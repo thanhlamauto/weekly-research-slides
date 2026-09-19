@@ -1,0 +1,163 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "research_state.schema.json",
+  "title": "Research State",
+  "description": "Persistent, versioned scientific state of a research project across weeks. This is the memory the weekly deck is a delta against.",
+  "type": "object",
+  "required": ["project", "problem", "method", "claims"],
+  "additionalProperties": false,
+  "properties": {
+    "project": {
+      "type": "object",
+      "required": ["title", "stage", "week"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "stage": {
+          "type": "string",
+          "enum": ["survey", "hypothesis-formation", "method-development", "diagnostic", "refinement", "mature-comparison"]
+        },
+        "week": { "type": "integer", "minimum": 1 },
+        "audience": { "type": "string" },
+        "familiarity": {
+          "type": "string",
+          "enum": ["low", "medium", "high"],
+          "description": "How familiar the audience is with the project. Controls how much background the deck may compress."
+        }
+      }
+    },
+    "problem": {
+      "type": "object",
+      "required": ["id", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^P[0-9]+$" },
+        "summary": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["stable", "revised", "retired"] }
+      }
+    },
+    "competitors": {
+      "type": "object",
+      "description": "Prior and competing methods. familiarity controls whether the deck re-explains them.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["summary"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "familiarity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "relevance": { "type": "string", "enum": ["low", "medium", "high"] },
+          "summary": { "type": "string" },
+          "mechanism": { "type": "string" },
+          "weakness": { "type": "string" },
+          "reference": { "type": "string" }
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "required": ["current_version", "summary"],
+      "additionalProperties": false,
+      "properties": {
+        "current_version": { "type": "string" },
+        "previous_version": { "type": "string" },
+        "summary": { "type": "string" },
+        "versions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["version", "summary"],
+            "additionalProperties": false,
+            "properties": {
+              "version": { "type": "string" },
+              "summary": { "type": "string" },
+              "changes": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "method_changes": {
+      "type": "array",
+      "description": "Changes introduced in the current version relative to the previous version.",
+      "items": { "type": "string" }
+    },
+    "claims": {
+      "type": "object",
+      "description": "Versioned scientific claims. Status tracks strength, not truth.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["statement", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "statement": { "type": "string", "minLength": 1 },
+          "status": {
+            "type": "string",
+            "enum": ["new", "emerging", "plausible", "unchanged", "strengthened", "weakened", "refuted"]
+          },
+          "diagnostics": { "type": "array", "items": { "type": "string" } },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "object",
+      "description": "Diagnostic experiments. Each explicitly links to the claims it tests and keeps measurement, observation, and interpretation separate.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["question", "result"],
+        "additionalProperties": false,
+        "properties": {
+          "question": { "type": "string", "minLength": 1 },
+          "supports_or_tests": { "type": "array", "items": { "type": "string" } },
+          "alternative_explanation": { "type": "string" },
+          "measurement": { "type": "string" },
+          "observation": { "type": "string" },
+          "interpretation": { "type": "string" },
+          "result": { "type": "string" },
+          "can_conclude": { "type": "string" },
+          "cannot_conclude": { "type": "string" }
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "description": "Named metrics and their latest values, used to compute result deltas between weeks.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value"],
+        "additionalProperties": false,
+        "properties": {
+          "value": { "type": ["number", "string"] },
+          "unit": { "type": "string" },
+          "higher_is_better": { "type": "boolean" },
+          "method_version": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "open_questions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "objects": {
+      "type": "object",
+      "description": "Persistent semantic objects (latents, features, modules) with stable ids for object permanence across slides.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["label"],
+        "additionalProperties": false,
+        "properties": {
+          "object_id": { "type": "string" },
+          "label": { "type": "string" },
+          "kind": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}

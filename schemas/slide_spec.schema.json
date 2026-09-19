@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "slide_spec.schema.json",
+  "title": "Slide Spec",
+  "description": "The renderable deck source. One entry per slide, with an archetype and the content that archetype needs. Archetype-specific content is validated by the layout modules and by scientific QA.",
+  "type": "object",
+  "required": ["deck", "slides"],
+  "additionalProperties": false,
+  "properties": {
+    "deck": {
+      "type": "object",
+      "required": ["title", "stage", "week"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "stage": {
+          "type": "string",
+          "enum": ["survey", "hypothesis-formation", "method-development", "diagnostic", "refinement", "mature-comparison"]
+        },
+        "week": { "type": "integer", "minimum": 1 },
+        "project": { "type": "string" },
+        "audience": { "type": "string" },
+        "familiarity": { "type": "string", "enum": ["low", "medium", "high"] },
+        "theme": { "type": "string" },
+        "footer": { "type": "string" },
+        "this_week_question": { "type": "string" }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "archetype", "title"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+          "archetype": {
+            "type": "string",
+            "enum": [
+              "title", "question", "recap", "problem", "method-landscape",
+              "competitor-mechanism", "weakness", "motivation", "method-high-level",
+              "method-delta", "experiment", "benchmark", "claim", "claim-delta",
+              "diagnostic", "feature-space", "interpretation", "limitations"
+            ]
+          },
+          "module": {
+            "type": "string",
+            "enum": [
+              "problem", "recap", "prior-work", "competitor-method", "weakness-gap",
+              "motivation", "method-high-level", "method-delta", "experiment-setup",
+              "results", "benchmark-comparison", "claim", "claim-delta", "diagnostic",
+              "interpretation", "limitation", "open-question"
+            ]
+          },
+          "title": { "type": "string", "minLength": 1 },
+          "subtitle": { "type": "string" },
+          "kicker": { "type": "string" },
+          "content": { "type": "object" },
+          "beats": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Explanation beats. Motion groups and progressive disclosure follow these."
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

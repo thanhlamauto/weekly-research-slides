@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "storyboard.schema.json",
+  "title": "Storyboard",
+  "description": "The argument plan for one weekly deck: which intellectual message each slide carries, before any geometry is decided.",
+  "type": "object",
+  "required": ["deck", "slides"],
+  "additionalProperties": false,
+  "properties": {
+    "deck": {
+      "type": "object",
+      "required": ["title", "stage", "week"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "stage": {
+          "type": "string",
+          "enum": ["survey", "hypothesis-formation", "method-development", "diagnostic", "refinement", "mature-comparison"]
+        },
+        "week": { "type": "integer", "minimum": 1 },
+        "audience": { "type": "string" },
+        "familiarity": { "type": "string", "enum": ["low", "medium", "high"] },
+        "this_week_question": { "type": "string" }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "module", "intent"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "module": {
+            "type": "string",
+            "enum": [
+              "problem", "recap", "prior-work", "competitor-method", "weakness-gap",
+              "motivation", "method-high-level", "method-delta", "experiment-setup",
+              "results", "benchmark-comparison", "claim", "claim-delta", "diagnostic",
+              "interpretation", "limitation", "open-question"
+            ]
+          },
+          "intent": {
+            "type": "string",
+            "description": "The single intellectual message of the slide. Prefer a question or claim, not a category name."
+          },
+          "source_refs": {
+            "type": "array",
+            "description": "Stable ids from research_state / weekly_delta this slide draws on (e.g. P1, C1, D2, method.v4).",
+            "items": { "type": "string" }
+          },
+          "content_hints": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "beats": {
+            "type": "array",
+            "description": "Scientific explanation beats for progressive disclosure and motion grouping.",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

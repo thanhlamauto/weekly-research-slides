@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "weekly_delta.schema.json",
+  "title": "Weekly Delta",
+  "description": "What changed since the previous week. This is the primary input to a weekly deck.",
+  "type": "object",
+  "required": ["week"],
+  "additionalProperties": false,
+  "properties": {
+    "week": { "type": "integer", "minimum": 1 },
+    "from_week": { "type": "integer", "minimum": 1 },
+    "headline": {
+      "type": "string",
+      "description": "One sentence: the single most important change this week."
+    },
+    "this_week_question": { "type": "string" },
+    "method_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "changes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "result_delta": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["metric"],
+        "additionalProperties": false,
+        "properties": {
+          "metric": { "type": "string" },
+          "previous": { "type": ["number", "string", "null"] },
+          "current": { "type": ["number", "string", "null"] },
+          "unit": { "type": "string" },
+          "higher_is_better": { "type": "boolean" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "claim_delta": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["previous", "current"],
+        "additionalProperties": false,
+        "properties": {
+          "previous": {
+            "type": "string",
+            "enum": ["new", "emerging", "plausible", "unchanged", "strengthened", "weakened", "refuted", "absent"]
+          },
+          "current": {
+            "type": "string",
+            "enum": ["new", "emerging", "plausible", "unchanged", "strengthened", "weakened", "refuted"]
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "new_claims": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["statement", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "statement": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["new", "emerging", "plausible", "unchanged", "strengthened", "weakened", "refuted"]
+          }
+        }
+      }
+    },
+    "new_diagnostics": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "changed_diagnostics": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "new_limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "unchanged": {
+      "type": "array",
+      "description": "Things the audience already knows and that did not change. Used to justify compressing background.",
+      "items": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "motion_spec.schema.json",
+  "title": "Motion Spec",
+  "description": "Optional motion plan. Groups reference semantic object names (e.g. concept-zs), not shape ids, so the spec survives rebuilds. Each group is one explanation beat.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "transition": {
+          "type": "string",
+          "enum": ["none", "cut", "fade", "push", "wipe", "split", "cover", "dissolve", "circle", "diamond", "plus", "wedge"]
+        },
+        "effect": { "type": "string", "enum": ["none", "appear", "fade", "wipe", "fly", "zoom"] },
+        "duration": { "type": "number", "minimum": 0 },
+        "transition_duration": { "type": "number", "minimum": 0 }
+      }
+    },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "transition": {
+            "type": "string",
+            "enum": ["none", "cut", "fade", "push", "wipe", "split", "cover", "dissolve", "circle", "diamond", "plus", "wedge"]
+          },
+          "groups": {
+            "type": "array",
+            "description": "One presenter click per group, following the slide's explanation beats.",
+            "items": {
+              "type": "object",
+              "required": ["objects"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string" },
+                "trigger": { "type": "string", "enum": ["on-click", "after-previous", "with-previous"] },
+                "effect": { "type": "string", "enum": ["appear", "fade", "wipe", "fly", "zoom"] },
+                "duration": { "type": "number", "minimum": 0 },
+                "objects": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
