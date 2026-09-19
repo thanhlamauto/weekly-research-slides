@@ -1,0 +1,53 @@
+# Survey-stage research state (synthetic example).
+project:
+  title: Robust Visual Place Recognition
+  stage: survey
+  week: 2
+  audience: Weekly research group meeting
+  familiarity: medium
+
+problem:
+  id: P1
+  summary: Place recognition must stay correct under appearance change and viewpoint shift.
+  status: stable
+
+competitors:
+  vlad:
+    name: Global aggregation (VLAD-style)
+    familiarity: high
+    relevance: medium
+    summary: Aggregate local descriptors into a single global vector per place.
+    mechanism: Attention or VLAD pooling compresses a feature map into one descriptor.
+    weakness: A single descriptor cannot represent multiple distinct appearances of the same place.
+  seq_match:
+    name: Sequential matching
+    familiarity: medium
+    relevance: high
+    summary: Match short sequences of frames instead of single images.
+    mechanism: Build a descriptor sequence and align it against a database sequence.
+    weakness: Assumes a traversable temporal order, which fails on out-of-order revisits.
+  foundation_vpr:
+    name: Foundation-model features
+    familiarity: medium
+    relevance: high
+    summary: Use large pretrained visual features for retrieval.
+    mechanism: Extract generic foundation features and retrieve by cosine similarity.
+    weakness: Generic features are not place-specific and degrade under domain shift.
+
+method:
+  current_version: none
+  summary: No method yet; this week is a survey.
+
+claims: {}
+diagnostics: {}
+
+limitations:
+  - No dataset-level benchmark has been run yet.
+  - Robustness statements are taken from paper-reported numbers only.
+
+open_questions:
+  - Which failure mode dominates, appearance change or viewpoint change?
+  - Can sequence matching and foundation features be combined?
+
+results: {}
+objects: {}

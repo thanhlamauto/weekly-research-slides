@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1279.968" height="720" viewBox="0 0 1279.968 720"><defs></defs>
+  <rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">DIAGNOSTIC</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
+  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Diagnostic D2: does output recovery require feature recovery?</tspan></text>
+  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
+  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">9 / 10</tspan></text>
+  <rect x="59.5" y="161.3" width="1160.9" height="82.6" rx="10.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="17.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="84.5" y="191.2">D2</tspan></text>
+  <text font-family="Calibri" font-size="22.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="189.1" y="210.3">Does output recovery require feature recovery?</tspan></text>
+  <rect x="1052.4" y="186.2" width="74.9" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="1089.9" y="207.1">tests C2</tspan></text>
+  <rect x="59.5" y="263.0" width="661.7" height="109.4" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="80.6" y="289.7">MEASUREMENT</tspan></text>
+  <text font-family="Consolas" font-size="20.0" fill="#111827" text-anchor="start" ><tspan x="80.6" y="319.8">linear probe R^2 for recovering Z_d from the corrected</tspan><tspan x="80.6" y="344.6">feature = 0.34; downstream accuracy = 0.91</tspan></text>
+  <rect x="59.5" y="382.1" width="661.7" height="109.4" rx="10.6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#374151" text-anchor="start" font-weight="700" ><tspan x="80.6" y="408.7">OBSERVATION</tspan></text>
+  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="80.6" y="437.7">Downstream accuracy is high while feature recovery remains low.</tspan></text>
+  <rect x="59.5" y="501.1" width="661.7" height="109.4" rx="10.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="80.6" y="527.7">INTERPRETATION</tspan></text>
+  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="80.6" y="556.7">A downstream-valid pre-image that is not the true future feature</tspan><tspan x="80.6" y="579.8">may be sufficient.</tspan></text>
+  <rect x="756.1" y="263.0" width="464.4" height="109.4" rx="10.6" fill="#DCFCE7" stroke="#047857" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="start" font-weight="700" ><tspan x="777.2" y="289.7">CAN CONCLUDE</tspan></text>
+  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="316.2">Output recovery can occur without strong feature</tspan><tspan x="777.2" y="336.0">recovery in this setup.</tspan></text>
+  <rect x="756.1" y="382.1" width="464.4" height="109.4" rx="10.6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#B91C1C" text-anchor="start" font-weight="700" ><tspan x="777.2" y="408.7">CANNOT CONCLUDE</tspan></text>
+  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="435.2">That no valid feature recovery exists, or that the</tspan><tspan x="777.2" y="455.0">probe is a complete measurement.</tspan></text>
+  <rect x="756.1" y="501.1" width="464.4" height="109.4" rx="10.6" fill="#F9FAFB" stroke="#6B7280" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="777.2" y="527.7">ALTERNATIVE TARGETED</tspan></text>
+  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="554.2">The probe may fail to decode information that is</tspan><tspan x="777.2" y="574.1">present in the feature.</tspan></text>
+</svg>

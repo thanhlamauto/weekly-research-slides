@@ -1,0 +1,134 @@
+# Current research state (synthetic example). This is the persistent project memory
+# that weekly decks are a delta against.
+project:
+  title: Cached Future-Feature Prediction
+  stage: diagnostic
+  week: 6
+  audience: Weekly research group meeting
+  familiarity: high
+
+problem:
+  id: P1
+  summary: Cached hidden features go stale over time, so reusing them as a proxy for future features drifts.
+  status: stable
+
+competitors:
+  reuse_only:
+    name: Cache reuse only
+    familiarity: high
+    relevance: high
+    summary: Reuse the cached feature directly as the estimate of the future feature.
+    mechanism: No update step; the cached tensor is passed downstream unchanged.
+    weakness: The cached feature drifts from the true future feature as the prediction horizon grows.
+
+method:
+  current_version: v4
+  previous_version: v3
+  summary: Cache reuse with a residual correction objective and an oracle diagnostic that separates feature recovery from output recovery.
+  versions:
+    - version: v3
+      summary: Cache reuse plus a learned linear correction.
+      changes:
+        - added a linear correction head on top of the cached feature
+    - version: v4
+      summary: Adds a correction objective and an oracle diagnostic, and scales down the correction.
+      changes:
+        - added a correction objective that penalizes deviation from the future feature
+        - added an oracle diagnostic that partitions feature recovery from output recovery
+        - scaled down the correction magnitude to reduce long-rollout drift
+
+method_changes:
+  - added a correction objective that penalizes deviation from the future feature
+  - added an oracle diagnostic that partitions feature recovery from output recovery
+  - scaled down the correction magnitude to reduce long-rollout drift
+
+claims:
+  C1:
+    statement: The learned correction approximates the true future feature, measured by high cosine alignment.
+    status: weakened
+    diagnostics: [D0, D1]
+    note: D1 measured cos(deltaZ, Z_d - Z_s) = 0.117; the correction is nearly orthogonal to the future-feature direction.
+  C2:
+    statement: An alternative downstream-valid pre-image may be sufficient; output recovery does not require feature recovery.
+    status: emerging
+    diagnostics: [D2]
+    note: D2 measured high downstream accuracy with low feature recovery.
+
+diagnostics:
+  D0:
+    question: Does adding a correction improve rollout cosine over plain cache reuse?
+    supports_or_tests: [C1]
+    alternative_explanation: The gain could come from extra capacity rather than a meaningful correction.
+    measurement: rollout cosine, reuse_only 0.42 vs v3 0.51
+    observation: The corrected feature scores higher on rollout cosine than reuse only.
+    interpretation: The correction adds useful signal, but this metric does not show movement toward the true future feature.
+    result: v3 improves rollout cosine by +0.09 over reuse only.
+    can_conclude: The correction improves the downstream metric.
+    cannot_conclude: That the corrected feature is close to the true future feature.
+  D1:
+    question: Does the correction direction point toward the future feature?
+    supports_or_tests: [C1]
+    alternative_explanation: The correction may exploit a downstream-valid direction that is not the future-feature direction.
+    measurement: cos(deltaZ, Z_d - Z_s) = 0.1168
+    observation: The correction direction is nearly orthogonal to the direction from the cached feature to the future feature.
+    interpretation: Output recovery may not require moving toward the exact future hidden state.
+    result: cosine 0.1168, close to zero.
+    can_conclude: C1 as stated is not supported; the correction is not simply moving toward Z_d.
+    cannot_conclude: That the correction is uninformative, or that the method fails.
+  D2:
+    question: Does output recovery require feature recovery?
+    supports_or_tests: [C2]
+    alternative_explanation: The probe may fail to decode information that is present in the feature.
+    measurement: linear probe R^2 for recovering Z_d from the corrected feature = 0.34; downstream accuracy = 0.91
+    observation: Downstream accuracy is high while feature recovery remains low.
+    interpretation: A downstream-valid pre-image that is not the true future feature may be sufficient.
+    result: high output recovery, low feature recovery.
+    can_conclude: Output recovery can occur without strong feature recovery in this setup.
+    cannot_conclude: That no valid feature recovery exists, or that the probe is a complete measurement.
+
+results:
+  rollout_cosine:
+    value: 0.58
+    higher_is_better: true
+    method_version: v4
+  downstream_acc:
+    value: 0.91
+    higher_is_better: true
+    method_version: v4
+  feature_recovery_r2:
+    value: 0.34
+    higher_is_better: true
+    method_version: v4
+    note: Low, and the evidence behind the weakened C1.
+
+limitations:
+  - Alternative valid pre-images have not been directly characterized.
+  - The oracle diagnostic uses the future feature as an upper bound and is unavailable at inference.
+  - Feature recovery is measured with a single linear probe.
+
+open_questions:
+  - Can we characterize downstream-valid pre-images without the oracle?
+  - Does the correction generalize to horizons beyond the training horizon?
+  - Would the same orthogonality appear for other cached-feature tasks?
+
+objects:
+  zs:
+    object_id: concept-zs
+    label: Z_s
+    kind: latent
+    description: cached source feature
+  zd:
+    object_id: concept-zd
+    label: Z_d
+    kind: latent
+    description: desired future feature
+  ztilde:
+    object_id: concept-ztilde
+    label: Z~
+    kind: latent
+    description: corrected estimate
+  delta:
+    object_id: concept-delta
+    label: dZ
+    kind: vector
+    description: correction direction

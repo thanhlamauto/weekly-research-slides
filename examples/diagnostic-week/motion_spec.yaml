@@ -1,0 +1,63 @@
+# Optional motion plan. Groups reference semantic object names, so this file
+# survives rebuilds. One group = one presenter click = one explanation beat.
+defaults:
+  transition: fade
+  effect: fade
+  duration: 0.4
+  transition_duration: 0.3
+
+slides:
+  - id: s1
+    groups:
+      - { trigger: on-click, objects: [title-project, title-accent, title-main] }
+      - { trigger: on-click, objects: [title-question, title-byline] }
+      - { trigger: on-click, objects: [motif-zs, motif-ztilde, motif-zd, motif-delta, motif-desired, motif-residual] }
+  - id: s2
+    groups:
+      - { trigger: on-click, objects: [recap-known, recap-0, recap-1, recap-2] }
+      - { trigger: on-click, objects: [recap-now, recap-now-k, recap-now-t, recap-week-chip] }
+  - id: s3
+    groups:
+      - { trigger: on-click, objects: [method-from, method-delta-arrow, method-to, method-delta-summary] }
+      - { trigger: on-click, objects: [method-change-0, method-change-1, method-change-2] }
+      - { trigger: on-click, objects: [method-unchanged] }
+  - id: s4
+    groups:
+      - { trigger: on-click, objects: [concept-zs, concept-ztilde, concept-zd] }
+      - { trigger: on-click, objects: [vec-desired, vec-delta, vec-residual] }
+      - { trigger: on-click, objects: [fs-note] }
+  - id: s5
+    groups:
+      - { trigger: on-click, objects: [vec-desired] }
+      - { trigger: on-click, objects: [vec-delta] }
+      - { trigger: on-click, objects: [fs-note] }
+  - id: s6
+    groups:
+      - { trigger: on-click, objects: [diag-D1-q, diag-D1-link-0] }
+      - { trigger: on-click, objects: [diag-D1-measurement] }
+      - { trigger: on-click, objects: [diag-D1-observation] }
+      - { trigger: on-click, objects: [diag-D1-interpretation] }
+      - { trigger: on-click, objects: [diag-D1-can_conclude, diag-D1-cannot_conclude, diag-D1-alternative_explanation] }
+  - id: s7
+    groups:
+      - { trigger: on-click, objects: [bench-corner, bench-metric-0, bench-metric-1, bench-metric-2] }
+      - { trigger: on-click, objects: [bench-row-0] }
+      - { trigger: on-click, objects: [bench-row-1] }
+      - { trigger: on-click, objects: [bench-row-2, bench-row-current, bench-caption] }
+  - id: s8
+    groups:
+      - { trigger: on-click, objects: [claimdelta-C1] }
+      - { trigger: on-click, objects: [claimdelta-C2] }
+      - { trigger: on-click, objects: [claimdelta-note] }
+  - id: s9
+    groups:
+      - { trigger: on-click, objects: [diag-D2-q, diag-D2-link-0] }
+      - { trigger: on-click, objects: [diag-D2-measurement] }
+      - { trigger: on-click, objects: [diag-D2-observation] }
+      - { trigger: on-click, objects: [diag-D2-interpretation] }
+      - { trigger: on-click, objects: [diag-D2-can_conclude, diag-D2-cannot_conclude, diag-D2-alternative_explanation] }
+  - id: s10
+    groups:
+      - { trigger: on-click, objects: [lim-panel, lim-0] }
+      - { trigger: on-click, objects: [lim-1, lim-2] }
+      - { trigger: on-click, objects: [lim-open, lim-open-0, lim-open-1, lim-open-2] }

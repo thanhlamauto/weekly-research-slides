@@ -1,0 +1,16 @@
+{
+  "counts": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 1
+  },
+  "findings": [
+    {
+      "level": "info",
+      "check": "continuity",
+      "slide": "s5",
+      "object": "vec-delta-label",
+      "message": "Label text updated between consecutive slides"
+    }
+  ]
+}

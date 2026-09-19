@@ -1,0 +1,88 @@
+# Previous week's research state (synthetic example). Used to compute weekly_delta.yaml.
+project:
+  title: Cached Future-Feature Prediction
+  stage: diagnostic
+  week: 5
+  audience: Weekly research group meeting
+  familiarity: high
+
+problem:
+  id: P1
+  summary: Cached hidden features go stale over time, so reusing them as a proxy for future features drifts.
+  status: stable
+
+competitors:
+  reuse_only:
+    name: Cache reuse only
+    familiarity: high
+    relevance: high
+    summary: Reuse the cached feature directly as the estimate of the future feature.
+    mechanism: No update step; the cached tensor is passed downstream unchanged.
+    weakness: The cached feature drifts from the true future feature as the prediction horizon grows.
+
+method:
+  current_version: v3
+  previous_version: v2
+  summary: Cache reuse followed by a learned linear correction toward the future feature.
+  versions:
+    - version: v3
+      summary: Cache reuse plus a learned linear correction.
+      changes:
+        - added a linear correction head on top of the cached feature
+
+claims:
+  C1:
+    statement: The learned correction approximates the true future feature, measured by high cosine alignment.
+    status: plausible
+    diagnostics: [D0]
+    note: Supported so far only by the rollout cosine metric.
+
+diagnostics:
+  D0:
+    question: Does adding a correction improve rollout cosine over plain cache reuse?
+    supports_or_tests: [C1]
+    alternative_explanation: The gain could come from extra capacity rather than a meaningful correction.
+    measurement: rollout cosine, reuse_only 0.42 vs v3 0.51
+    observation: The corrected feature scores higher on rollout cosine than reuse only.
+    interpretation: The correction adds useful signal, but this metric does not show movement toward the true future feature.
+    result: v3 improves rollout cosine by +0.09 over reuse only.
+    can_conclude: The correction improves the downstream metric.
+    cannot_conclude: That the corrected feature is close to the true future feature.
+
+results:
+  rollout_cosine:
+    value: 0.51
+    higher_is_better: true
+    method_version: v3
+  downstream_acc:
+    value: 0.83
+    higher_is_better: true
+    method_version: v3
+
+limitations:
+  - The correction is supervised only through the rollout metric, not directly toward the future feature.
+
+open_questions:
+  - Does the correction actually move toward the future hidden state?
+
+objects:
+  zs:
+    object_id: concept-zs
+    label: Z_s
+    kind: latent
+    description: cached source feature
+  zd:
+    object_id: concept-zd
+    label: Z_d
+    kind: latent
+    description: desired future feature
+  ztilde:
+    object_id: concept-ztilde
+    label: Z~
+    kind: latent
+    description: corrected estimate
+  delta:
+    object_id: concept-delta
+    label: dZ
+    kind: vector
+    description: correction direction

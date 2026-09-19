@@ -1,0 +1,184 @@
+# Renderable source for the week-6 demo deck (synthetic example).
+# This file is the source of truth; the PPTX is rebuilt from it.
+deck:
+  title: Cached Future-Feature Prediction
+  subtitle: Week 6 diagnostic update
+  project: Cached Future-Feature Prediction
+  stage: diagnostic
+  week: 6
+  audience: Weekly research group meeting
+  familiarity: high
+  footer: Cached Future-Feature Prediction · synthetic demo
+
+slides:
+  - id: s1
+    archetype: title
+    module: recap
+    title: Cached Future-Feature Prediction
+    content:
+      project: Cached Future-Feature Prediction
+      headline: Does correction recover the future feature?
+      question: Week 6 · an oracle diagnostic splits feature recovery from output recovery, and claim C1 weakens.
+      byline: Weekly research update · synthetic demo · version 0.1
+    beats: [project, question]
+    notes: Open by naming the week's question. Do not re-explain the problem; the group knows it.
+
+  - id: s2
+    archetype: recap
+    module: recap
+    title: Where we are, and what changed this week
+    content:
+      established_title: Established (unchanged)
+      established:
+        - label: P1
+          detail: Cached hidden features go stale; reusing them as future features drifts.
+        - label: Method
+          detail: Cache reuse followed by a learned correction toward the future feature.
+        - label: Baseline
+          detail: Reuse only scores rollout cosine 0.42.
+      now_title: Where we are now
+      now: Method v4 adds a correction objective and an oracle diagnostic. The question this week is whether the correction moves toward the future feature, or whether a different downstream-valid direction is enough.
+      prior_week: 'Last week: v3'
+    beats: [established, now]
+    notes: 20-30 seconds. Keep it compressed because familiarity is high.
+
+  - id: s3
+    archetype: method-delta
+    module: method-delta
+    title: 'What changed in the method: v3 to v4'
+    content:
+      from: v3
+      to: v4
+      summary: v4 adds a correction objective and an oracle diagnostic, and scales down the correction.
+      changes:
+        - change: Added a correction objective
+          why: Penalize deviation from the future feature so the correction is supervised directly.
+        - change: Added an oracle diagnostic
+          why: Separate feature recovery from output recovery to test C1 and C2.
+        - change: Scaled down the correction magnitude
+          why: Reduce drift when the correction is applied over long rollouts.
+      unchanged:
+        - Cache layout and update schedule
+        - Backbone and dataset split
+        - Rollout evaluation protocol
+    beats: [version, changes, unchanged]
+    notes: Only the delta matters here. Point at the two new pieces and move on.
+
+  - id: s4
+    archetype: feature-space
+    module: diagnostic
+    title: Two stories for what the correction does
+    content:
+      nodes:
+        - { object_id: concept-zs, label: Z_s, kind: latent, cx: 2.9, cy: 4.5, sublabel: cached source }
+        - { object_id: concept-ztilde, label: 'Z~', kind: latent, cx: 8.7, cy: 4.5, sublabel: corrected estimate }
+        - { object_id: concept-zd, label: Z_d, kind: latent, cx: 2.9, cy: 2.1, sublabel: desired future }
+      vectors:
+        - { id: vec-delta, from: concept-zs, to: concept-ztilde, semantic: vector, label: 'dZ correction' }
+        - { id: vec-desired, from: concept-zs, to: concept-zd, semantic: reference, label: desired }
+        - { id: vec-residual, from: concept-ztilde, to: concept-zd, semantic: reference, label: residual }
+      note: C1 says dZ follows the desired direction; C2 says dZ can be orthogonal and still be useful.
+    beats: [objects, predictions]
+    notes: Establish the three objects here. They keep exactly these positions on the next slide.
+
+  - id: s5
+    archetype: feature-space
+    module: diagnostic
+    title: Correction is nearly orthogonal to the desired direction
+    content:
+      nodes:
+        - { object_id: concept-zs, label: Z_s, kind: latent, cx: 2.9, cy: 4.5, sublabel: cached source }
+        - { object_id: concept-ztilde, label: 'Z~', kind: latent, cx: 8.7, cy: 4.5, sublabel: corrected estimate }
+        - { object_id: concept-zd, label: Z_d, kind: latent, cx: 2.9, cy: 2.1, sublabel: desired future }
+      vectors:
+        - { id: vec-delta, from: concept-zs, to: concept-ztilde, semantic: vector, label: 'dZ (cos 0.117 vs desired)' }
+        - { id: vec-desired, from: concept-zs, to: concept-zd, semantic: reference, label: desired }
+      note: Same objects and positions as the previous slide; the measured dZ is ~90 degrees from desired.
+    beats: [objects, measured]
+    notes: Object permanence is deliberate. Z_s, Z~, and Z_d keep identical positions between slides 4 and 5.
+
+  - id: s6
+    archetype: diagnostic
+    module: diagnostic
+    title: 'Diagnostic D1: does the correction aim at the future feature?'
+    content:
+      id: D1
+      question: Does the correction direction point toward the future feature?
+      claim_ids: [C1]
+      measurement: 'cos(deltaZ, Z_d - Z_s) = 0.1168'
+      observation: The correction direction is nearly orthogonal to the direction from the cached feature to the future feature.
+      interpretation: Output recovery may not require moving toward the exact future hidden state.
+      can_conclude: C1 as stated is not supported; the correction is not simply moving toward Z_d.
+      cannot_conclude: That the correction is uninformative, or that the method fails.
+      alternative_explanation: The correction may exploit a downstream-valid direction that is not the future-feature direction.
+    beats: [measurement, observation, interpretation, bounds]
+    notes: Walk the four bands in order. The measurement is not the observation; the observation is not the interpretation.
+
+  - id: s7
+    archetype: benchmark
+    module: benchmark-comparison
+    title: 'Comparison: competitor, last week, this week'
+    content:
+      metrics:
+        - { key: rollout_cosine, name: Rollout cosine, unit: higher is better, higher_is_better: true }
+        - { key: downstream_acc, name: Downstream acc., unit: higher is better, higher_is_better: true }
+        - { key: feature_recovery_r2, name: Feature recovery R2, unit: higher is better, higher_is_better: true }
+      methods:
+        - name: Cache reuse only
+          role: competitor
+          values: { rollout_cosine: 0.42, downstream_acc: 0.74, feature_recovery_r2: 0.28 }
+        - name: Ours (v3, last week)
+          role: previous
+          values: { rollout_cosine: 0.51, downstream_acc: 0.83, feature_recovery_r2: 0.30 }
+        - name: Ours (v4, this week)
+          role: current
+          values: { rollout_cosine: 0.58, downstream_acc: 0.91, feature_recovery_r2: 0.34 }
+          delta: { rollout_cosine: '+0.07', downstream_acc: '+0.08', feature_recovery_r2: '+0.04' }
+      caption: v4 improves both downstream metrics over v3. Feature recovery stays low; that is the evidence behind the weakened C1 and the emerging C2, not a hidden weakness.
+    beats: [competitor, previous, current]
+    notes: Emphasize the delta. Do not hide the weak feature-recovery column.
+
+  - id: s8
+    archetype: claim-delta
+    module: claim-delta
+    title: What this week does to our claims
+    content:
+      claims:
+        - { id: C1, previous: plausible, current: weakened, statement: The learned correction approximates the true future feature., note: 'D1: cos 0.117' }
+        - { id: C2, previous: absent, current: emerging, statement: 'An alternative downstream-valid pre-image may be sufficient; output recovery does not require feature recovery.', note: 'D2: high output, low feature recovery' }
+      note: Neither claim is refuted or confirmed; both remain under test.
+    beats: [C1, C2]
+    notes: A weakened claim is a result, not a failure. C2 is new this week.
+
+  - id: s9
+    archetype: diagnostic
+    module: diagnostic
+    title: 'Diagnostic D2: does output recovery require feature recovery?'
+    content:
+      id: D2
+      question: Does output recovery require feature recovery?
+      claim_ids: [C2]
+      measurement: 'linear probe R^2 for recovering Z_d from the corrected feature = 0.34; downstream accuracy = 0.91'
+      observation: Downstream accuracy is high while feature recovery remains low.
+      interpretation: A downstream-valid pre-image that is not the true future feature may be sufficient.
+      can_conclude: Output recovery can occur without strong feature recovery in this setup.
+      cannot_conclude: That no valid feature recovery exists, or that the probe is a complete measurement.
+      alternative_explanation: The probe may fail to decode information that is present in the feature.
+    beats: [measurement, observation, interpretation, bounds]
+    notes: D2 targets the alternative explanation for C1. Keep the probe limitation visible.
+
+  - id: s10
+    archetype: limitations
+    module: limitation
+    title: Limitations and open questions
+    content:
+      limitations:
+        - Alternative valid pre-images have not been directly characterized.
+        - The oracle diagnostic uses the future feature as an upper bound and is unavailable at inference.
+        - Feature recovery is measured with a single linear probe.
+      open_questions:
+        - Can we characterize downstream-valid pre-images without the oracle?
+        - Does the correction generalize to horizons beyond the training horizon?
+        - Would the same orthogonality appear for other cached-feature tasks?
+    beats: [limitations, open-questions]
+    notes: Stop here. The mentor discussion happens after the deck; no thank-you slide.

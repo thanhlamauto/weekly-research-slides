@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1279.968" height="720" viewBox="0 0 1279.968 720"><defs><marker id="arw-B91C1C" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B91C1C"/></marker></defs>
+  <rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">1 / 10</tspan></text>
+  <rect x="59.5" y="225.6" width="86.4" height="4.8" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="20.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="262.2">Cached Future-Feature Prediction</tspan></text>
+  <text font-family="Calibri" font-size="50.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="329.8">Does correction recover</tspan><tspan x="59.5" y="392.6">the future feature?</tspan></text>
+  <text font-family="Calibri" font-size="24.0" fill="#374151" text-anchor="start" ><tspan x="59.5" y="478.1">Week 6 · an oracle diagnostic splits feature recovery</tspan><tspan x="59.5" y="507.8">from output recovery, and claim C1 weakens.</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#6B7280" text-anchor="start" ><tspan x="59.5" y="590.8">Weekly research update · synthetic demo · version 0.1</tspan></text>
+  <ellipse cx="837.6" cy="458.4" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
+  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="837.6" y="465.2">Z_s</tspan></text>
+  <ellipse cx="1044.0" cy="458.4" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
+  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="1044.0" y="465.2">Z~</tspan></text>
+  <ellipse cx="941.3" cy="295.2" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
+  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="941.3" y="302.0">Z_d</tspan></text>
+  <line x1="892.8" y1="458.9" x2="988.8" y2="458.9" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
+  <line x1="868.5" y1="405.1" x2="936.0" y2="350.4" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <line x1="1099.2" y1="410.9" x2="1012.8" y2="355.9" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="950.4" y="561.3">cached features drift; correction moves them</tspan></text>
+</svg>

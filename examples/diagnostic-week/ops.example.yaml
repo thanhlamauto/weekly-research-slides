@@ -1,0 +1,20 @@
+# Example conservative edit ops for `wrs edit` on a source-less or existing PPTX.
+# Run: wrs edit --input output/demo-weekly-research-slides.pptx --ops ops.example.yaml --output edited.pptx
+ops:
+  - op: set_text
+    target: claimdelta-C1-stmt
+    text: The learned correction approximates the true future feature, measured by cosine alignment.
+  - op: move
+    target: concept-ztilde
+    dx: 0.15
+    dy: 0.0
+  - op: annotate
+    slide: 10
+    name: annotation-review
+    text: 'Reviewer note: characterize the downstream-valid pre-images next.'
+    x: 0.7
+    y: 6.55
+    w: 7.0
+    h: 0.34
+    size: 11
+    color: 6B7280

@@ -1,0 +1,59 @@
+# The argument plan for the week-6 deck, authorable by hand or by `wrs plan`.
+deck:
+  title: Cached Future-Feature Prediction — Week 6
+  stage: diagnostic
+  week: 6
+  audience: Weekly research group meeting
+  familiarity: high
+  this_week_question: Does correction recover the future feature, or is any downstream-valid pre-image enough?
+slides:
+  - id: s1
+    module: recap
+    intent: Open with the project and this week's question, not the problem definition
+    source_refs: [delta.this_week_question]
+    beats: [project, question]
+  - id: s2
+    module: recap
+    intent: Compress shared context and state exactly where the project is now
+    source_refs: [P1, method.v4]
+    beats: [established, now]
+  - id: s3
+    module: method-delta
+    intent: What changed in the method from v3 to v4, and why
+    source_refs: [method.v3, method.v4]
+    beats: [version, changes, unchanged]
+  - id: s4
+    module: diagnostic
+    intent: Two candidate stories for the correction — it follows the desired direction, or it does not
+    source_refs: [C1, C2, concept-zs, concept-zd, concept-ztilde]
+    beats: [objects, predictions]
+  - id: s5
+    module: diagnostic
+    intent: The measured correction is nearly orthogonal to the desired direction
+    source_refs: [D1]
+    beats: [objects, measured]
+  - id: s6
+    module: diagnostic
+    intent: D1 — separate the measurement, the observation, and the interpretation
+    source_refs: [C1, D1]
+    beats: [measurement, observation, interpretation, bounds]
+  - id: s7
+    module: benchmark-comparison
+    intent: Compare competitor, previous version, and current version without hiding the weak metric
+    source_refs: [reuse_only, method.v3, method.v4]
+    beats: [competitor, previous, current]
+  - id: s8
+    module: claim-delta
+    intent: State how the claims changed this week
+    source_refs: [C1, C2]
+    beats: [C1, C2]
+  - id: s9
+    module: diagnostic
+    intent: D2 — test whether output recovery requires feature recovery
+    source_refs: [C2, D2]
+    beats: [measurement, observation, interpretation, bounds]
+  - id: s10
+    module: limitation
+    intent: End on limitations and the open questions for discussion
+    source_refs: [limitations, open_questions]
+    beats: [limitations, open-questions]

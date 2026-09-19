@@ -1,0 +1,92 @@
+# Survey-stage renderable source (synthetic example).
+deck:
+  title: Robust Visual Place Recognition
+  subtitle: Survey, week 2
+  project: Robust Visual Place Recognition
+  stage: survey
+  week: 2
+  audience: Weekly research group meeting
+  familiarity: medium
+  footer: Robust Visual Place Recognition · synthetic survey demo
+
+slides:
+  - id: s1
+    archetype: title
+    module: problem
+    title: Robust Visual Place Recognition
+    content:
+      project: Robust Visual Place Recognition
+      headline: How do we recognize a place under change?
+      question: Week 2 · survey of three families of approaches and the gap they share.
+      byline: Weekly research update · synthetic survey · version 0.1
+    beats: [problem]
+    notes: Survey only. Do not propose a method.
+
+  - id: s2
+    archetype: method-landscape
+    module: prior-work
+    title: Three families, one visual language
+    content:
+      methods:
+        - tag: A
+          name: Global aggregation (VLAD-style)
+          role: competitor
+          mechanism: Attention or VLAD pooling compresses a feature map into a single global descriptor per place.
+        - tag: B
+          name: Sequential matching
+          role: competitor
+          mechanism: Build a descriptor sequence and align it against a database sequence.
+        - tag: C
+          name: Foundation-model features
+          role: competitor
+          mechanism: Extract generic pretrained features and retrieve by cosine similarity.
+      gap: None of the three handles appearance change and out-of-order revisits together.
+    beats: [families, gap]
+    notes: Keep all three in the same visual language. The output of this slide is the shared gap.
+
+  - id: s3
+    archetype: competitor-mechanism
+    module: competitor-method
+    title: Sequential matching, and where its assumption breaks
+    content:
+      name: Sequential matching
+      module_label: align
+      intuition: Consecutive frames contain more information than any single frame, so match a short sequence.
+      mechanism: Frames are embedded into a descriptor sequence, and the sequence is aligned against the database before retrieval.
+      failure:
+        - Assumes the camera moves along a traversable temporal order.
+        - Breaks when the same place is revisited from a different direction.
+        - Alignment cost grows with sequence length.
+      relation_to_us: We have no method yet. The question is whether ordering assumptions hold in our target data.
+    beats: [intuition, mechanism, limitation]
+    notes: Intuition, then mechanism, then the failing assumption. Never start from a figure.
+
+  - id: s4
+    archetype: weakness
+    module: weakness-gap
+    title: The gap shared by all three families
+    content:
+      gap: No family addresses appearance change and out-of-order revisits with a single representation.
+      evidence:
+        - Global aggregation loses multi-appearance places.
+        - Sequential matching depends on temporal order.
+        - Foundation features are not place-specific under domain shift.
+      implication: A method worth building would keep a place representation that does not assume order and does not collapse appearances.
+    beats: [gap, evidence, implication]
+    notes: This is the endpoint of a survey. The gap is the result.
+
+  - id: s5
+    archetype: limitations
+    module: limitation
+    title: What we still do not know
+    content:
+      limitations:
+        - No dataset-level benchmark has been run yet.
+        - Robustness statements are taken from paper-reported numbers only.
+        - The target deployment domain is not fixed.
+      open_questions:
+        - Which failure mode dominates, appearance change or viewpoint change?
+        - Can sequence matching and foundation features be combined?
+        - What is a fair benchmark for out-of-order revisits?
+    beats: [limitations, open-questions]
+    notes: End here. Discussion follows.

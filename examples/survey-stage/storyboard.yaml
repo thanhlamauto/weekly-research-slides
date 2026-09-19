@@ -1,0 +1,33 @@
+# Survey-stage argument plan. Ends at the unresolved gap; no invented method.
+deck:
+  title: Robust Visual Place Recognition — Survey
+  stage: survey
+  week: 2
+  audience: Weekly research group meeting
+  familiarity: medium
+  this_week_question: Which method family survives appearance change and out-of-order revisits?
+slides:
+  - id: s1
+    module: problem
+    intent: State the recognition problem and why it is hard
+    source_refs: [P1]
+    beats: [problem]
+  - id: s2
+    module: prior-work
+    intent: Normalize three method families into one visual language and expose the shared gap
+    source_refs: [vlad, seq_match, foundation_vpr]
+    beats: [families, gap]
+  - id: s3
+    module: competitor-method
+    intent: Explain sequential matching — intuition, mechanism, and where its assumption breaks
+    source_refs: [seq_match]
+    beats: [intuition, mechanism, limitation]
+  - id: s4
+    module: weakness-gap
+    intent: Name the unresolved gap across all families
+    beats: [gap, evidence, implication]
+  - id: s5
+    module: limitation
+    intent: End on what is not yet known and the questions to discuss
+    source_refs: [limitations, open_questions]
+    beats: [limitations, open-questions]

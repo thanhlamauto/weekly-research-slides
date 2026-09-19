@@ -1,0 +1,44 @@
+week: 6
+from_week: 5
+headline: v4 adds a correction objective and an oracle diagnostic; C1 weakens and C2 emerges.
+this_week_question: Does correction recover the future feature, or is any downstream-valid pre-image enough?
+method_delta:
+  from: v3
+  to: v4
+  changes:
+    - added a correction objective that penalizes deviation from the future feature
+    - added an oracle diagnostic that partitions feature recovery from output recovery
+    - scaled down the correction magnitude to reduce long-rollout drift
+result_delta:
+  - metric: rollout_cosine
+    previous: 0.51
+    current: 0.58
+    higher_is_better: true
+  - metric: downstream_acc
+    previous: 0.83
+    current: 0.91
+    higher_is_better: true
+  - metric: feature_recovery_r2
+    previous: null
+    current: 0.34
+    higher_is_better: true
+claim_delta:
+  C1:
+    previous: plausible
+    current: weakened
+new_claims:
+  C2:
+    statement: >-
+      An alternative downstream-valid pre-image may be sufficient; output recovery does not require
+      feature recovery.
+    status: emerging
+new_diagnostics:
+  - D1
+  - D2
+new_limitations:
+  - Alternative valid pre-images have not been directly characterized.
+  - The oracle diagnostic uses the future feature as an upper bound and is unavailable at inference.
+  - Feature recovery is measured with a single linear probe.
+unchanged:
+  - Problem P1 is unchanged
+  - Claim C1 already known

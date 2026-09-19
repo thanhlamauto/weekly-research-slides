@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1279.968" height="720" viewBox="0 0 1279.968 720"><defs></defs>
+  <rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">COMPARISON</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
+  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Comparison: competitor, last week, this week</tspan></text>
+  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
+  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">7 / 10</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="59.5" y="234.9">Method</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="235.6">Rollout cosine</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" ><tspan x="485.8" y="260.9">higher is better</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="235.6">Downstream acc.</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" ><tspan x="776.8" y="260.9">higher is better</tspan></text>
+  <rect x="630.8" y="201.6" width="1.2" height="305.3" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="15.3" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="235.6">Feature recovery R2</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" ><tspan x="1067.8" y="260.9">higher is better</tspan></text>
+  <rect x="921.8" y="201.6" width="1.2" height="305.3" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="59.5" y="304.4">Cache reuse only</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" font-weight="700" ><tspan x="59.5" y="330.9">COMPETITOR</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="306.2">0.42</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="306.2">0.74</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="306.2">0.28</tspan></text>
+  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="59.5" y="387.0">Ours (v3, last week)</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="59.5" y="413.5">OURS · LAST WEEK</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="388.8">0.51</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="388.8">0.83</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="388.8">0.30</tspan></text>
+  <rect x="48.0" y="418.6" width="1184.0" height="78.7" rx="9.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="469.5">Ours (v4, this week)</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="496.1">OURS · THIS WEEK</tspan></text>
+  <text font-family="Consolas" font-size="28.0" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="472.7">0.58</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="493.2">+0.07</tspan></text>
+  <text font-family="Consolas" font-size="28.0" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="472.7">0.91</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="493.2">+0.08</tspan></text>
+  <text font-family="Consolas" font-size="28.0" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="472.7">0.34</tspan></text>
+  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="493.2">+0.04</tspan></text>
+  <rect x="59.5" y="533.8" width="1160.9" height="91.2" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
+  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="86.4" y="574.6">v4 improves both downstream metrics over v3. Feature recovery stays low; that is the evidence behind the weakened C1</tspan><tspan x="86.4" y="597.8">and the emerging C2, not a hidden weakness.</tspan></text>
+</svg>
