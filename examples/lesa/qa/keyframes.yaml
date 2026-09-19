@@ -1,0 +1,37 @@
+video: examples/lesa/renders/final/lesa-method-explainer.mp4
+keyframes:
+- scene: lesa_01_why_cache
+  title: Why cache diffusion features?
+  timestamp: 9.844
+  purpose: caching motivation summary
+  png: qa/keyframes/lesa_01_why_cache.png
+- scene: lesa_02_uniform_assumption
+  title: The smoothness assumption breaks
+  timestamp: 7.92
+  purpose: smoothness assumption failure
+  png: qa/keyframes/lesa_02_uniform_assumption.png
+- scene: lesa_03_stage_dynamics
+  title: Feature dynamics are stage-dependent
+  timestamp: 10.622
+  purpose: three-stage segmentation
+  png: qa/keyframes/lesa_03_stage_dynamics.png
+- scene: lesa_04_stage_experts
+  title: One predictor becomes stage-aware experts
+  timestamp: 5.76
+  purpose: stage-aware experts
+  png: qa/keyframes/lesa_04_stage_experts.png
+- scene: lesa_05_expert_internals
+  title: What does one expert predictor compute?
+  timestamp: 10.26
+  purpose: predictor mechanism and equation
+  png: qa/keyframes/lesa_05_expert_internals.png
+- scene: lesa_06_training
+  title: Ground-truth guided, then closed-loop
+  timestamp: 7.912
+  purpose: closed-loop training motivation
+  png: qa/keyframes/lesa_06_training.png
+- scene: lesa_07_recap
+  title: The method in one view
+  timestamp: 6.84
+  purpose: method summary slide
+  png: qa/keyframes/lesa_07_recap.png

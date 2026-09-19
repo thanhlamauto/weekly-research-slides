@@ -1,0 +1,194 @@
+# Scene spec for the LESA method explainer.
+# Scientific understanding comes from method_model.yaml; geometry is implemented
+# in src/. Actors carry stable ids so objects persist across scenes.
+video:
+  title: "LESA: why diffusion caching needs stage-aware predictors"
+  method: lesa
+  mode: competitor
+  method_model: method_model.yaml
+  description: >-
+    A concise visual explanation of the LESA method: why caching is needed, why
+    a single fixed reuse/forecast scheme fails, the stage-dependent observation,
+    the stage-aware experts, what one expert computes, and why training is
+    closed-loop.
+  target_duration_seconds: 115
+  canvas: light
+  theme: wrs-light
+
+scenes:
+  - id: lesa_01_why_cache
+    title: Why cache diffusion features?
+    manim_class: LESA01WhyCache
+    mode: competitor
+    purpose: Show that DiT inference repeats expensive work and that caching can skip it.
+    question: Why is feature caching worth doing at all?
+    method_refs: [problem, baseline]
+    actors:
+      - { id: dit_blocks, type: module, label: "DiT", persistent: true, role: model }
+      - { id: feature_current, type: feature, label: "h_{t}", persistent: true, role: feature }
+      - { id: cache, type: cache, label: "cache", persistent: true, role: cache }
+      - { id: cost_bar, type: panel, label: "cost", role: meter }
+    start_state: A row of expensive DiT evaluations with a feature moving through them.
+    beats:
+      - { id: establish, pattern: ESTABLISH, action: draw the DiT pipeline and its cost, duration_seconds: 3 }
+      - { id: trace, pattern: TRACE, action: move the feature through every DiT block, duration_seconds: 4, speaker_note: "every step recomputes the whole block" }
+      - { id: reuse, pattern: MORPH, action: cache the feature and skip repeated computation, duration_seconds: 5 }
+      - { id: conclude, pattern: REVEAL, action: reveal that cached features let us skip evaluations, duration_seconds: 2 }
+    end_state: Most DiT evaluations are marked skipped; the cost meter has dropped.
+    transition_to: lesa_02_uniform_assumption
+    keyframe: { fraction: 0.92, purpose: "caching motivation summary" }
+    narration_note: "DiT inference is many expensive evaluations. If adjacent features are similar, cache and skip."
+    speaker_note: "Frame the cost, not the method yet."
+
+  - id: lesa_02_uniform_assumption
+    title: The smoothness assumption breaks
+    manim_class: LESA02UniformAssumption
+    mode: competitor
+    purpose: Show that reuse/forecast assumes uniform smooth change, which the real trajectory violates.
+    question: Why is simple reuse or forecasting not enough?
+    method_refs: [assumption_of_previous_methods, failure_of_previous_methods, equations.taylor]
+    actors:
+      - { id: trajectory, type: timeline, label: "diffusion timesteps", persistent: true }
+      - { id: feature_point, type: feature, label: "h_{t}", persistent: true, role: feature }
+      - { id: forecast, type: vector, label: "forecast", persistent: true, role: prediction }
+      - { id: change_vectors, type: vector, label: "change", role: drift }
+    start_state: A feature trajectory drawn over diffusion timesteps.
+    beats:
+      - { id: establish, pattern: ESTABLISH, action: draw the trajectory and the smoothness assumption, duration_seconds: 3 }
+      - { id: forecast, pattern: TRACE, action: extrapolate a straight forecast from the first steps, duration_seconds: 4 }
+      - { id: diverge, pattern: ACCUMULATION, action: show the forecast diverging from the real feature, duration_seconds: 4 }
+      - { id: conclude, pattern: REVEAL, action: reveal that change is not uniform, duration_seconds: 2 }
+    end_state: The straight forecast visibly misses the real trajectory.
+    transition_to: lesa_03_stage_dynamics
+    keyframe: { fraction: 0.9, purpose: "smoothness assumption failure" }
+    narration_note: "A fixed scheme assumes smooth, uniform change. The real trajectory is not uniform."
+
+  - id: lesa_03_stage_dynamics
+    title: Feature dynamics are stage-dependent
+    manim_class: LESA03StageDynamics
+    mode: competitor
+    purpose: The aha moment - the trajectory splits into three regimes with different dynamics.
+    question: Why does one fixed predictor struggle?
+    method_refs: [key_observation]
+    actors:
+      - { id: trajectory, type: timeline, label: "diffusion timesteps", persistent: true }
+      - { id: feature_point, type: feature, label: "h_{t}", persistent: true, role: feature }
+      - { id: stage_high, type: stage, label: "high noise: drastic", persistent: true }
+      - { id: stage_mid, type: stage, label: "mid: stable, continuous", persistent: true }
+      - { id: stage_low, type: stage, label: "low: detail refinement", persistent: true }
+      - { id: question, type: text, label: "Why should one predictor handle all three?" }
+    start_state: The same trajectory as the previous scene, unsegmented.
+    beats:
+      - { id: replay, pattern: REPLAY, action: replay the feature moving along the trajectory, duration_seconds: 3 }
+      - { id: early, pattern: TRAJECTORY, action: "show large, irregular movements in the high-noise region", duration_seconds: 3 }
+      - { id: middle, pattern: TRAJECTORY, action: "show small, smooth movements in the middle region", duration_seconds: 3 }
+      - { id: late, pattern: TRAJECTORY, action: show fine refinement in the low-noise region, duration_seconds: 3 }
+      - { id: split, pattern: STAGE-SPLIT, action: segment the timeline into three stages, duration_seconds: 4 }
+      - { id: ask, pattern: REVEAL, action: ask why one predictor should handle all three, duration_seconds: 2 }
+    end_state: Three visibly distinct temporal regimes with a motivating question.
+    transition_to: lesa_04_stage_experts
+    keyframe: { fraction: 0.94, purpose: "three-stage segmentation" }
+    narration_note: "High noise: drastic. Middle: stable and continuous. Low noise: detail refinement."
+
+  - id: lesa_04_stage_experts
+    title: One predictor becomes stage-aware experts
+    manim_class: LESA04StageExperts
+    mode: competitor
+    purpose: Show specialization as the natural consequence of stage-dependent dynamics.
+    question: How should the predictor adapt?
+    method_refs: [components.experts, motivation]
+    actors:
+      - { id: predictor, type: learned, label: "predictor", persistent: true }
+      - { id: expert_1, type: expert, label: "expert 1", persistent: true }
+      - { id: expert_2, type: expert, label: "expert 2", persistent: true }
+      - { id: expert_3, type: expert, label: "expert 3", persistent: true }
+      - { id: stage_high, type: stage, label: "high noise (K=4)", persistent: true }
+      - { id: stage_mid, type: stage, label: "mid (K=8)", persistent: true }
+      - { id: stage_low, type: stage, label: "low (K=8)", persistent: true }
+    start_state: A single generic predictor sitting under one timeline.
+    beats:
+      - { id: single, pattern: ESTABLISH, action: show one predictor handling the whole trajectory, duration_seconds: 3 }
+      - { id: split, pattern: STAGE-SPLIT, action: bring back the three stages, duration_seconds: 3 }
+      - { id: specialize, pattern: MORPH, action: transform the single predictor into three stage-aligned experts, duration_seconds: 5 }
+      - { id: window, pattern: REVEAL, action: show each expert's temporal window, duration_seconds: 3 }
+    end_state: Three experts, one per stage, each with its own history window.
+    transition_to: lesa_05_expert_internals
+    keyframe: { fraction: 0.9, purpose: "stage-aware experts" }
+    narration_note: "Specialization is the natural consequence of the observation."
+
+  - id: lesa_05_expert_internals
+    title: What does one expert predictor compute?
+    manim_class: LESA05ExpertInternals
+    mode: competitor
+    purpose: Explain the predictor mechanism and build its equation incrementally.
+    question: What is inside a single LESA predictor?
+    method_refs: [mechanism, components.linear_proj, components.kan, equations.linear, equations.alpha, equations.update]
+    actors:
+      - { id: history_features, type: feature, label: "h_{t+K-1} ... h_{t}", persistent: true }
+      - { id: linear_proj, type: learned, label: "linear projection", persistent: true }
+      - { id: z, type: feature, label: "z", persistent: true }
+      - { id: delta_t, type: vector, label: "dt offsets", persistent: true }
+      - { id: kan, type: learned, label: "KAN", persistent: true }
+      - { id: alpha, type: feature, label: "alpha", persistent: true }
+      - { id: output, type: feature, label: "hhat_{t-1}", persistent: true }
+    start_state: An empty workspace for one expert.
+    beats:
+      - { id: zoom, pattern: ZOOM, action: zoom into one expert, duration_seconds: 2 }
+      - { id: history, pattern: ESTABLISH, action: lay out the cached feature history, duration_seconds: 3 }
+      - { id: spatial, pattern: BUILD, action: history enters the linear projection producing z, duration_seconds: 4 }
+      - { id: temporal, pattern: BUILD, action: timestep offsets enter the KAN producing alpha, duration_seconds: 4 }
+      - { id: combine, pattern: REVEAL, action: build hhat = h_t + alpha z incrementally, duration_seconds: 5 }
+    end_state: The predictor equation assembled from its two inputs.
+    transition_to: lesa_06_training
+    keyframe: { fraction: 0.95, purpose: "predictor mechanism and equation" }
+    narration_note: "Spatial transform of the history, scalar temporal modulation, residual update."
+
+  - id: lesa_06_training
+    title: Ground-truth guided, then closed-loop
+    manim_class: LESA06Training
+    mode: competitor
+    purpose: Explain why training starts with ground truth and then becomes autoregressive.
+    question: Why not just train on ground-truth features?
+    method_refs: [training]
+    actors:
+      - { id: history_gt, type: feature, label: "GT history", persistent: true }
+      - { id: history_pred, type: feature, label: "predicted history", persistent: true }
+      - { id: predictor, type: learned, label: "predictor", persistent: true }
+      - { id: drift, type: vector, label: "drift", persistent: true }
+      - { id: loop, type: vector, label: "feedback", persistent: true }
+    start_state: Predictor trained on accurate, ground-truth histories.
+    beats:
+      - { id: gt, pattern: ESTABLISH, action: train with ground-truth histories and an L1 loss, duration_seconds: 4 }
+      - { id: inference, pattern: COMPARE, action: show that accelerated inference feeds imperfect histories, duration_seconds: 4 }
+      - { id: drift, pattern: ACCUMULATION, action: prediction error feeds back and drift accumulates, duration_seconds: 5 }
+      - { id: closed_loop, pattern: MORPH, action: transform training into the closed-loop autoregressive setup, duration_seconds: 5 }
+    end_state: A closed loop that trains on the same imperfect histories seen at inference.
+    transition_to: lesa_07_recap
+    keyframe: { fraction: 0.92, purpose: "closed-loop training motivation" }
+    narration_note: "Training on ground truth is not the regime the predictor runs in. Closed-loop matches inference."
+
+  - id: lesa_07_recap
+    title: The method in one view
+    manim_class: LESA07Recap
+    mode: competitor
+    purpose: Compress the whole method into one picture.
+    question: What is LESA, in one view?
+    method_refs: [mechanism, inference]
+    actors:
+      - { id: trajectory, type: timeline, label: "diffusion trajectory", persistent: true }
+      - { id: stage_high, type: stage, label: "high noise", persistent: true }
+      - { id: stage_mid, type: stage, label: "mid", persistent: true }
+      - { id: stage_low, type: stage, label: "low", persistent: true }
+      - { id: expert_1, type: expert, label: "expert 1", persistent: true }
+      - { id: expert_2, type: expert, label: "expert 2", persistent: true }
+      - { id: expert_3, type: expert, label: "expert 3", persistent: true }
+      - { id: dit_blocks, type: module, label: "DiT", persistent: true }
+    start_state: The full method, compressed.
+    beats:
+      - { id: zoom_out, pattern: ZOOM, action: return to the full trajectory, duration_seconds: 3 }
+      - { id: stages, pattern: STAGE-SPLIT, action: show the three stages, duration_seconds: 3 }
+      - { id: experts, pattern: BUILD, action: show one expert per stage forecasting skipped features, duration_seconds: 5 }
+      - { id: recap, pattern: RECAP, action: state the method in one sentence, duration_seconds: 3 }
+    end_state: A single summary picture; no leaderboard claim.
+    keyframe: { fraction: 0.95, purpose: "method summary slide" }
+    narration_note: "Stages, experts, predicted skipped features, fewer DiT evaluations."

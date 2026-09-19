@@ -1,0 +1,102 @@
+# Method semantic model for LESA.
+# Source: "LESA: Learnable Stage-Aware Predictors for Diffusion Model Acceleration",
+# Cai, Liu, Xu, Wang, Zou, Zhang. arXiv:2602.20497 (v3, 27 May 2026).
+# Read from the paper PDF. Synthetic example for the skill; no endorsement implied.
+
+method:
+  name: LESA (Learnable Stage-Aware Predictors)
+  short_name: LESA
+  kind: competitor
+  paper_title: "LESA: Learnable Stage-Aware Predictors for Diffusion Model Acceleration"
+  source_url: "https://arxiv.org/abs/2602.20497"
+  venue: arXiv
+  year: 2026
+
+problem: Diffusion Transformers (DiTs) require dozens of expensive denoising evaluations per sample, and this dominates inference cost.
+
+baseline: "Cache-Then-Reuse: store the feature computed at timestep t and reuse it at later steps, F(x_{t-k}) ~= F(x_t)."
+
+key_observation: >-
+  Feature dynamics are stage-dependent. The high-noise stage shows drastic and
+  unstable changes, the middle stage evolves smoothly and continuously, and the
+  low-noise stage performs fine-grained detail refinement.
+
+assumption_of_previous_methods: >-
+  Cache-Then-Forecast assumes features evolve smoothly over time and applies a
+  single fixed extrapolation scheme (for example a truncated Taylor expansion)
+  at every timestep.
+
+failure_of_previous_methods: >-
+  One fixed prediction scheme cannot match stage-varying dynamics. Reuse or
+  forecasting over large intervals drifts from the true trajectory and degrades
+  generation quality.
+
+motivation: >-
+  Learn the temporal feature mapping from data instead of assuming a fixed
+  smoothness, and specialize the predictor for each noise stage.
+
+mechanism:
+  inputs:
+    - "cached feature history {h_{t+K-1}, ..., h_t}"
+    - "relative timestep offsets dt_i = t_pred - t_i"
+  operations:
+    - "linear projection of the feature history -> z"
+    - "KAN over the timestep offsets -> scalar alpha"
+    - "residual update hhat_{t-1} = h_t + alpha * z"
+  outputs:
+    - "predicted future feature hhat_{t-1}"
+
+components:
+  - { id: linear_proj, name: Feature Projection, role: spatial transform,
+      description: "z = W[h_{t+K-1}, ..., h_t] + b" }
+  - { id: kan, name: KAN Timestep Modulation, role: temporal modulation,
+      description: "learnable spline functions produce a scalar alpha(dt)" }
+  - { id: experts, name: Stage-Aware Experts, role: specialization,
+      description: "a high-noise expert (window K=4) and mid/low-noise experts (K=8)" }
+  - { id: residual, name: Residual Update, role: combine,
+      description: "hhat_{t-1} = h_t + alpha z" }
+
+equations:
+  - { id: reuse, plain: "F(x_{t-k}) ~= F(x_t)",
+      meaning: "cache-then-reuse ignores temporal feature change" }
+  - { id: taylor, plain: "F_pred(x_{t-k}) = F(x_t) + sum_i (d^i F / (i! N^i)) (-k)^i",
+      meaning: "training-free forecasting assumes smooth evolution" }
+  - { id: linear, plain: "z = W[h_{t+K-1}, ..., h_t] + b",
+      meaning: "spatial transform of the feature history" }
+  - { id: alpha, plain: "alpha = f_KAN(dt_{L-1}, ..., dt_0)",
+      meaning: "scalar temporal modulation from the timestep offsets" }
+  - { id: update, plain: "hhat_{t-1} = h_t + alpha z",
+      meaning: "residual prediction of the next feature" }
+
+training:
+  - "Data preparation: run the base model without acceleration and cache the feature trajectory."
+  - "Stage 1, ground-truth guided: past K ground-truth features plus the timestep embedding, minimising an L1 loss to the ground-truth feature at t."
+  - "Stage 2, closed-loop autoregressive: the history mixes the predictor's own predictions with model outputs, exposing it to the drift it will see at inference."
+
+inference:
+  - "Recompute the feature with the full DiT at the first step of each cache interval N."
+  - "For skipped steps, the expert for that stage predicts the feature from the cached history."
+  - "This skips most DiT evaluations, e.g. 5.00x on FLUX.1-dev and 6.25x on Qwen-Image."
+
+claims:
+  - "Stage-aware learned predictors preserve quality better than a single fixed scheme at high acceleration."
+
+assumptions:
+  - "A single scalar alpha per step is enough to modulate the residual update across all feature channels."
+  - "Noise-level stage boundaries transfer across different diffusion models."
+
+limitations:
+  - "Training-based: it requires cached trajectories and predictor training."
+  - "Stage boundaries and the window sizes K are design choices, not learned."
+
+relation_to_our_work: >-
+  A learned, stage-aware alternative to fixed reuse or forecasting; relevant when
+  one global rule fails across different regimes of the same trajectory.
+
+notation:
+  h_t: "DiT feature at timestep t"
+  K: "cache window (number of past features)"
+  N: "cache interval (steps between full recomputations)"
+  z: "linear projection of the feature history"
+  alpha: "KAN temporal modulation scalar"
+  hhat: "predicted future feature"
