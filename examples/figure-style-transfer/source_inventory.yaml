@@ -1,0 +1,12 @@
+# The reference is a STYLE_SOURCE only. The subject content is ours.
+sources:
+  - id: reference_pipeline
+    path: examples/figure-style-transfer/reference.svg
+    roles: [STYLE_SOURCE]
+    redistributable: true
+    notes: Authored inside this repository; used for palette, typography, module geometry and edges only.
+  - id: subject_notes
+    path: examples/figure-style-transfer/subject_method.yaml
+    roles: [CONTENT_SOURCE, STRUCTURE_SOURCE]
+    redistributable: true
+    notes: Different scientific content (speculative decoding) than the reference.

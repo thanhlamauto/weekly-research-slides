@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="320" viewBox="0 0 760 320">
+  <!-- Reference figure authored inside this repository (redistributable).
+       It is used as a STYLE_SOURCE only: palette, typography, module geometry
+       and edge grammar are extracted; its scientific content is not. -->
+  <rect width="760" height="320" fill="#FBF9F4"/>
+  <text x="28" y="40" font-family="Georgia" font-size="17" font-weight="700" fill="#1F2937">Stage pipeline (reference)</text>
+  <rect x="28" y="70" width="180" height="70" rx="14" fill="#CCFBF1" stroke="#0F766E" stroke-width="1.6"/>
+  <text x="118" y="110" font-family="Georgia" font-size="12" font-weight="600" fill="#0F766E" text-anchor="middle">Encode</text>
+  <rect x="290" y="70" width="180" height="70" rx="14" fill="#FFEDD5" stroke="#EA580C" stroke-width="1.6"/>
+  <text x="380" y="110" font-family="Georgia" font-size="12" font-weight="600" fill="#EA580C" text-anchor="middle">Score</text>
+  <rect x="552" y="70" width="180" height="70" rx="14" fill="#E5E7EB" stroke="#4B5563" stroke-width="1.6"/>
+  <text x="642" y="110" font-family="Georgia" font-size="12" font-weight="600" fill="#4B5563" text-anchor="middle">Select</text>
+  <line x1="208" y1="105" x2="288" y2="105" stroke="#4B5563" stroke-width="1.8"/>
+  <line x1="470" y1="105" x2="550" y2="105" stroke="#4B5563" stroke-width="1.8"/>
+  <rect x="28" y="190" width="704" height="96" rx="14" fill="none" stroke="#0F766E" stroke-width="1.4" stroke-dasharray="8 6"/>
+  <text x="44" y="216" font-family="Georgia" font-size="11" font-weight="700" fill="#0F766E">Training</text>
+  <text x="44" y="248" font-family="Georgia" font-size="11" fill="#374151">forward, score, select, update</text>
+</svg>

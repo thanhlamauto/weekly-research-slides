@@ -1,0 +1,162 @@
+figure:
+  id: method_delta
+  type: method-delta
+  mode: delta
+  title: 'Budget-Aware Retrieval: change this week'
+  purpose: Keep unchanged components in place, mute them, and highlight only what
+    changed.
+  style: topconf-clean
+panels:
+- id: mechanism
+  label: Current method
+  role: ours
+nodes:
+- id: C_input_1
+  semantic_id: input.1
+  type: input
+  label: query tokens
+  panel: mechanism
+  column: 0
+  order: 0
+  role: shared
+- id: C_input_2
+  semantic_id: input.2
+  type: input
+  label: cached context keys
+  panel: mechanism
+  column: 0
+  order: 1
+  role: shared
+- id: C_backbone
+  semantic_id: component.backbone
+  type: learned-module
+  label: Backbone encoder
+  detail: encodes queries and keys
+  panel: mechanism
+  role: shared
+  column: 1
+  order: 0
+- id: C_index
+  semantic_id: component.index
+  type: learned-module
+  label: Similarity index
+  detail: cosine similarity over cached keys
+  panel: mechanism
+  role: shared
+  column: 2
+  order: 1
+- id: C_router
+  semantic_id: component.router
+  type: learned-module
+  label: Learned router
+  detail: predicts query difficulty
+  panel: mechanism
+  role: added
+  column: 3
+  order: 2
+- id: C_budget
+  semantic_id: component.budget
+  type: learned-module
+  label: Budget controller
+  detail: converts difficulty into a retrieval budget
+  panel: mechanism
+  role: added
+  column: 4
+  order: 3
+- id: C_decoder
+  semantic_id: component.decoder
+  type: learned-module
+  label: Decoder
+  detail: attends over the selected tokens
+  panel: mechanism
+  role: shared
+  column: 5
+  order: 4
+- id: C_output_1
+  semantic_id: output.1
+  type: output
+  label: answer tokens
+  panel: mechanism
+  column: 6
+  order: 0
+  role: shared
+- id: P_select
+  semantic_id: component.select
+  type: learned-module
+  label: Tuned-K selection
+  detail: keeps a hand-tuned K tokens
+  panel: mechanism
+  role: removed
+  column: 3
+  order: 2
+edges:
+- from: C_input_1
+  to: C_backbone
+  role: data
+  id: C_input_1->backbone
+- from: C_input_2
+  to: C_backbone
+  role: data
+  id: C_input_2->backbone
+- from: C_backbone
+  to: C_index
+  role: computation
+  id: C_backbone->index
+- from: C_index
+  to: C_router
+  role: computation
+  id: C_index->router
+- from: C_router
+  to: C_budget
+  role: computation
+  id: C_router->budget
+- from: C_budget
+  to: C_decoder
+  role: computation
+  id: C_budget->decoder
+- from: C_decoder
+  to: C_output_1
+  role: computation
+  id: C_decoder->output_1
+annotations:
+- id: C_ann_observation
+  target: C_router
+  role: note
+  text: Query difficulty is predictable from the query embedding, so the budget can
+    be learned.
+  placement: above
+legend:
+- role: shared
+  label: unchanged
+- role: added
+  label: added / changed
+- role: removed
+  label: removed
+comparison:
+  methods:
+  - previous
+  - current
+  alignment:
+    inputs: shared
+    outputs: shared
+  shared_components:
+  - component.backbone
+  - component.decoder
+  - component.index
+  - input.1
+  - input.2
+  - output.1
+  differences:
+    competitor_only: []
+    ours_only:
+    - component.budget
+    - component.router
+shared_concepts:
+- component.backbone
+- component.decoder
+- component.index
+- input.1
+- input.2
+- output.1
+provenance:
+  generated_by: compare.build_delta

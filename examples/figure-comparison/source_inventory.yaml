@@ -1,0 +1,17 @@
+# Explicit source-role classification for this figure project.
+sources:
+  - id: ours_notes
+    path: examples/figure-comparison/ours_method.yaml
+    roles: [CONTENT_SOURCE, STRUCTURE_SOURCE]
+    redistributable: true
+    notes: Our own synthetic method description.
+  - id: competitor_notes
+    path: examples/figure-comparison/competitor_method.yaml
+    roles: [CONTENT_SOURCE]
+    redistributable: true
+    notes: Synthetic competitor; no third-party figure or text is reused.
+  - id: topconf_style
+    path: skills/research-method-figure/styles/topconf-clean.yaml
+    roles: [STYLE_SOURCE]
+    redistributable: true
+    notes: Repository style preset; controls appearance only.

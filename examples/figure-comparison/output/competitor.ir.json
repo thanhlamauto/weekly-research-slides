@@ -1,0 +1,431 @@
+{
+  "figure": {
+    "id": "statictopk_overview",
+    "type": "method-overview",
+    "mode": "competitor",
+    "title": "Static Top-K Retrieval",
+    "purpose": "Retrieve a fixed number of tokens by embedding similarity and attend only to those.",
+    "method": "StaticTopK",
+    "style": "topconf-clean"
+  },
+  "canvas": {
+    "w": 1004.0,
+    "h": 226.0,
+    "bg": "#FFFFFF"
+  },
+  "layout_mode": "columns",
+  "style": {
+    "name": "topconf-clean",
+    "background": "#FFFFFF",
+    "corner_radius": 6,
+    "stroke_width": 1.1,
+    "panel_stroke_width": 1.0,
+    "panel_dash": "6 4",
+    "semantics": {
+      "shared": "#6B7280",
+      "competitor": "#D97706",
+      "ours": "#2563EB",
+      "auxiliary": "#059669",
+      "neutral": "#374151",
+      "changed": "#7C3AED",
+      "added": "#047857",
+      "removed": "#B91C1C"
+    },
+    "typography": {
+      "family": "Arial",
+      "title": {
+        "size": 15,
+        "weight": 700
+      },
+      "module": {
+        "size": 9.5,
+        "weight": 600
+      },
+      "label": {
+        "size": 8,
+        "weight": 600
+      },
+      "annotation": {
+        "size": 8,
+        "weight": 400
+      },
+      "panel_label": {
+        "size": 9,
+        "weight": 700
+      }
+    },
+    "spacing": {
+      "base": 8,
+      "margin": 26,
+      "panel_gap": 24,
+      "node_gap": 16,
+      "row_gap": 20,
+      "padding": 8
+    }
+  },
+  "panels": [
+    {
+      "id": "mechanism",
+      "label": "Mechanism",
+      "role": "mechanism",
+      "emphasis": false,
+      "x": 26.0,
+      "y": 25.99999999999997,
+      "w": 952.0,
+      "h": 174.00000000000003,
+      "color": "#374151",
+      "fill": "#F3F4F5"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "input_1",
+      "semantic_id": "input.1",
+      "type": "input",
+      "label": "query tokens",
+      "detail": null,
+      "role": "neutral",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 34.0,
+      "y": 88.0,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#374151",
+      "fill": "#EBECEE",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "input_2",
+      "semantic_id": "input.2",
+      "type": "input",
+      "label": "cached context keys",
+      "detail": null,
+      "role": "neutral",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 34.0,
+      "y": 148.0,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#374151",
+      "fill": "#EBECEE",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "backbone",
+      "semantic_id": "component.backbone",
+      "type": "learned-module",
+      "label": "Backbone encoder",
+      "detail": "encodes queries and keys",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 178.0,
+      "y": 113.0,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "index",
+      "semantic_id": "component.index",
+      "type": "learned-module",
+      "label": "Similarity index",
+      "detail": "cosine similarity over cached keys",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 344.0,
+      "y": 113.0,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "topk",
+      "semantic_id": "component.topk",
+      "type": "learned-module",
+      "label": "Fixed Top-K selection",
+      "detail": "always keeps exactly K tokens",
+      "role": "competitor",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 510.0,
+      "y": 113.0,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#D97706",
+      "fill": "#FAECDC",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "decoder",
+      "semantic_id": "component.decoder",
+      "type": "learned-module",
+      "label": "Decoder",
+      "detail": "attends over the selected tokens",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 676.0,
+      "y": 113.0,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "output_1",
+      "semantic_id": "output.1",
+      "type": "output",
+      "label": "answer tokens",
+      "detail": null,
+      "role": "neutral",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 842.0,
+      "y": 118.0,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#374151",
+      "fill": "#EBECEE",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "input_1->backbone",
+      "from": "input_1",
+      "to": "backbone",
+      "role": "data",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          162.0,
+          110.0
+        ],
+        [
+          170.0,
+          110.0
+        ],
+        [
+          170.0,
+          140.0
+        ],
+        [
+          178.0,
+          140.0
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "input_2->backbone",
+      "from": "input_2",
+      "to": "backbone",
+      "role": "data",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          162.0,
+          170.0
+        ],
+        [
+          170.0,
+          170.0
+        ],
+        [
+          170.0,
+          140.0
+        ],
+        [
+          178.0,
+          140.0
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "backbone->index",
+      "from": "backbone",
+      "to": "index",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          328.0,
+          140.0
+        ],
+        [
+          344.0,
+          140.0
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "index->topk",
+      "from": "index",
+      "to": "topk",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          494.0,
+          140.0
+        ],
+        [
+          510.0,
+          140.0
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "topk->decoder",
+      "from": "topk",
+      "to": "decoder",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          660.0,
+          140.0
+        ],
+        [
+          676.0,
+          140.0
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "decoder->output_1",
+      "from": "decoder",
+      "to": "output_1",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          826.0,
+          140.0
+        ],
+        [
+          842.0,
+          140.0
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    }
+  ],
+  "annotations": [
+    {
+      "id": "ann_observation",
+      "target": "backbone",
+      "role": "note",
+      "text": "For a given query, only a few context tokens carry most of the relevant signal.",
+      "x": 113.0,
+      "y": 48.39999999999998,
+      "w": 280,
+      "h": 29.6,
+      "size": 8,
+      "placement": "above",
+      "color": "#374151",
+      "text_color": "#374151"
+    }
+  ],
+  "legend": null,
+  "title": null,
+  "shared_concepts": [
+    "input.1",
+    "input.2",
+    "component.backbone",
+    "component.index",
+    "component.topk",
+    "component.decoder",
+    "output.1"
+  ],
+  "comparison": null,
+  "provenance": {
+    "method_model": "method_model.yaml",
+    "generated_by": "spec.from_method_model"
+  }
+}

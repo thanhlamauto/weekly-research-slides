@@ -1,0 +1,28 @@
+# Previous version of our method, used for the method-delta figure demo.
+method:
+  name: Budget-Aware Retrieval
+  short_name: BAR
+  kind: ours
+  year: 2025
+
+problem: A fixed retrieval budget wastes compute on easy queries and starves hard ones.
+baseline: Static Top-K retrieval with a constant K.
+key_observation: Some queries need fewer tokens than others.
+motivation: Select tokens with a fixed but better-tuned K.
+
+mechanism:
+  inputs: [query tokens, cached context keys]
+  operations: [encode with the backbone, score with the similarity index, select with a tuned K, attend over the selection]
+  outputs: [answer tokens]
+
+components:
+  - { id: backbone, name: Backbone encoder, role: shared, description: encodes queries and keys }
+  - { id: index, name: Similarity index, role: shared, description: cosine similarity over cached keys }
+  - { id: select, name: Tuned-K selection, role: shared, description: keeps a hand-tuned K tokens }
+  - { id: decoder, name: Decoder, role: shared, description: attends over the selected tokens }
+
+claims:
+  - A better-tuned constant K improves accuracy.
+
+limitations:
+  - K is still constant across queries.

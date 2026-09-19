@@ -1,0 +1,32 @@
+# Synthetic "our method" for the figure comparison demo.
+method:
+  name: Budget-Aware Retrieval
+  short_name: BAR
+  kind: ours
+  year: 2026
+
+problem: A fixed retrieval budget wastes compute on easy queries and starves hard ones.
+baseline: Static Top-K retrieval with a constant K.
+key_observation: Query difficulty is predictable from the query embedding, so the budget can be learned.
+motivation: Learn how many tokens to retrieve instead of fixing K.
+
+mechanism:
+  inputs: [query tokens, cached context keys]
+  operations: [encode with the backbone, score with the similarity index, route with a learned router, set the budget, attend over the selection]
+  outputs: [answer tokens]
+
+components:
+  - { id: backbone, name: Backbone encoder, role: shared, description: encodes queries and keys }
+  - { id: index, name: Similarity index, role: shared, description: cosine similarity over cached keys }
+  - { id: router, name: Learned router, role: ours, description: predicts query difficulty }
+  - { id: budget, name: Budget controller, role: ours, description: converts difficulty into a retrieval budget }
+  - { id: decoder, name: Decoder, role: shared, description: attends over the selected tokens }
+
+claims:
+  - A learned budget matches or improves accuracy at lower average cost.
+
+assumptions:
+  - Query difficulty is learnable from the query embedding.
+
+limitations:
+  - The router needs labels or a proxy objective.

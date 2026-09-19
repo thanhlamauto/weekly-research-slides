@@ -1,0 +1,28 @@
+# Different scientific content used to prove the extracted style transfers.
+method:
+  name: Draft-and-Verify Decoding
+  short_name: DnV
+  kind: ours
+  year: 2026
+
+problem: Autoregressive decoding issues one token per forward pass and is latency bound.
+baseline: Standard greedy autoregressive decoding.
+key_observation: A small draft model can propose several tokens that a large model verifies in one pass.
+motivation: Trade extra verification compute for fewer sequential forward passes.
+
+mechanism:
+  inputs: [prompt tokens, draft proposals]
+  operations: [draft several tokens, verify in parallel, accept the longest correct prefix, resample on rejection]
+  outputs: [accepted tokens]
+
+components:
+  - { id: draft, name: Draft model, role: ours, description: proposes a short token block }
+  - { id: verify, name: Parallel verifier, role: ours, description: checks the proposed block in one pass }
+  - { id: accept, name: Prefix acceptor, role: ours, description: keeps the longest accepted prefix }
+  - { id: resample, name: Resampler, role: auxiliary, description: corrects the first rejected token }
+
+claims:
+  - Draft-and-verify reduces wall-clock latency at equal output quality.
+
+limitations:
+  - Speedup depends on the acceptance rate.

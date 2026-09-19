@@ -1,0 +1,876 @@
+{
+  "figure": {
+    "id": "method_comparison",
+    "type": "method-comparison",
+    "mode": "comparison",
+    "title": "Static Top-K vs BAR (ours)",
+    "purpose": "Normalize both methods into one visual language and show the minimal structural difference.",
+    "style": "topconf-clean",
+    "width": 1320,
+    "height": 640
+  },
+  "canvas": {
+    "w": 1320.0,
+    "h": 640.0,
+    "bg": "#FFFFFF"
+  },
+  "layout_mode": "columns",
+  "style": {
+    "name": "topconf-clean",
+    "background": "#FFFFFF",
+    "corner_radius": 6,
+    "stroke_width": 1.1,
+    "panel_stroke_width": 1.0,
+    "panel_dash": "6 4",
+    "semantics": {
+      "shared": "#6B7280",
+      "competitor": "#D97706",
+      "ours": "#2563EB",
+      "auxiliary": "#059669",
+      "neutral": "#374151",
+      "changed": "#7C3AED",
+      "added": "#047857",
+      "removed": "#B91C1C"
+    },
+    "typography": {
+      "family": "Arial",
+      "title": {
+        "size": 15,
+        "weight": 700
+      },
+      "module": {
+        "size": 9.5,
+        "weight": 600
+      },
+      "label": {
+        "size": 8,
+        "weight": 600
+      },
+      "annotation": {
+        "size": 8,
+        "weight": 400
+      },
+      "panel_label": {
+        "size": 9,
+        "weight": 700
+      }
+    },
+    "spacing": {
+      "base": 8,
+      "margin": 26,
+      "panel_gap": 24,
+      "node_gap": 16,
+      "row_gap": 20,
+      "padding": 8
+    }
+  },
+  "panels": [
+    {
+      "id": "competitor",
+      "label": "Static Top-K",
+      "role": "competitor",
+      "emphasis": false,
+      "x": 26.0,
+      "y": 60.0,
+      "w": 1268.0,
+      "h": 232.0,
+      "color": "#D97706",
+      "fill": "#FDF7F0"
+    },
+    {
+      "id": "ours",
+      "label": "BAR (ours)",
+      "role": "ours",
+      "emphasis": false,
+      "x": 26.0,
+      "y": 316.0,
+      "w": 1268.0,
+      "h": 232.0,
+      "color": "#2563EB",
+      "fill": "#F2F6FE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "L_input_1",
+      "semantic_id": "input.1",
+      "type": "input",
+      "label": "query tokens",
+      "detail": null,
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 192.0,
+      "y": 131.2,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#F0F1F2",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "L_input_2",
+      "semantic_id": "input.2",
+      "type": "input",
+      "label": "cached context keys",
+      "detail": null,
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 192.0,
+      "y": 191.2,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#F0F1F2",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "L_backbone",
+      "semantic_id": "component.backbone",
+      "type": "learned-module",
+      "label": "Backbone encoder",
+      "detail": "encodes queries and keys",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 336.0,
+      "y": 156.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "L_index",
+      "semantic_id": "component.index",
+      "type": "learned-module",
+      "label": "Similarity index",
+      "detail": "cosine similarity over cached keys",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 502.0,
+      "y": 156.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "L_topk",
+      "semantic_id": "component.topk",
+      "type": "learned-module",
+      "label": "Fixed Top-K selection",
+      "detail": "always keeps exactly K tokens",
+      "role": "competitor",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 668.0,
+      "y": 156.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#D97706",
+      "fill": "#FAECDC",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "L_decoder",
+      "semantic_id": "component.decoder",
+      "type": "learned-module",
+      "label": "Decoder",
+      "detail": "attends over the selected tokens",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 834.0,
+      "y": 156.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "L_output_1",
+      "semantic_id": "output.1",
+      "type": "output",
+      "label": "answer tokens",
+      "detail": null,
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 1000.0,
+      "y": 161.2,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#F0F1F2",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_input_1",
+      "semantic_id": "input.1",
+      "type": "input",
+      "label": "query tokens",
+      "detail": null,
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 109.0,
+      "y": 387.2,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#F0F1F2",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_input_2",
+      "semantic_id": "input.2",
+      "type": "input",
+      "label": "cached context keys",
+      "detail": null,
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 109.0,
+      "y": 447.2,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#F0F1F2",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_backbone",
+      "semantic_id": "component.backbone",
+      "type": "learned-module",
+      "label": "Backbone encoder",
+      "detail": "encodes queries and keys",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 253.0,
+      "y": 412.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_index",
+      "semantic_id": "component.index",
+      "type": "learned-module",
+      "label": "Similarity index",
+      "detail": "cosine similarity over cached keys",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 419.0,
+      "y": 412.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_router",
+      "semantic_id": "component.router",
+      "type": "learned-module",
+      "label": "Learned router",
+      "detail": "predicts query difficulty",
+      "role": "ours",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 585.0,
+      "y": 412.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#2563EB",
+      "fill": "#E0E9FC",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_budget",
+      "semantic_id": "component.budget",
+      "type": "learned-module",
+      "label": "Budget controller",
+      "detail": "converts difficulty into a retrieval budget",
+      "role": "ours",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 751.0,
+      "y": 412.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#2563EB",
+      "fill": "#E0E9FC",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_decoder",
+      "semantic_id": "component.decoder",
+      "type": "learned-module",
+      "label": "Decoder",
+      "detail": "attends over the selected tokens",
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 917.0,
+      "y": 412.2,
+      "w": 150,
+      "h": 54,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#EAEBED",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    },
+    {
+      "id": "R_output_1",
+      "semantic_id": "output.1",
+      "type": "output",
+      "label": "answer tokens",
+      "detail": null,
+      "role": "shared",
+      "repeat": 1,
+      "shape": "rounded",
+      "x": 1083.0,
+      "y": 417.2,
+      "w": 128,
+      "h": 44,
+      "explicit": false,
+      "color": "#6B7280",
+      "fill": "#F0F1F2",
+      "text": {
+        "size": 9.5,
+        "weight": 600,
+        "color": "#374151",
+        "family": "Arial"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "L_input_1->backbone",
+      "from": "L_input_1",
+      "to": "L_backbone",
+      "role": "data",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          320.0,
+          153.2
+        ],
+        [
+          328.0,
+          153.2
+        ],
+        [
+          328.0,
+          183.2
+        ],
+        [
+          336.0,
+          183.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "L_input_2->backbone",
+      "from": "L_input_2",
+      "to": "L_backbone",
+      "role": "data",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          320.0,
+          213.2
+        ],
+        [
+          328.0,
+          213.2
+        ],
+        [
+          328.0,
+          183.2
+        ],
+        [
+          336.0,
+          183.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "L_backbone->index",
+      "from": "L_backbone",
+      "to": "L_index",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          486.0,
+          183.2
+        ],
+        [
+          502.0,
+          183.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "L_index->topk",
+      "from": "L_index",
+      "to": "L_topk",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          652.0,
+          183.2
+        ],
+        [
+          668.0,
+          183.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "L_topk->decoder",
+      "from": "L_topk",
+      "to": "L_decoder",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          818.0,
+          183.2
+        ],
+        [
+          834.0,
+          183.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "L_decoder->output_1",
+      "from": "L_decoder",
+      "to": "L_output_1",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          984.0,
+          183.2
+        ],
+        [
+          1000.0,
+          183.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_input_1->backbone",
+      "from": "R_input_1",
+      "to": "R_backbone",
+      "role": "data",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          237.0,
+          409.2
+        ],
+        [
+          245.0,
+          409.2
+        ],
+        [
+          245.0,
+          439.2
+        ],
+        [
+          253.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_input_2->backbone",
+      "from": "R_input_2",
+      "to": "R_backbone",
+      "role": "data",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          237.0,
+          469.2
+        ],
+        [
+          245.0,
+          469.2
+        ],
+        [
+          245.0,
+          439.2
+        ],
+        [
+          253.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_backbone->index",
+      "from": "R_backbone",
+      "to": "R_index",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          403.0,
+          439.2
+        ],
+        [
+          419.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_index->router",
+      "from": "R_index",
+      "to": "R_router",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          569.0,
+          439.2
+        ],
+        [
+          585.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_router->budget",
+      "from": "R_router",
+      "to": "R_budget",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          735.0,
+          439.2
+        ],
+        [
+          751.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_budget->decoder",
+      "from": "R_budget",
+      "to": "R_decoder",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          901.0,
+          439.2
+        ],
+        [
+          917.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    },
+    {
+      "id": "R_decoder->output_1",
+      "from": "R_decoder",
+      "to": "R_output_1",
+      "role": "computation",
+      "label": null,
+      "emphasis": false,
+      "points": [
+        [
+          1067.0,
+          439.2
+        ],
+        [
+          1083.0,
+          439.2
+        ]
+      ],
+      "color": "#374151",
+      "dash": false,
+      "dash_style": "solid",
+      "arrowhead": "classic",
+      "width": 1.2
+    }
+  ],
+  "annotations": [
+    {
+      "id": "L_ann_observation",
+      "target": "L_backbone",
+      "role": "note",
+      "text": "For a given query, only a few context tokens carry most of the relevant signal.",
+      "x": 271.0,
+      "y": 91.6,
+      "w": 280,
+      "h": 29.6,
+      "size": 8,
+      "placement": "above",
+      "color": "#374151",
+      "text_color": "#374151"
+    },
+    {
+      "id": "R_ann_observation",
+      "target": "R_router",
+      "role": "note",
+      "text": "Query difficulty is predictable from the query embedding, so the budget can be learned.",
+      "x": 520.0,
+      "y": 347.59999999999997,
+      "w": 280,
+      "h": 29.6,
+      "size": 8,
+      "placement": "above",
+      "color": "#374151",
+      "text_color": "#374151"
+    }
+  ],
+  "legend": {
+    "x": 1172.0,
+    "y": 556.0,
+    "w": 122.0,
+    "h": 58.0,
+    "size": 8,
+    "entries": [
+      {
+        "role": "shared",
+        "label": "shared computation",
+        "y": 5.0
+      },
+      {
+        "role": "competitor",
+        "label": "only in Static Top-K",
+        "y": 21.0
+      },
+      {
+        "role": "ours",
+        "label": "only in BAR (ours)",
+        "y": 37.0
+      }
+    ]
+  },
+  "title": {
+    "text": "Static Top-K vs BAR (ours)",
+    "x": 26,
+    "y": 26,
+    "w": 1268.0,
+    "h": 21.0,
+    "size": 15,
+    "color": "#374151",
+    "weight": 700,
+    "family": "Arial"
+  },
+  "shared_concepts": [
+    "component.backbone",
+    "component.decoder",
+    "component.index",
+    "input.1",
+    "input.2",
+    "output.1"
+  ],
+  "comparison": {
+    "methods": [
+      "Static Top-K",
+      "BAR (ours)"
+    ],
+    "alignment": {
+      "inputs": "shared",
+      "outputs": "shared"
+    },
+    "shared_components": [
+      "component.backbone",
+      "component.decoder",
+      "component.index",
+      "input.1",
+      "input.2",
+      "output.1"
+    ],
+    "differences": {
+      "competitor_only": [
+        "component.topk"
+      ],
+      "ours_only": [
+        "component.budget",
+        "component.router"
+      ]
+    }
+  },
+  "provenance": {
+    "generated_by": "compare.build_comparison"
+  }
+}

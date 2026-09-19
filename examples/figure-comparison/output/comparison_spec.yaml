@@ -1,0 +1,250 @@
+figure:
+  id: method_comparison
+  type: method-comparison
+  mode: comparison
+  title: Static Top-K vs BAR (ours)
+  purpose: Normalize both methods into one visual language and show the minimal structural
+    difference.
+  style: topconf-clean
+  width: 1320
+  height: 640
+panels:
+- id: competitor
+  label: Static Top-K
+  role: competitor
+  row: 0
+- id: ours
+  label: BAR (ours)
+  role: ours
+  row: 1
+nodes:
+- id: L_input_1
+  semantic_id: input.1
+  type: input
+  label: query tokens
+  panel: competitor
+  column: 0
+  order: 0
+  role: shared
+- id: L_input_2
+  semantic_id: input.2
+  type: input
+  label: cached context keys
+  panel: competitor
+  column: 0
+  order: 1
+  role: shared
+- id: L_backbone
+  semantic_id: component.backbone
+  type: learned-module
+  label: Backbone encoder
+  detail: encodes queries and keys
+  panel: competitor
+  role: shared
+  column: 1
+  order: 0
+- id: L_index
+  semantic_id: component.index
+  type: learned-module
+  label: Similarity index
+  detail: cosine similarity over cached keys
+  panel: competitor
+  role: shared
+  column: 2
+  order: 1
+- id: L_topk
+  semantic_id: component.topk
+  type: learned-module
+  label: Fixed Top-K selection
+  detail: always keeps exactly K tokens
+  panel: competitor
+  role: competitor
+  column: 3
+  order: 2
+- id: L_decoder
+  semantic_id: component.decoder
+  type: learned-module
+  label: Decoder
+  detail: attends over the selected tokens
+  panel: competitor
+  role: shared
+  column: 4
+  order: 3
+- id: L_output_1
+  semantic_id: output.1
+  type: output
+  label: answer tokens
+  panel: competitor
+  column: 5
+  order: 0
+  role: shared
+- id: R_input_1
+  semantic_id: input.1
+  type: input
+  label: query tokens
+  panel: ours
+  column: 0
+  order: 0
+  role: shared
+- id: R_input_2
+  semantic_id: input.2
+  type: input
+  label: cached context keys
+  panel: ours
+  column: 0
+  order: 1
+  role: shared
+- id: R_backbone
+  semantic_id: component.backbone
+  type: learned-module
+  label: Backbone encoder
+  detail: encodes queries and keys
+  panel: ours
+  role: shared
+  column: 1
+  order: 0
+- id: R_index
+  semantic_id: component.index
+  type: learned-module
+  label: Similarity index
+  detail: cosine similarity over cached keys
+  panel: ours
+  role: shared
+  column: 2
+  order: 1
+- id: R_router
+  semantic_id: component.router
+  type: learned-module
+  label: Learned router
+  detail: predicts query difficulty
+  panel: ours
+  role: ours
+  column: 3
+  order: 2
+- id: R_budget
+  semantic_id: component.budget
+  type: learned-module
+  label: Budget controller
+  detail: converts difficulty into a retrieval budget
+  panel: ours
+  role: ours
+  column: 4
+  order: 3
+- id: R_decoder
+  semantic_id: component.decoder
+  type: learned-module
+  label: Decoder
+  detail: attends over the selected tokens
+  panel: ours
+  role: shared
+  column: 5
+  order: 4
+- id: R_output_1
+  semantic_id: output.1
+  type: output
+  label: answer tokens
+  panel: ours
+  column: 6
+  order: 0
+  role: shared
+edges:
+- from: L_input_1
+  to: L_backbone
+  role: data
+  id: L_input_1->backbone
+- from: L_input_2
+  to: L_backbone
+  role: data
+  id: L_input_2->backbone
+- from: L_backbone
+  to: L_index
+  role: computation
+  id: L_backbone->index
+- from: L_index
+  to: L_topk
+  role: computation
+  id: L_index->topk
+- from: L_topk
+  to: L_decoder
+  role: computation
+  id: L_topk->decoder
+- from: L_decoder
+  to: L_output_1
+  role: computation
+  id: L_decoder->output_1
+- from: R_input_1
+  to: R_backbone
+  role: data
+  id: R_input_1->backbone
+- from: R_input_2
+  to: R_backbone
+  role: data
+  id: R_input_2->backbone
+- from: R_backbone
+  to: R_index
+  role: computation
+  id: R_backbone->index
+- from: R_index
+  to: R_router
+  role: computation
+  id: R_index->router
+- from: R_router
+  to: R_budget
+  role: computation
+  id: R_router->budget
+- from: R_budget
+  to: R_decoder
+  role: computation
+  id: R_budget->decoder
+- from: R_decoder
+  to: R_output_1
+  role: computation
+  id: R_decoder->output_1
+annotations:
+- id: L_ann_observation
+  target: L_backbone
+  role: note
+  text: For a given query, only a few context tokens carry most of the relevant signal.
+  placement: above
+- id: R_ann_observation
+  target: R_router
+  role: note
+  text: Query difficulty is predictable from the query embedding, so the budget can
+    be learned.
+  placement: above
+legend:
+- role: shared
+  label: shared computation
+- role: competitor
+  label: only in Static Top-K
+- role: ours
+  label: only in BAR (ours)
+comparison:
+  methods:
+  - Static Top-K
+  - BAR (ours)
+  alignment:
+    inputs: shared
+    outputs: shared
+  shared_components:
+  - component.backbone
+  - component.decoder
+  - component.index
+  - input.1
+  - input.2
+  - output.1
+  differences:
+    competitor_only:
+    - component.topk
+    ours_only:
+    - component.budget
+    - component.router
+shared_concepts:
+- component.backbone
+- component.decoder
+- component.index
+- input.1
+- input.2
+- output.1
+provenance:
+  generated_by: compare.build_comparison

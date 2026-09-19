@@ -1,0 +1,28 @@
+# Synthetic competitor method for the figure comparison demo.
+method:
+  name: Static Top-K Retrieval
+  short_name: StaticTopK
+  kind: competitor
+  year: 2025
+
+problem: Long-context attention is expensive, so only a small subset of tokens should be attended to.
+baseline: Full attention over the entire context window.
+key_observation: For a given query, only a few context tokens carry most of the relevant signal.
+motivation: Retrieve a fixed number of tokens by embedding similarity and attend only to those.
+
+mechanism:
+  inputs: [query tokens, cached context keys]
+  operations: [encode with the backbone, score with the similarity index, select a fixed top-K, attend over the selection]
+  outputs: [answer tokens]
+
+components:
+  - { id: backbone, name: Backbone encoder, role: shared, description: encodes queries and keys }
+  - { id: index, name: Similarity index, role: shared, description: cosine similarity over cached keys }
+  - { id: topk, name: Fixed Top-K selection, role: competitor, description: always keeps exactly K tokens }
+  - { id: decoder, name: Decoder, role: shared, description: attends over the selected tokens }
+
+claims:
+  - A fixed K is sufficient across all queries.
+
+limitations:
+  - K is not adapted to query difficulty.
