@@ -3,6 +3,33 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.5.0] - 2026-09-20
+
+### Added
+
+- **Editorial critique loop** for generated slides: content critic → revision →
+  build → visual critic → revision → build → deck critic → revision → rebuild +
+  verify, bounded to three cycles, always revising the source.
+  - Content critic: correctness, concision, redundancy, necessity, budgets,
+    role-specific rules, competitor compression, and `spoken_explanation_on_slide`;
+    moves explanatory prose to speaker notes.
+  - Mandatory deletion-only first cycle (delete / merge / shorten / move to
+    notes; no additions).
+  - Visual critic: inspects the **rendered slide image** (pixel metrics from
+    `scripts/slide_image_metrics.py`) plus geometry; reports density, balance,
+    whitespace/cramped regions, palette scatter and competing focal points.
+  - Deck critic: duplicated explanation, repeated layout streaks, density
+    rhythm, merge/delete candidates, and titles-as-narrative.
+  - Editorial metrics and review artifacts: `qa/content_review.json`,
+    `visual_review.json`, `deck_review.json`, `editorial_metrics.json`,
+    `revision_log.md`.
+  - `wrs critique` CLI and `npm run critique:demo`.
+- Before/after demo (`docs/critique-before-after.md`): verbose week-6 draft
+  reduced from 615 to 320 visible words with 9 → 0 QA errors in one cycle; the
+  already-tight deck drops 442 → 361 words without losing slides.
+- Tests for budgets, all three critics, deletion-only revision, list-safety,
+  protected scientific fields, the render loop and convergence.
+
 ## [0.4.0] - 2026-09-20
 
 ### Added

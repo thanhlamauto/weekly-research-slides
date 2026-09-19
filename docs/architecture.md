@@ -63,6 +63,25 @@ slide's XML, and writes standard `<p:transition>` and `<p:timing>` nodes for the
 requested semantic groups. The static deck remains canonical; the animated deck
 is a separate file.
 
+## Editorial critique loop (`src/critics/`)
+
+```text
+slide_spec.yaml
+   -> content critic -> revise source -> build -> render
+   -> visual critic  -> revise source -> build
+   -> deck critic    -> revise source -> build + verify
+```
+
+- `budgets.js` measures visible words, clusters and note ratio per archetype.
+- `content.js`, `visual.js`, `deck.js` are the three critics.
+- `revise.js` applies findings as source edits (drop / move to notes / shorten /
+  cap / retitle / merge / delete) and refuses to empty lists or remove required
+  fields.
+- `imageMetrics.js` + `scripts/slide_image_metrics.py` give the visual critic
+  real rendered-image metrics.
+- `loop.js` orchestrates the bounded cycles and writes the review artifacts.
+- `metrics.js` reports editorial metrics for the deck.
+
 ## Method explainer video (`skills/research-method-video`)
 
 A parallel consumer of the same scientific understanding:

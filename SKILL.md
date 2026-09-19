@@ -3,7 +3,7 @@ name: weekly-research-slides
 description: Turn the week's changes in research methods, evidence, claims, and diagnostics into a concise, visually explanatory, editable PowerPoint update for a supervisor, PI, mentor, or research group. Use when the user asks to make or update weekly research slides, prepare a lab-meeting deck, compare this week's method against last week's, explain competitor methods visually, build slides that support a research claim with diagnostics, or turn experiment notes into an editable research PowerPoint. Not for generic business, marketing, or sales decks.
 license: MIT
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
 ---
 
 # Weekly Research Slides
@@ -53,6 +53,17 @@ The primary output is an editable `.pptx` built from structured source.
 
 5. **Fix the source and rebuild** until scientific QA, geometry QA, and visual
    review pass. Do not patch the generated `.pptx`.
+6. **Run the editorial critique loop** to sharpen the deck:
+
+   ```bash
+   wrs critique --input slide_spec.yaml --output revised.yaml \
+     --deck out.pptx --qa-dir qa
+   ```
+
+   It runs a content critic (deletion-first, moves prose to speaker notes), a
+   rendered-image visual critic, and a deck critic, revising the source and
+   rebuilding. Cycle 1 is deletion-only; at most three cycles. See
+   `references/editorial-critique.md`.
 
 ## Hard rules
 
@@ -134,6 +145,7 @@ content. See `skills/research-method-figure/SKILL.md`.
 - `references/motion-language.md` — beat-driven motion and `motion_spec.yaml`.
 - `references/editing-existing-pptx.md` — inspect and conservative edits.
 - `references/review-checklist.md` — scientific and visual QA.
+- `references/editorial-critique.md` — content / visual / deck critique loop.
 - `skills/research-method-video/SKILL.md` — method → Manim explainer video.
 - `skills/research-method-figure/SKILL.md` — method → editable scientific figure.
 - `references/layout-contracts.md` — shared layout limits across slides, figures and video.

@@ -81,6 +81,49 @@ actual PPTX instead).
 |---|---|
 | ![benchmark slide 7](docs/images/gallery-slide-07.png) | ![diagnostic slide 9](docs/images/gallery-slide-09.png) |
 
+## Editorial critique loop
+
+Agent-generated slides are often verbose, repetitive and visually dense. The
+critique loop fixes that at the **source** and rebuilds the deck:
+
+```text
+draft -> content critic -> revision -> build
+      -> visual critic  -> revision -> build
+      -> deck critic    -> revision -> build + verify
+```
+
+Three critics, bounded to three cycles:
+
+- **Content critic** — correctness, concision, redundancy, necessity, and
+  whether text belongs on the slide or in the speaker notes. It prefers
+  deleting/demoting over adding.
+- **Visual critic** — inspects the **rendered slide image** (pixel metrics plus
+  a few geometry signals); it cannot pass a slide on PPT geometry alone.
+- **Deck critic** — duplicated explanation, repeated layouts, density rhythm,
+  merge/delete candidates, and whether the story reads from titles.
+
+Cycle 1 is a **deletion-only** pass (delete / merge / shorten / move to notes).
+Visible text has soft budgets (title ≤ 12 words, visible ≤ 30 words, ≤ 3 text
+clusters) with technical content exempt, and required scientific fields are
+shortened, never removed.
+
+Before / after on a deliberately verbose week-6 draft (**615 → 320 visible
+words, 9 → 0 QA errors, one cycle**):
+
+![diagnostic before](docs/images/critique-before-s6.png)
+![diagnostic after](docs/images/critique-after-s6.png)
+
+Full before/after, findings and reproduction: [`docs/critique-before-after.md`](docs/critique-before-after.md).
+
+```bash
+npm run critique:demo
+node src/cli.js critique --input slide_spec.yaml --output revised.yaml \
+  --deck out.pptx --qa-dir qa
+```
+
+Review artifacts: `qa/{content,visual,deck}_review.json`,
+`qa/editorial_metrics.json`, `qa/revision_log.md`.
+
 ## Method explainer videos
 
 Some methods are better explained with motion than with a static diagram. The
