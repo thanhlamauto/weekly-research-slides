@@ -88,6 +88,36 @@ method_model.yaml          (shared semantic model)
 - Scenes are authored Manim classes (one per file) registered in `src/main.py`
   from `scene_spec.yaml`. A general spec-to-Manim interpreter is future work.
 
+## Scientific figures (`skills/research-method-figure`)
+
+A third consumer of the same method model:
+
+```text
+method_model.yaml          (shared semantic model)
+        |
+        +--> slide_spec.yaml -> PPTX
+        +--> scene_spec.yaml -> Manim MP4
+        |
+        v
+   figure_spec.yaml + style_profile.yaml
+        |
+        v
+   Figure IR  -->  drawio (canonical)
+              -->  svg / pdf / png
+              -->  pptx (native shapes)
+```
+
+- `src/spec.py` validates figure specs and synthesizes one from a method model.
+- `src/style.py` resolves reusable style profiles; `src/extract.py` derives a
+  profile from a reference with per-field confidence.
+- `src/layout.py` derives deterministic geometry (columns, panel hugging,
+  annotation and legend placement); `src/ir.py` merges spec + style + layout.
+- `src/drawio.py`, `src/svg.py` and `scripts/figure_to_pptx.js` render the IR.
+- `src/qa.py` is the geometric pre-flight; `scripts/qa_figure.py` adds the
+  render/inspect/repair loop.
+- `src/roles.py` enforces source-role classification so a STYLE_SOURCE never
+  leaks scientific content.
+
 ## Extension points
 
 - Add an archetype: add a layout function and register it in

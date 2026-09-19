@@ -119,6 +119,47 @@ The video and the deck share one method model, so a competitor method is never
 explained two different ways. A video is only worth generating when movement
 carries the argument; otherwise a static diagram is preferable.
 
+## Scientific method figures
+
+The same method model also drives publication-quality, editable figures. The
+bundled **`research-method-figure`** sub-skill keeps `.drawio` as the canonical
+editable source and exports SVG, PDF and PNG, plus native PowerPoint shapes.
+
+![competitor vs ours comparison](docs/images/figure-comparison.png)
+
+Comparison figures normalize both methods into one visual language with a single
+shared style profile: shared components are gray, competitor-only amber, ours
+blue. Only the real structural difference is visible.
+
+![method delta](docs/images/figure-method-delta.png)
+
+Method-delta figures reuse the weekly-delta idea: unchanged parts keep their
+coordinates and are muted, added parts are green, removed parts red.
+
+### Style extraction and transfer
+
+![style transfer](docs/images/figure-style-transfer.png)
+
+A reusable style profile is extracted from a reference figure — palette,
+typography hierarchy, module geometry, edge grammar — and applied to *different*
+scientific content. The reference is classified as a `STYLE_SOURCE` only, so its
+labels and architecture are never copied.
+
+```bash
+npm run figure:doctor
+npm run figure:compare     # competitor vs ours, normalized
+npm run figure:delta       # our v3 vs v4
+npm run figure:extract     # reference.svg -> styles/user/<name>.yaml
+npm run figure:qa
+```
+
+### One method, three carriers
+
+![LESA method figure](docs/images/figure-lesa.png)
+
+The LESA method model that produces the Manim video also produces this figure and
+the slide source, so one method is never explained three different ways.
+
 ## Features
 
 - **Delta-first workflow** — compute `weekly_delta.yaml` from two research
@@ -289,8 +330,9 @@ weekly-research-slides/
 │   └── cli.js
 ├── assets/README.md
 ├── skills/
-│   └── research-method-video/   # method -> Manim explainer (SKILL, schemas, src, scripts, references)
-├── examples/                 # diagnostic-week, survey-stage, lesa (video demo)
+│   ├── research-method-video/   # method -> Manim explainer
+│   └── research-method-figure/  # method -> editable scientific figure (drawio/svg/pdf/png/pptx)
+├── examples/                 # diagnostic-week, survey-stage, lesa, figure-comparison, figure-style-transfer
 ├── docs/                     # architecture.md, gallery.md, gallery/, images/
 └── tests/
 ```
@@ -313,6 +355,13 @@ weekly-research-slides/
 | `npm run video:render` / `video:render:final` | render the LESA explainer (draft / final) |
 | `npm run video:qa` | extract frames, contact sheet, heuristics |
 | `npm run video:lint` | source-level animation lint |
+| `npm run figure:doctor` | figure runtime + font + renderer check |
+| `npm run figure:build` | build a figure from a method model |
+| `npm run figure:compare` | normalized competitor-vs-ours comparison figure |
+| `npm run figure:delta` | method-delta figure (v3 vs v4) |
+| `npm run figure:extract` | extract a style profile from a reference |
+| `npm run figure:qa` | geometric preflight + preview + defect log |
+| `npm run figure:pptx` | native PowerPoint shapes from the figure IR |
 
 ## Current limitations
 
@@ -335,6 +384,13 @@ weekly-research-slides/
   generated from a general interpreter.
 - **Video rendering needs Manim + ffmpeg locally.** Without them the video tests
   and render steps are skipped, and the deck pipeline is unaffected.
+- **Figures: draw.io is canonical; no native `.drawio` rasterizer.** SVG/PDF/PNG
+  are produced by our own renderer, so the drawio CLI is optional. Style
+  extraction from raster images recovers palette and density but not fonts or
+  exact geometry, and records that as low confidence. Reconstruction is
+  agent-assisted, not a universal automatic converter.
+- **TikZ is not implemented.** It remains an optional future backend; draw.io is
+  the editable source.
 
 ## Roadmap
 
@@ -346,6 +402,8 @@ weekly-research-slides/
 - Additional example: `mature-weekly-update`.
 - Video: a general pattern interpreter, optional narration/TTS, and richer
   PowerPoint keyframe insertion.
+- Figures: an optional TikZ backend, `.drawio` → IR round-trip for external
+  editing, and richer reconstruction fidelity.
 
 ## Inspirations and acknowledgements
 
@@ -367,6 +425,28 @@ reused; concepts were reimplemented.
 - [`LikC1606/lab-meeting-report-skill`](https://github.com/LikC1606/lab-meeting-report-skill)
   — source-grounded lab-meeting reporting and honest handling of negative
   results.
+
+For the figure sub-capability, concepts were studied from these projects (no
+bundled assets copied; code was reimplemented):
+
+- [`holdyounger/drawio-diagram-builder`](https://github.com/holdyounger/drawio-diagram-builder)
+  (MIT) — separate content/structure/style/layout sources, style extraction
+  before drawing, top-conference visual rules, geometric pre-flight, screenshot
+  → defect → repair.
+- [`Agents365-ai/drawio-skill`](https://github.com/Agents365-ai/drawio-skill) (MIT)
+  — persistent style presets, learning a style from `.drawio` or a flat image,
+  iterative self-check.
+- [`sxy1499894281/drawio-reconstruction-skill`](https://github.com/sxy1499894281/drawio-reconstruction-skill)
+  (MIT) — reference decomposition, element inventory, editability boundaries,
+  drawio → editable PPTX mapping.
+- [`pengqianhan/codex-paper-figure-skill`](https://github.com/pengqianhan/codex-paper-figure-skill)
+  (MIT) — composition exploration and editable-first reconstruction.
+- [`Ztsdut/ml-architecture-diagram-skill`](https://github.com/Ztsdut/ml-architecture-diagram-skill)
+  (MIT) — architecture IR, semantic roles, separating computation fidelity from
+  figure design, multiple editable carriers.
+- [`PM-Shawn/tikz-scientific-figures`](https://github.com/PM-Shawn/tikz-scientific-figures)
+  — publication sizing and vector PDF/SVG concepts only; no license file was
+  present at inspection time, so no code was reused.
 
 For the video sub-capability, concepts were studied from these projects (no
 bundled assets copied; code was reimplemented):

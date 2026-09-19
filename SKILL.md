@@ -3,7 +3,7 @@ name: weekly-research-slides
 description: Turn the week's changes in research methods, evidence, claims, and diagnostics into a concise, visually explanatory, editable PowerPoint update for a supervisor, PI, mentor, or research group. Use when the user asks to make or update weekly research slides, prepare a lab-meeting deck, compare this week's method against last week's, explain competitor methods visually, build slides that support a research claim with diagnostics, or turn experiment notes into an editable research PowerPoint. Not for generic business, marketing, or sales decks.
 license: MIT
 metadata:
-  version: "0.2.0"
+  version: "0.3.0"
 ---
 
 # Weekly Research Slides
@@ -94,6 +94,28 @@ Decide first:
 Do not generate a video for every method. See
 `skills/research-method-video/SKILL.md`.
 
+## Scientific method figures
+
+When the deliverable is a paper figure — a method overview, an architecture, a
+mechanism zoom, a training/inference diagram, a competitor-vs-ours comparison,
+or a method delta — use the bundled **`research-method-figure`** sub-skill. It
+draws from the same method model as the slides and the video, keeps
+`.drawio` as the canonical editable source, and exports SVG/PDF/PNG plus native
+PowerPoint.
+
+```text
+METHOD MODEL
+     |
+ figure_spec.yaml + style_profile.yaml
+     |
+ figure.drawio -> .svg / .pdf / .png -> .pptx
+```
+
+It also supports extracting a reusable style profile from a reference figure and
+redrawing different content in that style, and classifying inputs by role
+(CONTENT / STRUCTURE / STYLE / LAYOUT / ASSET) so a style reference never leaks
+content. See `skills/research-method-figure/SKILL.md`.
+
 ## Read next (progressive disclosure)
 
 - `references/research-story.md` — narrative framework.
@@ -108,6 +130,8 @@ Do not generate a video for every method. See
 - `references/editing-existing-pptx.md` — inspect and conservative edits.
 - `references/review-checklist.md` — scientific and visual QA.
 - `skills/research-method-video/SKILL.md` — method → Manim explainer video.
+- `skills/research-method-figure/SKILL.md` — method → editable scientific figure.
+- `references/layout-contracts.md` — shared layout limits across slides, figures and video.
 
 ## Commands
 

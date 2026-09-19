@@ -3,6 +3,36 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.3.0] - 2026-09-20
+
+### Added
+
+- **`research-method-figure` sub-skill**: turn a method model into a
+  publication-quality, editable scientific figure.
+  - `figure_spec.yaml` (renderer-neutral) and a reusable `style_profile.yaml`,
+    with one Figure IR consumed by the Draw.io, SVG, QA and PowerPoint outputs.
+  - Editable Draw.io as the canonical format; SVG, PDF and PNG exports; native
+    PowerPoint shapes via the Node bridge.
+  - Style profiles: `topconf-clean`, `grayscale-paper`, `presentation-clean`,
+    `dark-explainer`, plus user presets.
+  - Style extraction from `.svg`, `.drawio` and raster images, with per-field
+    confidence; source-role classification (CONTENT/STRUCTURE/STYLE/LAYOUT/ASSET).
+  - Normalized competitor-vs-ours comparison and method-delta figures using one
+    shared style profile.
+  - Geometric pre-flight (text fit, overlap, edge-through-node, annotation and
+    legend clearance, spacing, palette, font size) plus a visual QA/repair loop.
+  - Demos: `examples/figure-comparison` (competitor, ours, comparison, delta)
+    and `examples/figure-style-transfer` (extract style, redraw different
+    content), and a LESA overview figure from the shared method model.
+- Shared layout contracts (`references/layout-contracts.md`,
+  `layout_contracts.py`) used by figure QA and referenced by video QA.
+
+### Changed
+
+- `research-method-video`: added `audience` (expert / adjacent-researcher /
+  general-technical) and audience-aware pacing checks (`src/pacing.py`); the
+  video doctor now checks the theme font.
+
 ## [0.2.0] - 2026-09-20
 
 ### Added
