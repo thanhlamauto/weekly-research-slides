@@ -3,6 +3,34 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.2.0] - 2026-09-20
+
+### Added
+
+- **`research-method-video` sub-skill**: turn a research method into a short
+  3Blue1Brown-style Manim explainer.
+  - `method_model.yaml` semantic model shared with the slide pipeline, and a
+    `scene_spec.yaml` bridge (persistent actors, explanation beats, keyframes).
+  - Shared visual grammar for video: `theme.py`, `actors.py` (persistent
+    scientific objects) and `patterns.py` (ESTABLISH/TRACE/BUILD/MORPH/FOCUS/
+    COMPARE/TRAJECTORY/STAGE-SPLIT/ACCUMULATION/CORRECTION/REPLAY/REVEAL/ZOOM/
+    RECAP).
+  - Manim render workflow: `video_doctor.py`, `render_scene.py` (draft/final,
+    single-scene iteration, concat), `extract_frames.py`,
+    `make_contact_sheet.py`, `qa_video.py`, `lint_scenes.py`,
+    `export_keyframes.py`.
+  - PowerPoint bridge: MP4 plus `qa/keyframes.yaml` and per-scene stills.
+- **LESA acceptance demo** (`examples/lesa/`): a 7-scene, ~64 s explainer of the
+  central LESA method (arXiv:2602.20497), rendered to MP4, with storyboard,
+  scene spec, Manim source, contact sheet and keyframes.
+- Tests for the video specs, structure, lint, keyframes and an optional
+  single-scene render integration test.
+
+### Changed
+
+- Main `SKILL.md` and `README.md` document when to prefer a static diagram and
+  when a video explainer is helpful.
+
 ## [0.1.0] - 2026-09-20
 
 Initial alpha.

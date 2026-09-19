@@ -81,6 +81,44 @@ actual PPTX instead).
 |---|---|
 | ![benchmark slide 7](docs/images/gallery-slide-07.png) | ![diagnostic slide 9](docs/images/gallery-slide-09.png) |
 
+## Method explainer videos
+
+Some methods are better explained with motion than with a static diagram. The
+bundled **`research-method-video`** sub-skill turns the same scientific
+understanding (`method_model.yaml`) into a short 3Blue1Brown-style Manim
+explainer where scientific objects persist and transform, then exports keyframes
+for slides.
+
+![LESA method explainer preview](docs/images/lesa-preview.gif)
+
+The demo explains the central method of **LESA: Learnable Stage-Aware Predictors
+for Diffusion Model Acceleration** (Cai et al., arXiv:2602.20497): why caching
+diffusion features is worth doing, why a single fixed reuse/forecast scheme
+fails, the stage-dependent observation, the stage-aware experts, what one expert
+predictor computes, and why training becomes closed-loop. It is a silent visual
+explanation; the researcher narrates live.
+
+[![LESA contact sheet](docs/images/lesa-contact-sheet.png)](docs/images/lesa-contact-sheet.png)
+
+```bash
+npm run video:doctor
+npm run video:render          # draft 480p15, concatenated to one mp4
+npm run video:render:final    # 1080p60 deliverable
+npm run video:qa              # frames + contact sheet + heuristics
+npm run video:lint            # source-level animation lint
+```
+
+Iterate on one scene (cheap):
+
+```bash
+python skills/research-method-video/scripts/render_scene.py \
+  --project examples/lesa --scene lesa_03_stage_dynamics --quality draft
+```
+
+The video and the deck share one method model, so a competitor method is never
+explained two different ways. A video is only worth generating when movement
+carries the argument; otherwise a static diagram is preferable.
+
 ## Features
 
 - **Delta-first workflow** — compute `weekly_delta.yaml` from two research
@@ -250,8 +288,10 @@ weekly-research-slides/
 │   ├── qa/                   # geometry.js, continuity.js, scientific.js, pptxPackage.js
 │   └── cli.js
 ├── assets/README.md
-├── examples/                 # diagnostic-week (full) + survey-stage
-├── docs/                     # architecture.md, gallery.md, images/
+├── skills/
+│   └── research-method-video/   # method -> Manim explainer (SKILL, schemas, src, scripts, references)
+├── examples/                 # diagnostic-week, survey-stage, lesa (video demo)
+├── docs/                     # architecture.md, gallery.md, gallery/, images/
 └── tests/
 ```
 
@@ -269,6 +309,10 @@ weekly-research-slides/
 | `wrs diff --prev a.yaml --curr b.yaml` | emit `weekly_delta.yaml` |
 | `wrs validate --schema slide_spec --input spec.yaml` | schema validation |
 | `wrs demo` | build + QA the bundled example |
+| `npm run video:doctor` | check Python, Manim, ffmpeg, LaTeX |
+| `npm run video:render` / `video:render:final` | render the LESA explainer (draft / final) |
+| `npm run video:qa` | extract frames, contact sheet, heuristics |
+| `npm run video:lint` | source-level animation lint |
 
 ## Current limitations
 
@@ -285,6 +329,12 @@ weekly-research-slides/
   on the roadmap; no figure ingestion yet.
 - **Speaker notes are generated** but narration timing and rehearsal tooling are
   not part of v0.1.
+- **Video: no narration/TTS, no Morph, no arbitrary Manim→PPTX conversion.** The
+  video is a silent clip; the PowerPoint bridge exports the MP4 plus keyframe
+  stills and a manifest. Animation patterns are authored in Manim per scene, not
+  generated from a general interpreter.
+- **Video rendering needs Manim + ffmpeg locally.** Without them the video tests
+  and render steps are skipped, and the deck pipeline is unaffected.
 
 ## Roadmap
 
@@ -294,6 +344,8 @@ weekly-research-slides/
 - Figure/asset ingestion from a local `figures/` directory.
 - Richer external-PPTX editing (shape duplication, style transfer, slide copy).
 - Additional example: `mature-weekly-update`.
+- Video: a general pattern interpreter, optional narration/TTS, and richer
+  PowerPoint keyframe insertion.
 
 ## Inspirations and acknowledgements
 
@@ -315,6 +367,23 @@ reused; concepts were reimplemented.
 - [`LikC1606/lab-meeting-report-skill`](https://github.com/LikC1606/lab-meeting-report-skill)
   — source-grounded lab-meeting reporting and honest handling of negative
   results.
+
+For the video sub-capability, concepts were studied from these projects (no
+bundled assets copied; code was reimplemented):
+
+- [`AmitSubhash/3brown1blue`](https://github.com/AmitSubhash/3brown1blue) (MIT) —
+  paper-explainer workflow, machine-learning visual patterns, scene planning.
+- [`albertobarnabo/manim-craft`](https://github.com/albertobarnabo/manim-craft) —
+  visual continuity, morph-over-fade, still-frame review, contact-sheet
+  inspection. No license file was present at inspection time, so only concepts
+  were used, no code.
+- [`adithya-s-k/manim_skill`](https://github.com/adithya-s-k/manim_skill) (MIT) —
+  composer/storyboard before coding, identifying the aha moment.
+- [`Yusuke710/manim-skill`](https://github.com/Yusuke710/manim-skill) (MIT) —
+  packaging and verification patterns.
+- [`ahkamboh/chalktalk`](https://github.com/ahkamboh/chalktalk) (MIT) — environment
+  bootstrap, no-LaTeX mode, render/verify scripts.
+- [Manim Community Edition](https://www.manim.community/) (MIT) — the renderer.
 
 The unique focus here is **research reasoning across weeks**.
 

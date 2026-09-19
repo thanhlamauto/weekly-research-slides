@@ -63,6 +63,31 @@ slide's XML, and writes standard `<p:transition>` and `<p:timing>` nodes for the
 requested semantic groups. The static deck remains canonical; the animated deck
 is a separate file.
 
+## Method explainer video (`skills/research-method-video`)
+
+A parallel consumer of the same scientific understanding:
+
+```text
+method_model.yaml          (shared semantic model)
+        |
+        +--> storyboard.md -> scene_spec.yaml -> Manim scenes -> MP4
+        |                                         |
+        |                                         v
+        |                                   frames + contact sheet (QA)
+        |                                         |
+        v                                         v
+   slide_spec.yaml -> PPTX                 keyframes.yaml + PNG (PPT bridge)
+```
+
+- `src/spec.py` validates both specs and rejects duplicate scene/actor/beat ids.
+- `src/theme.py`, `src/actors.py`, `src/patterns.py` are the video visual
+  grammar, mirroring the PowerPoint grammar.
+- `scripts/render_scene.py` renders one scene or all, draft or final, and can
+  concatenate; `scripts/qa_video.py` and `scripts/lint_scenes.py` are the QA
+  loop; `scripts/export_keyframes.py` is the bridge.
+- Scenes are authored Manim classes (one per file) registered in `src/main.py`
+  from `scene_spec.yaml`. A general spec-to-Manim interpreter is future work.
+
 ## Extension points
 
 - Add an archetype: add a layout function and register it in

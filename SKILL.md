@@ -3,7 +3,7 @@ name: weekly-research-slides
 description: Turn the week's changes in research methods, evidence, claims, and diagnostics into a concise, visually explanatory, editable PowerPoint update for a supervisor, PI, mentor, or research group. Use when the user asks to make or update weekly research slides, prepare a lab-meeting deck, compare this week's method against last week's, explain competitor methods visually, build slides that support a research claim with diagnostics, or turn experiment notes into an editable research PowerPoint. Not for generic business, marketing, or sales decks.
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Weekly Research Slides
@@ -67,6 +67,33 @@ The primary output is an editable `.pptx` built from structured source.
 - Native PowerPoint objects only; the user must be able to edit the result.
 - PPTX is reproducible from source. Source files are the truth.
 
+## Method explainer videos
+
+When a method's mechanism is hard to understand statically — a representation
+changes through time, an algorithm iterates, or a multi-stage process is the
+point — use the bundled **`research-method-video`** sub-skill. It turns the same
+scientific understanding into a short 3Blue1Brown-style Manim explainer whose
+objects persist and transform, plus a keyframe manifest for slides.
+
+```text
+research_state / method_model.yaml
+        |                     \
+        v                      v
+   slide_spec.yaml        scene_spec.yaml
+        |                      |
+        v                      v
+   editable PPTX           Manim MP4 + keyframes
+```
+
+Decide first:
+
+- **STATIC SLIDES SUFFICIENT** — movement adds no explanatory value.
+- **VIDEO EXPLAINER HELPFUL** — temporal dynamics, iteration, geometry, or
+  multi-stage structure carry the argument.
+
+Do not generate a video for every method. See
+`skills/research-method-video/SKILL.md`.
+
 ## Read next (progressive disclosure)
 
 - `references/research-story.md` — narrative framework.
@@ -80,6 +107,7 @@ The primary output is an editable `.pptx` built from structured source.
 - `references/motion-language.md` — beat-driven motion and `motion_spec.yaml`.
 - `references/editing-existing-pptx.md` — inspect and conservative edits.
 - `references/review-checklist.md` — scientific and visual QA.
+- `skills/research-method-video/SKILL.md` — method → Manim explainer video.
 
 ## Commands
 
