@@ -1,0 +1,66 @@
+{
+  "name": "weekly-research-slides",
+  "version": "0.1.0",
+  "description": "Agent skill for turning weekly changes in research methods, evidence, claims, and diagnostics into editable PowerPoint research updates.",
+  "license": "MIT",
+  "type": "commonjs",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thanhlamauto/weekly-research-slides.git"
+  },
+  "homepage": "https://github.com/thanhlamauto/weekly-research-slides#readme",
+  "bugs": {
+    "url": "https://github.com/thanhlamauto/weekly-research-slides/issues"
+  },
+  "keywords": [
+    "agent-skill",
+    "research",
+    "powerpoint",
+    "pptx",
+    "presentation",
+    "scientific-presentation",
+    "lab-meeting",
+    "research-workflow",
+    "pptxgenjs",
+    "ai-agent"
+  ],
+  "bin": {
+    "wrs": "src/cli.js"
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "LICENSE",
+    "references",
+    "schemas",
+    "scripts",
+    "src"
+  ],
+  "scripts": {
+    "doctor": "node src/cli.js doctor",
+    "demo": "node src/cli.js demo",
+    "build": "node src/cli.js build",
+    "qa": "node src/cli.js qa",
+    "render": "node src/cli.js render",
+    "inspect": "node src/cli.js inspect",
+    "edit": "node src/cli.js edit",
+    "plan": "node src/cli.js plan",
+    "diff": "node src/cli.js diff",
+    "validate": "node src/cli.js validate",
+    "scene": "node src/cli.js scene",
+    "test": "node --test tests/*.test.js",
+    "assets": "node scripts/make_docs_assets.js",
+    "check": "npm run test && npm run demo"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "fast-xml-parser": "5.11.1",
+    "js-yaml": "4.1.0",
+    "jszip": "3.10.2",
+    "pptxgenjs": "4.0.1"
+  }
+}

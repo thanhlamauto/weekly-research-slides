@@ -1,0 +1,13 @@
+node_modules/
+npm-debug.log*
+.DS_Store
+*.tgz
+
+# Local scratch / build outputs at the repo root
+/out/
+/qa_report.json
+/scene.json
+
+# Generated example previews (gallery lives in docs/images/ instead)
+examples/**/output/preview/
+examples/**/output/rendered/
