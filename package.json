@@ -1,6 +1,6 @@
 {
   "name": "weekly-research-slides",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Agent skill for turning weekly changes in research methods, evidence, claims, and diagnostics into editable PowerPoint research updates.",
   "license": "MIT",
   "type": "commonjs",
@@ -49,6 +49,8 @@
     "diff": "node src/cli.js diff",
     "validate": "node src/cli.js validate",
     "scene": "node src/cli.js scene",
+    "critique": "node src/cli.js critique",
+    "critique:demo": "node src/cli.js critique --input examples/diagnostic-week/draft_verbose_slide_spec.yaml --output examples/diagnostic-week/revised_verbose_slide_spec.yaml --deck examples/diagnostic-week/output/demo-weekly-research-slides-revised.pptx --qa-dir examples/diagnostic-week/critique",
     "test": "node --test tests/*.test.js",
     "assets": "node scripts/make_docs_assets.js",
     "video:doctor": "python3 skills/research-method-video/scripts/video_doctor.py",

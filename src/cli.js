@@ -280,6 +280,34 @@ function cmdDoctor() {
   console.log('  stages:', Object.keys(STAGE_MODULES).join(', '));
 }
 
+async function cmdCritique(flags) {
+  const input = requireFlag(flags, 'input');
+  const output = flags.output || input.replace(/\.ya?ml$/i, '') + '.revised.yaml';
+  const deck = flags.deck || 'out.pptx';
+  const qaDir = flags['qa-dir'] || path.join(path.dirname(output), 'qa');
+  const maxCycles = Number(flags['max-cycles'] || 3);
+  const render = flags['no-render'] ? false : true;
+  const spec = loadData(input);
+  const v = validateData('slide_spec', spec);
+  if (!v.ok) {
+    console.error('slide_spec schema errors:');
+    v.errors.forEach((e) => console.error(`  ${e.path}: ${e.message}`));
+    process.exit(1);
+  }
+  const { runCritiqueLoop } = require('./critics/loop');
+  const root = path.join(__dirname, '..');
+  [output, deck, qaDir].forEach((f) => ensureDir(path.dirname(path.resolve(f))));
+  const res = await runCritiqueLoop({ root, spec, qaDir, deckOut: deck, maxCycles, render });
+  fs.writeFileSync(output, dumpData(res.spec));
+  console.log(`critique loop: ${res.cycles.length} cycle(s), deck -> ${deck}`);
+  res.cycles.forEach((c) => console.log(`  cycle ${c.cycle}: ${c.applied} change(s), ${c.hardFailures} hard failure(s), ${c.unresolvedHigh} unresolved high`));
+  const m = res.metrics;
+  console.log(`  slides ${m.slide_count}, visible words ${m.total_visible_words}, note/visible ${m.note_to_visible_ratio}, max layout streak ${m.max_repeated_layout_streak}`);
+  console.log(`  revised source -> ${output}`);
+  console.log(`  reviews -> ${qaDir}/{content,visual,deck}_review.json, revision_log.md`);
+  process.exit(res.hardFailures.length ? 1 : 0);
+}
+
 async function cmdDemo(flags) {
   const root = path.join(__dirname, '..');
   const ex = path.join(root, 'examples', 'diagnostic-week');
@@ -327,6 +355,7 @@ async function main() {
     case 'plan': cmdPlan(flags); break;
     case 'diff': cmdDiff(flags); break;
     case 'validate': cmdValidate(flags); break;
+    case 'critique': await cmdCritique(flags); break;
     case 'demo': await cmdDemo(flags); break;
     default:
       console.log('weekly-research-slides CLI');
@@ -340,6 +369,7 @@ async function main() {
       console.log('  diff     --prev state_prev.yaml --curr state_curr.yaml [--output weekly_delta.yaml]');
       console.log('  scene    --input slide_spec.yaml [--output scene.json|--format svg]');
       console.log('  validate --schema slide_spec --input file.yaml');
+      console.log('  critique --input slide_spec.yaml --output revised.yaml --deck out.pptx [--qa-dir qa] [--max-cycles 3] [--no-render]');
       console.log('  demo     build + qa the bundled example');
   }
 }
