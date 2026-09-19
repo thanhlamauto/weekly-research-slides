@@ -12,6 +12,11 @@ npm test
 npm run demo
 ```
 
+> Note: `npm run demo` rewrites `examples/*/output/`. The generated PPTX files
+> are content-deterministic (same slides, objects, text, and geometry) but not
+> byte-identical between runs because OOXML embeds creation timestamps. Restore
+> or recommit the example outputs after running the demo.
+
 ## Ground rules
 
 - Source-first: fix `slide_spec.yaml` and rebuild; do not patch generated PPTX
