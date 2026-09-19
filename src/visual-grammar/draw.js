@@ -7,7 +7,8 @@ const { COLORS, FONT, STROKE } = require('../renderer/theme');
 // ---------------------------------------------------------------------------
 
 function text(id, x, y, w, h, str, style = {}) {
-  return { kind: 'text', id, x, y, w, h, text: String(str), style };
+  const value = str === undefined || str === null ? '' : String(str);
+  return { kind: 'text', id, x, y, w, h, text: value, style };
 }
 
 function rect(id, x, y, w, h, opts = {}) {

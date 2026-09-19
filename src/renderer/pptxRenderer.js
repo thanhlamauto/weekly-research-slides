@@ -23,6 +23,7 @@ function lineOf(p) {
 function addPrimitive(pptx, s, p) {
   if (!p) return;
   if (p.kind === 'text') {
+    if (!p.text) return; // never emit empty/undefined text objects
     const st = p.style || {};
     s.addText(p.text, {
       x: p.x, y: p.y, w: p.w, h: p.h,

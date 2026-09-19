@@ -36,6 +36,7 @@ function wrap(text, wIn, sizePt) {
 }
 
 function textSvg(p) {
+  if (!p.text) return '';
   const st = p.style || {};
   const sizePt = st.size || FONT.sizes.body;
   const sizePx = (sizePt * PX_PER_IN) / 72;
