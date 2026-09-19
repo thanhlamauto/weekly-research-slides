@@ -63,6 +63,7 @@
     "transcript:notes": "python3 skills/research-method-video/scripts/export_speaker_notes.py --project examples/lesa",
     "transcript:tts": "python3 skills/research-method-video/scripts/tts_narration.py --project examples/lesa",
     "transcript:align": "python3 skills/research-method-video/scripts/align_recording.py --project examples/lesa",
+    "video:narrate": "python3 skills/research-method-video/scripts/mux_narration.py --project examples/lesa --quality final",
     "figure:doctor": "python3 skills/research-method-figure/scripts/figure_doctor.py",
     "figure:build": "python3 skills/research-method-figure/scripts/build_figure.py --method examples/lesa/method_model.yaml --style topconf-clean --output examples/lesa/figure/lesa_overview.drawio",
     "figure:compare": "python3 skills/research-method-figure/scripts/compare_methods.py --left examples/figure-comparison/competitor_method.yaml --right examples/figure-comparison/ours_method.yaml --left-label \"Static Top-K\" --right-label \"BAR (ours)\" --style topconf-clean --output examples/figure-comparison/output/comparison.drawio",

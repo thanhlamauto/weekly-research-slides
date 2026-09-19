@@ -112,6 +112,7 @@ python scripts/render_scene.py --project examples/lesa --timing transcript
 python scripts/export_subtitles.py --project examples/lesa
 python scripts/tts_narration.py --project examples/lesa --voice Samantha
 python scripts/align_recording.py --project examples/lesa --audio narration.wav
+python scripts/mux_narration.py --project examples/lesa --quality final
 python scripts/export_speaker_notes.py --project examples/lesa
 ```
 

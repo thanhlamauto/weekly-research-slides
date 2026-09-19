@@ -149,7 +149,14 @@ npm run transcript:qa        # narration, linking, subtitle and pacing checks
 npm run transcript:notes     # transcript -> speaker_notes.yaml
 npm run transcript:tts       # optional local TTS (macOS say)
 npm run transcript:align -- --audio narration.wav
+npm run video:narrate        # mux narration onto the rendered scenes
 ```
+
+The optional **narrated** demo (local macOS `say`, no cloud account) is
+committed at
+[`examples/lesa/renders/final/lesa-method-explainer-narrated.mp4`](examples/lesa/renders/final/lesa-method-explainer-narrated.mp4)
+— 110.3 s, 1080p60 with AAC audio. The canonical demo remains the silent,
+script-paced render; audio is a backend.
 
 A LESA excerpt (`examples/lesa/transcript/narration.md`), rewritten for an
 **adjacent researcher**:

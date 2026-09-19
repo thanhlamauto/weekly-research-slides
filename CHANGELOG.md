@@ -25,6 +25,10 @@ based on Keep a Changelog, and this project adheres to Semantic Versioning.
     estimate).
   - `timing.py` gives scenes transcript-derived dwell; `render_scene.py
     --timing transcript` enables it.
+  - `mux_narration.py` muxes narration audio onto rendered scenes (padding the
+    shorter side so no words are cut) and concatenates a narrated video.
+  - Optional narrated LESA demo rendered with local macOS `say`:
+    `examples/lesa/renders/final/lesa-method-explainer-narrated.mp4` (110.3 s).
 - **LESA narration rewritten** for adjacent researchers (291 words, ~153 s
   script) and re-rendered with transcript pacing: **100.1 s**, up from 63.8 s.
 - References: `narration-writing.md`, `transcript-schema.md`, `video-pacing.md`,
