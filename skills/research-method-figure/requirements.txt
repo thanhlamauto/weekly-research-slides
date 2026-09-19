@@ -1,0 +1,6 @@
+# research-method-figure runtime (Python)
+# Install into an isolated venv; see scripts/figure_doctor.py.
+PyYAML>=6.0
+jsonschema>=4.0
+Pillow>=10.0
+# rsvg-convert (Homebrew: librsvg) is used for SVG -> PNG/PDF export.

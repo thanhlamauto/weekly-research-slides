@@ -1,0 +1,112 @@
+style_profile:
+  name: paper-style
+  source:
+    kind: extraction
+    reference: examples/figure-style-transfer/reference.svg
+    reference_kind: svg
+  canvas:
+    background: '#FBF9F4'
+    width: 1200
+    height: 620
+  typography:
+    family: Georgia
+    fallback:
+    - Helvetica
+    - Helvetica Neue
+    - DejaVu Sans
+    title:
+      size: 17.0
+      weight: 700
+    module:
+      size: 12.0
+      weight: 600
+    label:
+      size: 12.0
+      weight: 600
+    annotation:
+      size: 11.0
+      weight: 400
+    panel_label:
+      size: 12.0
+      weight: 700
+  geometry:
+    corner_radius: 14.0
+    stroke_width: 1.6
+    arrow_width: 1.6
+    panel_stroke_width: 1.0
+    panel_dash: 6 4
+  spacing:
+    base: 8
+    margin: 26
+    panel_gap: 24
+    node_gap: 16
+    row_gap: 20
+    padding: 8
+  semantics:
+    neutral: '#1F2937'
+    ours: '#0F766E'
+    competitor: '#EA580C'
+    shared: '#4B5563'
+    auxiliary: '#059669'
+    changed: '#0F766E'
+    added: '#059669'
+    removed: '#EA580C'
+  edges:
+    computation:
+      style: solid
+      arrowhead: classic
+    reuse:
+      style: dashed
+      arrowhead: classic
+    reference:
+      style: dotted
+      arrowhead: open
+    feedback:
+      style: dashed
+      arrowhead: classic
+    loss:
+      style: solid
+      arrowhead: classic
+    data:
+      style: solid
+      arrowhead: classic
+    gradient:
+      style: dashed
+      arrowhead: classic
+  confidence:
+    palette:
+      value:
+      - '#0F766E'
+      - '#1F2937'
+      - '#CCFBF1'
+      - '#FFEDD5'
+      - '#EA580C'
+      - '#E5E7EB'
+      - '#4B5563'
+      - '#374151'
+      confidence: high
+    background:
+      value: '#FBF9F4'
+      confidence: high
+    stroke_width:
+      value: 1.6
+      confidence: high
+    corner_radius:
+      value: 14.0
+      confidence: high
+    font_family:
+      value: Georgia
+      confidence: high
+    font_sizes:
+      value:
+      - 11.0
+      - 12.0
+      - 17.0
+      confidence: high
+    spacing:
+      value: null
+      confidence: unknown
+  notes:
+  - Extracted from a reference used as STYLE_SOURCE only; scientific content was not
+    transferred.
+  - 'Overall extraction confidence: high.'

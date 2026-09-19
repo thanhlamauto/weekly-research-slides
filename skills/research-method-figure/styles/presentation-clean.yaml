@@ -1,0 +1,47 @@
+style_profile:
+  name: presentation-clean
+  based_on: topconf-clean
+  source:
+    kind: preset
+  canvas:
+    background: "#FFFFFF"
+    width: 1320
+    height: 600
+  typography:
+    family: Arial
+    fallback: [Helvetica, "Helvetica Neue", "DejaVu Sans"]
+    title: { size: 20, weight: 700 }
+    module: { size: 13, weight: 600 }
+    label: { size: 11, weight: 600 }
+    annotation: { size: 11, weight: 400 }
+    panel_label: { size: 12, weight: 700 }
+  geometry:
+    corner_radius: 10
+    stroke_width: 1.4
+    arrow_width: 1.6
+    panel_stroke_width: 1.2
+    panel_dash: "7 5"
+  spacing:
+    base: 12
+    margin: 34
+    panel_gap: 30
+    node_gap: 22
+    row_gap: 26
+    padding: 12
+  semantics:
+    shared: "#6B7280"
+    competitor: "#D97706"
+    ours: "#2563EB"
+    auxiliary: "#059669"
+    neutral: "#374151"
+    changed: "#7C3AED"
+    added: "#047857"
+    removed: "#B91C1C"
+  edges:
+    computation: { style: solid, arrowhead: classic }
+    reuse: { style: dashed, arrowhead: classic }
+    reference: { style: dotted, arrowhead: open }
+    feedback: { style: dashed, arrowhead: classic }
+    loss: { style: solid, arrowhead: classic }
+    data: { style: solid, arrowhead: classic }
+    gradient: { style: dashed, arrowhead: classic }

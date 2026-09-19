@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "figure_spec.schema.json",
+  "title": "Figure Spec",
+  "description": "Renderer-neutral specification of a scientific method figure. Scientific meaning lives here and in the method model; geometry may be explicit or derived by the layout engine; appearance comes from a referenced style profile.",
+  "type": "object",
+  "required": ["figure", "nodes"],
+  "additionalProperties": false,
+  "properties": {
+    "figure": {
+      "type": "object",
+      "required": ["id", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+        "type": {
+          "type": "string",
+          "enum": ["method-overview", "architecture", "mechanism-zoom", "training-vs-inference",
+                   "temporal-process", "iterative-process", "method-comparison", "method-delta",
+                   "diagnostic", "data-pipeline", "graphical-abstract", "multi-panel-overview"]
+        },
+        "mode": { "type": "string", "enum": ["competitor", "ours", "comparison", "delta", "diagnostic", "reconstruction"] },
+        "title": { "type": "string" },
+        "purpose": { "type": "string" },
+        "method": { "type": "string" },
+        "style": { "type": "string", "description": "Style profile name or path." },
+        "width": { "type": "number", "minimum": 100 },
+        "height": { "type": "number", "minimum": 100 },
+        "unit": { "type": "string", "enum": ["px", "in", "pt"], "default": "px" }
+      }
+    },
+    "panels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "role": { "type": "string" },
+          "column": { "type": "integer", "minimum": 0 },
+          "row": { "type": "integer", "minimum": 0 },
+          "span": { "type": "integer", "minimum": 1 },
+          "emphasis": { "type": "boolean" }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+          "semantic_id": { "type": "string", "description": "Stable scientific identity, shared across PPT/video/figure." },
+          "type": {
+            "type": "string",
+            "enum": ["input", "output", "feature", "feature-sequence", "module", "learned-module",
+                     "frozen-module", "cache", "operator", "loss", "data", "backbone", "head",
+                     "expert", "predictor", "tensor", "group", "text", "image", "timestep", "vector"]
+          },
+          "label": { "type": "string" },
+          "panel": { "type": "string" },
+          "role": { "type": "string", "enum": ["shared", "competitor", "ours", "auxiliary", "neutral", "changed", "added", "removed"] },
+          "detail": { "type": "string" },
+          "repeat": { "type": "integer", "minimum": 1 },
+          "shape": { "type": "string", "enum": ["rounded", "rect", "ellipse", "diamond", "cylinder", "stack", "none"] },
+          "geometry": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "x": { "type": "number" }, "y": { "type": "number" },
+              "w": { "type": "number" }, "h": { "type": "number" }
+            }
+          },
+          "row": { "type": "integer", "minimum": 0 },
+          "column": { "type": "integer", "minimum": 0 },
+          "order": { "type": "integer" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "role": { "type": "string", "enum": ["computation", "reuse", "reference", "feedback", "loss", "data", "gradient"] },
+          "label": { "type": "string" },
+          "waypoints": { "type": "array", "items": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 } },
+          "emphasis": { "type": "boolean" }
+        }
+      }
+    },
+    "annotations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "target": { "type": "string" },
+          "role": { "type": "string", "enum": ["key_change", "note", "constraint", "claim", "measurement"] },
+          "text": { "type": "string" },
+          "placement": { "type": "string", "enum": ["above", "below", "left", "right"] }
+        }
+      }
+    },
+    "legend": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "label"],
+        "additionalProperties": false,
+        "properties": {
+          "role": { "type": "string", "enum": ["shared", "competitor", "ours", "auxiliary", "neutral", "changed", "added", "removed"] },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "methods": { "type": "array", "items": { "type": "string" } },
+        "alignment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "inputs": { "type": "string", "enum": ["shared", "separate"] },
+            "outputs": { "type": "string", "enum": ["shared", "separate"] }
+          }
+        },
+        "shared_components": { "type": "array", "items": { "type": "string" } },
+        "differences": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "competitor_only": { "type": "array", "items": { "type": "string" } },
+            "ours_only": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "shared_concepts": { "type": "array", "items": { "type": "string" } },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "method_model": { "type": "string" },
+        "source_inventory": { "type": "string" },
+        "generated_by": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "style_profile.schema.json",
+  "title": "Figure Style Profile",
+  "description": "Reusable visual appearance for figures: canvas, typography, geometry, spacing, semantic colors and edge grammar. Style is referenced by figures, never duplicated per node. A profile extracted from a reference records confidence for inferred values.",
+  "type": "object",
+  "required": ["style_profile"],
+  "additionalProperties": false,
+  "properties": {
+    "style_profile": {
+      "type": "object",
+      "required": ["name", "semantics"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+        "based_on": { "type": "string" },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": { "type": "string", "enum": ["preset", "extraction", "manual"] },
+            "reference": { "type": "string" },
+            "reference_kind": { "type": "string", "enum": ["svg", "drawio", "png", "jpg", "pdf-crop", "manual"] }
+          }
+        },
+        "canvas": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "background": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+            "width": { "type": "number" },
+            "height": { "type": "number" }
+          }
+        },
+        "typography": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "family": { "type": "string" },
+            "fallback": { "type": "array", "items": { "type": "string" } },
+            "title": { "$ref": "#/definitions/textRole" },
+            "subtitle": { "$ref": "#/definitions/textRole" },
+            "module": { "$ref": "#/definitions/textRole" },
+            "label": { "$ref": "#/definitions/textRole" },
+            "annotation": { "$ref": "#/definitions/textRole" },
+            "panel_label": { "$ref": "#/definitions/textRole" }
+          }
+        },
+        "geometry": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "corner_radius": { "type": "number", "minimum": 0 },
+            "stroke_width": { "type": "number", "minimum": 0 },
+            "arrow_width": { "type": "number", "minimum": 0 },
+            "panel_stroke_width": { "type": "number", "minimum": 0 },
+            "panel_dash": { "type": "string" }
+          }
+        },
+        "spacing": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "base": { "type": "number" },
+            "margin": { "type": "number" },
+            "panel_gap": { "type": "number" },
+            "node_gap": { "type": "number" },
+            "row_gap": { "type": "number" },
+            "padding": { "type": "number" }
+          }
+        },
+        "semantics": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+          "description": "Semantic color roles. Required keys: shared, competitor, ours, auxiliary, neutral."
+        },
+        "edges": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "style": { "type": "string", "enum": ["solid", "dashed", "dotted"] },
+              "color": { "type": "string" },
+              "arrowhead": { "type": "string", "enum": ["classic", "block", "open", "none"] }
+            }
+          }
+        },
+        "confidence": {
+          "type": "object",
+          "description": "Per-field confidence for extracted profiles.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {},
+              "confidence": { "type": "string", "enum": ["high", "medium", "low", "unknown"] }
+            }
+          }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "definitions": {
+    "textRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "size": { "type": "number", "minimum": 1 },
+        "weight": { "type": "integer" },
+        "color": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+style_profile:
+  name: dark-explainer
+  based_on: topconf-clean
+  source:
+    kind: preset
+  canvas:
+    background: "#0E1116"
+    width: 1320
+    height: 600
+  typography:
+    family: Arial
+    fallback: [Helvetica, "Helvetica Neue", "DejaVu Sans"]
+    title: { size: 18, weight: 700, color: "#E5E7EB" }
+    module: { size: 12, weight: 600, color: "#E5E7EB" }
+    label: { size: 10, weight: 600, color: "#E5E7EB" }
+    annotation: { size: 10, weight: 400, color: "#9CA3AF" }
+    panel_label: { size: 11, weight: 700, color: "#9CA3AF" }
+  geometry:
+    corner_radius: 10
+    stroke_width: 1.4
+    arrow_width: 1.6
+    panel_stroke_width: 1.1
+    panel_dash: "7 5"
+  spacing:
+    base: 12
+    margin: 32
+    panel_gap: 28
+    node_gap: 20
+    row_gap: 24
+    padding: 10
+  semantics:
+    shared: "#9CA3AF"
+    competitor: "#F59E0B"
+    ours: "#60A5FA"
+    auxiliary: "#34D399"
+    neutral: "#E5E7EB"
+    changed: "#A78BFA"
+    added: "#34D399"
+    removed: "#F87171"
+  edges:
+    computation: { style: solid, color: "#9CA3AF", arrowhead: classic }
+    reuse: { style: dashed, color: "#9CA3AF", arrowhead: classic }
+    reference: { style: dotted, color: "#6B7280", arrowhead: open }
+    feedback: { style: dashed, color: "#9CA3AF", arrowhead: classic }
+    loss: { style: solid, color: "#9CA3AF", arrowhead: classic }
+    data: { style: solid, color: "#9CA3AF", arrowhead: classic }
+    gradient: { style: dashed, color: "#9CA3AF", arrowhead: classic }

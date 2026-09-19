@@ -1,0 +1,47 @@
+style_profile:
+  name: topconf-clean
+  source:
+    kind: preset
+  canvas:
+    background: "#FFFFFF"
+    width: 1320
+    height: 560
+  typography:
+    family: Arial
+    fallback: [Helvetica, "Helvetica Neue", "DejaVu Sans"]
+    title: { size: 15, weight: 700 }
+    subtitle: { size: 10, weight: 400 }
+    module: { size: 9.5, weight: 600 }
+    label: { size: 8, weight: 600 }
+    annotation: { size: 8, weight: 400 }
+    panel_label: { size: 9, weight: 700 }
+  geometry:
+    corner_radius: 6
+    stroke_width: 1.1
+    arrow_width: 1.2
+    panel_stroke_width: 1.0
+    panel_dash: "6 4"
+  spacing:
+    base: 8
+    margin: 26
+    panel_gap: 24
+    node_gap: 16
+    row_gap: 20
+    padding: 8
+  semantics:
+    shared: "#6B7280"
+    competitor: "#D97706"
+    ours: "#2563EB"
+    auxiliary: "#059669"
+    neutral: "#374151"
+    changed: "#7C3AED"
+    added: "#047857"
+    removed: "#B91C1C"
+  edges:
+    computation: { style: solid, arrowhead: classic }
+    reuse: { style: dashed, arrowhead: classic }
+    reference: { style: dotted, arrowhead: open }
+    feedback: { style: dashed, arrowhead: classic }
+    loss: { style: solid, arrowhead: classic }
+    data: { style: solid, arrowhead: classic }
+    gradient: { style: dashed, arrowhead: classic }
