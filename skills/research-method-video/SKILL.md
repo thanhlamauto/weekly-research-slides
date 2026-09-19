@@ -53,16 +53,32 @@ fade-out/fade-in.
    mechanism -> why it works -> assumption/weakness). Do not follow paper
    section order.
 
-3. **Scene spec.** Write `scene_spec.yaml` (schema in
+3. **Scene spec + narration.** Write `scene_spec.yaml` (schema in
    `schemas/scene_spec.schema.json`): scenes, persistent actors with stable ids,
    explanation beats with a motion `pattern`, start/end state, and one
-   `keyframe` per scene for the PowerPoint bridge.
+   `keyframe` per scene for the PowerPoint bridge. Write the narration script at
+   the same time, linked to the beats (`transcript/transcript.yaml`). Review the
+   words and the visuals together before animating. See
+   `references/narration-writing.md`.
 
-4. **Implement scenes.** One Manim scene per file under `src/scenes/`, registered
+4. **Build the transcript.** Derive deterministic timings and all transcript
+   artifacts from the authored script:
+
+   ```bash
+   python scripts/build_transcript.py --project examples/lesa --audience adjacent-researcher
+   python scripts/qa_transcript.py --project examples/lesa
+   ```
+
+   Produces `narration.md`, `transcript.json`, `transcript.srt`,
+   `transcript.vtt`, `word_times.json` and `speaker_notes.yaml`.
+
+5. **Implement scenes.** One Manim scene per file under `src/scenes/`, registered
    in `src/main.py` from `scene_spec.yaml`. Reuse `src/theme.py`,
-   `src/actors.py` and `src/patterns.py` (the shared visual grammar).
+   `src/actors.py` and `src/patterns.py` (the shared visual grammar). Scenes read
+   transcript-derived dwell through `src/timing.py` (`timing.tail`,
+   `timing.beat_dwell`) so silent pacing follows the script.
 
-5. **Render, inspect, revise.** Draft render is cheap; render one scene while
+6. **Render, inspect, revise.** Draft render is cheap; render one scene while
    iterating. Always extract frames and look at them before a final render.
 
    ```bash
@@ -82,6 +98,23 @@ fade-out/fade-in.
    Writes `qa/keyframes/<scene>.png` and `qa/keyframes.yaml`. The slide pipeline
    can use a keyframe as a method-summary slide, or insert the MP4.
 
+## Transcript and narration modes
+
+- **silent** (default): no audio; the script sets per-beat dwell and scene holds.
+  Best for weekly meetings where the researcher narrates live.
+- **tts**: local synthesis (macOS `say`, or pyttsx3). No cloud account required.
+- **recorded**: align a recorded reading to the canonical text with WhisperX
+  when installed, else a clearly-labelled estimate. The text is never replaced
+  by ASR output.
+
+```bash
+python scripts/render_scene.py --project examples/lesa --timing transcript
+python scripts/export_subtitles.py --project examples/lesa
+python scripts/tts_narration.py --project examples/lesa --voice Samantha
+python scripts/align_recording.py --project examples/lesa --audio narration.wav
+python scripts/export_speaker_notes.py --project examples/lesa
+```
+
 ## Animation vocabulary
 
 `ESTABLISH, TRACE, BUILD, MORPH, FOCUS, COMPARE, TRAJECTORY, STAGE-SPLIT,
@@ -98,6 +131,10 @@ the ordering of a multi-stage process is the point.
 ## Read next
 
 - `references/video-explainer.md` — the end-to-end pipeline and file formats.
+- `references/narration-writing.md` — writing for listening.
+- `references/transcript-schema.md` — transcript artifacts and structure.
+- `references/video-pacing.md` — script-derived pacing and dwell.
+- `references/audio-alignment.md` — TTS and forced alignment.
 - `references/video-storytelling.md` — act structure, aha moment, camera, text.
 - `references/manim-visual-grammar.md` — actors, patterns, shared palette.
 - `references/video-qa.md` — animation lint, frame QA, the render loop.

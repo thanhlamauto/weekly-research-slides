@@ -3,7 +3,7 @@ name: weekly-research-slides
 description: Turn the week's changes in research methods, evidence, claims, and diagnostics into a concise, visually explanatory, editable PowerPoint update for a supervisor, PI, mentor, or research group. Use when the user asks to make or update weekly research slides, prepare a lab-meeting deck, compare this week's method against last week's, explain competitor methods visually, build slides that support a research claim with diagnostics, or turn experiment notes into an editable research PowerPoint. Not for generic business, marketing, or sales decks.
 license: MIT
 metadata:
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Weekly Research Slides
@@ -90,6 +90,11 @@ Decide first:
 - **STATIC SLIDES SUFFICIENT** — movement adds no explanatory value.
 - **VIDEO EXPLAINER HELPFUL** — temporal dynamics, iteration, geometry, or
   multi-stage structure carry the argument.
+
+Narration is written **before** animation and is a first-class artifact: the
+script sets the pacing (silent mode), and the same transcript produces subtitles
+(SRT/VTT) and slide speaker notes. See
+`skills/research-method-video/references/narration-writing.md`.
 
 Do not generate a video for every method. See
 `skills/research-method-video/SKILL.md`.

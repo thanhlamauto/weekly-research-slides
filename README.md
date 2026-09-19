@@ -119,6 +119,49 @@ The video and the deck share one method model, so a competitor method is never
 explained two different ways. A video is only worth generating when movement
 carries the argument; otherwise a static diagram is preferable.
 
+## Transcript and narration
+
+Narration is a first-class part of the video pipeline, written **before**
+animation and reviewed together with the visual beats:
+
+```text
+method model -> storyboard -> narration script + visual beats
+             -> timed transcript -> Manim -> video
+```
+
+Three modes share one canonical transcript:
+
+- **silent** (default) — no audio; the script sets per-beat dwell and scene
+  holds, so pacing follows the words. Best for weekly meetings.
+- **tts** — local synthesis via macOS `say` (free, no account); timings estimated
+  from audio duration.
+- **recorded** — force-align a recording to the canonical text with WhisperX
+  when installed, else a clearly-labelled estimate. The text is never replaced by
+  ASR output.
+
+The same transcript produces sidecar subtitles (`transcript.srt`,
+`transcript.vtt`) and a speaker-notes manifest (`speaker_notes.yaml`) for the
+deck.
+
+```bash
+npm run transcript:build     # narration.md + transcript.json + srt/vtt + word_times
+npm run transcript:qa        # narration, linking, subtitle and pacing checks
+npm run transcript:notes     # transcript -> speaker_notes.yaml
+npm run transcript:tts       # optional local TTS (macOS say)
+npm run transcript:align -- --audio narration.wav
+```
+
+A LESA excerpt (`examples/lesa/transcript/narration.md`), rewritten for an
+**adjacent researcher**:
+
+> Early on, noise is high and change is fast and uneven.
+> In the middle, change becomes small and smooth.
+> Near the end it barely moves: only details are refined.
+> One trajectory, three behaviours. Call them stages.
+> Why should one predictor handle all three?
+
+Animation shows *what* changes; narration explains *why* it matters.
+
 ## Scientific method figures
 
 The same method model also drives publication-quality, editable figures. The

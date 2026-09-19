@@ -3,6 +3,35 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.4.0] - 2026-09-20
+
+### Added
+
+- **Transcript / narration is first-class** in `research-method-video`.
+  - Authored `transcript/transcript.yaml` is the source of truth; `narration.md`,
+    `transcript.json`, `transcript.srt`, `transcript.vtt`, `word_times.json` and
+    `speaker_notes.yaml` are generated from it.
+  - Deterministic timing estimation from the script (speech rate per audience,
+    punctuation pauses, comprehension dwell) for **silent** mode.
+  - Audience levels `expert`, `adjacent-researcher` (default), `general-technical`
+    with different speech rates and dwell budgets.
+  - Narration↔visual beat linking via stable scene/beat ids and `visual_cue`.
+  - Transcript QA: sentence length, words per beat, paper-like prose,
+    unexplained acronyms, narration duplicating on-screen text, terms before
+    they appear, insufficient dwell, subtitle line length, and (with a render)
+    animation-vs-narration pacing.
+  - Optional audio: local TTS (macOS `say`, pyttsx3) and recorded-narration
+    alignment (WhisperX forced alignment when installed, else a labelled
+    estimate).
+  - `timing.py` gives scenes transcript-derived dwell; `render_scene.py
+    --timing transcript` enables it.
+- **LESA narration rewritten** for adjacent researchers (291 words, ~153 s
+  script) and re-rendered with transcript pacing: **100.1 s**, up from 63.8 s.
+- References: `narration-writing.md`, `transcript-schema.md`, `video-pacing.md`,
+  `audio-alignment.md`.
+- Tests for transcript schema, ids, linking, deterministic timings, subtitles,
+  audience profiles, QA, and optional-dependency handling.
+
 ## [0.3.0] - 2026-09-20
 
 ### Added

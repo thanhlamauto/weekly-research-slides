@@ -23,6 +23,11 @@ writes `qa/qa_report.json`. It flags:
 These are cheap heuristics, not a scientific judgement. Open the contact sheet
 and check the actual explanation.
 
+A "long static period" warning is **expected** for a silent, script-paced render:
+scenes hold their final state while the presenter speaks. Transcript QA reports
+the resulting animation-vs-narration gap as `info` in silent mode, and as a
+warning only when audio drives the clock (tts/recorded).
+
 ## Animation lint
 
 ```bash

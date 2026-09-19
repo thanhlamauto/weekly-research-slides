@@ -70,7 +70,14 @@ A parallel consumer of the same scientific understanding:
 ```text
 method_model.yaml          (shared semantic model)
         |
-        +--> storyboard.md -> scene_spec.yaml -> Manim scenes -> MP4
+        +--> storyboard.md -> scene_spec.yaml ---+
+        |                                        |
+        |            transcript/transcript.yaml --+--> transcript.json (+ timings)
+        |                                        |         |
+        |                                        |         v
+        |                                        |   narration.md / srt / vtt / speaker_notes
+        |                                        v
+        |                                   Manim scenes (timing.py dwell) -> MP4
         |                                         |
         |                                         v
         |                                   frames + contact sheet (QA)
@@ -78,6 +85,12 @@ method_model.yaml          (shared semantic model)
         v                                         v
    slide_spec.yaml -> PPTX                 keyframes.yaml + PNG (PPT bridge)
 ```
+
+The narration script is authored with the visual beats and is the source of
+truth for what is said. `src/transcript.py` estimates timings (silent mode),
+`src/subtitles.py` derives SRT/VTT, `src/qa_transcript.py` checks the narration,
+`src/audio.py` provides optional TTS/alignment backends, and `src/timing.py`
+lets scenes read transcript-derived dwell.
 
 - `src/spec.py` validates both specs and rejects duplicate scene/actor/beat ids.
 - `src/theme.py`, `src/actors.py`, `src/patterns.py` are the video visual
