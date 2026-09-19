@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 
 SID = "lesa_01_why_cache"
 
@@ -80,4 +81,4 @@ class LESA01WhyCache(Scene):
 
         cap = P.caption(self, "cache the feature  →  skip the recomputation")
         self.play(FadeIn(cap, shift=UP * 0.1), run_time=0.5)
-        self.wait(1.1)
+        self.wait(timing.tail(SID, 1.1, anim_estimate=10.7))

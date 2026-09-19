@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 import trajectory as TRJ
 
 SID = "lesa_07_recap"
@@ -57,4 +58,4 @@ class LESA07Recap(Scene):
 
         cap = P.caption(self, "stage-aware experts forecast the skipped features")
         self.play(FadeIn(cap, shift=UP * 0.1), run_time=0.6)
-        self.wait(1.6)
+        self.wait(timing.tail(SID, 1.6, anim_estimate=7.2))

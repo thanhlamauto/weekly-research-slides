@@ -1,60 +1,60 @@
 {
   "video": "examples/lesa/renders/final/lesa-method-explainer.mp4",
-  "duration_seconds": 63.8,
+  "duration_seconds": 100.1,
   "frames": [
     {
       "frame": "lesa-method-explainer_frame_00.png",
-      "content_fraction": 0.0613,
+      "content_fraction": 0.0823,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_01.png",
-      "content_fraction": 0.0871,
+      "content_fraction": 0.088,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_02.png",
-      "content_fraction": 0.0915,
+      "content_fraction": 0.0452,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_03.png",
-      "content_fraction": 0.0475,
+      "content_fraction": 0.0478,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_04.png",
-      "content_fraction": 0.0132,
+      "content_fraction": 0.0085,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_05.png",
-      "content_fraction": 0.0216,
+      "content_fraction": 0.0224,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_06.png",
-      "content_fraction": 0.0322,
+      "content_fraction": 0.0338,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_07.png",
-      "content_fraction": 0.0091,
+      "content_fraction": 0.0382,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_08.png",
-      "content_fraction": 0.0255,
+      "content_fraction": 0.0129,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_09.png",
-      "content_fraction": 0.0302,
+      "content_fraction": 0.029,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_10.png",
-      "content_fraction": 0.1014,
+      "content_fraction": 0.0367,
       "edge_touch": false
     },
     {
@@ -64,69 +64,93 @@
     },
     {
       "frame": "lesa-method-explainer_frame_12.png",
-      "content_fraction": 0.1015,
+      "content_fraction": 0.1083,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_13.png",
-      "content_fraction": 0.1507,
+      "content_fraction": 0.0803,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_14.png",
-      "content_fraction": 0.0206,
+      "content_fraction": 0.1502,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_15.png",
-      "content_fraction": 0.0493,
+      "content_fraction": 0.1502,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_16.png",
-      "content_fraction": 0.0728,
+      "content_fraction": 0.0205,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_17.png",
-      "content_fraction": 0.0771,
+      "content_fraction": 0.0665,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_18.png",
-      "content_fraction": 0.0385,
+      "content_fraction": 0.0737,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_19.png",
-      "content_fraction": 0.0548,
+      "content_fraction": 0.0774,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_20.png",
-      "content_fraction": 0.0594,
+      "content_fraction": 0.0775,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_21.png",
-      "content_fraction": 0.0081,
+      "content_fraction": 0.0454,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_22.png",
-      "content_fraction": 0.1354,
+      "content_fraction": 0.0591,
       "edge_touch": false
     },
     {
       "frame": "lesa-method-explainer_frame_23.png",
+      "content_fraction": 0.07,
+      "edge_touch": false
+    },
+    {
+      "frame": "lesa-method-explainer_frame_24.png",
+      "content_fraction": 0.0699,
+      "edge_touch": false
+    },
+    {
+      "frame": "lesa-method-explainer_frame_25.png",
+      "content_fraction": 0.1233,
+      "edge_touch": false
+    },
+    {
+      "frame": "lesa-method-explainer_frame_26.png",
       "content_fraction": 0.1536,
+      "edge_touch": false
+    },
+    {
+      "frame": "lesa-method-explainer_frame_27.png",
+      "content_fraction": 0.1518,
       "edge_touch": false
     }
   ],
   "findings": [
     {
       "level": "info",
-      "message": "duration 63.80s, size 3.65 MB"
+      "message": "duration 100.10s, size 4.56 MB"
+    },
+    {
+      "level": "warning",
+      "message": "~4 consecutive near-identical sampled frames (long static period)"
     }
   ]
 }

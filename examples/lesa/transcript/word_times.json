@@ -1,0 +1,2042 @@
+{
+  "method": "estimated",
+  "words": [
+    {
+      "word": "Diffusion",
+      "start": 0.0,
+      "end": 0.891,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "runs",
+      "start": 0.891,
+      "end": 1.287,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "a",
+      "start": 1.287,
+      "end": 1.386,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "large",
+      "start": 1.386,
+      "end": 1.881,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "network",
+      "start": 1.881,
+      "end": 2.573,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "at",
+      "start": 2.573,
+      "end": 2.771,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "every",
+      "start": 2.771,
+      "end": 3.266,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "step",
+      "start": 3.266,
+      "end": 3.662,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "so",
+      "start": 3.662,
+      "end": 3.86,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "generation",
+      "start": 3.86,
+      "end": 4.85,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "is",
+      "start": 4.85,
+      "end": 5.048,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "slow.",
+      "start": 5.048,
+      "end": 5.543,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "establish"
+    },
+    {
+      "word": "Neighboring",
+      "start": 6.343,
+      "end": 7.111,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "steps",
+      "start": 7.111,
+      "end": 7.459,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "repeat",
+      "start": 7.459,
+      "end": 7.878,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "almost",
+      "start": 7.878,
+      "end": 8.297,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "the",
+      "start": 8.297,
+      "end": 8.506,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "same",
+      "start": 8.506,
+      "end": 8.785,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "computation.",
+      "start": 8.785,
+      "end": 9.623,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "trace"
+    },
+    {
+      "word": "Caching",
+      "start": 9.873,
+      "end": 10.381,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "keeps",
+      "start": 10.381,
+      "end": 10.744,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "those",
+      "start": 10.744,
+      "end": 11.107,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "internal",
+      "start": 11.107,
+      "end": 11.687,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "features",
+      "start": 11.687,
+      "end": 12.268,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "and",
+      "start": 12.268,
+      "end": 12.486,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "skips",
+      "start": 12.486,
+      "end": 12.849,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "recomputing",
+      "start": 12.849,
+      "end": 13.647,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "them.",
+      "start": 13.647,
+      "end": 14.01,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "The",
+      "start": 14.26,
+      "end": 14.599,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "question",
+      "start": 14.599,
+      "end": 15.504,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "is",
+      "start": 15.504,
+      "end": 15.73,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "how",
+      "start": 15.73,
+      "end": 16.07,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "to",
+      "start": 16.07,
+      "end": 16.296,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "skip",
+      "start": 16.296,
+      "end": 16.748,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "safely.",
+      "start": 16.748,
+      "end": 17.54,
+      "scene_id": "lesa_01_why_cache",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "The",
+      "start": 18.14,
+      "end": 18.448,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "obvious",
+      "start": 18.448,
+      "end": 19.166,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "trick",
+      "start": 19.166,
+      "end": 19.68,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "is",
+      "start": 19.68,
+      "end": 19.885,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "to",
+      "start": 19.885,
+      "end": 20.09,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "reuse",
+      "start": 20.09,
+      "end": 20.603,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "the",
+      "start": 20.603,
+      "end": 20.911,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "last",
+      "start": 20.911,
+      "end": 21.322,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "feature",
+      "start": 21.322,
+      "end": 22.041,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "or",
+      "start": 22.041,
+      "end": 22.246,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "extrapolate",
+      "start": 22.246,
+      "end": 23.375,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "it.",
+      "start": 23.375,
+      "end": 23.683,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "establish"
+    },
+    {
+      "word": "Both",
+      "start": 24.483,
+      "end": 24.865,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "assume",
+      "start": 24.865,
+      "end": 25.439,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "it",
+      "start": 25.439,
+      "end": 25.63,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "changes",
+      "start": 25.63,
+      "end": 26.299,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "smoothly",
+      "start": 26.299,
+      "end": 27.063,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "so",
+      "start": 27.063,
+      "end": 27.254,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "a",
+      "start": 27.254,
+      "end": 27.35,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "fitted",
+      "start": 27.35,
+      "end": 27.923,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "curve",
+      "start": 27.923,
+      "end": 28.401,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "should",
+      "start": 28.401,
+      "end": 28.974,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "continue",
+      "start": 28.974,
+      "end": 29.739,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "it.",
+      "start": 29.739,
+      "end": 30.026,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "forecast"
+    },
+    {
+      "word": "But",
+      "start": 30.276,
+      "end": 30.637,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "early",
+      "start": 30.637,
+      "end": 31.24,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "on",
+      "start": 31.24,
+      "end": 31.481,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "it",
+      "start": 31.481,
+      "end": 31.722,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "moves",
+      "start": 31.722,
+      "end": 32.324,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "a",
+      "start": 32.324,
+      "end": 32.445,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "lot",
+      "start": 32.445,
+      "end": 32.806,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "and",
+      "start": 32.806,
+      "end": 33.168,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "the",
+      "start": 33.168,
+      "end": 33.529,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "forecast",
+      "start": 33.529,
+      "end": 34.493,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "drifts",
+      "start": 34.493,
+      "end": 35.216,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "away.",
+      "start": 35.216,
+      "end": 35.819,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "diverge"
+    },
+    {
+      "word": "A",
+      "start": 36.069,
+      "end": 36.169,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "fixed",
+      "start": 36.169,
+      "end": 36.674,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "rule",
+      "start": 36.674,
+      "end": 37.078,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "guesses",
+      "start": 37.078,
+      "end": 37.784,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "a",
+      "start": 37.784,
+      "end": 37.885,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "shape",
+      "start": 37.885,
+      "end": 38.389,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "that",
+      "start": 38.389,
+      "end": 38.793,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "keeps",
+      "start": 38.793,
+      "end": 39.298,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "changing.",
+      "start": 39.298,
+      "end": 40.206,
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_id": "conclude"
+    },
+    {
+      "word": "Watch",
+      "start": 40.806,
+      "end": 41.281,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "the",
+      "start": 41.281,
+      "end": 41.566,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "same",
+      "start": 41.566,
+      "end": 41.947,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "feature",
+      "start": 41.947,
+      "end": 42.612,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "over",
+      "start": 42.612,
+      "end": 42.993,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "the",
+      "start": 42.993,
+      "end": 43.278,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "whole",
+      "start": 43.278,
+      "end": 43.754,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "process.",
+      "start": 43.754,
+      "end": 44.514,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "replay"
+    },
+    {
+      "word": "Early",
+      "start": 44.764,
+      "end": 45.359,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "on",
+      "start": 45.359,
+      "end": 45.597,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "noise",
+      "start": 45.597,
+      "end": 46.192,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "is",
+      "start": 46.192,
+      "end": 46.429,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "high",
+      "start": 46.429,
+      "end": 46.905,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "and",
+      "start": 46.905,
+      "end": 47.262,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "change",
+      "start": 47.262,
+      "end": 47.976,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "is",
+      "start": 47.976,
+      "end": 48.213,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "fast",
+      "start": 48.213,
+      "end": 48.689,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "and",
+      "start": 48.689,
+      "end": 49.046,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "uneven.",
+      "start": 49.046,
+      "end": 49.879,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "early"
+    },
+    {
+      "word": "In",
+      "start": 50.129,
+      "end": 50.325,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "the",
+      "start": 50.325,
+      "end": 50.619,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "middle",
+      "start": 50.619,
+      "end": 51.208,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "change",
+      "start": 51.208,
+      "end": 51.797,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "becomes",
+      "start": 51.797,
+      "end": 52.485,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "small",
+      "start": 52.485,
+      "end": 52.975,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "and",
+      "start": 52.975,
+      "end": 53.27,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "smooth.",
+      "start": 53.27,
+      "end": 53.957,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "middle"
+    },
+    {
+      "word": "Near",
+      "start": 54.207,
+      "end": 54.638,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "the",
+      "start": 54.638,
+      "end": 54.961,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "end",
+      "start": 54.961,
+      "end": 55.284,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "it",
+      "start": 55.284,
+      "end": 55.499,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "barely",
+      "start": 55.499,
+      "end": 56.145,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "moves",
+      "start": 56.145,
+      "end": 56.684,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "only",
+      "start": 56.684,
+      "end": 57.115,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "details",
+      "start": 57.115,
+      "end": 57.868,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "are",
+      "start": 57.868,
+      "end": 58.191,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "refined.",
+      "start": 58.191,
+      "end": 59.053,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "late"
+    },
+    {
+      "word": "One",
+      "start": 59.303,
+      "end": 59.554,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "trajectory",
+      "start": 59.554,
+      "end": 60.39,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "three",
+      "start": 60.39,
+      "end": 60.808,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "behaviours.",
+      "start": 60.808,
+      "end": 61.728,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "Call",
+      "start": 61.728,
+      "end": 62.063,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "them",
+      "start": 62.063,
+      "end": 62.397,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "stages.",
+      "start": 62.397,
+      "end": 62.983,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "split"
+    },
+    {
+      "word": "Why",
+      "start": 63.783,
+      "end": 64.04,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "should",
+      "start": 64.04,
+      "end": 64.554,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "one",
+      "start": 64.554,
+      "end": 64.811,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "predictor",
+      "start": 64.811,
+      "end": 65.583,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "handle",
+      "start": 65.583,
+      "end": 66.097,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "all",
+      "start": 66.097,
+      "end": 66.354,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "three",
+      "start": 66.354,
+      "end": 66.783,
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_id": "ask"
+    },
+    {
+      "word": "A",
+      "start": 68.083,
+      "end": 68.182,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "single",
+      "start": 68.182,
+      "end": 68.775,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "predictor",
+      "start": 68.775,
+      "end": 69.665,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "must",
+      "start": 69.665,
+      "end": 70.061,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "compromise",
+      "start": 70.061,
+      "end": 71.05,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "a",
+      "start": 71.05,
+      "end": 71.149,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "rule",
+      "start": 71.149,
+      "end": 71.544,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "for",
+      "start": 71.544,
+      "end": 71.841,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "the",
+      "start": 71.841,
+      "end": 72.138,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "noisy",
+      "start": 72.138,
+      "end": 72.632,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "start",
+      "start": 72.632,
+      "end": 73.126,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "fails",
+      "start": 73.126,
+      "end": 73.621,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "later.",
+      "start": 73.621,
+      "end": 74.214,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "single"
+    },
+    {
+      "word": "If",
+      "start": 74.464,
+      "end": 74.647,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "stages",
+      "start": 74.647,
+      "end": 75.194,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "differ",
+      "start": 75.194,
+      "end": 75.74,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "the",
+      "start": 75.74,
+      "end": 76.014,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "predictor",
+      "start": 76.014,
+      "end": 76.834,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "should",
+      "start": 76.834,
+      "end": 77.381,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "differ",
+      "start": 77.381,
+      "end": 77.928,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "too.",
+      "start": 77.928,
+      "end": 78.293,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "split"
+    },
+    {
+      "word": "LESA",
+      "start": 78.543,
+      "end": 78.842,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "Learnable",
+      "start": 78.842,
+      "end": 79.516,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "Stage-Aware",
+      "start": 79.516,
+      "end": 80.339,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "predictors",
+      "start": 80.339,
+      "end": 81.088,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "gives",
+      "start": 81.088,
+      "end": 81.462,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "each",
+      "start": 81.462,
+      "end": 81.761,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "stage",
+      "start": 81.761,
+      "end": 82.136,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "its",
+      "start": 82.136,
+      "end": 82.36,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "own",
+      "start": 82.36,
+      "end": 82.585,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "expert.",
+      "start": 82.585,
+      "end": 83.109,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "specialize"
+    },
+    {
+      "word": "Each",
+      "start": 83.909,
+      "end": 84.314,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "expert",
+      "start": 84.314,
+      "end": 84.923,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "uses",
+      "start": 84.923,
+      "end": 85.329,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "a",
+      "start": 85.329,
+      "end": 85.43,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "history",
+      "start": 85.43,
+      "end": 86.141,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "window",
+      "start": 86.141,
+      "end": 86.749,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "that",
+      "start": 86.749,
+      "end": 87.155,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "fits",
+      "start": 87.155,
+      "end": 87.561,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "its",
+      "start": 87.561,
+      "end": 87.866,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "stage.",
+      "start": 87.866,
+      "end": 88.474,
+      "scene_id": "lesa_04_stage_experts",
+      "beat_id": "window"
+    },
+    {
+      "word": "Zoom",
+      "start": 88.724,
+      "end": 89.167,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "zoom"
+    },
+    {
+      "word": "into",
+      "start": 89.167,
+      "end": 89.611,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "zoom"
+    },
+    {
+      "word": "one",
+      "start": 89.611,
+      "end": 89.943,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "zoom"
+    },
+    {
+      "word": "expert.",
+      "start": 89.943,
+      "end": 90.719,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "zoom"
+    },
+    {
+      "word": "It",
+      "start": 91.519,
+      "end": 91.695,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "receives",
+      "start": 91.695,
+      "end": 92.402,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "cached",
+      "start": 92.402,
+      "end": 92.932,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "features",
+      "start": 92.932,
+      "end": 93.639,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "from",
+      "start": 93.639,
+      "end": 93.992,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "recent",
+      "start": 93.992,
+      "end": 94.522,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "steps",
+      "start": 94.522,
+      "end": 94.964,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "the",
+      "start": 94.964,
+      "end": 95.229,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "history.",
+      "start": 95.229,
+      "end": 95.936,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "history"
+    },
+    {
+      "word": "A",
+      "start": 96.186,
+      "end": 96.282,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "learned",
+      "start": 96.282,
+      "end": 96.958,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "linear",
+      "start": 96.958,
+      "end": 97.537,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "projection",
+      "start": 97.537,
+      "end": 98.502,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "mixes",
+      "start": 98.502,
+      "end": 98.984,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "that",
+      "start": 98.984,
+      "end": 99.37,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "history",
+      "start": 99.37,
+      "end": 100.046,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "into",
+      "start": 100.046,
+      "end": 100.432,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "a",
+      "start": 100.432,
+      "end": 100.528,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "vector",
+      "start": 100.528,
+      "end": 101.107,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "z.",
+      "start": 101.107,
+      "end": 101.3,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "spatial"
+    },
+    {
+      "word": "A",
+      "start": 102.1,
+      "end": 102.176,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "KAN",
+      "start": 102.176,
+      "end": 102.405,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "Kolmogorov-Arnold",
+      "start": 102.405,
+      "end": 103.703,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "Network",
+      "start": 103.703,
+      "end": 104.237,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "turns",
+      "start": 104.237,
+      "end": 104.619,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "timestep",
+      "start": 104.619,
+      "end": 105.23,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "offsets",
+      "start": 105.23,
+      "end": 105.764,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "into",
+      "start": 105.764,
+      "end": 106.069,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "one",
+      "start": 106.069,
+      "end": 106.298,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "number",
+      "start": 106.298,
+      "end": 106.756,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "alpha.",
+      "start": 106.756,
+      "end": 107.214,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "temporal"
+    },
+    {
+      "word": "The",
+      "start": 108.014,
+      "end": 108.287,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "prediction",
+      "start": 108.287,
+      "end": 109.196,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "adds",
+      "start": 109.196,
+      "end": 109.559,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "a",
+      "start": 109.559,
+      "end": 109.65,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "correction",
+      "start": 109.65,
+      "end": 110.559,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "to",
+      "start": 110.559,
+      "end": 110.74,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "the",
+      "start": 110.74,
+      "end": 111.013,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "current",
+      "start": 111.013,
+      "end": 111.649,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "feature",
+      "start": 111.649,
+      "end": 112.285,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "scaled",
+      "start": 112.285,
+      "end": 112.83,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "by",
+      "start": 112.83,
+      "end": 113.012,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "alpha.",
+      "start": 113.012,
+      "end": 113.557,
+      "scene_id": "lesa_05_expert_internals",
+      "beat_id": "combine"
+    },
+    {
+      "word": "Training",
+      "start": 114.557,
+      "end": 115.275,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "has",
+      "start": 115.275,
+      "end": 115.544,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "two",
+      "start": 115.544,
+      "end": 115.813,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "steps.",
+      "start": 115.813,
+      "end": 116.352,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "First",
+      "start": 116.352,
+      "end": 116.801,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "it",
+      "start": 116.801,
+      "end": 116.98,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "learns",
+      "start": 116.98,
+      "end": 117.518,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "from",
+      "start": 117.518,
+      "end": 117.877,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "accurate",
+      "start": 117.877,
+      "end": 118.595,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "features.",
+      "start": 118.595,
+      "end": 119.403,
+      "scene_id": "lesa_06_training",
+      "beat_id": "gt"
+    },
+    {
+      "word": "At",
+      "start": 120.203,
+      "end": 120.384,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "inference",
+      "start": 120.384,
+      "end": 121.199,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "its",
+      "start": 121.199,
+      "end": 121.471,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "inputs",
+      "start": 121.471,
+      "end": 122.014,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "are",
+      "start": 122.014,
+      "end": 122.286,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "partly",
+      "start": 122.286,
+      "end": 122.83,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "its",
+      "start": 122.83,
+      "end": 123.101,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "own",
+      "start": 123.101,
+      "end": 123.373,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "predictions.",
+      "start": 123.373,
+      "end": 124.46,
+      "scene_id": "lesa_06_training",
+      "beat_id": "inference"
+    },
+    {
+      "word": "If",
+      "start": 124.71,
+      "end": 124.932,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "it",
+      "start": 124.932,
+      "end": 125.155,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "never",
+      "start": 125.155,
+      "end": 125.711,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "sees",
+      "start": 125.711,
+      "end": 126.155,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "its",
+      "start": 126.155,
+      "end": 126.489,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "own",
+      "start": 126.489,
+      "end": 126.822,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "mistakes",
+      "start": 126.822,
+      "end": 127.712,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "small",
+      "start": 127.712,
+      "end": 128.268,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "errors",
+      "start": 128.268,
+      "end": 128.935,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "build",
+      "start": 128.935,
+      "end": 129.491,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "up.",
+      "start": 129.491,
+      "end": 129.824,
+      "scene_id": "lesa_06_training",
+      "beat_id": "drift"
+    },
+    {
+      "word": "So",
+      "start": 130.624,
+      "end": 130.82,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "training",
+      "start": 130.82,
+      "end": 131.6,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "feeds",
+      "start": 131.6,
+      "end": 132.089,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "it",
+      "start": 132.089,
+      "end": 132.284,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "its",
+      "start": 132.284,
+      "end": 132.577,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "own",
+      "start": 132.577,
+      "end": 132.87,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "predictions",
+      "start": 132.87,
+      "end": 133.943,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "as",
+      "start": 133.943,
+      "end": 134.139,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "at",
+      "start": 134.139,
+      "end": 134.334,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "inference.",
+      "start": 134.334,
+      "end": 135.31,
+      "scene_id": "lesa_06_training",
+      "beat_id": "closed_loop"
+    },
+    {
+      "word": "Put",
+      "start": 135.91,
+      "end": 136.242,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "zoom_out"
+    },
+    {
+      "word": "it",
+      "start": 136.242,
+      "end": 136.464,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "zoom_out"
+    },
+    {
+      "word": "back",
+      "start": 136.464,
+      "end": 136.907,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "zoom_out"
+    },
+    {
+      "word": "together.",
+      "start": 136.907,
+      "end": 137.904,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "zoom_out"
+    },
+    {
+      "word": "One",
+      "start": 138.154,
+      "end": 138.421,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "trajectory",
+      "start": 138.421,
+      "end": 139.312,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "divided",
+      "start": 139.312,
+      "end": 139.935,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "into",
+      "start": 139.935,
+      "end": 140.291,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "stages",
+      "start": 140.291,
+      "end": 140.825,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "by",
+      "start": 140.825,
+      "end": 141.003,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "noise",
+      "start": 141.003,
+      "end": 141.449,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "level.",
+      "start": 141.449,
+      "end": 141.983,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "stages"
+    },
+    {
+      "word": "Each",
+      "start": 142.233,
+      "end": 142.586,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "stage",
+      "start": 142.586,
+      "end": 143.029,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "has",
+      "start": 143.029,
+      "end": 143.294,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "its",
+      "start": 143.294,
+      "end": 143.559,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "own",
+      "start": 143.559,
+      "end": 143.824,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "expert",
+      "start": 143.824,
+      "end": 144.355,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "predicting",
+      "start": 144.355,
+      "end": 145.239,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "the",
+      "start": 145.239,
+      "end": 145.504,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "skipped",
+      "start": 145.504,
+      "end": 146.123,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "features.",
+      "start": 146.123,
+      "end": 146.919,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "experts"
+    },
+    {
+      "word": "Stages",
+      "start": 147.169,
+      "end": 147.645,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "experts",
+      "start": 147.645,
+      "end": 148.202,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "predicted",
+      "start": 148.202,
+      "end": 148.917,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "features",
+      "start": 148.917,
+      "end": 149.552,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "that",
+      "start": 149.552,
+      "end": 149.87,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "is",
+      "start": 149.87,
+      "end": 150.029,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "how",
+      "start": 150.029,
+      "end": 150.268,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "LESA",
+      "start": 150.268,
+      "end": 150.586,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "accelerates",
+      "start": 150.586,
+      "end": 151.46,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    },
+    {
+      "word": "diffusion.",
+      "start": 151.46,
+      "end": 152.254,
+      "scene_id": "lesa_07_recap",
+      "beat_id": "recap"
+    }
+  ]
+}

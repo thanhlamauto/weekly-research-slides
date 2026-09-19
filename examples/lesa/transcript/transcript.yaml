@@ -1,0 +1,167 @@
+# Authored narration source for the LESA method explainer.
+# This is the source of truth for what is said. Timings are estimated from the
+# text for silent mode; TTS or forced alignment can replace them without
+# changing the words. Rewritten for audience = adjacent-researcher: assume ML
+# knowledge, but not diffusion-acceleration background. Short sentences,
+# terminology before symbols, one concept per beat.
+video:
+  id: lesa-method-explainer
+  title: "LESA: why diffusion caching needs stage-aware predictors"
+  method: lesa
+
+audience:
+  level: adjacent-researcher
+  target_wpm: 145
+
+mode: silent
+
+scenes:
+  - id: lesa_01_why_cache
+    title: Why cache diffusion features?
+    purpose: Show that DiT inference repeats expensive work, and that caching can skip it.
+    takeaway: Caching avoids repeated computation, so the question becomes how to skip safely.
+    narration:
+      - beat_id: establish
+        kind: introduction
+        visual_cue: establish
+        text: Diffusion runs a large network at every step, so generation is slow.
+      - beat_id: trace
+        visual_cue: trace
+        text: Neighboring steps repeat almost the same computation.
+      - beat_id: reuse
+        visual_cue: reuse
+        text: Caching keeps those internal features and skips recomputing them.
+      - beat_id: conclude
+        kind: conclusion
+        visual_cue: conclude
+        text: The question is how to skip safely.
+
+  - id: lesa_02_uniform_assumption
+    title: The smoothness assumption breaks
+    purpose: Show that reuse and forecasting assume smooth, uniform change that the real trajectory violates.
+    takeaway: A single fixed reuse or forecast rule cannot track changing dynamics.
+    narration:
+      - beat_id: establish
+        kind: introduction
+        visual_cue: establish
+        text: The obvious trick is to reuse the last feature, or extrapolate it.
+      - beat_id: forecast
+        visual_cue: forecast
+        text: Both assume it changes smoothly, so a fitted curve should continue it.
+      - beat_id: diverge
+        visual_cue: diverge
+        text: But early on it moves a lot, and the forecast drifts away.
+      - beat_id: conclude
+        kind: conclusion
+        visual_cue: conclude
+        text: A fixed rule guesses a shape that keeps changing.
+
+  - id: lesa_03_stage_dynamics
+    title: Feature dynamics are stage-dependent
+    purpose: The aha moment - one trajectory has three regimes with different dynamics.
+    takeaway: One trajectory has three stages with different dynamics, so a single fixed rule is the wrong shape of model.
+    narration:
+      - beat_id: replay
+        visual_cue: replay
+        text: Watch the same feature over the whole process.
+      - beat_id: early
+        visual_cue: early
+        text: Early on, noise is high and change is fast and uneven.
+      - beat_id: middle
+        visual_cue: middle
+        text: In the middle, change becomes small and smooth.
+      - beat_id: late
+        visual_cue: late
+        text: "Near the end it barely moves: only details are refined."
+      - beat_id: split
+        kind: introduction
+        visual_cue: split
+        text: One trajectory, three behaviours. Call them stages.
+      - beat_id: ask
+        kind: aha
+        visual_cue: ask
+        text: Why should one predictor handle all three?
+
+  - id: lesa_04_stage_experts
+    title: One predictor becomes stage-aware experts
+    purpose: Show specialization as the natural consequence of the stage observation.
+    takeaway: Specialization follows from the stage observation; each expert also uses a history window that fits its stage.
+    narration:
+      - beat_id: single
+        visual_cue: single
+        text: "A single predictor must compromise: a rule for the noisy start fails later."
+      - beat_id: split
+        visual_cue: split
+        text: If stages differ, the predictor should differ too.
+      - beat_id: specialize
+        kind: introduction
+        visual_cue: specialize
+        text: LESA (Learnable Stage-Aware predictors) gives each stage its own expert.
+      - beat_id: window
+        visual_cue: window
+        text: Each expert uses a history window that fits its stage.
+
+  - id: lesa_05_expert_internals
+    title: What does one expert compute?
+    purpose: Explain the predictor mechanism and build its equation incrementally.
+    takeaway: One expert is a learned projection of recent features, scaled by a learned time-dependent factor.
+    narration:
+      - beat_id: zoom
+        kind: introduction
+        visual_cue: zoom
+        text: Zoom into one expert.
+      - beat_id: history
+        visual_cue: history
+        text: "It receives cached features from recent steps: the history."
+      - beat_id: spatial
+        kind: introduction
+        visual_cue: spatial
+        text: A learned linear projection mixes that history into a vector, z.
+      - beat_id: temporal
+        kind: introduction
+        visual_cue: temporal
+        text: A KAN (Kolmogorov-Arnold Network) turns timestep offsets into one number, alpha.
+      - beat_id: combine
+        kind: equation
+        visual_cue: combine
+        text: The prediction adds a correction to the current feature, scaled by alpha.
+
+  - id: lesa_06_training
+    title: Ground-truth guided, then closed-loop
+    purpose: Explain why training starts with ground truth and then becomes autoregressive.
+    takeaway: Train under the same imperfect history the model will see at inference.
+    narration:
+      - beat_id: gt
+        kind: introduction
+        visual_cue: gt
+        text: Training has two steps. First it learns from accurate features.
+      - beat_id: inference
+        visual_cue: inference
+        text: At inference, its inputs are partly its own predictions.
+      - beat_id: drift
+        kind: comparison
+        visual_cue: drift
+        text: If it never sees its own mistakes, small errors build up.
+      - beat_id: closed_loop
+        kind: conclusion
+        visual_cue: closed_loop
+        text: So training feeds it its own predictions, as at inference.
+
+  - id: lesa_07_recap
+    title: The method in one view
+    purpose: Compress the whole method into one picture.
+    takeaway: Stage-aware experts forecast the skipped features.
+    narration:
+      - beat_id: zoom_out
+        visual_cue: zoom_out
+        text: Put it back together.
+      - beat_id: stages
+        visual_cue: stages
+        text: One trajectory, divided into stages by noise level.
+      - beat_id: experts
+        visual_cue: experts
+        text: Each stage has its own expert, predicting the skipped features.
+      - beat_id: recap
+        kind: conclusion
+        visual_cue: recap
+        text: "Stages, experts, predicted features: that is how LESA accelerates diffusion."

@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 
 SID = "lesa_04_stage_experts"
 
@@ -59,4 +60,4 @@ class LESA04StageExperts(Scene):
         win.move_to(np.array([0, -1.5, 0]))
         cap = P.caption(self, "specialization follows from the stage-dependent dynamics")
         self.play(FadeIn(win), FadeIn(cap, shift=UP * 0.1), run_time=0.6)
-        self.wait(1.2)
+        self.wait(timing.tail(SID, 1.2, anim_estimate=6.4))

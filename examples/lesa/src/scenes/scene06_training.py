@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 
 SID = "lesa_06_training"
 
@@ -74,7 +75,8 @@ class LESA06Training(Scene):
         drift = A.label("prediction error accumulates around the loop",
                         size=T.SIZE_SMALL, color=PRED).move_to(np.array([0, fb_y - 0.38, 0]))
         self.play(FadeIn(drift), run_time=0.5)
+        self.wait(timing.beat_dwell(SID, "drift", 0.6))
 
         cap = P.caption(self, "closed-loop training uses the same imperfect history seen at inference")
         self.play(FadeIn(cap, shift=UP * 0.1), run_time=0.6)
-        self.wait(1.0)
+        self.wait(timing.tail(SID, 1.0, anim_estimate=9.2))

@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 import trajectory as TRJ
 
 SID = "lesa_03_stage_dynamics"
@@ -65,8 +66,9 @@ class LESA03StageDynamics(Scene):
         # recolour the change bars by their stage
         self.play(*[bars[i].animate.set_fill(STAGE_COLOR[TRJ.stage_of_index(i)], 0.75)
                     for i in range(len(bars))], run_time=0.9)
+        self.wait(timing.beat_dwell(SID, "split", 0.6))
 
         q = A.text("Why should one predictor handle all three?",
                    size=T.SIZE_HEAD, color=T.INK, weight="BOLD").move_to(UP * 2.45)
         self.play(FadeOut(note), FadeIn(q, shift=DOWN * 0.15), run_time=0.7)
-        self.wait(1.4)
+        self.wait(timing.tail(SID, 1.4, anim_estimate=12.0))

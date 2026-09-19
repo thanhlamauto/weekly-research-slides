@@ -23,7 +23,8 @@ from spec import scene_ids, scene_by_id
 QUALITY_FLAG = {"draft": "-ql", "final": "-qh"}
 
 
-def render_one(project: pathlib.Path, scene: dict, quality: str, media_dir: pathlib.Path) -> pathlib.Path:
+def render_one(project: pathlib.Path, scene: dict, quality: str, media_dir: pathlib.Path,
+               timing_mode: str = "scene") -> pathlib.Path:
     cls = scene.get("manim_class")
     if not cls:
         C.fail(f"scene '{scene['id']}' has no manim_class in scene_spec.yaml")
@@ -35,7 +36,15 @@ def render_one(project: pathlib.Path, scene: dict, quality: str, media_dir: path
         QUALITY_FLAG[quality], "--disable_caching",
         "--media_dir", str(media_dir), str(main_py), cls,
     ]
-    proc = C.run(cmd, cwd=str(project / "src"))
+    import os
+    env = dict(os.environ)
+    if timing_mode == "transcript":
+        transcript = project / "transcript" / "transcript.json"
+        if not transcript.exists():
+            C.fail(f"--timing transcript needs {transcript}; run build_transcript.py first")
+        env["WRS_TRANSCRIPT"] = str(transcript)
+        env["WRS_PROJECT"] = str(project)
+    proc = C.run(cmd, cwd=str(project / "src"), env=env)
     if proc.returncode != 0:
         tail = (proc.stderr or proc.stdout or "").strip().splitlines()[-14:]
         C.fail(f"manim failed for scene '{scene['id']}' ({cls}):\n  " + "\n  ".join(tail))
@@ -67,6 +76,8 @@ def main() -> int:
     ap.add_argument("--scene", action="append", default=[], help="scene id to render (repeatable)")
     ap.add_argument("--all", action="store_true", help="render every scene (default)")
     ap.add_argument("--quality", choices=["draft", "final"], default="draft")
+    ap.add_argument("--timing", choices=["scene", "transcript"], default="scene",
+                    help="'transcript' derives dwells from transcript/transcript.json")
     ap.add_argument("--concat", help="concatenate rendered scenes into this mp4")
     ap.add_argument("--media-dir", help="Manim media directory (defaults under the project)")
     ap.add_argument("--list", action="store_true", help="list scenes and exit")
@@ -100,7 +111,7 @@ def main() -> int:
     outputs = []
     for scene in wanted:
         print(f"rendering {scene['id']} ({args.quality}) ...")
-        out = render_one(proj["path"], scene, args.quality, media_dir)
+        out = render_one(proj["path"], scene, args.quality, media_dir, timing_mode=args.timing)
         outputs.append(out)
         print(f"  -> {out}")
 

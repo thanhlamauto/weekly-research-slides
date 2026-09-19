@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 
 SID = "lesa_05_expert_internals"
 
@@ -51,6 +52,7 @@ class LESA05ExpertInternals(Scene):
                                     color=T.AMBER)), FadeIn(kan), run_time=0.6)
         self.play(GrowArrow(A.arrow(kan.get_right() + RIGHT * 0.02, alpha.get_left() + LEFT * 0.02,
                                     color=T.AMBER)), FadeIn(alpha), run_time=0.6)
+        self.wait(timing.beat_dwell(SID, "temporal", 0.6))
 
         # --- combine ---
         op = A.operator("op_mul", "×", radius=0.3).move_to(np.array([2.0, -0.4, 0]))
@@ -75,4 +77,4 @@ class LESA05ExpertInternals(Scene):
         note = A.label("spatial transform  +  scalar temporal modulation",
                        size=T.SIZE_SMALL, color=T.MUTED).move_to(np.array([0, -3.45, 0]))
         self.play(FadeIn(note), run_time=0.5)
-        self.wait(1.2)
+        self.wait(timing.tail(SID, 1.2, anim_estimate=11.6))

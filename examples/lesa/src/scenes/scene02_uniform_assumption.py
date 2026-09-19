@@ -4,6 +4,7 @@ import numpy as np
 import theme as T
 import actors as A
 import patterns as P
+import timing
 import trajectory as TRJ
 
 SID = "lesa_02_uniform_assumption"
@@ -57,7 +58,8 @@ class LESA02UniformAssumption(Scene):
         gap = A.vector(np.array([end_x, end_y, 0]), pts[-1], color=T.RED)
         gap_label = A.label("drift", size=T.SIZE_SMALL, color=T.RED).next_to(gap, RIGHT, buff=0.12)
         self.play(GrowArrow(gap), FadeIn(gap_label), run_time=0.8)
+        self.wait(timing.beat_dwell(SID, "diverge", 0.5))
 
         cap = P.caption(self, "features do not change uniformly over time")
         self.play(FadeIn(cap, shift=UP * 0.1), run_time=0.5)
-        self.wait(1.1)
+        self.wait(timing.tail(SID, 1.1, anim_estimate=9.3))

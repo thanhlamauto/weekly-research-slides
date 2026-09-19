@@ -1,0 +1,98 @@
+video: lesa-method-explainer
+audience: adjacent-researcher
+slides:
+- slide_index: 1
+  scene_id: lesa_01_why_cache
+  title: Why cache diffusion features?
+  narration: 'Diffusion runs a large network at every step, so generation is slow.
+
+    Neighboring steps repeat almost the same computation.
+
+    Caching keeps those internal features and skips recomputing them.
+
+    The question is how to skip safely.'
+  takeaway: Caching avoids repeated computation, so the question becomes how to skip
+    safely.
+  duration_seconds: 18.14
+- slide_index: 2
+  scene_id: lesa_02_uniform_assumption
+  title: The smoothness assumption breaks
+  narration: 'The obvious trick is to reuse the last feature, or extrapolate it.
+
+    Both assume it changes smoothly, so a fitted curve should continue it.
+
+    But early on it moves a lot, and the forecast drifts away.
+
+    A fixed rule guesses a shape that keeps changing.'
+  takeaway: A single fixed reuse or forecast rule cannot track changing dynamics.
+  duration_seconds: 22.666
+- slide_index: 3
+  scene_id: lesa_03_stage_dynamics
+  title: Feature dynamics are stage-dependent
+  narration: 'Watch the same feature over the whole process.
+
+    Early on, noise is high and change is fast and uneven.
+
+    In the middle, change becomes small and smooth.
+
+    Near the end it barely moves: only details are refined.
+
+    One trajectory, three behaviours. Call them stages.
+
+    Why should one predictor handle all three?'
+  takeaway: One trajectory has three stages with different dynamics, so a single fixed
+    rule is the wrong shape of model.
+  duration_seconds: 27.277
+- slide_index: 4
+  scene_id: lesa_04_stage_experts
+  title: One predictor becomes stage-aware experts
+  narration: 'A single predictor must compromise: a rule for the noisy start fails
+    later.
+
+    If stages differ, the predictor should differ too.
+
+    LESA (Learnable Stage-Aware predictors) gives each stage its own expert.
+
+    Each expert uses a history window that fits its stage.'
+  takeaway: Specialization follows from the stage observation; each expert also uses
+    a history window that fits its stage.
+  duration_seconds: 20.641
+- slide_index: 5
+  scene_id: lesa_05_expert_internals
+  title: What does one expert compute?
+  narration: 'Zoom into one expert.
+
+    It receives cached features from recent steps: the history.
+
+    A learned linear projection mixes that history into a vector, z.
+
+    A KAN (Kolmogorov-Arnold Network) turns timestep offsets into one number, alpha.
+
+    The prediction adds a correction to the current feature, scaled by alpha.'
+  takeaway: One expert is a learned projection of recent features, scaled by a learned
+    time-dependent factor.
+  duration_seconds: 25.833
+- slide_index: 6
+  scene_id: lesa_06_training
+  title: Ground-truth guided, then closed-loop
+  narration: 'Training has two steps. First it learns from accurate features.
+
+    At inference, its inputs are partly its own predictions.
+
+    If it never sees its own mistakes, small errors build up.
+
+    So training feeds it its own predictions, as at inference.'
+  takeaway: Train under the same imperfect history the model will see at inference.
+  duration_seconds: 21.353
+- slide_index: 7
+  scene_id: lesa_07_recap
+  title: The method in one view
+  narration: 'Put it back together.
+
+    One trajectory, divided into stages by noise level.
+
+    Each stage has its own expert, predicting the skipped features.
+
+    Stages, experts, predicted features: that is how LESA accelerates diffusion.'
+  takeaway: Stage-aware experts forecast the skipped features.
+  duration_seconds: 16.944
