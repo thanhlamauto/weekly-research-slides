@@ -17,6 +17,11 @@
         "mode": { "type": "string", "enum": ["competitor", "ours", "baseline"] },
         "method_model": { "type": "string" },
         "description": { "type": "string" },
+        "audience": {
+          "type": "string",
+          "enum": ["expert", "adjacent-researcher", "general-technical"],
+          "description": "Controls how much background is introduced and how long key states dwell."
+        },
         "target_duration_seconds": { "type": "number", "minimum": 10 },
         "canvas": { "type": "string", "enum": ["light", "dark"] },
         "theme": { "type": "string" }

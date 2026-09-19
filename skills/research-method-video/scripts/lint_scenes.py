@@ -14,6 +14,7 @@ import pathlib
 import re
 
 import _common as C
+import pacing as pacing_mod
 
 PLACEHOLDER = re.compile(r"\b(TODO|TBD|FIXME|lorem ipsum|placeholder|xxx+)\b", re.I)
 FADEOUT = re.compile(r"\bFadeOut\(")
@@ -101,6 +102,7 @@ def main() -> int:
         project = C.REPO_ROOT / args.project
     proj = C.load_project(project)
     findings = lint(proj["path"], proj["spec"])
+    findings.extend(pacing_mod.findings(proj["spec"]))
 
     if args.json:
         C.write_json(proj["path"] / "qa" / "lint_report.json", {"findings": findings})

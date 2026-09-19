@@ -45,6 +45,21 @@ def main() -> int:
     else:
         print("  latex: not found  (optional; v0.1 works without LaTeX)")
 
+    # typography: the theme font must exist or Manim silently substitutes
+    import subprocess
+    try:
+        fams = subprocess.run(["fc-list", ":", "family"], capture_output=True, text=True, timeout=20).stdout
+    except Exception:
+        fams = ""
+    theme_font = "Helvetica Neue"
+    if fams:
+        present = theme_font.lower() in fams.lower()
+        print(f"  theme font: {theme_font}: {'OK' if present else 'MISSING (Pango will substitute)'}")
+        if not present:
+            print("    set theme.FONT to an installed family for consistent typography")
+    else:
+        print(f"  theme font: {theme_font}: unknown (fc-list unavailable)")
+
     example = C.REPO_ROOT / "examples" / "lesa"
     print(f"  example: {'OK ' + str(example) if example.exists() else 'MISSING ' + str(example)}")
 

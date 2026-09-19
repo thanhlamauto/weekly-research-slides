@@ -11,6 +11,7 @@ video:
     a single fixed reuse/forecast scheme fails, the stage-dependent observation,
     the stage-aware experts, what one expert computes, and why training is
     closed-loop.
+  audience: adjacent-researcher
   target_duration_seconds: 115
   canvas: light
   theme: wrs-light
