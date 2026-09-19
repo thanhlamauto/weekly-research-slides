@@ -25,3 +25,9 @@ examples/lesa/renders/**/*_concat.txt
 examples/lesa/qa/frames/
 examples/lesa/transcript/audio/
 examples/lesa/renders/_narrated_work/
+
+# critique loop: keep contact sheets + reports, drop per-slide intermediates
+examples/diagnostic-week/critique/renders/slide-*.png
+examples/diagnostic-week/critique/renders/slide-*.svg
+examples/diagnostic-week/critique/before/slide-*.png
+examples/diagnostic-week/critique/before/slide-*.svg
