@@ -11,3 +11,14 @@ npm-debug.log*
 # Generated example previews (gallery lives in docs/images/ instead)
 examples/**/output/preview/
 examples/**/output/rendered/
+
+# research-method-video: keep the concatenated explainer, ignore Manim scratch
+# and the per-scene intermediates.
+.venv-manim/
+__pycache__/
+*.pyc
+examples/lesa/renders/_media/
+examples/lesa/renders/draft/lesa_0*.mp4
+examples/lesa/renders/final/lesa_0*.mp4
+examples/lesa/renders/**/_concat.txt
+examples/lesa/qa/frames/

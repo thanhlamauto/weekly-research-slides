@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "method_model.schema.json",
+  "title": "Method Semantic Model",
+  "description": "Shared scientific understanding of one research method. Both the PowerPoint explainer and the video explainer should be derived from this, so the same method is never explained inconsistently.",
+  "type": "object",
+  "required": ["method"],
+  "additionalProperties": false,
+  "properties": {
+    "method": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "short_name": { "type": "string" },
+        "kind": { "type": "string", "enum": ["competitor", "ours", "baseline"] },
+        "paper_title": { "type": "string" },
+        "source_url": { "type": "string" },
+        "venue": { "type": "string" },
+        "year": { "type": "integer" }
+      }
+    },
+    "problem": { "type": "string" },
+    "baseline": { "type": "string" },
+    "key_observation": { "type": "string" },
+    "assumption_of_previous_methods": { "type": "string" },
+    "failure_of_previous_methods": { "type": "string" },
+    "motivation": { "type": "string" },
+    "mechanism": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "inputs": { "type": "array", "items": { "type": "string" } },
+        "operations": { "type": "array", "items": { "type": "string" } },
+        "outputs": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "equations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "plain", "meaning"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "plain": { "type": "string" },
+          "latex": { "type": "string" },
+          "meaning": { "type": "string" }
+        }
+      }
+    },
+    "training": { "type": "array", "items": { "type": "string" } },
+    "inference": { "type": "array", "items": { "type": "string" } },
+    "claims": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "relation_to_our_work": { "type": "string" },
+    "notation": {
+      "type": "object",
+      "description": "Symbol -> meaning, used to keep labels consistent across deck and video.",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
