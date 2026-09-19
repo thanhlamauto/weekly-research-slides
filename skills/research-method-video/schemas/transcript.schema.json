@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "transcript.schema.json",
+  "title": "Video Transcript",
+  "description": "First-class narration for a method explainer. The script is authored before animation; timing is estimated deterministically for silent mode or supplied by TTS/forced alignment. Stable scene and beat ids link narration to visual beats.",
+  "type": "object",
+  "required": ["video", "audience", "scenes"],
+  "additionalProperties": false,
+  "properties": {
+    "video": {
+      "type": "object",
+      "required": ["id"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+        "title": { "type": "string" },
+        "method": { "type": "string" }
+      }
+    },
+    "audience": {
+      "type": "object",
+      "required": ["level"],
+      "additionalProperties": false,
+      "properties": {
+        "level": { "type": "string", "enum": ["expert", "adjacent-researcher", "general-technical"] },
+        "target_wpm": { "type": "number", "minimum": 60 }
+      }
+    },
+    "mode": { "type": "string", "enum": ["silent", "tts", "recorded"] },
+    "duration_seconds": { "type": "number", "description": "Computed total duration." },
+    "word_count": { "type": "integer" },
+    "target_wpm": { "type": "number" },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "narration"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+          "title": { "type": "string" },
+          "purpose": { "type": "string" },
+          "takeaway": { "type": "string" },
+          "dwell_seconds": { "type": "number", "minimum": 0 },
+          "start": { "type": "number" },
+          "end": { "type": "number" },
+          "duration_seconds": { "type": "number" },
+          "tail_dwell": { "type": "number" },
+          "word_count": { "type": "integer" },
+          "narration": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["beat_id", "text"],
+              "additionalProperties": false,
+              "properties": {
+                "beat_id": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+$" },
+                "text": { "type": "string", "minLength": 1 },
+                "visual_cue": { "type": "string", "description": "scene_spec beat id or action this narration accompanies." },
+                "emphasis": { "type": "array", "items": { "type": "string" } },
+                "kind": {
+                  "type": "string",
+                  "enum": ["normal", "introduction", "equation", "comparison", "aha", "conclusion"],
+                  "description": "Drives extra comprehension dwell."
+                },
+                "dwell_seconds": { "type": "number", "minimum": 0 },
+                "start": { "type": "number" },
+                "end": { "type": "number" },
+                "end_with_dwell": { "type": "number" },
+                "speaking_seconds": { "type": "number" },
+                "word_count": { "type": "integer" },
+                "words": { "type": "array", "items": { "type": "string" } },
+                "cue": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "phrase": { "type": "string" },
+                    "animation": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
