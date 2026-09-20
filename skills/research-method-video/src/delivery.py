@@ -252,8 +252,12 @@ def build_plan(transcript: dict, *, profile: str | None = None) -> dict:
            or (narration_cfg.get("pacing") or {}).get("target_wpm")
            or 140.0)
     chunks = []
+    chunk_cfg = narration_cfg.get("chunking") or {}
+    min_seconds = float(chunk_cfg.get("min_seconds", 8.0))
+    max_seconds = float(chunk_cfg.get("max_seconds", 25.0))
     for si, scene in enumerate(transcript.get("scenes", [])):
-        scene_chunks = chunk_beats(scene.get("narration", []), wpm=wpm)
+        scene_chunks = chunk_beats(scene.get("narration", []), wpm=wpm,
+                                   min_seconds=min_seconds, max_seconds=max_seconds)
         prev_takeaway = transcript["scenes"][si - 1].get("takeaway") if si else None
         next_scene = transcript["scenes"][si + 1] if si + 1 < len(transcript["scenes"]) else None
         next_intent = (next_scene or {}).get("purpose") or (next_scene or {}).get("title")

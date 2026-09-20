@@ -50,6 +50,15 @@
             "min_concept_dwell_ms": { "type": "integer", "minimum": 0 }
           }
         },
+        "chunking": {
+          "type": "object",
+          "description": "Semantic chunk size bounds for TTS requests. Raise the minimum to merge beats into fewer, longer requests (useful for per-day provider quotas).",
+          "additionalProperties": false,
+          "properties": {
+            "min_seconds": { "type": "number", "minimum": 1 },
+            "max_seconds": { "type": "number", "minimum": 2 }
+          }
+        },
         "fallback": {
           "type": "object",
           "additionalProperties": false,
