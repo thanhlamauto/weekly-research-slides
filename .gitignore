@@ -31,3 +31,18 @@ examples/diagnostic-week/critique/renders/slide-*.png
 examples/diagnostic-week/critique/renders/slide-*.svg
 examples/diagnostic-week/critique/before/slide-*.png
 examples/diagnostic-week/critique/before/slide-*.svg
+
+# Beamer: keep generated LaTeX sources + manifest, drop latex aux/state files
+examples/**/output/beamer-build/*.aux
+examples/**/output/beamer-build/*.log
+examples/**/output/beamer-build/*.fls
+examples/**/output/beamer-build/*.fdb_latexmk
+examples/**/output/beamer-build/*.out
+examples/**/output/beamer-build/*.synctex.gz
+examples/**/output/beamer-build/*.nav
+examples/**/output/beamer-build/*.snm
+examples/**/output/beamer-build/*.toc
+examples/**/output/beamer-build/*.vrb
+examples/**/output/beamer-build/*.pdf
+# keep the Beamer contact sheet, drop the per-page intermediates (docs/images has the gallery copies)
+examples/**/output/beamer-pages/slide-*.png

@@ -27,6 +27,9 @@ const { editPptx } = require('./pptx/edit');
 const { applyMotion } = require('./pptx/motion');
 const { planStoryboard, STAGE_MODULES } = require('./model/plan');
 const { diffStates } = require('./model/diff');
+const {
+  buildBeamer, compileBeamer, renderPdfPages, makeContactSheet, texDoctor, pdfPageCount, parseLatexLog,
+} = require('./beamer/build');
 
 function parseArgs(argv) {
   const flags = {};
@@ -108,9 +111,55 @@ async function renderPptxExternal(pptx, outDir) {
   return { rendered: true, tool: 'libreoffice', outDir };
 }
 
+function isBeamerRequest(flags, output) {
+  if (flags.renderer) return flags.renderer === 'beamer';
+  if (flags.format) return flags.format === 'beamer';
+  if (output) return /\.pdf$/i.test(output);
+  return true; // Beamer is the default presentation renderer.
+}
+
+async function cmdBuildBeamer(flags, input, output) {
+  const spec = loadData(input);
+  const v = validateData('slide_spec', spec);
+  if (!v.ok) {
+    console.error('slide_spec schema errors:');
+    v.errors.forEach((e) => console.error(`  ${e.path}: ${e.message}`));
+    process.exit(1);
+  }
+  const root = path.join(__dirname, '..');
+  const absOut = path.resolve(output);
+  const buildDir = flags['build-dir'] || path.join(path.dirname(absOut), `${path.basename(absOut, '.pdf')}-build`);
+  const res = await buildBeamer(spec, {
+    output,
+    specDir: path.dirname(path.resolve(input)),
+    buildDir,
+    engine: flags.engine,
+    handout: flags['no-handout'] ? false : true,
+  });
+  const errors = res.findings.filter((f) => f.level === 'error');
+  const warnings = res.findings.filter((f) => f.level === 'warning');
+  res.findings.forEach((f) => console.log(`[${f.level}] ${f.check}: ${f.message}`));
+  console.log(`Built ${spec.slides.length} slides -> ${output} (template ${res.manifest.template.name} v${res.manifest.template.version}, engine ${res.engine}, ${res.presentation.pages || '?'} pages)`);
+  if (res.handout && res.handout.ok) console.log(`Handout -> ${res.handout.pdf} (${res.handout.pages || '?'} pages)`);
+  console.log(`LaTeX source -> ${buildDir} (main entry ${path.join(buildDir, 'presentation.tex')})`);
+  if (flags.preview || flags['render-pages']) {
+    const dir = flags.preview || path.join(path.dirname(absOut), `${path.basename(absOut, '.pdf')}-pages`);
+    const pages = renderPdfPages(output, dir, { dpi: Number(flags.dpi || 110) });
+    if (pages.ok) {
+      const sheet = makeContactSheet(root, dir, path.join(dir, 'contact-sheet.png'), { cols: Number(flags.cols || 3) });
+      console.log(`Page renders -> ${dir} (${pages.pages} PNG${sheet.ok ? ', contact sheet' : ''})`);
+    } else {
+      console.log(`Page renders unavailable: ${pages.reason}`);
+    }
+  }
+  if (errors.length) process.exit(1);
+  return { spec, res, findings: res.findings, errors, warnings };
+}
+
 async function cmdBuild(flags) {
   const input = requireFlag(flags, 'input');
-  const output = flags.output || 'out.pptx';
+  const output = flags.output || (isBeamerRequest(flags, null) ? 'out.pdf' : 'out.pptx');
+  if (isBeamerRequest(flags, output)) return cmdBuildBeamer(flags, input, output);
   const spec = loadData(input);
   const v = validateData('slide_spec', spec);
   if (!v.ok) {
@@ -157,12 +206,23 @@ async function cmdQa(flags) {
     const res = await qaPptx(input, { spec, expectedNames: expected });
     findings.push(...res.findings);
   }
+  if (input.endsWith('.pdf')) {
+    if (!fs.existsSync(input)) fail(`missing ${input}`);
+    const pages = pdfPageCount(input);
+    if (pages === null) findings.push({ level: 'warning', check: 'beamer-pdf', message: 'pdfinfo unavailable; page count not verified' });
+    else if (pages < 1) findings.push({ level: 'error', check: 'beamer-pdf', message: 'PDF has no pages' });
+    else findings.push({ level: 'info', check: 'beamer-pdf', message: `${pages} page(s)` });
+    const buildDir = flags['build-dir'] || path.join(path.dirname(path.resolve(input)), `${path.basename(input, '.pdf')}-build`);
+    const log = path.join(buildDir, 'presentation.log');
+    if (fs.existsSync(log)) findings.push(...parseLatexLog(fs.readFileSync(log, 'utf8')).findings);
+    else findings.push({ level: 'warning', check: 'beamer-log', message: `no compile log at ${log}; run wrs build first` });
+  }
   if (spec) {
     findings.push(...qaScience(spec, { weeklyDelta: flags.delta ? loadData(flags.delta) : null }));
     findings.push(...qaScene(scene));
     findings.push(...qaContinuity(scene));
   }
-  if (!spec && !input.endsWith('.pptx')) fail('--input must be a .pptx or provide --spec');
+  if (!spec && !input.endsWith('.pptx') && !input.endsWith('.pdf')) fail('--input must be a .pptx/.pdf or provide --spec');
 
   const errors = findings.filter((f) => f.level === 'error');
   const warnings = findings.filter((f) => f.level === 'warning');
@@ -193,8 +253,16 @@ function cmdScene(flags) {
 
 async function cmdRender(flags) {
   const input = flags.input || flags.spec;
-  if (!input) fail('Provide --input <slide_spec.yaml> or --input <deck.pptx>');
+  if (!input) fail('Provide --input <slide_spec.yaml> or --input <deck.pptx|deck.pdf>');
   const outDir = flags.output || 'preview';
+  if (input.endsWith('.pdf')) {
+    const r = renderPdfPages(input, outDir, { dpi: Number(flags.dpi || 110) });
+    if (!r.ok) fail(`PDF page render failed: ${r.reason}`);
+    const root = path.join(__dirname, '..');
+    const sheet = makeContactSheet(root, outDir, path.join(outDir, 'contact-sheet.png'), { cols: Number(flags.cols || 3) });
+    console.log(`Rendered ${r.pages} PDF page(s) -> ${outDir}${sheet.ok ? ' (contact sheet)' : ''}`);
+    return;
+  }
   if (input.endsWith('.pptx')) {
     const r = await renderPptxExternal(input, outDir);
     if (r.rendered) console.log(`Rendered PPTX with ${r.tool} -> ${r.outDir}`);
@@ -284,6 +352,14 @@ function cmdDoctor() {
   ];
   console.log('  optional tools:');
   optional.forEach(([name, bin, why]) => console.log(`    ${name}: ${bin || 'not found'}${bin ? '' : `  (optional: ${why})`}`));
+  const latex = texDoctor();
+  console.log('  latex (beamer renderer, default output):');
+  console.log(`    engine: ${latex.engine || 'not found'} ${latex.ok ? 'OK' : 'MISSING (install TeX Live or TinyTeX)'}`);
+  ['pdflatex', 'lualatex', 'latexmk', 'pdftoppm', 'pdfinfo'].forEach((t) => {
+    console.log(`    ${t}: ${latex.tools[t] || 'not found'}`);
+  });
+  console.log(`    beamer.cls: ${latex.packages['beamer.cls'] ? 'OK' : 'MISSING'}`);
+  if (latex.missing.length) console.log(`    missing packages: ${latex.missing.join(', ')}`);
   const schemaDir = path.join(__dirname, '..', 'schemas');
   console.log(`  schemas: ${fs.readdirSync(schemaDir).length} (${fs.readdirSync(schemaDir).join(', ')})`);
   console.log('  stages:', Object.keys(STAGE_MODULES).join(', '));
@@ -292,7 +368,8 @@ function cmdDoctor() {
 async function cmdCritique(flags) {
   const input = requireFlag(flags, 'input');
   const output = flags.output || input.replace(/\.ya?ml$/i, '') + '.revised.yaml';
-  const deck = flags.deck || 'out.pptx';
+  const renderer = flags.renderer || 'pptx';
+  const deck = flags.deck || (renderer === 'beamer' ? 'out.pdf' : 'out.pptx');
   const qaDir = flags['qa-dir'] || path.join(path.dirname(output), 'qa');
   const maxCycles = Number(flags['max-cycles'] || 3);
   const render = flags['no-render'] ? false : true;
@@ -306,9 +383,13 @@ async function cmdCritique(flags) {
   const { runCritiqueLoop } = require('./critics/loop');
   const root = path.join(__dirname, '..');
   [output, deck, qaDir].forEach((f) => ensureDir(path.dirname(path.resolve(f))));
-  const res = await runCritiqueLoop({ root, spec, qaDir, deckOut: deck, maxCycles, render });
+  const res = await runCritiqueLoop({
+    root, spec, qaDir, deckOut: deck, maxCycles, render, renderer,
+    specDir: path.dirname(path.resolve(input)),
+    buildDir: flags['build-dir'] || path.join(path.dirname(path.resolve(deck)), `${path.basename(deck).replace(/\.[^.]+$/, '')}-build`),
+  });
   fs.writeFileSync(output, dumpData(res.spec));
-  console.log(`critique loop: ${res.cycles.length} cycle(s), deck -> ${deck}`);
+  console.log(`critique loop (${renderer}): ${res.cycles.length} cycle(s), deck -> ${deck}`);
   res.cycles.forEach((c) => console.log(`  cycle ${c.cycle}: ${c.applied} change(s), ${c.hardFailures} hard failure(s), ${c.unresolvedHigh} unresolved high`));
   const m = res.metrics;
   console.log(`  slides ${m.slide_count}, visible words ${m.total_visible_words}, note/visible ${m.note_to_visible_ratio}, max layout streak ${m.max_repeated_layout_streak}`);
@@ -347,7 +428,39 @@ async function cmdDemo(flags) {
     findings,
   }, null, 2));
   console.log(`QA: ${errors.length} error(s), ${warnings.length} warning(s)`);
-  if (errors.length) process.exit(1);
+
+  console.log('== beamer build (default renderer) ==');
+  const pdfOut = path.join(outDir, 'demo-weekly-research-slides.pdf');
+  const beamer = await buildBeamer(loadData(path.join(ex, 'slide_spec.yaml')), {
+    output: pdfOut,
+    specDir: ex,
+    buildDir: path.join(outDir, 'beamer-build'),
+    handout: true,
+  });
+  beamer.findings.forEach((f) => console.log(`[${f.level}] ${f.check}: ${f.message}`));
+  const beamerErrors = beamer.findings.filter((f) => f.level === 'error');
+  console.log(`Built ${beamer.manifest.slides} slides -> ${pdfOut} (template ${beamer.manifest.template.name} v${beamer.manifest.template.version}, engine ${beamer.engine}, ${beamer.presentation.pages || '?'} pages)`);
+  if (beamer.handout && beamer.handout.ok) console.log(`Handout -> ${beamer.handout.pdf} (${beamer.handout.pages || '?'} pages)`);
+  const pagesDir = path.join(outDir, 'beamer-pages');
+  const pages = renderPdfPages(pdfOut, pagesDir, { dpi: 110 });
+  let sheetOk = false;
+  if (pages.ok) {
+    const sheet = makeContactSheet(root, pagesDir, path.join(pagesDir, 'contact-sheet.png'), { cols: 3 });
+    sheetOk = sheet.ok;
+    console.log(`Page renders -> ${pagesDir} (${pages.pages} PNG${sheetOk ? ', contact sheet' : ''})`);
+  } else {
+    console.log(`Page renders unavailable: ${pages.reason}`);
+  }
+  fs.writeFileSync(path.join(outDir, 'beamer_qa.json'), JSON.stringify({
+    template: beamer.manifest.template,
+    engine: beamer.engine,
+    pages: beamer.presentation.pages,
+    handout_pages: beamer.handout ? beamer.handout.pages : null,
+    page_renders: pages.ok ? pages.pages : 0,
+    contact_sheet: sheetOk,
+    findings: beamer.findings,
+  }, null, 2));
+  if (errors.length || beamerErrors.length) process.exit(1);
 }
 
 async function main() {
@@ -368,17 +481,19 @@ async function main() {
     case 'demo': await cmdDemo(flags); break;
     default:
       console.log('weekly-research-slides CLI');
-      console.log('  doctor   check runtime and optional tools');
-      console.log('  build    --input slide_spec.yaml --output out.pptx [--motion m.yaml] [--preview dir] [--scene scene.json]');
-      console.log('  qa       --input out.pptx [--spec slide_spec.yaml] [--delta weekly_delta.yaml] [--report qa.json]');
-      console.log('  render   --input slide_spec.yaml|deck.pptx --output dir');
+      console.log('  doctor   check runtime, optional tools and the LaTeX/Beamer stack');
+      console.log('  build    --input slide_spec.yaml --output out.pdf [--renderer beamer|pptx] [--preview]');
+      console.log('           beamer (default): .pdf output, template-driven LaTeX, handout + page renders');
+      console.log('           pptx (legacy):    .pptx output [--motion m.yaml] [--preview dir] [--scene scene.json]');
+      console.log('  qa       --input out.pdf|out.pptx [--spec slide_spec.yaml] [--delta weekly_delta.yaml] [--build-dir dir] [--report qa.json]');
+      console.log('  render   --input slide_spec.yaml|deck.pptx|deck.pdf --output dir');
       console.log('  inspect  --input deck.pptx [--json]');
       console.log('  edit     --input deck.pptx --ops ops.yaml --output deck2.pptx');
       console.log('  plan     --state state.yaml [--delta delta.yaml] [--stage diagnostic] [--output storyboard.yaml]');
       console.log('  diff     --prev state_prev.yaml --curr state_curr.yaml [--output weekly_delta.yaml]');
       console.log('  scene    --input slide_spec.yaml [--output scene.json|--format svg]');
       console.log('  validate --schema slide_spec --input file.yaml');
-      console.log('  critique --input slide_spec.yaml --output revised.yaml --deck out.pptx [--qa-dir qa] [--max-cycles 3] [--no-render]');
+      console.log('  critique --input slide_spec.yaml --output revised.yaml --deck out.pdf [--renderer beamer] [--qa-dir qa] [--max-cycles 3] [--no-render]');
       console.log('  (all commands accept --style academic-beamer|academic-metropolis|paper-figure|dark-explainer)');
       console.log('  demo     build + qa the bundled example');
   }

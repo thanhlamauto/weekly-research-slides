@@ -1,7 +1,7 @@
 {
   "name": "weekly-research-slides",
-  "version": "0.6.0",
-  "description": "Agent skill for turning weekly changes in research methods, evidence, claims, and diagnostics into editable PowerPoint research updates.",
+  "version": "0.7.0",
+  "description": "Agent skill for turning weekly changes in research methods, evidence, claims, and diagnostics into a template-driven LaTeX Beamer PDF (default) or editable PowerPoint research update.",
   "license": "MIT",
   "type": "commonjs",
   "private": false,
@@ -16,13 +16,15 @@
   "keywords": [
     "agent-skill",
     "research",
+    "beamer",
+    "latex",
+    "pdf",
     "powerpoint",
     "pptx",
     "presentation",
     "scientific-presentation",
     "lab-meeting",
     "research-workflow",
-    "pptxgenjs",
     "ai-agent"
   ],
   "bin": {
@@ -35,12 +37,15 @@
     "references",
     "schemas",
     "scripts",
-    "src"
+    "src",
+    "templates"
   ],
   "scripts": {
     "doctor": "node src/cli.js doctor",
     "demo": "node src/cli.js demo",
     "build": "node src/cli.js build",
+    "build:pdf": "node src/cli.js build --input examples/diagnostic-week/slide_spec.yaml --output examples/diagnostic-week/output/demo-weekly-research-slides.pdf --render-pages",
+    "build:pptx": "node src/cli.js build --input examples/diagnostic-week/slide_spec.yaml --output examples/diagnostic-week/output/demo-weekly-research-slides.pptx --renderer pptx",
     "qa": "node src/cli.js qa",
     "render": "node src/cli.js render",
     "inspect": "node src/cli.js inspect",

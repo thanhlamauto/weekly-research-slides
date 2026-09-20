@@ -6,6 +6,7 @@ const path = require('path');
 const { buildScene } = require('../renderer/buildScene');
 const { writePptx } = require('../renderer/pptxRenderer');
 const { renderSlidePreviews } = require('../renderer/preview');
+const { buildBeamer, renderPdfPages } = require('../beamer/build');
 const { qaScene } = require('../qa/geometry');
 const { qaScience } = require('../qa/scientific');
 const { qaPptx } = require('../qa/pptxPackage');
@@ -56,6 +57,8 @@ async function runCritiqueLoop(opts) {
   const deckOut = opts.deckOut;
   const maxCycles = Math.min(opts.maxCycles || 3, opts.hardMax || 3);
   const doRender = opts.render !== false;
+  const isBeamer = opts.renderer === 'beamer';
+  let beamerFindings = [];
 
   let spec = clone(opts.spec);
   const cycles = [];
@@ -67,6 +70,22 @@ async function runCritiqueLoop(opts) {
   let hardFailures = [];
   let unresolvedHigh = [];
   let scene = null;
+
+  // Build + render through the selected renderer. Beamer is the default
+  // deliverable; PPTX remains available for legacy/native-editability flows.
+  const buildDeck = async () => {
+    scene = buildScene(spec);
+    if (isBeamer) {
+      if (deckOut) {
+        const b = await buildBeamer(spec, {
+          output: deckOut, specDir: opts.specDir, buildDir: opts.buildDir, handout: false,
+        });
+        beamerFindings = b.findings;
+      }
+      return;
+    }
+    if (deckOut) await writePptx(scene, deckOut);
+  };
 
   for (let cycle = 1; cycle <= maxCycles; cycle += 1) {
     const cycleIssues = [];
@@ -89,12 +108,18 @@ async function runCritiqueLoop(opts) {
     spec = contentRev.spec;
 
     // 2. build + render
-    scene = buildScene(spec);
-    if (deckOut) await writePptx(scene, deckOut);
+    await buildDeck();
     if (doRender) {
-      const pv = renderSlidePreviews(scene, path.join(qaDir, 'renders'));
-      const im = analyzeImages(root, pv.dir);
-      images = im.ok ? im.images : null;
+      const renderDir = path.join(qaDir, 'renders');
+      if (isBeamer && deckOut) {
+        const pg = renderPdfPages(deckOut, renderDir, { dpi: 110 });
+        const im = pg.ok ? analyzeImages(root, renderDir) : { ok: false, reason: pg.reason };
+        images = im.ok ? im.images : null;
+      } else {
+        const pv = renderSlidePreviews(scene, renderDir);
+        const im = analyzeImages(root, pv.dir);
+        images = im.ok ? im.images : null;
+      }
     }
 
     // 3. visual critique + revision
@@ -104,19 +129,19 @@ async function runCritiqueLoop(opts) {
     spec = visualRev.spec;
 
     // 4. rebuild, then deck critique + revision
-    scene = buildScene(spec);
-    if (deckOut) await writePptx(scene, deckOut);
+    await buildDeck();
     const deckF = critiqueDeck(spec, scene, images);
     const deckRev = applyRevisions(spec, deckF, { mode: 'all' });
     pushAll(deckF, deckRev.applied);
     spec = deckRev.spec;
 
     // 5. final build + verify
-    scene = buildScene(spec);
-    if (deckOut) await writePptx(scene, deckOut);
+    await buildDeck();
     const geometry = qaScene(scene);
     const scientific = qaScience(spec);
-    const pkg = deckOut ? (await qaPptx(deckOut, { spec })).findings : [];
+    const pkg = isBeamer
+      ? beamerFindings
+      : (deckOut ? (await qaPptx(deckOut, { spec })).findings : []);
     hardFailures = [...geometry, ...scientific, ...pkg].filter((f) => f.level === 'error');
     unresolvedHigh = cycleIssues.filter((i) => i.severity === 'high' && !i.applied);
 
