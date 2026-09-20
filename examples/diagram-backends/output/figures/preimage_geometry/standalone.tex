@@ -1,0 +1,18 @@
+% Standalone TikZ figure export (weekly-research-slides).
+% mode: presentation
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+  \IfFontExistsTF{lmroman10-regular.otf}{\setmainfont{lmroman10-regular.otf}}{}
+\fi
+\usepackage{amsmath}
+\usepackage{amssymb}
+\input{tikz}
+\begin{document}
+\input{preimage_geometry.tex}
+\end{document}

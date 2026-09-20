@@ -1,0 +1,69 @@
+{
+  "input": "examples/diagram-backends/preimage_geometry.figure.yaml",
+  "kind": "spec",
+  "decision": {
+    "selected": "tikz",
+    "reason": [
+      "3 semantic objects",
+      "3 edges",
+      "simple acyclic flow",
+      "math-heavy labels (3)",
+      "figure type 'diagnostic' is conceptual",
+      "direct integration with Beamer"
+    ],
+    "explicit": false,
+    "stats": {
+      "nodes": 3,
+      "edges": 3,
+      "panels": 0,
+      "math_labels": 3,
+      "max_out_degree": 2,
+      "acyclic": true,
+      "has_cycle": false,
+      "nested_groups": false,
+      "has_freeform_geometry": false,
+      "node_types": [
+        "feature"
+      ]
+    },
+    "figure": {
+      "id": "preimage_geometry",
+      "type": "diagnostic",
+      "mode": "diagnostic"
+    }
+  },
+  "archetype": "feature-space",
+  "nodes": 3,
+  "edges": 3,
+  "width_cm": 7.5,
+  "height_cm": 3.586956521739131,
+  "render_pdf": "examples/diagram-backends/qa/preimage_geometry/render/standalone.pdf",
+  "images": [
+    {
+      "file": "slide-01.png",
+      "width": 590,
+      "height": 326,
+      "ink_ratio": 0.0267,
+      "border_touch": false,
+      "grid": [
+        0.0332,
+        0.0045,
+        0,
+        0.0199,
+        0.0129,
+        0.0029,
+        0.0654,
+        0.0509,
+        0.0496
+      ],
+      "grid_min": 0,
+      "grid_max": 0.0654,
+      "grid_ratio": 654.45,
+      "com_dx": -0.084,
+      "com_dy": 0.174,
+      "colors": 13,
+      "dominant_colors": 0
+    }
+  ],
+  "findings": []
+}

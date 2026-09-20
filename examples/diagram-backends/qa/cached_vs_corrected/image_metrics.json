@@ -1,0 +1,29 @@
+{
+  "images": [
+    {
+      "file": "slide-01.png",
+      "width": 1205,
+      "height": 242,
+      "ink_ratio": 0.047,
+      "border_touch": false,
+      "grid": [
+        0.0373,
+        0.0134,
+        0.0494,
+        0.0928,
+        0.0727,
+        0.0649,
+        0.0627,
+        0.0183,
+        0.0127
+      ],
+      "grid_min": 0.0127,
+      "grid_max": 0.0928,
+      "grid_ratio": 7.29,
+      "com_dx": -0.052,
+      "com_dy": -0.013,
+      "colors": 18,
+      "dominant_colors": 0
+    }
+  ]
+}

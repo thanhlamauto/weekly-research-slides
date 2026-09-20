@@ -1,0 +1,71 @@
+{
+  "input": "examples/diagram-backends/v3_v4.figure.yaml",
+  "kind": "spec",
+  "decision": {
+    "selected": "tikz",
+    "reason": [
+      "7 semantic objects",
+      "5 edges",
+      "simple acyclic flow",
+      "math-heavy labels (2)",
+      "figure type 'method-delta' is conceptual",
+      "direct integration with Beamer"
+    ],
+    "explicit": false,
+    "stats": {
+      "nodes": 7,
+      "edges": 5,
+      "panels": 2,
+      "math_labels": 2,
+      "max_out_degree": 1,
+      "acyclic": true,
+      "has_cycle": false,
+      "nested_groups": false,
+      "has_freeform_geometry": false,
+      "node_types": [
+        "feature",
+        "learned-module",
+        "output"
+      ]
+    },
+    "figure": {
+      "id": "v3_v4",
+      "type": "method-delta",
+      "mode": "delta"
+    }
+  },
+  "archetype": "method-delta",
+  "nodes": 7,
+  "edges": 5,
+  "width_cm": 19.399999999999995,
+  "height_cm": 2.6,
+  "render_pdf": "examples/diagram-backends/qa/v3_v4/render/standalone.pdf",
+  "images": [
+    {
+      "file": "slide-01.png",
+      "width": 1205,
+      "height": 242,
+      "ink_ratio": 0.039,
+      "border_touch": false,
+      "grid": [
+        0.0278,
+        0.0133,
+        0.0276,
+        0.0596,
+        0.0623,
+        0.0927,
+        0.0439,
+        0.0123,
+        0.0127
+      ],
+      "grid_min": 0.0123,
+      "grid_max": 0.0927,
+      "grid_ratio": 7.56,
+      "com_dx": -0.012,
+      "com_dy": -0.01,
+      "colors": 12,
+      "dominant_colors": 0
+    }
+  ],
+  "findings": []
+}

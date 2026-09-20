@@ -46,3 +46,14 @@ examples/**/output/beamer-build/*.vrb
 examples/**/output/beamer-build/*.pdf
 # keep the Beamer contact sheet, drop the per-page intermediates (docs/images has the gallery copies)
 examples/**/output/beamer-pages/slide-*.png
+
+# diagram-backends demo: keep sources, PDFs, contact sheet and reports; drop
+# latex aux, per-page intermediates and standalone render scratch
+examples/**/output/pages/slide-*.png
+examples/**/output/figures/**/*.aux
+examples/**/output/figures/**/*.log
+examples/**/output/figures/**/*.fls
+examples/**/output/figures/**/*.fdb_latexmk
+examples/**/output/figures/**/*.out
+examples/**/output/figures/**/*.synctex.gz
+examples/**/qa/**/render/

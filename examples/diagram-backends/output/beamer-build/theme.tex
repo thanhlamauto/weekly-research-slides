@@ -1,0 +1,92 @@
+% ---------------------------------------------------------------------------
+% academic-beamer - presentation theme for weekly-research-slides
+%
+% Independent implementation. Design principles were studied from LaTeX
+% Beamer (GPL-2.0-or-later / LPPL-1.3c) and the Metropolis theme
+% (CC BY-SA 4.0), but no code or assets are reused. The palette mirrors the
+% PowerPoint academic style so both renderers read as one system.
+%
+% This file is versioned with templates/academic-beamer/version.json.
+% ---------------------------------------------------------------------------
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+  \IfFontExistsTF{lmroman10-regular.otf}{\setmainfont{lmroman10-regular.otf}}{}
+  \IfFontExistsTF{lmsans10-regular.otf}{\setsansfont{lmsans10-regular.otf}}{}
+  \IfFontExistsTF{lmmono10-regular.otf}{\setmonofont{lmmono10-regular.otf}}{}
+\fi
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{ragged2e}
+
+% Shared palette + TikZ vocabulary (also used by standalone figure exports).
+\input{tikz}
+
+\graphicspath{{assets/}}
+
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+
+% --- palette is defined in tikz.tex ----------------------------------------
+
+\setbeamercolor{normal text}{fg=wrsInk,bg=white}
+\setbeamercolor{structure}{fg=wrsBlue}
+\setbeamercolor{frametitle}{fg=wrsInk,bg=white}
+\setbeamercolor{title}{fg=wrsInk}
+\setbeamercolor{subtitle}{fg=wrsInkSoft}
+\setbeamercolor{author}{fg=wrsMuted}
+\setbeamercolor{date}{fg=wrsFaint}
+\setbeamercolor{footline}{fg=wrsMuted}
+\setbeamercolor{itemize item}{fg=wrsBlue}
+\setbeamercolor{itemize subitem}{fg=wrsMuted}
+\setbeamercolor{wrsband}{fg=wrsInkSoft,bg=wrsPanel}
+\setbeamercolor{caption name}{fg=wrsMuted}
+
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize}
+\setbeamerfont{author}{size=\small}
+\setbeamerfont{date}{size=\scriptsize}
+\setbeamerfont{footline}{size=\scriptsize}
+
+% --- frame chrome: left-aligned title, hairline rule, minimal footer --------
+\setbeamertemplate{frametitle}{%
+  \vspace{0.4em}%
+  \raggedright\usebeamerfont{frametitle}\insertframetitle\par
+  \vspace{0.12em}%
+  {\color{wrsRule}\rule{\textwidth}{0.4pt}}%
+}
+
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.2ex,dp=1.1ex,leftskip=1em,rightskip=1em]{}%
+      \usebeamerfont{footline}%
+      \usebeamercolor[fg]{footline}%
+      \insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber%
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+\setbeamertemplate{title page}{%
+  \vspace{0.6em}%
+  {\color{wrsBlue}\rule{2.2em}{1.5pt}}\par\vspace{0.9em}%
+  {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}%
+  \vspace{0.6em}%
+  {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+  \vspace{1.4em}%
+  {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par}%
+  \vspace{0.3em}%
+  {\usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par}%
+}

@@ -1,0 +1,86 @@
+\begin{frame}[plain]
+\wrsTitlePage{Diagram backends}{Which backend should draw which scientific visual?}{Week 1 \textperiodcentered{} one semantic figure spec, rendered by TikZ, Draw.io and native Beamer layout.}{Weekly research update \textperiodcentered{} synthetic demo \textperiodcentered{} version 0.1}
+\note{Name the routing question. Do not explain each backend yet; the deck shows them.}
+\end{frame}
+
+\begin{frame}{What stays constant across renderers}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Established}
+\begin{itemize}
+  \item \textbf{Method model} One semantic model of the method
+  \item \textbf{Figure spec} Nodes
+  \item \textbf{Routing} The renderer is chosen explicitly or by complexity heuristics.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{This week}
+\wrsBody{Four renderers coexist in one deck. Conceptual diagrams are native TikZ, the large architecture stays in Draw.io, results stay a native table, and the deck is still one Beamer PDF.}\par\vspace{0.4em}
+\wrsTiny{Previous: separate figure pipelines}
+\end{columns}
+\note{Keep it short. The point is that the science does not move between renderers.}
+\end{frame}
+
+\begin{frame}{Direct reuse vs learned correction}
+\wrsLead{The difference should be visible in under five seconds.}\par\vspace{0.5em}
+\wrsDiagram[0.97\linewidth]{figures/cached_vs_corrected.tex}
+\vspace{0.3em}\wrsQuiet{Same inputs, same cache, same output; only the operation between cache and output differs. TikZ keeps both panels in one coordinate system.}
+\note{Point at the middle operation in both panels. Everything else is deliberately identical.}
+\end{frame}
+
+\begin{frame}{Correction direction vs desired direction}
+\wrsDiagram{figures/preimage_geometry.tex}
+\vspace{0.3em}\wrsQuiet{The correction is nearly orthogonal to the desired direction; the angle is annotated from the same measurement as the diagnostic slide.}
+\note{Reveal objects first, then the desired direction, then the correction. The angle is the observation.}
+\end{frame}
+
+\begin{frame}{Method delta: v3 to v4}
+\wrsDiagram[0.97\linewidth]{figures/v3_v4.tex}
+\vspace{0.3em}\wrsQuiet{Unchanged components keep their layer across both panels and stay muted; the inserted correction is the only highlighted object.}
+\note{Compare left and right by position, not by reading every label.}
+\end{frame}
+
+\begin{frame}{Large architecture stays editable in Draw.io}
+\wrsFigure[0.92\linewidth]{assets/lesa_overview.pdf}
+\vspace{0.3em}\wrsQuiet{Draw.io remains the backend for large editable architecture figures; Beamer includes the exported PDF directly.}
+\note{This figure is intentionally not TikZ; the router would choose Draw.io for it.}
+\end{frame}
+
+\begin{frame}{Renderer cost and editability}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc}
+\toprule
+Method & \textbf{Compile (s)} & \textbf{Native typography} & \textbf{Editable source} \\
+\midrule
+\textbf{\textcolor{wrsBlue}{TikZ conceptual}}\newline{\tiny\color{wrsMuted}(this week)} & \textbf{\textcolor{wrsBlue}{1.20\ {\tiny\color{wrsGreen}(once)}}} & \textbf{\textcolor{wrsBlue}{1\ {\tiny\color{wrsGreen}(yes)}}} & \textbf{\textcolor{wrsBlue}{0.50\ {\tiny\color{wrsGreen}(tex)}}} \\
+Draw.io architecture\newline{\tiny\color{wrsMuted}(last week)} & 0.40\ {\tiny\color{wrsGreen}(pdf)} & 0.50\ {\tiny\color{wrsGreen}(via pdf)} & 1\ {\tiny\color{wrsGreen}(gui)} \\
+Python plot & 0.30\ {\tiny\color{wrsGreen}(pre)} & 0.50\ {\tiny\color{wrsGreen}(no)} & 0.50\ {\tiny\color{wrsGreen}(script)} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsTiny{lower is better; 1 = native; 1 = full}
+\vspace{0.25em}\wrsQuiet{TikZ costs a compile step and pays back in native typography and direct Beamer integration; Draw.io stays best for large editable figures.}
+\note{Honest trade-off, not a benchmark of quality.}
+\end{frame}
+
+\begin{frame}{Limitations and open questions}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Current limitations}
+\begin{itemize}
+  \item TikZ routing is heuristic; the decision is recorded but not yet learned from feedback.
+  \item Only conceptual and diagnostic archetypes are implemented in v0.1.
+  \item PGFPlots is optional and not used by the default plot pipeline.
+  \item Overlays inside a scaled figure are not supported.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Open questions}
+\begin{itemize}
+  \item Should routing learn from critic outcomes across weeks?
+  \item Can the same figure spec drive a paper-ready export automatically?
+  \item When does a TikZ diagram become too large to stay readable in a slide?
+\end{itemize}
+\end{columns}
+\note{Stop here. Discussion follows.}
+\end{frame}
