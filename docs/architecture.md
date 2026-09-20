@@ -63,8 +63,23 @@ slide's XML, and writes standard `<p:transition>` and `<p:timing>` nodes for the
 requested semantic groups. The static deck remains canonical; the animated deck
 is a separate file.
 
-## Editorial critique loop (`src/critics/`)
+## Academic style system (`src/renderer/styles.js`)
 
+Style is separated from slide implementations: typography, colour, layout,
+blocks, outer frame, figure treatment and decoration policy live in a profile.
+
+```text
+styles.js (academic-beamer | academic-metropolis | paper-figure | dark-explainer)
+    -> theme.js (resolved LAYOUT / COLORS / FONT / STROKE / STYLE)
+    -> chrome (frame title, rule, footer, progress, citation)
+    -> layouts (blocks, figure-first sizing)
+```
+
+Selected per build with `--style` / `WRS_PPT_STYLE`; `academic-beamer` is the
+default. `visual-grammar/draw.js#block` renders semantic blocks with a thin left
+rule.
+
+## Editorial critique loop (`src/critics/`)
 ```text
 slide_spec.yaml
    -> content critic -> revise source -> build -> render

@@ -3,6 +3,36 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.6.0] - 2026-09-20
+
+### Added
+
+- **Academic PowerPoint visual language** (`academic-beamer`, default):
+  - a style system (`src/renderer/styles.js`) with typography, colour, layout,
+    frame, blocks, figure-treatment and decoration policy separated from slide
+    implementations;
+  - left-aligned one-line frame titles, subtle title rule, minimal footer with
+    page numbers, optional thin progress line (`academic-metropolis`), and an
+    understated citation slot;
+  - semantic blocks (`Observation`, `Claim`, `Limitation`, …) with a thin left
+    rule instead of coloured cards; the diagnostic archetype now uses them;
+  - restrained academic palette (near-black text, two accents, neutral fills);
+  - figure-first sizing (geometry and method diagrams dominate the slide);
+  - `paper-figure` and `dark-explainer` variants; `--style` selection.
+- Critic updates: `beamer_overexplained` (content), academic visual checks
+  (`card_layout`, `figure_not_dominant`, tighter card thresholds), deck
+  `card_heavy_deck`, and `style_metrics.json` (cards, blocks, accent colours,
+  figure-area ratio, font hierarchy).
+- Before/after demo and A/B contact sheets
+  (`docs/images/academic-{beamer,metropolis}-contact-sheet.png`,
+  `academic-diagnostic.png`) plus an editable
+  `examples/diagnostic-week/output/demo-weekly-research-slides-academic.pptx`.
+
+### Changed
+
+- The default deck style is now `academic-beamer`; the earlier colourful
+  card-based look remains available as a reference in the gallery.
+
 ## [0.5.0] - 2026-09-20
 
 ### Added

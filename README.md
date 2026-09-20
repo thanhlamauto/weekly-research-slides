@@ -81,6 +81,42 @@ actual PPTX instead).
 |---|---|
 | ![benchmark slide 7](docs/images/gallery-slide-07.png) | ![diagnostic slide 9](docs/images/gallery-slide-09.png) |
 
+## Academic PowerPoint style
+
+The default visual language is academic: **PowerPoint mechanics, Beamer-like
+restraint**. It does not replicate LaTeX Beamer; it keeps native editability,
+figures, video and animation while adopting the clarity of strong academic
+slides.
+
+Before (previous default) vs after (`academic-beamer`):
+
+| before | after |
+|---|---|
+| ![before contact sheet](docs/images/gallery-contact-sheet.png) | ![academic contact sheet](docs/images/academic-beamer-contact-sheet.png) |
+
+A diagnostic slide, before and after:
+
+| before | after |
+|---|---|
+| ![diagnostic before](docs/images/gallery-slide-06.png) | ![academic diagnostic](docs/images/academic-diagnostic.png) |
+
+```bash
+node src/cli.js build --input slide_spec.yaml --output out.pptx \
+  --style academic-beamer     # default
+node src/cli.js build --input slide_spec.yaml --output out.pptx \
+  --style academic-metropolis # more whitespace + thin progress line
+```
+
+Styles: `academic-beamer` (default), `academic-metropolis`, `paper-figure`,
+`dark-explainer`. See [`references/academic-slide-style.md`](references/academic-slide-style.md)
+and the editable
+[`examples/diagnostic-week/output/demo-weekly-research-slides.pptx`](examples/diagnostic-week/output/demo-weekly-research-slides.pptx).
+
+Design: typography-led hierarchy, near-black text on light ground, at most two
+accents, left-aligned one-line titles, minimal footer, semantic blocks used
+sparingly, figures given 60–85% of the slide, no gradients/shadows/decorative
+icons. `academic-metropolis` adds a thin progress line and more whitespace.
+
 ## Editorial critique loop
 
 Agent-generated slides are often verbose, repetitive and visually dense. The

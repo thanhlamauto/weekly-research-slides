@@ -3,7 +3,7 @@ name: weekly-research-slides
 description: Turn the week's changes in research methods, evidence, claims, and diagnostics into a concise, visually explanatory, editable PowerPoint update for a supervisor, PI, mentor, or research group. Use when the user asks to make or update weekly research slides, prepare a lab-meeting deck, compare this week's method against last week's, explain competitor methods visually, build slides that support a research claim with diagnostics, or turn experiment notes into an editable research PowerPoint. Not for generic business, marketing, or sales decks.
 license: MIT
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
 ---
 
 # Weekly Research Slides
@@ -46,7 +46,7 @@ The primary output is an editable `.pptx` built from structured source.
 
    ```bash
    wrs build --input slide_spec.yaml --output deck.pptx \
-     --motion motion_spec.yaml --preview preview/
+     --motion motion_spec.yaml --preview preview/ --style academic-beamer
    wrs qa --input deck.pptx --spec slide_spec.yaml --delta weekly_delta.yaml
    wrs render --input deck.pptx --output rendered/   # if LibreOffice exists
    ```
@@ -146,6 +146,7 @@ content. See `skills/research-method-figure/SKILL.md`.
 - `references/editing-existing-pptx.md` — inspect and conservative edits.
 - `references/review-checklist.md` — scientific and visual QA.
 - `references/editorial-critique.md` — content / visual / deck critique loop.
+- `references/academic-slide-style.md` — the default academic visual language.
 - `skills/research-method-video/SKILL.md` — method → Manim explainer video.
 - `skills/research-method-figure/SKILL.md` — method → editable scientific figure.
 - `references/layout-contracts.md` — shared layout limits across slides, figures and video.
