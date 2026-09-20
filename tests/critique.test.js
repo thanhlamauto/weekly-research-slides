@@ -106,7 +106,7 @@ test('visual critic reports geometry overflow as a hard failure', () => {
   const spec = { deck: { title: 't', stage: 'diagnostic', week: 1 }, slides: [
     { id: 'd', archetype: 'diagnostic', title: 'Diagnostic D: a question long enough to matter here', content: {
       id: 'D', question: 'Does it work?', claim_ids: ['C1'], measurement: 'cos = 0.1',
-      observation: 'This observation is deliberately far too long to fit inside the small diagnostic band and it keeps going and going and going and going and going.',
+      observation: 'This observation is deliberately far too long to fit inside the small diagnostic band and it keeps going and going and going and going and going and then it keeps going even more and more and more and more and more until it is far too tall.',
       interpretation: 'Short.', can_conclude: 'Yes.', cannot_conclude: 'No.',
     } },
   ] };
