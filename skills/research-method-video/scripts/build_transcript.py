@@ -19,6 +19,7 @@ import yaml
 import _common as C
 import transcript as T
 import subtitles as S
+import delivery as D
 
 
 def main() -> int:
@@ -49,6 +50,7 @@ def main() -> int:
 
     import json
     tdir.mkdir(parents=True, exist_ok=True)
+    plan = D.write_plan(enriched, tdir / "delivery_plan.yaml")
     (tdir / "narration.md").write_text(T.narration_markdown(enriched), encoding="utf-8")
     (tdir / "transcript.json").write_text(
         json.dumps(enriched, indent=2, ensure_ascii=False), encoding="utf-8")
@@ -62,6 +64,7 @@ def main() -> int:
           f"mode={enriched.get('mode', 'silent')}")
     print(f"  words: {enriched['word_count']}  estimated duration: {enriched['duration_seconds']:.1f}s  "
           f"cues: {len(cues)}  max line: {S.max_line_length(cues)}")
+    print(f"  delivery plan: profile {plan['profile']}, {len(plan['chunks'])} semantic chunk(s)")
     for scene in enriched["scenes"]:
         print(f"  {scene['id']:<28} {scene['duration_seconds']:6.1f}s  {scene['word_count']:>3} words")
     return 0

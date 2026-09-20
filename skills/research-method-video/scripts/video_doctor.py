@@ -39,6 +39,26 @@ def main() -> int:
     ffmpeg = shutil.which("ffmpeg")
     print(f"  ffmpeg: {'OK ' + ffmpeg if ffmpeg else 'MISSING'}  (frame extraction, concat)")
 
+    # narration backends (never prints credential contents)
+    try:
+        from audio import voice_backends
+        backends = voice_backends()
+    except Exception as exc:  # pragma: no cover
+        backends = {}
+        print(f"  voice backends: unavailable ({exc})")
+    if backends:
+        gem = backends["gemini"]
+        gem_status = "OK" if gem["available"] else "UNAVAILABLE"
+        if gem.get("mode") == "adc-gcloud-user":
+            gem_status = "WARNING"
+        print(f"  Gemini TTS: {gem_status}  ({gem['detail']})")
+        print(f"    model: gemini-2.5-flash-preview-tts (configurable); voice: Kore (configurable)")
+        say = backends["macos-say"]
+        print(f"  macOS say: {'OK' if say['available'] else 'UNAVAILABLE'}  ({say['detail']})")
+        rec = backends["recorded"]
+        print(f"  recorded alignment: OK  ({rec['detail']})")
+        print(f"    WhisperX: {'OK' if shutil.which('whisperx') or _mod('whisperx') else 'optional / unavailable'}")
+
     latex = shutil.which("latex") or shutil.which("pdflatex")
     if latex:
         print(f"  latex: OK {latex}  (optional; v0.1 uses Pango Text)")

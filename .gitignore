@@ -24,6 +24,17 @@ examples/lesa/renders/**/_concat.txt
 examples/lesa/renders/**/*_concat.txt
 examples/lesa/qa/frames/
 examples/lesa/transcript/audio/
+
+# voice work: never commit credentials; keep raw A/B audio local (compressed
+# samples and comparison.md are committed instead)
+.env
+.env.*
+*.key
+*credentials*.json
+examples/**/qa/voice/ab/**/*.wav
+examples/**/qa/voice/ab/**/*.aiff
+examples/**/qa/voice/ab/**/cache/
+examples/**/qa/voice/ab/**/chunks/
 examples/lesa/renders/_narrated_work/
 
 # critique loop: keep contact sheets + reports, drop per-slide intermediates

@@ -7,6 +7,7 @@ estimated timings without changing the canonical text.
 
 from __future__ import annotations
 
+import copy
 import json
 import pathlib
 import re
@@ -148,6 +149,82 @@ def estimate(data: dict) -> tuple[dict, list[dict]]:
     return enriched, word_times
 
 
+DWELL_SURPLUS_WEIGHT = {"introduction": 3.0, "aha": 4.0, "comparison": 2.5, "equation": 2.5,
+                        "conclusion": 2.0, "normal": 1.0}
+
+
+def apply_audio_timing(data: dict, scene_audio: dict[str, float],
+                       chunk_map: dict[str, list[dict]] | None = None) -> dict:
+    """Replace estimated timings with actual narration audio durations.
+
+    ``scene_audio`` maps scene id -> synthesized scene audio seconds.
+    ``chunk_map`` optionally maps scene id -> [{chunk_id, beat_ids, duration}]
+    so speaking time is distributed per semantic chunk rather than per scene.
+    The words never change; only timing does.
+    """
+    out = copy.deepcopy(data)
+    out["mode"] = "tts"
+    cursor = 0.0
+    for scene in out["scenes"]:
+        beats = scene["narration"]
+        actual = scene_audio.get(scene["id"])
+        if actual is None:
+            scene["start"] = round(cursor, 3)
+            scene["end"] = round(cursor + scene.get("duration_seconds", 0.0), 3)
+            cursor = scene["end"]
+            continue
+        for chunk in (chunk_map or {}).get(scene["id"], []):
+            ids = set(chunk["beat_ids"])
+            members = [b for b in beats if b["beat_id"] in ids]
+            weights = [max(1, b.get("word_count") or len(words_of(b["text"]))) for b in members]
+            total_w = sum(weights) or 1
+            for b, w in zip(members, weights):
+                b["speaking_seconds"] = round(chunk["duration"] * w / total_w, 3)
+                b["audio"] = {"chunk_id": chunk["chunk_id"], "duration": round(chunk["duration"], 3)}
+        base_speak = sum(b.get("speaking_seconds", 0.0) for b in beats)
+        base_dwell = sum(b.get("dwell_seconds", 0.0) for b in beats)
+        base_total = base_speak + base_dwell
+        if actual >= base_total:
+            surplus = actual - base_total
+            weights = [DWELL_SURPLUS_WEIGHT.get(b.get("kind", "normal"), 1.0) for b in beats]
+            total_w = sum(weights) or 1
+            for b, w in zip(beats, weights):
+                b["dwell_seconds"] = round(b.get("dwell_seconds", 0.0) + surplus * w / total_w, 3)
+                b["dwell_source"] = "audio-surplus"
+        elif base_speak > 0:
+            factor = max(0.6, (actual - base_dwell) / base_speak)
+            for b in beats:
+                b["speaking_seconds"] = round(b.get("speaking_seconds", 0.0) * factor, 3)
+        t = cursor
+        for b in beats:
+            b["start"] = round(t, 3)
+            t += b.get("speaking_seconds", 0.0)
+            b["end"] = round(t, 3)
+            t += b.get("dwell_seconds", 0.0)
+            b["end_with_dwell"] = round(t, 3)
+        scene["start"] = round(cursor, 3)
+        scene["end"] = round(t, 3)
+        scene["duration_seconds"] = round(t - cursor, 3)
+        scene["audio_duration_seconds"] = round(actual, 3)
+        scene["tail_dwell"] = round(beats[-1].get("dwell_seconds", 0.0) if beats else 0.0, 3)
+        cursor = t
+    out["duration_seconds"] = round(cursor, 3)
+    out["word_count"] = sum(s.get("word_count", 0) for s in out["scenes"])
+    return out
+
+
+def word_times_from_timings(data: dict) -> list[dict]:
+    """Word times derived from audio-adjusted beat timings."""
+    out: list[dict] = []
+    for scene in data["scenes"]:
+        for beat in scene["narration"]:
+            words = beat.get("words") or words_of(beat["text"])
+            out.extend([{**w, "scene_id": scene["id"], "beat_id": beat["beat_id"]}
+                        for w in _distribute(words, beat.get("start", 0.0),
+                                             max(0.1, beat.get("speaking_seconds", 0.1)))])
+    return out
+
+
 def link_check(data: dict, scene_spec: dict | None) -> list[dict]:
     findings = []
     if not scene_spec:
@@ -177,6 +254,15 @@ def narration_markdown(data: dict) -> str:
     aud = data["audience"]
     lines.append(f"- audience: `{aud['level']}` (target ~{data.get('target_wpm', '?')} wpm)")
     lines.append(f"- mode: `{data.get('mode', 'silent')}`")
+    narration_cfg = data.get("narration") or {}
+    if narration_cfg:
+        backend = narration_cfg.get("backend", "silent")
+        voice = narration_cfg.get("voice")
+        voice_name = voice.get("name") if isinstance(voice, dict) else voice
+        profile = narration_cfg.get("profile")
+        lines.append(f"- narration: backend `{backend}`"
+                     + (f", voice `{voice_name}`" if voice_name else "")
+                     + (f", profile `{profile}`" if profile else ""))
     if data.get("duration_seconds"):
         lines.append(f"- estimated duration: {data['duration_seconds']:.1f}s "
                      f"({data.get('word_count', 0)} words)")
@@ -185,6 +271,9 @@ def narration_markdown(data: dict) -> str:
         lines.append(f"## {scene['id']} — {scene.get('title', '')}".rstrip(" —"))
         if scene.get("purpose"):
             lines.append(f"*Purpose: {scene['purpose']}*")
+        if scene.get("audio_duration_seconds"):
+            lines.append(f"*Audio: {scene['audio_duration_seconds']:.1f}s "
+                         f"(timing from synthesized narration)*")
         lines.append("")
         for beat in scene["narration"]:
             meta = []
@@ -201,6 +290,24 @@ def narration_markdown(data: dict) -> str:
             if beat.get("emphasis"):
                 lines.append("")
                 lines.append(f"*emphasis: {', '.join(beat['emphasis'])}*")
+            d = beat.get("delivery") or {}
+            if d:
+                bits = []
+                if d.get("intent"):
+                    bits.append(f"intent {d['intent']}")
+                if d.get("tone"):
+                    bits.append(d["tone"])
+                if d.get("pace"):
+                    bits.append(f"pace {d['pace']}")
+                if d.get("pause_before_ms"):
+                    bits.append(f"pause {d['pause_before_ms']}ms before")
+                if d.get("pause_after_ms"):
+                    bits.append(f"pause {d['pause_after_ms']}ms after")
+                if bits:
+                    lines.append("")
+                    lines.append(f"*delivery: {'; '.join(bits)}*")
+                if d.get("direction"):
+                    lines.append(f"*direction: {d['direction']}*")
             lines.append("")
         if scene.get("takeaway"):
             lines.append(f"> Takeaway: {scene['takeaway']}")

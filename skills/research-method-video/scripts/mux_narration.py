@@ -11,6 +11,7 @@ no silent gap is longer than the animation. Scenes are then concatenated.
 from __future__ import annotations
 
 import argparse
+import json
 import pathlib
 import shutil
 
@@ -59,18 +60,29 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--project", default="examples/lesa")
     ap.add_argument("--quality", choices=["draft", "final"], default="final")
+    ap.add_argument("--backend", default="auto", choices=["auto", "gemini", "macos-say", "say"],
+                    help="which narration audio to mux (auto prefers the Gemini audio when present)")
     ap.add_argument("--audio-dir", default=None)
     ap.add_argument("--output", default=None)
     args = ap.parse_args()
 
     proj = C.load_project(pathlib.Path(args.project))
-    audio_dir = pathlib.Path(args.audio_dir) if args.audio_dir else proj["path"] / "transcript" / "audio"
+    tdir = proj["path"] / "transcript"
+    if args.audio_dir:
+        audio_dir = pathlib.Path(args.audio_dir)
+    elif args.backend == "gemini" or (args.backend == "auto"
+                                      and (tdir / "audio" / "gemini" / "audio_manifest.json").exists()):
+        audio_dir = tdir / "audio" / "gemini"
+    else:
+        audio_dir = tdir / "audio"
     if not audio_dir.exists():
         C.fail(f"no narration audio in {audio_dir}; run tts_narration.py or record narration first")
+    print(f"narration audio: {audio_dir}")
 
     work = proj["path"] / "renders" / "_narrated_work" / args.quality
     work.mkdir(parents=True, exist_ok=True)
     pieces = []
+    report = {"quality": args.quality, "audio_dir": str(audio_dir), "scenes": []}
     print(f"muxing {len(proj['spec']['scenes'])} scene(s) at {args.quality} quality")
     for scene in proj["spec"]["scenes"]:
         sid = scene["id"]
@@ -83,14 +95,31 @@ def main() -> int:
         out = work / f"{sid}.mp4"
         vd, ad = mux_scene(video, audio, out)
         pieces.append(out)
-        delta = ad - vd
-        note = f"video +{delta:.1f}s hold" if delta > 0 else f"audio padded +{-delta:.1f}s"
+        pad = max(0.0, ad - vd)
+        hold = max(0.0, vd - ad)
+        report["scenes"].append({"id": sid, "video": round(vd, 3), "audio": round(ad, 3),
+                                 "end_frame_padding": round(pad, 3), "audio_silence": round(hold, 3)})
+        if pad > 3.0:
+            note = f"video +{pad:.1f}s frozen (REBUILD PACING: audio is much longer)"
+        elif pad > 1.5:
+            note = f"video +{pad:.1f}s frozen (check pacing)"
+        elif pad > 0:
+            note = f"video +{pad:.1f}s hold"
+        else:
+            note = f"audio padded +{hold:.1f}s"
         print(f"  {sid:<28} video {vd:5.1f}s  audio {ad:5.1f}s  ({note})")
 
     out = pathlib.Path(args.output) if args.output else \
         proj["path"] / "renders" / args.quality / "lesa-method-explainer-narrated.mp4"
     concat(pieces, out)
+    total_pad = sum(s["end_frame_padding"] for s in report["scenes"])
+    report["total_end_frame_padding"] = round(total_pad, 3)
+    report["output"] = str(out)
+    (out.parent / "narration_mux_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(f"narrated video -> {out} ({probe_duration(out):.1f}s)")
+    print(f"end-frame padding: {total_pad:.1f}s total (report: {out.parent / 'narration_mux_report.json'})")
+    if total_pad > 3.0:
+        print("warning: excessive end-frame padding; render with '--timing transcript' or rebuild the pacing")
     return 0
 
 

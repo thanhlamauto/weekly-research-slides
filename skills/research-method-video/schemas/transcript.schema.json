@@ -27,6 +27,39 @@
       }
     },
     "mode": { "type": "string", "enum": ["silent", "tts", "recorded"] },
+    "narration": {
+      "type": "object",
+      "description": "Project-level narration configuration. The transcript stays provider-independent; the delivery plan and provider prompt are derived from it.",
+      "additionalProperties": false,
+      "properties": {
+        "backend": { "type": "string", "enum": ["gemini", "macos-say", "say", "pyttsx3", "recorded", "silent", "auto"] },
+        "model": { "type": "string" },
+        "voice": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "object", "additionalProperties": false,
+              "properties": { "name": { "type": "string" } } }
+          ]
+        },
+        "profile": { "type": "string" },
+        "pacing": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "target_wpm": { "type": "number", "minimum": 60 },
+            "min_concept_dwell_ms": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "fallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "backend": { "type": "string" },
+            "voice": { "type": "string" }
+          }
+        }
+      }
+    },
     "duration_seconds": { "type": "number", "description": "Computed total duration." },
     "word_count": { "type": "integer" },
     "target_wpm": { "type": "number" },
@@ -47,6 +80,7 @@
           "end": { "type": "number" },
           "duration_seconds": { "type": "number" },
           "tail_dwell": { "type": "number" },
+          "audio_duration_seconds": { "type": "number", "description": "Actual synthesized narration duration when available." },
           "word_count": { "type": "integer" },
           "narration": {
             "type": "array",
@@ -72,6 +106,30 @@
                 "speaking_seconds": { "type": "number" },
                 "word_count": { "type": "integer" },
                 "words": { "type": "array", "items": { "type": "string" } },
+                "dwell_source": { "type": "string", "enum": ["kind", "audio-surplus", "authored"] },
+                "audio": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "chunk_id": { "type": "string" },
+                    "duration": { "type": "number" }
+                  }
+                },
+                "delivery": {
+                  "type": "object",
+                  "description": "Optional prosody metadata. All fields are optional; strong defaults come from the intent and the voice profile.",
+                  "additionalProperties": false,
+                  "properties": {
+                    "intent": { "type": "string" },
+                    "tone": { "type": "string" },
+                    "pace": { "type": "string" },
+                    "energy": { "type": "string" },
+                    "pause_before_ms": { "type": "integer", "minimum": 0, "maximum": 1200 },
+                    "pause_after_ms": { "type": "integer", "minimum": 0, "maximum": 1200 },
+                    "emphasis": { "type": "array", "items": { "type": "string" } },
+                    "direction": { "type": "string" }
+                  }
+                },
                 "cue": {
                   "type": "object",
                   "additionalProperties": false,

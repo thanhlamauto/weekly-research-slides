@@ -30,15 +30,63 @@ def probe_duration(path: str | pathlib.Path) -> float:
 # ---------------------------------------------------------------------------
 # TTS
 # ---------------------------------------------------------------------------
+def gemini_status() -> dict:
+    try:
+        from tts_gemini import auth_status
+        return auth_status()
+    except Exception as exc:  # pragma: no cover
+        return {"available": False, "mode": None, "detail": f"gemini adapter unavailable: {exc}"}
+
+
 def tts_backends() -> dict:
-    return {"say": bool(shutil.which("say")), "pyttsx3": _has("pyttsx3")}
+    return {"say": bool(shutil.which("say")), "pyttsx3": _has("pyttsx3"),
+            "gemini": gemini_status()["available"]}
+
+
+def voice_backends() -> dict:
+    """Backend availability for doctor output and selection (never credentials)."""
+    gem = gemini_status()
+    say = bool(shutil.which("say"))
+    return {
+        "gemini": {"available": gem["available"], "mode": gem["mode"], "detail": gem["detail"],
+                   "quality": "expressive synthesized narration (preferred)"},
+        "macos-say": {"available": say, "mode": "local" if say else None,
+                      "detail": "macOS say (local fallback / smoke test)" if say else "say not on PATH",
+                      "quality": "intelligible but flat; fallback only"},
+        "pyttsx3": {"available": _has("pyttsx3"), "mode": "local" if _has("pyttsx3") else None,
+                    "detail": "pyttsx3", "quality": "fallback only"},
+        "recorded": {"available": True, "mode": "human",
+                     "detail": "human recording + forced alignment (highest quality)", "quality": "human"},
+    }
+
+
+def select_backend(requested: str = "auto", *, prefer=("gemini", "macos-say", "pyttsx3")) -> str:
+    name = "macos-say" if requested == "say" else requested
+    backends = voice_backends()
+    if name in (None, "", "auto"):
+        for candidate in prefer:
+            if backends[candidate]["available"]:
+                return candidate
+        return "none"
+    if name == "silent":
+        return "silent"
+    if name not in backends:
+        raise AudioError(f"unknown TTS backend '{requested}' (have: {', '.join(backends)})")
+    if not backends[name]["available"]:
+        raise AudioError(f"backend '{name}' unavailable: {backends[name]['detail']}")
+    return name
 
 
 def synthesize(text: str, out_path: pathlib.Path, backend: str = "auto",
                voice: str | None = None) -> dict:
     out_path.parent.mkdir(parents=True, exist_ok=True)
+    backend = "say" if backend == "macos-say" else backend
     if backend == "auto":
-        backend = "say" if shutil.which("say") else ("pyttsx3" if _has("pyttsx3") else "none")
+        backend = select_backend("auto")
+        if backend == "macos-say":
+            backend = "say"
+        elif backend == "gemini":
+            raise AudioError("gemini needs a delivery plan; use tts_narration.py --backend gemini")
     if backend == "say":
         cmd = ["say", "-o", str(out_path)]
         if voice:
