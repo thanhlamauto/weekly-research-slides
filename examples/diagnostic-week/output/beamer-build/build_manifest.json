@@ -1,0 +1,16 @@
+{
+  "generator": "weekly-research-slides 0.6.0",
+  "template": {
+    "name": "academic-beamer",
+    "version": 1
+  },
+  "engine": "pdflatex",
+  "deck": {
+    "title": "Cached Future-Feature Prediction",
+    "stage": "diagnostic",
+    "week": 6
+  },
+  "slides": 10,
+  "figures": [],
+  "generated_at": "2026-09-20T04:44:52.682Z"
+}

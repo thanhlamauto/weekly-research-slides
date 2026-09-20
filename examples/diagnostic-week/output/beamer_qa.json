@@ -1,0 +1,12 @@
+{
+  "template": {
+    "name": "academic-beamer",
+    "version": 1
+  },
+  "engine": "pdflatex",
+  "pages": 10,
+  "handout_pages": 10,
+  "page_renders": 10,
+  "contact_sheet": true,
+  "findings": []
+}

@@ -1,0 +1,162 @@
+\begin{frame}[plain]
+\wrsTitlePage{Cached Future-Feature Prediction}{Does correction recover the future feature?}{Week 6 \textperiodcentered{} an oracle diagnostic splits feature recovery from output recovery, and claim C1 weakens.}{Weekly research update \textperiodcentered{} synthetic demo \textperiodcentered{} version 0.1}
+\note{Open by naming the week's question. Do not re-explain the problem; the group knows it.}
+\end{frame}
+
+\begin{frame}{Where we are, and what changed this week}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Established (unchanged)}
+\begin{itemize}
+  \item \textbf{P1} Cached hidden features go stale; reusing them as future features drifts.
+  \item \textbf{Method} Cache reuse followed by a learned correction toward the future feature.
+  \item \textbf{Baseline} Reuse only scores rollout cosine 0.42.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Where we are now}
+\wrsBody{Method v4 adds a correction objective and an oracle diagnostic. The question this week is whether the correction moves toward the future feature, or whether a different downstream-valid direction is enough.}\par\vspace{0.4em}
+\wrsTiny{Last week: v3}
+\end{columns}
+\note{20-30 seconds. Keep it compressed because familiarity is high.}
+\end{frame}
+
+\begin{frame}{What changed in the method: v3 to v4}
+\wrsMethodTransition{v3}{v4}{v4 adds a correction objective and an oracle diagnostic, and scales down the correction.}
+\vspace{0.7em}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Changes this week}
+\begin{itemize}
+  \item Added a correction objective\\ {\small\color{wrsMuted}Penalize deviation from the future feature so the correction is supervised directly.}
+  \item Added an oracle diagnostic\\ {\small\color{wrsMuted}Separate feature recovery from output recovery to test C1 and C2.}
+  \item Scaled down the correction magnitude\\ {\small\color{wrsMuted}Reduce drift when the correction is applied over long rollouts.}
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Unchanged}
+\begin{itemize}
+  \item Cache layout and update schedule
+  \item Backbone and dataset split
+  \item Rollout evaluation protocol
+\end{itemize}
+\end{columns}
+\note{Only the delta matters here. Point at the two new pieces and move on.}
+\end{frame}
+
+\begin{frame}{Two stories for what the correction does}
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[wrsnode] (concept-zs) at (1.61, 1.75) {$Z_{s}$};
+  \node[wrslabel, below=0.02cm of concept-zs] {cached source};
+  \node[wrsnode] (concept-ztilde) at (8.28, 1.75) {$\tilde{Z}$};
+  \node[wrslabel, below=0.02cm of concept-ztilde] {corrected estimate};
+  \node[wrsnode] (concept-zd) at (1.61, 4.75) {$Z_{d}$};
+  \node[wrslabel, below=0.02cm of concept-zd] {desired future};
+  \draw[wrsreference] (concept-zs) -- node[midway, left, wrslabel] {desired} (concept-zd);
+  \draw[wrsreference] (concept-ztilde) -- node[midway, above, wrslabel] {residual} (concept-zd);
+  \draw[wrsvector] (concept-zs) -- node[midway, above, wrslabel] {dZ correction} (concept-ztilde);
+\end{tikzpicture}
+\vspace{0.2em}\wrsLegendVector{correction $\Delta$Z (what moved)}\hspace{1.6em}\wrsLegendReference{desired direction Z\_d - Z\_s}
+\end{center}
+\begin{center}\wrsQuiet{C1 says dZ follows the desired direction; C2 says dZ can be orthogonal and still be useful.}\end{center}
+\note{Establish the three objects here. They keep exactly these positions on the next slide.}
+\end{frame}
+
+\begin{frame}{Correction is nearly orthogonal to the desired direction}
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[wrsnode] (concept-zs) at (1.61, 1.75) {$Z_{s}$};
+  \node[wrslabel, below=0.02cm of concept-zs] {cached source};
+  \node[wrsnode] (concept-ztilde) at (8.28, 1.75) {$\tilde{Z}$};
+  \node[wrslabel, below=0.02cm of concept-ztilde] {corrected estimate};
+  \node[wrsnode] (concept-zd) at (1.61, 4.75) {$Z_{d}$};
+  \node[wrslabel, below=0.02cm of concept-zd] {desired future};
+  \draw[wrsreference] (concept-zs) -- node[midway, left, wrslabel] {desired} (concept-zd);
+  \draw[wrsvector] (concept-zs) -- node[midway, above, wrslabel] {dZ (cos 0.117 vs desired)} (concept-ztilde);
+\end{tikzpicture}
+\vspace{0.2em}\wrsLegendVector{correction $\Delta$Z (what moved)}\hspace{1.6em}\wrsLegendReference{desired direction Z\_d - Z\_s}
+\end{center}
+\begin{center}\wrsQuiet{Same objects and positions as the previous slide; the measured dZ is \textasciitilde{}90 degrees from desired.}\end{center}
+\note{Object permanence is deliberate. Z\_s, Z\textasciitilde{}, and Z\_d keep identical positions between slides 4 and 5.}
+\end{frame}
+
+\begin{frame}{Diagnostic D1: does the correction aim at the future feature?}
+\wrsDiagId{D1}\quad\wrsBody{Does the correction direction point toward the future feature?}\hfill\wrsTests{C1}
+\vspace{0.6em}
+\begin{columns}[T]
+\column{0.56\textwidth}
+\begin{wrsband}{measurement}{Measurement}\wrsMono{cos(deltaZ, Z\_d - Z\_s) = 0.1168}\end{wrsband}
+\begin{wrsband}{observation}{Observation}The correction direction is nearly orthogonal to the direction from the cached feature to the future feature.\end{wrsband}
+\begin{wrsband}{interpretation}{Interpretation}Output recovery may not require moving toward the exact future hidden state.\end{wrsband}
+\column{0.4\textwidth}
+\begin{wrsband}{can}{Can conclude}C1 as stated is not supported; the correction is not simply moving toward Z\_d.\end{wrsband}
+\begin{wrsband}{cannot}{Cannot conclude}That the correction is uninformative, or that the method fails.\end{wrsband}
+\begin{wrsband}{alternative}{Alternative targeted}The correction may exploit a downstream-valid direction that is not the future-feature direction.\end{wrsband}
+\end{columns}
+\note{Walk the four bands in order. The measurement is not the observation; the observation is not the interpretation.}
+\end{frame}
+
+\begin{frame}{Comparison: competitor, last week, this week}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccc}
+\toprule
+Method & \textbf{Rollout cosine} & \textbf{Downstream acc.} & \textbf{Feature recovery R2} \\
+\midrule
+Cache reuse only & 0.42 & 0.74 & 0.28 \\
+Ours (v3, last week) & 0.51 & 0.83 & 0.30 \\
+\textbf{\textcolor{wrsBlue}{Ours (v4, this week)}} & \textbf{\textcolor{wrsBlue}{0.58\ {\tiny\color{wrsGreen}(+0.07)}}} & \textbf{\textcolor{wrsBlue}{0.91\ {\tiny\color{wrsGreen}(+0.08)}}} & \textbf{\textcolor{wrsBlue}{0.34\ {\tiny\color{wrsGreen}(+0.04)}}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsTiny{higher is better}
+\vspace{0.25em}\wrsQuiet{v4 improves both downstream metrics over v3. Feature recovery stays low; that is the evidence behind the weakened C1 and the emerging C2, not a hidden weakness.}
+\note{Emphasize the delta. Do not hide the weak feature-recovery column.}
+\end{frame}
+
+\begin{frame}{What this week does to our claims}
+\wrsClaimTransition{C1}{plausible}{weakened}\\
+\wrsSmall{The learned correction approximates the true future feature.}\\
+\wrsTiny{D1: cos 0.117}\\[0.5em]
+\wrsClaimTransition{C2}{absent}{emerging}\\
+\wrsSmall{An alternative downstream-valid pre-image may be sufficient; output recovery does not require feature recovery.}\\
+\wrsTiny{D2: high output, low feature recovery}
+\vspace{0.6em}\wrsQuiet{Neither claim is refuted or confirmed; both remain under test.}
+\note{A weakened claim is a result, not a failure. C2 is new this week.}
+\end{frame}
+
+\begin{frame}{Diagnostic D2: does output recovery require feature recovery?}
+\wrsDiagId{D2}\quad\wrsBody{Does output recovery require feature recovery?}\hfill\wrsTests{C2}
+\vspace{0.6em}
+\begin{columns}[T]
+\column{0.56\textwidth}
+\begin{wrsband}{measurement}{Measurement}\wrsMono{linear probe R\textasciicircum{}2 for recovering Z\_d from the corrected feature = 0.34; downstream accuracy = 0.91}\end{wrsband}
+\begin{wrsband}{observation}{Observation}Downstream accuracy is high while feature recovery remains low.\end{wrsband}
+\begin{wrsband}{interpretation}{Interpretation}A downstream-valid pre-image that is not the true future feature may be sufficient.\end{wrsband}
+\column{0.4\textwidth}
+\begin{wrsband}{can}{Can conclude}Output recovery can occur without strong feature recovery in this setup.\end{wrsband}
+\begin{wrsband}{cannot}{Cannot conclude}That no valid feature recovery exists, or that the probe is a complete measurement.\end{wrsband}
+\begin{wrsband}{alternative}{Alternative targeted}The probe may fail to decode information that is present in the feature.\end{wrsband}
+\end{columns}
+\note{D2 targets the alternative explanation for C1. Keep the probe limitation visible.}
+\end{frame}
+
+\begin{frame}{Limitations and open questions}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Current limitations}
+\begin{itemize}
+  \item Alternative valid pre-images have not been directly characterized.
+  \item The oracle diagnostic uses the future feature as an upper bound and is unavailable at inference.
+  \item Feature recovery is measured with a single linear probe.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Open questions}
+\begin{itemize}
+  \item Can we characterize downstream-valid pre-images without the oracle?
+  \item Does the correction generalize to horizons beyond the training horizon?
+  \item Would the same orthogonality appear for other cached-feature tasks?
+\end{itemize}
+\end{columns}
+\note{Stop here. The mentor discussion happens after the deck; no thank-you slide.}
+\end{frame}
