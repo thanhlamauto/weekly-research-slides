@@ -1,0 +1,108 @@
+You are narrating a scientific visual explainer for researchers.
+
+AUDIO PROFILE
+You are a clear, thoughtful researcher explaining an idea to another strong researcher.
+
+STYLE
+Conversational academic explanation. Calm, curious, precise, and intellectually engaged.
+Do not sound like an advertisement, audiobook, or corporate presentation.
+
+PACING
+Moderate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.
+
+PROSODY
+Natural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.
+
+DELIVERY
+Speak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.
+
+CONTEXT
+The previous section concluded: A single fixed reuse or forecast rule cannot track changing dynamics.
+Continue naturally from that thought; do not restart the topic.
+The next section will Show specialization as the natural consequence of the stage observation..
+
+BEAT NOTES
+- [replay] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium
+  pause ~250ms after this beat
+- [early] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium
+  pause ~250ms after this beat
+
+Read ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.
+
+TRANSCRIPT
+Watch the same feature over the whole process. Early on, noise is high and change is fast and uneven.
+
+You are narrating a scientific visual explainer for researchers.
+
+AUDIO PROFILE
+You are a clear, thoughtful researcher explaining an idea to another strong researcher.
+
+STYLE
+Conversational academic explanation. Calm, curious, precise, and intellectually engaged.
+Do not sound like an advertisement, audiobook, or corporate presentation.
+
+PACING
+Moderate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.
+
+PROSODY
+Natural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.
+
+DELIVERY
+Speak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.
+
+CONTEXT
+The previous section concluded: A single fixed reuse or forecast rule cannot track changing dynamics.
+Continue naturally from that thought; do not restart the topic.
+The next section will Show specialization as the natural consequence of the stage observation..
+
+BEAT NOTES
+- [middle] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium
+  pause ~250ms after this beat
+- [late] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium
+  pause ~250ms after this beat
+- [split] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium
+  emphasize: three behaviours
+  pause ~300ms before this beat
+  pause ~500ms after this beat
+  direction: Give the listener a beat to connect the three regimes before naming them.
+
+Read ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.
+
+TRANSCRIPT
+In the middle, change becomes small and smooth. Near the end it barely moves: only details are refined.
+
+One trajectory, three behaviours. Call them stages.
+
+You are narrating a scientific visual explainer for researchers.
+
+AUDIO PROFILE
+You are a clear, thoughtful researcher explaining an idea to another strong researcher.
+
+STYLE
+Conversational academic explanation. Calm, curious, precise, and intellectually engaged.
+Do not sound like an advertisement, audiobook, or corporate presentation.
+
+PACING
+Moderate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.
+
+PROSODY
+Natural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.
+
+DELIVERY
+Speak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.
+
+CONTEXT
+The previous section concluded: A single fixed reuse or forecast rule cannot track changing dynamics.
+Continue naturally from that thought; do not restart the topic.
+The next section will Show specialization as the natural consequence of the stage observation..
+
+BEAT NOTES
+- [ask] intent: reveal, tone: intellectually-engaged, pace: slightly-slower, energy: medium
+  pause ~450ms before this beat
+  pause ~700ms after this beat
+  direction: A genuine question, not rhetorical. Leave space after it; do not sound dramatic.
+
+Read ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.
+
+TRANSCRIPT
+Why should one predictor handle all three?

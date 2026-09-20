@@ -1,0 +1,57 @@
+{
+  "quality": "final",
+  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/lesa/transcript/audio/gemini",
+  "scenes": [
+    {
+      "id": "lesa_01_why_cache",
+      "video": 15.6,
+      "audio": 17.272,
+      "end_frame_padding": 1.672,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lesa_02_uniform_assumption",
+      "video": 14.5,
+      "audio": 18.352,
+      "end_frame_padding": 3.852,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lesa_03_stage_dynamics",
+      "video": 16.7,
+      "audio": 25.873,
+      "end_frame_padding": 9.173,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lesa_04_stage_experts",
+      "video": 11.2,
+      "audio": 20.772,
+      "end_frame_padding": 9.572,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lesa_05_expert_internals",
+      "video": 16.4,
+      "audio": 30.89,
+      "end_frame_padding": 14.49,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lesa_06_training",
+      "video": 14.4,
+      "audio": 21.94,
+      "end_frame_padding": 7.54,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lesa_07_recap",
+      "video": 11.6,
+      "audio": 20.15,
+      "end_frame_padding": 8.55,
+      "audio_silence": 0.0
+    }
+  ],
+  "total_end_frame_padding": 54.849,
+  "output": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/lesa/renders/final/lesa-method-explainer-narrated.mp4"
+}

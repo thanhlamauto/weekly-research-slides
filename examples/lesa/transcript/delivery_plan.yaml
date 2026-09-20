@@ -1,0 +1,546 @@
+{
+  "video": "lesa-method-explainer",
+  "profile": "research-explainer",
+  "audience": {
+    "level": "adjacent-researcher"
+  },
+  "narration": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-preview-tts",
+    "voice": {
+      "name": "Kore"
+    },
+    "profile": "research-explainer",
+    "pacing": {
+      "target_wpm": 140,
+      "min_concept_dwell_ms": 500
+    },
+    "fallback": {
+      "backend": "say",
+      "voice": "Samantha"
+    }
+  },
+  "chunks": [
+    {
+      "chunk_id": "lesa_01_why_cache__c01",
+      "scene_id": "lesa_01_why_cache",
+      "beat_ids": [
+        "establish",
+        "trace"
+      ],
+      "text": "Diffusion runs a large network at every step, so generation is slow. Neighboring steps repeat almost the same computation.",
+      "delivery": {
+        "establish": {
+          "intent": "setup",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 500,
+          "emphasis": [],
+          "direction": "State the cost plainly. This is the problem, not a complaint."
+        },
+        "trace": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 8.823,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\nThe next section will Show that reuse and forecasting assume smooth, uniform change that the real trajectory violates..\n\nBEAT NOTES\n- [establish] intent: setup, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n  direction: State the cost plainly. This is the problem, not a complaint.\n- [trace] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nDiffusion runs a large network at every step, so generation is slow. Neighboring steps repeat almost the same computation."
+    },
+    {
+      "chunk_id": "lesa_01_why_cache__c02",
+      "scene_id": "lesa_01_why_cache",
+      "beat_ids": [
+        "reuse",
+        "conclude"
+      ],
+      "text": "Caching keeps those internal features and skips recomputing them.\n\nThe question is how to skip safely.",
+      "delivery": {
+        "reuse": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "conclude": {
+          "intent": "conclude",
+          "tone": "confident-restrained",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 350,
+          "pause_after_ms": 550,
+          "emphasis": [
+            "skip safely"
+          ],
+          "direction": "Land the question. Do not sound like a slogan."
+        }
+      },
+      "estimated_seconds": 7.417,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\nThe next section will Show that reuse and forecasting assume smooth, uniform change that the real trajectory violates..\n\nBEAT NOTES\n- [reuse] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [conclude] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: skip safely\n  pause ~350ms before this beat\n  pause ~550ms after this beat\n  direction: Land the question. Do not sound like a slogan.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nCaching keeps those internal features and skips recomputing them.\n\nThe question is how to skip safely."
+    },
+    {
+      "chunk_id": "lesa_02_uniform_assumption__c01",
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_ids": [
+        "establish",
+        "forecast"
+      ],
+      "text": "The obvious trick is to reuse the last feature, or extrapolate it. Both assume the feature changes smoothly, so a fitted curve should keep going.",
+      "delivery": {
+        "establish": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slightly-slower",
+          "energy": "medium",
+          "pause_before_ms": 150,
+          "pause_after_ms": 500,
+          "emphasis": [],
+          "direction": "Present the baseline fairly; no skepticism yet."
+        },
+        "forecast": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 11.514,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Caching avoids repeated computation, so the question becomes how to skip safely.\nContinue naturally from that thought; do not restart the topic.\nThe next section will The aha moment - one trajectory has three regimes with different dynamics..\n\nBEAT NOTES\n- [establish] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n  direction: Present the baseline fairly; no skepticism yet.\n- [forecast] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe obvious trick is to reuse the last feature, or extrapolate it. Both assume the feature changes smoothly, so a fitted curve should keep going."
+    },
+    {
+      "chunk_id": "lesa_02_uniform_assumption__c02",
+      "scene_id": "lesa_02_uniform_assumption",
+      "beat_ids": [
+        "diverge",
+        "conclude"
+      ],
+      "text": "But early on it moves a lot, and the forecast drifts away. A fixed rule has to guess a shape that keeps changing.",
+      "delivery": {
+        "diverge": {
+          "intent": "contrast",
+          "tone": "curious-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 400,
+          "pause_after_ms": 450,
+          "emphasis": [
+            "drifts away"
+          ],
+          "direction": "The contrast starts here. Slightly emphasize \"drifts away\"; stay measured."
+        },
+        "conclude": {
+          "intent": "conclude",
+          "tone": "confident-restrained",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 250,
+          "pause_after_ms": 550,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 10.537,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Caching avoids repeated computation, so the question becomes how to skip safely.\nContinue naturally from that thought; do not restart the topic.\nThe next section will The aha moment - one trajectory has three regimes with different dynamics..\n\nBEAT NOTES\n- [diverge] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  emphasize: drifts away\n  pause ~400ms before this beat\n  pause ~450ms after this beat\n  direction: The contrast starts here. Slightly emphasize \"drifts away\"; stay measured.\n- [conclude] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~250ms before this beat\n  pause ~550ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nBut early on it moves a lot, and the forecast drifts away. A fixed rule has to guess a shape that keeps changing."
+    },
+    {
+      "chunk_id": "lesa_03_stage_dynamics__c01",
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_ids": [
+        "replay",
+        "early"
+      ],
+      "text": "Watch the same feature over the whole process. Early on, noise is high and change is fast and uneven.",
+      "delivery": {
+        "replay": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "early": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 8.823,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A single fixed reuse or forecast rule cannot track changing dynamics.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Show specialization as the natural consequence of the stage observation..\n\nBEAT NOTES\n- [replay] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [early] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nWatch the same feature over the whole process. Early on, noise is high and change is fast and uneven."
+    },
+    {
+      "chunk_id": "lesa_03_stage_dynamics__c02",
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_ids": [
+        "middle",
+        "late",
+        "split"
+      ],
+      "text": "In the middle, change becomes small and smooth. Near the end it barely moves: only details are refined.\n\nOne trajectory, three behaviours. Call them stages.",
+      "delivery": {
+        "middle": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "late": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "split": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slightly-slower",
+          "energy": "medium",
+          "pause_before_ms": 300,
+          "pause_after_ms": 500,
+          "emphasis": [
+            "three behaviours"
+          ],
+          "direction": "Give the listener a beat to connect the three regimes before naming them."
+        }
+      },
+      "estimated_seconds": 12.355,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A single fixed reuse or forecast rule cannot track changing dynamics.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Show specialization as the natural consequence of the stage observation..\n\nBEAT NOTES\n- [middle] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [late] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [split] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  emphasize: three behaviours\n  pause ~300ms before this beat\n  pause ~500ms after this beat\n  direction: Give the listener a beat to connect the three regimes before naming them.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nIn the middle, change becomes small and smooth. Near the end it barely moves: only details are refined.\n\nOne trajectory, three behaviours. Call them stages."
+    },
+    {
+      "chunk_id": "lesa_03_stage_dynamics__c03",
+      "scene_id": "lesa_03_stage_dynamics",
+      "beat_ids": [
+        "ask"
+      ],
+      "text": "Why should one predictor handle all three?",
+      "delivery": {
+        "ask": {
+          "intent": "reveal",
+          "tone": "intellectually-engaged",
+          "pace": "slightly-slower",
+          "energy": "medium",
+          "pause_before_ms": 450,
+          "pause_after_ms": 700,
+          "emphasis": [],
+          "direction": "A genuine question, not rhetorical. Leave space after it; do not sound dramatic."
+        }
+      },
+      "estimated_seconds": 3.0,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A single fixed reuse or forecast rule cannot track changing dynamics.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Show specialization as the natural consequence of the stage observation..\n\nBEAT NOTES\n- [ask] intent: reveal, tone: intellectually-engaged, pace: slightly-slower, energy: medium\n  pause ~450ms before this beat\n  pause ~700ms after this beat\n  direction: A genuine question, not rhetorical. Leave space after it; do not sound dramatic.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nWhy should one predictor handle all three?"
+    },
+    {
+      "chunk_id": "lesa_04_stage_experts__c01",
+      "scene_id": "lesa_04_stage_experts",
+      "beat_ids": [
+        "single",
+        "split"
+      ],
+      "text": "A single predictor must compromise: a rule for the noisy start fails later. If stages differ, the predictor should differ too.",
+      "delivery": {
+        "single": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [
+            "compromise"
+          ],
+          "direction": ""
+        },
+        "split": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 400,
+          "emphasis": [],
+          "direction": "This is the logical step, not a new claim. Keep it calm."
+        }
+      },
+      "estimated_seconds": 9.96,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: One trajectory has three stages with different dynamics, so a single fixed rule is the wrong shape of model.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain the predictor mechanism and build its equation incrementally..\n\nBEAT NOTES\n- [single] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  emphasize: compromise\n  pause ~250ms after this beat\n- [split] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~400ms after this beat\n  direction: This is the logical step, not a new claim. Keep it calm.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nA single predictor must compromise: a rule for the noisy start fails later. If stages differ, the predictor should differ too."
+    },
+    {
+      "chunk_id": "lesa_04_stage_experts__c02",
+      "scene_id": "lesa_04_stage_experts",
+      "beat_ids": [
+        "specialize",
+        "window"
+      ],
+      "text": "The method, LESA (learnable stage-aware predictors), gives each stage its own expert. Each expert uses a history window that fits its stage.",
+      "delivery": {
+        "specialize": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slower",
+          "energy": "medium",
+          "pause_before_ms": 150,
+          "pause_after_ms": 600,
+          "emphasis": [],
+          "direction": "Introduce the name once, clearly, then move on."
+        },
+        "window": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 10.229,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: One trajectory has three stages with different dynamics, so a single fixed rule is the wrong shape of model.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain the predictor mechanism and build its equation incrementally..\n\nBEAT NOTES\n- [specialize] intent: define, tone: precise-introducing, pace: slower, energy: medium\n  pause ~150ms before this beat\n  pause ~600ms after this beat\n  direction: Introduce the name once, clearly, then move on.\n- [window] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe method, LESA (learnable stage-aware predictors), gives each stage its own expert. Each expert uses a history window that fits its stage."
+    },
+    {
+      "chunk_id": "lesa_05_expert_internals__c01",
+      "scene_id": "lesa_05_expert_internals",
+      "beat_ids": [
+        "zoom",
+        "history",
+        "spatial"
+      ],
+      "text": "Zoom into one expert. It receives cached features from recent steps: the history. A learned linear projection mixes that history into a vector, z.",
+      "delivery": {
+        "zoom": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slightly-slower",
+          "energy": "medium",
+          "pause_before_ms": 150,
+          "pause_after_ms": 500,
+          "emphasis": [],
+          "direction": ""
+        },
+        "history": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "spatial": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slower",
+          "energy": "medium",
+          "pause_before_ms": 150,
+          "pause_after_ms": 500,
+          "emphasis": [],
+          "direction": "Slow down at \"projection\"; this is the first new operation."
+        }
+      },
+      "estimated_seconds": 11.525,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Specialization follows from the stage observation; each expert also uses a history window that fits its stage.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain why training starts with ground truth and then becomes autoregressive..\n\nBEAT NOTES\n- [zoom] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [history] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [spatial] intent: define, tone: precise-introducing, pace: slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n  direction: Slow down at \"projection\"; this is the first new operation.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nZoom into one expert. It receives cached features from recent steps: the history. A learned linear projection mixes that history into a vector, z."
+    },
+    {
+      "chunk_id": "lesa_05_expert_internals__c02",
+      "scene_id": "lesa_05_expert_internals",
+      "beat_ids": [
+        "temporal",
+        "combine"
+      ],
+      "text": "A small network called a KAN (Kolmogorov-Arnold network) turns the timestep offset into one number, alpha. The prediction adds a correction to the current feature, scaled by alpha.",
+      "delivery": {
+        "temporal": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slower",
+          "energy": "medium",
+          "pause_before_ms": 150,
+          "pause_after_ms": 600,
+          "emphasis": [],
+          "direction": "Slow down around the new term. Say the expansion clearly, then the result."
+        },
+        "combine": {
+          "intent": "derive",
+          "tone": "precise",
+          "pace": "slower",
+          "energy": "medium",
+          "pause_before_ms": 200,
+          "pause_after_ms": 700,
+          "emphasis": [
+            "scaled by alpha"
+          ],
+          "direction": "Read the equation through its meaning, not symbol by symbol."
+        }
+      },
+      "estimated_seconds": 12.8,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Specialization follows from the stage observation; each expert also uses a history window that fits its stage.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain why training starts with ground truth and then becomes autoregressive..\n\nBEAT NOTES\n- [temporal] intent: define, tone: precise-introducing, pace: slower, energy: medium\n  pause ~150ms before this beat\n  pause ~600ms after this beat\n  direction: Slow down around the new term. Say the expansion clearly, then the result.\n- [combine] intent: derive, tone: precise, pace: slower, energy: medium\n  emphasize: scaled by alpha\n  pause ~200ms before this beat\n  pause ~700ms after this beat\n  direction: Read the equation through its meaning, not symbol by symbol.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nA small network called a KAN (Kolmogorov-Arnold network) turns the timestep offset into one number, alpha. The prediction adds a correction to the current feature, scaled by alpha."
+    },
+    {
+      "chunk_id": "lesa_06_training__c01",
+      "scene_id": "lesa_06_training",
+      "beat_ids": [
+        "gt",
+        "inference"
+      ],
+      "text": "Training has two steps. First it learns from accurate features. At inference, its inputs are partly its own predictions.",
+      "delivery": {
+        "gt": {
+          "intent": "define",
+          "tone": "precise-introducing",
+          "pace": "slightly-slower",
+          "energy": "medium",
+          "pause_before_ms": 150,
+          "pause_after_ms": 500,
+          "emphasis": [],
+          "direction": ""
+        },
+        "inference": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 9.103,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: One expert is a learned projection of recent features, scaled by a learned time-dependent factor.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Compress the whole method into one picture..\n\nBEAT NOTES\n- [gt] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [inference] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nTraining has two steps. First it learns from accurate features. At inference, its inputs are partly its own predictions."
+    },
+    {
+      "chunk_id": "lesa_06_training__c02",
+      "scene_id": "lesa_06_training",
+      "beat_ids": [
+        "drift",
+        "closed_loop"
+      ],
+      "text": "If it never sees its own mistakes, small errors build up.\n\nSo training feeds it its own predictions, as at inference.",
+      "delivery": {
+        "drift": {
+          "intent": "contrast",
+          "tone": "curious-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 250,
+          "pause_after_ms": 450,
+          "emphasis": [
+            "never sees"
+          ],
+          "direction": ""
+        },
+        "closed_loop": {
+          "intent": "conclude",
+          "tone": "confident-restrained",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 350,
+          "pause_after_ms": 650,
+          "emphasis": [],
+          "direction": "This is the conclusion of the training idea. Restrained confidence, no flourish."
+        }
+      },
+      "estimated_seconds": 9.8,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: One expert is a learned projection of recent features, scaled by a learned time-dependent factor.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Compress the whole method into one picture..\n\nBEAT NOTES\n- [drift] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  emphasize: never sees\n  pause ~250ms before this beat\n  pause ~450ms after this beat\n- [closed_loop] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~650ms after this beat\n  direction: This is the conclusion of the training idea. Restrained confidence, no flourish.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nIf it never sees its own mistakes, small errors build up.\n\nSo training feeds it its own predictions, as at inference."
+    },
+    {
+      "chunk_id": "lesa_07_recap__c01",
+      "scene_id": "lesa_07_recap",
+      "beat_ids": [
+        "zoom_out",
+        "stages",
+        "experts"
+      ],
+      "text": "Put it back together. One trajectory, divided into stages by noise level. Each stage has its own expert, predicting the skipped features.",
+      "delivery": {
+        "zoom_out": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "stages": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        },
+        "experts": {
+          "intent": "explain",
+          "tone": "calm-explanatory",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 0,
+          "pause_after_ms": 250,
+          "emphasis": [],
+          "direction": ""
+        }
+      },
+      "estimated_seconds": 10.509,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Train under the same imperfect history the model will see at inference.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [zoom_out] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [stages] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [experts] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nPut it back together. One trajectory, divided into stages by noise level. Each stage has its own expert, predicting the skipped features."
+    },
+    {
+      "chunk_id": "lesa_07_recap__c02",
+      "scene_id": "lesa_07_recap",
+      "beat_ids": [
+        "recap"
+      ],
+      "text": "Stages, experts, predicted features: that is how LESA accelerates diffusion.",
+      "delivery": {
+        "recap": {
+          "intent": "conclude",
+          "tone": "confident-restrained",
+          "pace": "moderate",
+          "energy": "medium",
+          "pause_before_ms": 300,
+          "pause_after_ms": 700,
+          "emphasis": [
+            "predicted features"
+          ],
+          "direction": "Compress the whole method into one sentence. Finish cleanly; do not trail off."
+        }
+      },
+      "estimated_seconds": 5.086,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Train under the same imperfect history the model will see at inference.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [recap] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: predicted features\n  pause ~300ms before this beat\n  pause ~700ms after this beat\n  direction: Compress the whole method into one sentence. Finish cleanly; do not trail off.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nStages, experts, predicted features: that is how LESA accelerates diffusion."
+    }
+  ],
+  "word_count": 301
+}

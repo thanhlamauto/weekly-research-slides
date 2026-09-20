@@ -1,0 +1,72 @@
+{
+  "errors": 6,
+  "warnings": 6,
+  "infos": 1,
+  "findings": [
+    {
+      "level": "info",
+      "where": "lesa_02_uniform_assumption/conclude",
+      "message": "no delivery direction for a key beat; add one for expressiveness"
+    },
+    {
+      "level": "warning",
+      "where": "lesa_03_stage_dynamics/split",
+      "message": "3 new technical terms in one beat; split the concept"
+    },
+    {
+      "level": "warning",
+      "where": "lesa_06_training/gt",
+      "message": "6 new technical terms in one beat; split the concept"
+    },
+    {
+      "level": "warning",
+      "where": "lesa_07_recap/recap",
+      "message": "acronym 'LESA' used without expansion"
+    },
+    {
+      "level": "warning",
+      "where": "lesa_03_stage_dynamics__c03",
+      "message": "chunk is ~3.0s; merge it with a neighbour to avoid a prosody reset"
+    },
+    {
+      "level": "warning",
+      "where": "lesa_07_recap__c02",
+      "message": "chunk is ~5.1s; merge it with a neighbour to avoid a prosody reset"
+    },
+    {
+      "level": "warning",
+      "where": "lesa_01_why_cache",
+      "message": "narration is 1.7s longer than the animation; re-pace or re-render with --timing transcript"
+    },
+    {
+      "level": "error",
+      "where": "lesa_02_uniform_assumption",
+      "message": "narration is 3.9s longer than the animation; rebuild the pacing around the audio, do not finish the narration on a frozen frame"
+    },
+    {
+      "level": "error",
+      "where": "lesa_03_stage_dynamics",
+      "message": "narration is 9.2s longer than the animation; rebuild the pacing around the audio, do not finish the narration on a frozen frame"
+    },
+    {
+      "level": "error",
+      "where": "lesa_04_stage_experts",
+      "message": "narration is 9.6s longer than the animation; rebuild the pacing around the audio, do not finish the narration on a frozen frame"
+    },
+    {
+      "level": "error",
+      "where": "lesa_05_expert_internals",
+      "message": "narration is 14.5s longer than the animation; rebuild the pacing around the audio, do not finish the narration on a frozen frame"
+    },
+    {
+      "level": "error",
+      "where": "lesa_06_training",
+      "message": "narration is 7.5s longer than the animation; rebuild the pacing around the audio, do not finish the narration on a frozen frame"
+    },
+    {
+      "level": "error",
+      "where": "lesa_07_recap",
+      "message": "narration is 8.5s longer than the animation; rebuild the pacing around the audio, do not finish the narration on a frozen frame"
+    }
+  ]
+}

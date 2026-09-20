@@ -1,0 +1,74 @@
+You are narrating a scientific visual explainer for researchers.
+
+AUDIO PROFILE
+You are a clear, thoughtful researcher explaining an idea to another strong researcher.
+
+STYLE
+Conversational academic explanation. Calm, curious, precise, and intellectually engaged.
+Do not sound like an advertisement, audiobook, or corporate presentation.
+
+PACING
+Moderate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.
+
+PROSODY
+Natural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.
+
+DELIVERY
+Speak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.
+
+CONTEXT
+The previous section concluded: One expert is a learned projection of recent features, scaled by a learned time-dependent factor.
+Continue naturally from that thought; do not restart the topic.
+The next section will Compress the whole method into one picture..
+
+BEAT NOTES
+- [gt] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium
+  pause ~150ms before this beat
+  pause ~500ms after this beat
+- [inference] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium
+  pause ~250ms after this beat
+
+Read ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.
+
+TRANSCRIPT
+Training has two steps. First it learns from accurate features. At inference, its inputs are partly its own predictions.
+
+You are narrating a scientific visual explainer for researchers.
+
+AUDIO PROFILE
+You are a clear, thoughtful researcher explaining an idea to another strong researcher.
+
+STYLE
+Conversational academic explanation. Calm, curious, precise, and intellectually engaged.
+Do not sound like an advertisement, audiobook, or corporate presentation.
+
+PACING
+Moderate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.
+
+PROSODY
+Natural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.
+
+DELIVERY
+Speak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.
+
+CONTEXT
+The previous section concluded: One expert is a learned projection of recent features, scaled by a learned time-dependent factor.
+Continue naturally from that thought; do not restart the topic.
+The next section will Compress the whole method into one picture..
+
+BEAT NOTES
+- [drift] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium
+  emphasize: never sees
+  pause ~250ms before this beat
+  pause ~450ms after this beat
+- [closed_loop] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium
+  pause ~350ms before this beat
+  pause ~650ms after this beat
+  direction: This is the conclusion of the training idea. Restrained confidence, no flourish.
+
+Read ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.
+
+TRANSCRIPT
+If it never sees its own mistakes, small errors build up.
+
+So training feeds it its own predictions, as at inference.

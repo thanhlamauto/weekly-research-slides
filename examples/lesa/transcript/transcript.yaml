@@ -1,9 +1,12 @@
 # Authored narration source for the LESA method explainer.
-# This is the source of truth for what is said. Timings are estimated from the
-# text for silent mode; TTS or forced alignment can replace them without
-# changing the words. Rewritten for audience = adjacent-researcher: assume ML
-# knowledge, but not diffusion-acceleration background. Short sentences,
-# terminology before symbols, one concept per beat.
+# This is the source of truth for WHAT is said. Timings are estimated from the
+# text for silent mode; synthesized audio or forced alignment can replace them
+# without changing the words.
+#
+# Written for speech, not for paper prose: short sentences, one concept per
+# beat, terminology before symbols, explicit setup -> contrast -> pause ->
+# insight. `delivery` says HOW a beat should be spoken; the provider prompt is
+# derived from it (see delivery.py) and never the other way around.
 video:
   id: lesa-method-explainer
   title: "LESA: why diffusion caching needs stage-aware predictors"
@@ -12,6 +15,21 @@ video:
 audience:
   level: adjacent-researcher
   target_wpm: 145
+
+# Preferred narration. Gemini is the high-quality path; `say` is the local
+# fallback and never silently replaces a requested voice.
+narration:
+  backend: gemini
+  model: gemini-2.5-flash-preview-tts
+  voice:
+    name: Kore
+  profile: research-explainer
+  pacing:
+    target_wpm: 140
+    min_concept_dwell_ms: 500
+  fallback:
+    backend: say
+    voice: Samantha
 
 mode: silent
 
@@ -25,6 +43,9 @@ scenes:
         kind: introduction
         visual_cue: establish
         text: Diffusion runs a large network at every step, so generation is slow.
+        delivery:
+          intent: setup
+          direction: State the cost plainly. This is the problem, not a complaint.
       - beat_id: trace
         visual_cue: trace
         text: Neighboring steps repeat almost the same computation.
@@ -35,6 +56,10 @@ scenes:
         kind: conclusion
         visual_cue: conclude
         text: The question is how to skip safely.
+        delivery:
+          pause_before_ms: 350
+          emphasis: [skip safely]
+          direction: Land the question. Do not sound like a slogan.
 
   - id: lesa_02_uniform_assumption
     title: The smoothness assumption breaks
@@ -45,16 +70,25 @@ scenes:
         kind: introduction
         visual_cue: establish
         text: The obvious trick is to reuse the last feature, or extrapolate it.
+        delivery:
+          intent: define
+          direction: Present the baseline fairly; no skepticism yet.
       - beat_id: forecast
         visual_cue: forecast
-        text: Both assume it changes smoothly, so a fitted curve should continue it.
+        text: Both assume the feature changes smoothly, so a fitted curve should keep going.
       - beat_id: diverge
+        kind: comparison
         visual_cue: diverge
         text: But early on it moves a lot, and the forecast drifts away.
+        delivery:
+          intent: contrast
+          pause_before_ms: 400
+          emphasis: [drifts away]
+          direction: The contrast starts here. Slightly emphasize "drifts away"; stay measured.
       - beat_id: conclude
         kind: conclusion
         visual_cue: conclude
-        text: A fixed rule guesses a shape that keeps changing.
+        text: A fixed rule has to guess a shape that keeps changing.
 
   - id: lesa_03_stage_dynamics
     title: Feature dynamics are stage-dependent
@@ -77,10 +111,21 @@ scenes:
         kind: introduction
         visual_cue: split
         text: One trajectory, three behaviours. Call them stages.
+        delivery:
+          intent: define
+          pause_before_ms: 300
+          pause_after_ms: 500
+          emphasis: [three behaviours]
+          direction: Give the listener a beat to connect the three regimes before naming them.
       - beat_id: ask
         kind: aha
         visual_cue: ask
         text: Why should one predictor handle all three?
+        delivery:
+          intent: reveal
+          pause_before_ms: 450
+          pause_after_ms: 700
+          direction: A genuine question, not rhetorical. Leave space after it; do not sound dramatic.
 
   - id: lesa_04_stage_experts
     title: One predictor becomes stage-aware experts
@@ -90,13 +135,23 @@ scenes:
       - beat_id: single
         visual_cue: single
         text: "A single predictor must compromise: a rule for the noisy start fails later."
+        delivery:
+          emphasis: [compromise]
       - beat_id: split
         visual_cue: split
         text: If stages differ, the predictor should differ too.
+        delivery:
+          pause_after_ms: 400
+          direction: This is the logical step, not a new claim. Keep it calm.
       - beat_id: specialize
         kind: introduction
         visual_cue: specialize
-        text: LESA (Learnable Stage-Aware predictors) gives each stage its own expert.
+        text: "The method, LESA (learnable stage-aware predictors), gives each stage its own expert."
+        delivery:
+          intent: define
+          pace: slower
+          pause_after_ms: 600
+          direction: Introduce the name once, clearly, then move on.
       - beat_id: window
         visual_cue: window
         text: Each expert uses a history window that fits its stage.
@@ -110,6 +165,9 @@ scenes:
         kind: introduction
         visual_cue: zoom
         text: Zoom into one expert.
+        delivery:
+          intent: define
+          pause_after_ms: 500
       - beat_id: history
         visual_cue: history
         text: "It receives cached features from recent steps: the history."
@@ -117,14 +175,27 @@ scenes:
         kind: introduction
         visual_cue: spatial
         text: A learned linear projection mixes that history into a vector, z.
+        delivery:
+          pace: slower
+          pause_after_ms: 500
+          direction: Slow down at "projection"; this is the first new operation.
       - beat_id: temporal
         kind: introduction
         visual_cue: temporal
-        text: A KAN (Kolmogorov-Arnold Network) turns timestep offsets into one number, alpha.
+        text: A small network called a KAN (Kolmogorov-Arnold network) turns the timestep offset into one number, alpha.
+        delivery:
+          pace: slower
+          pause_after_ms: 600
+          direction: Slow down around the new term. Say the expansion clearly, then the result.
       - beat_id: combine
         kind: equation
         visual_cue: combine
         text: The prediction adds a correction to the current feature, scaled by alpha.
+        delivery:
+          pace: slower
+          pause_after_ms: 700
+          emphasis: [scaled by alpha]
+          direction: Read the equation through its meaning, not symbol by symbol.
 
   - id: lesa_06_training
     title: Ground-truth guided, then closed-loop
@@ -135,6 +206,9 @@ scenes:
         kind: introduction
         visual_cue: gt
         text: Training has two steps. First it learns from accurate features.
+        delivery:
+          intent: define
+          pause_after_ms: 450
       - beat_id: inference
         visual_cue: inference
         text: At inference, its inputs are partly its own predictions.
@@ -142,10 +216,18 @@ scenes:
         kind: comparison
         visual_cue: drift
         text: If it never sees its own mistakes, small errors build up.
+        delivery:
+          emphasis: [never sees]
+          pause_before_ms: 250
+          pause_after_ms: 450
       - beat_id: closed_loop
         kind: conclusion
         visual_cue: closed_loop
         text: So training feeds it its own predictions, as at inference.
+        delivery:
+          pause_before_ms: 350
+          pause_after_ms: 650
+          direction: This is the conclusion of the training idea. Restrained confidence, no flourish.
 
   - id: lesa_07_recap
     title: The method in one view
@@ -165,3 +247,8 @@ scenes:
         kind: conclusion
         visual_cue: recap
         text: "Stages, experts, predicted features: that is how LESA accelerates diffusion."
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 700
+          emphasis: [predicted features]
+          direction: Compress the whole method into one sentence. Finish cleanly; do not trail off.

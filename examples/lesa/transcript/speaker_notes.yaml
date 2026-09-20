@@ -19,13 +19,13 @@ slides:
   title: The smoothness assumption breaks
   narration: 'The obvious trick is to reuse the last feature, or extrapolate it.
 
-    Both assume it changes smoothly, so a fitted curve should continue it.
+    Both assume the feature changes smoothly, so a fitted curve should keep going.
 
     But early on it moves a lot, and the forecast drifts away.
 
-    A fixed rule guesses a shape that keeps changing.'
+    A fixed rule has to guess a shape that keeps changing.'
   takeaway: A single fixed reuse or forecast rule cannot track changing dynamics.
-  duration_seconds: 22.666
+  duration_seconds: 24.501
 - slide_index: 3
   scene_id: lesa_03_stage_dynamics
   title: Feature dynamics are stage-dependent
@@ -51,12 +51,13 @@ slides:
 
     If stages differ, the predictor should differ too.
 
-    LESA (Learnable Stage-Aware predictors) gives each stage its own expert.
+    The method, LESA (learnable stage-aware predictors), gives each stage its own
+    expert.
 
     Each expert uses a history window that fits its stage.'
   takeaway: Specialization follows from the stage observation; each expert also uses
     a history window that fits its stage.
-  duration_seconds: 20.641
+  duration_seconds: 21.739
 - slide_index: 5
   scene_id: lesa_05_expert_internals
   title: What does one expert compute?
@@ -66,12 +67,13 @@ slides:
 
     A learned linear projection mixes that history into a vector, z.
 
-    A KAN (Kolmogorov-Arnold Network) turns timestep offsets into one number, alpha.
+    A small network called a KAN (Kolmogorov-Arnold network) turns the timestep offset
+    into one number, alpha.
 
     The prediction adds a correction to the current feature, scaled by alpha.'
   takeaway: One expert is a learned projection of recent features, scaled by a learned
     time-dependent factor.
-  duration_seconds: 25.833
+  duration_seconds: 27.976
 - slide_index: 6
   scene_id: lesa_06_training
   title: Ground-truth guided, then closed-loop

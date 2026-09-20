@@ -25,134 +25,142 @@ The obvious trick is to reuse the last
 feature, or extrapolate it.
 
 6
-00:00:24.483 --> 00:00:30.026
-Both assume it changes smoothly, so a
-fitted curve should continue it.
+00:00:24.483 --> 00:00:30.454
+Both assume the feature changes smoothly,
+so a fitted curve should keep going.
 
 7
-00:00:30.276 --> 00:00:35.819
+00:00:30.704 --> 00:00:36.247
 But early on it moves a lot, and the
 forecast drifts away.
 
 8
-00:00:36.069 --> 00:00:40.206
-A fixed rule guesses a shape that keeps
-changing.
+00:00:37.047 --> 00:00:42.041
+A fixed rule has to guess a shape that
+keeps changing.
 
 9
-00:00:40.806 --> 00:00:44.514
+00:00:42.641 --> 00:00:46.350
 Watch the same feature over the whole
 process.
 
 10
-00:00:44.764 --> 00:00:49.879
+00:00:46.600 --> 00:00:51.714
 Early on, noise is high and change is fast
 and uneven.
 
 11
-00:00:50.129 --> 00:00:53.957
+00:00:51.964 --> 00:00:55.793
 In the middle, change becomes small and
 smooth.
 
 12
-00:00:54.207 --> 00:00:59.053
+00:00:56.043 --> 00:01:00.889
 Near the end it barely moves: only details
 are refined.
 
 13
-00:00:59.303 --> 00:01:01.406
+00:01:01.139 --> 00:01:03.242
 One trajectory, three behaviours.
 
 14
-00:01:01.406 --> 00:01:02.983
+00:01:03.242 --> 00:01:04.819
 Call them stages.
 
 15
-00:01:03.783 --> 00:01:06.783
+00:01:05.619 --> 00:01:08.619
 Why should one predictor handle all three?
 
 16
-00:01:08.083 --> 00:01:14.214
+00:01:09.919 --> 00:01:16.050
 A single predictor must compromise: a rule
 for the noisy start fails later.
 
 17
-00:01:14.464 --> 00:01:18.293
+00:01:16.300 --> 00:01:20.129
 If stages differ, the predictor should
 differ too.
 
 18
-00:01:18.543 --> 00:01:23.109
-LESA (Learnable Stage-Aware predictors)
-gives each stage its own expert.
+00:01:20.379 --> 00:01:25.569
+The method, LESA (learnable stage-aware
+predictors), gives each stage its own
 
 19
-00:01:23.909 --> 00:01:28.474
+00:01:25.569 --> 00:01:26.041
+expert.
+
+20
+00:01:26.841 --> 00:01:31.407
 Each expert uses a history window that
 fits its stage.
 
-20
-00:01:28.724 --> 00:01:30.719
+21
+00:01:31.657 --> 00:01:33.651
 Zoom into one expert.
 
-21
-00:01:31.519 --> 00:01:35.936
+22
+00:01:34.451 --> 00:01:38.869
 It receives cached features from recent
 steps: the history.
 
-22
-00:01:36.186 --> 00:01:41.300
+23
+00:01:39.119 --> 00:01:44.233
 A learned linear projection mixes that
 history into a vector, z.
 
-23
-00:01:42.100 --> 00:01:47.214
-A KAN (Kolmogorov-Arnold Network) turns
-timestep offsets into one number, alpha.
-
 24
-00:01:48.014 --> 00:01:53.557
+00:01:45.033 --> 00:01:49.569
+A small network called a KAN
+(Kolmogorov-Arnold network) turns the
+
+25
+00:01:49.569 --> 00:01:52.290
+timestep offset into one number, alpha.
+
+26
+00:01:53.090 --> 00:01:58.633
 The prediction adds a correction to the
 current feature, scaled by alpha.
 
-25
-00:01:54.557 --> 00:01:56.495
+27
+00:01:59.633 --> 00:02:01.571
 Training has two steps.
 
-26
-00:01:56.495 --> 00:01:59.403
+28
+00:02:01.571 --> 00:02:04.479
 First it learns from accurate features.
 
-27
-00:02:00.203 --> 00:02:04.460
+29
+00:02:05.279 --> 00:02:09.536
 At inference, its inputs are partly its
 own predictions.
 
-28
-00:02:04.710 --> 00:02:09.824
+30
+00:02:09.786 --> 00:02:14.900
 If it never sees its own mistakes, small
 errors build up.
 
-29
-00:02:10.624 --> 00:02:15.310
+31
+00:02:15.700 --> 00:02:20.386
 So training feeds it its own predictions,
 as at inference.
 
-30
-00:02:15.910 --> 00:02:17.904
+32
+00:02:20.986 --> 00:02:22.980
 Put it back together.
 
-31
-00:02:18.154 --> 00:02:21.983
+33
+00:02:23.230 --> 00:02:27.059
 One trajectory, divided into stages by
 noise level.
 
-32
-00:02:22.233 --> 00:02:26.919
+34
+00:02:27.309 --> 00:02:31.994
 Each stage has its own expert, predicting
 the skipped features.
 
-33
-00:02:27.169 --> 00:02:32.254
+35
+00:02:32.244 --> 00:02:37.330
 Stages, experts, predicted features: that
 is how LESA accelerates diffusion.

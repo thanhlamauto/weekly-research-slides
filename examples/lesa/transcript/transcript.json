@@ -7,6 +7,22 @@
   "audience": {
     "level": "adjacent-researcher"
   },
+  "narration": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-preview-tts",
+    "voice": {
+      "name": "Kore"
+    },
+    "profile": "research-explainer",
+    "pacing": {
+      "target_wpm": 140,
+      "min_concept_dwell_ms": 500
+    },
+    "fallback": {
+      "backend": "say",
+      "voice": "Samantha"
+    }
+  },
   "mode": "silent",
   "scenes": [
     {
@@ -20,6 +36,10 @@
           "kind": "introduction",
           "visual_cue": "establish",
           "text": "Diffusion runs a large network at every step, so generation is slow.",
+          "delivery": {
+            "intent": "setup",
+            "direction": "State the cost plainly. This is the problem, not a complaint."
+          },
           "words": [
             "Diffusion",
             "runs",
@@ -88,6 +108,13 @@
           "kind": "conclusion",
           "visual_cue": "conclude",
           "text": "The question is how to skip safely.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "emphasis": [
+              "skip safely"
+            ],
+            "direction": "Land the question. Do not sound like a slogan."
+          },
           "words": [
             "The",
             "question",
@@ -122,6 +149,10 @@
           "kind": "introduction",
           "visual_cue": "establish",
           "text": "The obvious trick is to reuse the last feature, or extrapolate it.",
+          "delivery": {
+            "intent": "define",
+            "direction": "Present the baseline fairly; no skepticism yet."
+          },
           "words": [
             "The",
             "obvious",
@@ -146,11 +177,12 @@
         {
           "beat_id": "forecast",
           "visual_cue": "forecast",
-          "text": "Both assume it changes smoothly, so a fitted curve should continue it.",
+          "text": "Both assume the feature changes smoothly, so a fitted curve should keep going.",
           "words": [
             "Both",
             "assume",
-            "it",
+            "the",
+            "feature",
             "changes",
             "smoothly",
             "so",
@@ -158,20 +190,29 @@
             "fitted",
             "curve",
             "should",
-            "continue",
-            "it."
+            "keep",
+            "going."
           ],
-          "word_count": 12,
-          "speaking_seconds": 5.543,
+          "word_count": 13,
+          "speaking_seconds": 5.971,
           "dwell_seconds": 0.25,
           "start": 24.483,
-          "end": 30.026,
-          "end_with_dwell": 30.276
+          "end": 30.454,
+          "end_with_dwell": 30.704
         },
         {
           "beat_id": "diverge",
+          "kind": "comparison",
           "visual_cue": "diverge",
           "text": "But early on it moves a lot, and the forecast drifts away.",
+          "delivery": {
+            "intent": "contrast",
+            "pause_before_ms": 400,
+            "emphasis": [
+              "drifts away"
+            ],
+            "direction": "The contrast starts here. Slightly emphasize \"drifts away\"; stay measured."
+          },
           "words": [
             "But",
             "early",
@@ -188,40 +229,42 @@
           ],
           "word_count": 12,
           "speaking_seconds": 5.543,
-          "dwell_seconds": 0.25,
-          "start": 30.276,
-          "end": 35.819,
-          "end_with_dwell": 36.069
+          "dwell_seconds": 0.8,
+          "start": 30.704,
+          "end": 36.247,
+          "end_with_dwell": 37.047
         },
         {
           "beat_id": "conclude",
           "kind": "conclusion",
           "visual_cue": "conclude",
-          "text": "A fixed rule guesses a shape that keeps changing.",
+          "text": "A fixed rule has to guess a shape that keeps changing.",
           "words": [
             "A",
             "fixed",
             "rule",
-            "guesses",
+            "has",
+            "to",
+            "guess",
             "a",
             "shape",
             "that",
             "keeps",
             "changing."
           ],
-          "word_count": 9,
-          "speaking_seconds": 4.137,
+          "word_count": 11,
+          "speaking_seconds": 4.994,
           "dwell_seconds": 0.6,
-          "start": 36.069,
-          "end": 40.206,
-          "end_with_dwell": 40.806
+          "start": 37.047,
+          "end": 42.041,
+          "end_with_dwell": 42.641
         }
       ],
       "start": 18.14,
-      "end": 40.806,
-      "duration_seconds": 22.666,
+      "end": 42.641,
+      "duration_seconds": 24.501,
       "tail_dwell": 0.6,
-      "word_count": 45
+      "word_count": 48
     },
     {
       "id": "lesa_03_stage_dynamics",
@@ -246,9 +289,9 @@
           "word_count": 8,
           "speaking_seconds": 3.709,
           "dwell_seconds": 0.25,
-          "start": 40.806,
-          "end": 44.514,
-          "end_with_dwell": 44.764
+          "start": 42.641,
+          "end": 46.35,
+          "end_with_dwell": 46.6
         },
         {
           "beat_id": "early",
@@ -270,9 +313,9 @@
           "word_count": 11,
           "speaking_seconds": 5.114,
           "dwell_seconds": 0.25,
-          "start": 44.764,
-          "end": 49.879,
-          "end_with_dwell": 50.129
+          "start": 46.6,
+          "end": 51.714,
+          "end_with_dwell": 51.964
         },
         {
           "beat_id": "middle",
@@ -291,9 +334,9 @@
           "word_count": 8,
           "speaking_seconds": 3.829,
           "dwell_seconds": 0.25,
-          "start": 50.129,
-          "end": 53.957,
-          "end_with_dwell": 54.207
+          "start": 51.964,
+          "end": 55.793,
+          "end_with_dwell": 56.043
         },
         {
           "beat_id": "late",
@@ -314,15 +357,24 @@
           "word_count": 10,
           "speaking_seconds": 4.846,
           "dwell_seconds": 0.25,
-          "start": 54.207,
-          "end": 59.053,
-          "end_with_dwell": 59.303
+          "start": 56.043,
+          "end": 60.889,
+          "end_with_dwell": 61.139
         },
         {
           "beat_id": "split",
           "kind": "introduction",
           "visual_cue": "split",
           "text": "One trajectory, three behaviours. Call them stages.",
+          "delivery": {
+            "intent": "define",
+            "pause_before_ms": 300,
+            "pause_after_ms": 500,
+            "emphasis": [
+              "three behaviours"
+            ],
+            "direction": "Give the listener a beat to connect the three regimes before naming them."
+          },
           "words": [
             "One",
             "trajectory",
@@ -335,15 +387,21 @@
           "word_count": 7,
           "speaking_seconds": 3.68,
           "dwell_seconds": 0.8,
-          "start": 59.303,
-          "end": 62.983,
-          "end_with_dwell": 63.783
+          "start": 61.139,
+          "end": 64.819,
+          "end_with_dwell": 65.619
         },
         {
           "beat_id": "ask",
           "kind": "aha",
           "visual_cue": "ask",
           "text": "Why should one predictor handle all three?",
+          "delivery": {
+            "intent": "reveal",
+            "pause_before_ms": 450,
+            "pause_after_ms": 700,
+            "direction": "A genuine question, not rhetorical. Leave space after it; do not sound dramatic."
+          },
           "words": [
             "Why",
             "should",
@@ -356,13 +414,13 @@
           "word_count": 7,
           "speaking_seconds": 3.0,
           "dwell_seconds": 1.3,
-          "start": 63.783,
-          "end": 66.783,
-          "end_with_dwell": 68.083
+          "start": 65.619,
+          "end": 68.619,
+          "end_with_dwell": 69.919
         }
       ],
-      "start": 40.806,
-      "end": 68.083,
+      "start": 42.641,
+      "end": 69.919,
       "duration_seconds": 27.277,
       "tail_dwell": 1.3,
       "word_count": 51
@@ -377,6 +435,11 @@
           "beat_id": "single",
           "visual_cue": "single",
           "text": "A single predictor must compromise: a rule for the noisy start fails later.",
+          "delivery": {
+            "emphasis": [
+              "compromise"
+            ]
+          },
           "words": [
             "A",
             "single",
@@ -395,14 +458,18 @@
           "word_count": 13,
           "speaking_seconds": 6.131,
           "dwell_seconds": 0.25,
-          "start": 68.083,
-          "end": 74.214,
-          "end_with_dwell": 74.464
+          "start": 69.919,
+          "end": 76.05,
+          "end_with_dwell": 76.3
         },
         {
           "beat_id": "split",
           "visual_cue": "split",
           "text": "If stages differ, the predictor should differ too.",
+          "delivery": {
+            "pause_after_ms": 400,
+            "direction": "This is the logical step, not a new claim. Keep it calm."
+          },
           "words": [
             "If",
             "stages",
@@ -416,19 +483,27 @@
           "word_count": 8,
           "speaking_seconds": 3.829,
           "dwell_seconds": 0.25,
-          "start": 74.464,
-          "end": 78.293,
-          "end_with_dwell": 78.543
+          "start": 76.3,
+          "end": 80.129,
+          "end_with_dwell": 80.379
         },
         {
           "beat_id": "specialize",
           "kind": "introduction",
           "visual_cue": "specialize",
-          "text": "LESA (Learnable Stage-Aware predictors) gives each stage its own expert.",
+          "text": "The method, LESA (learnable stage-aware predictors), gives each stage its own expert.",
+          "delivery": {
+            "intent": "define",
+            "pace": "slower",
+            "pause_after_ms": 600,
+            "direction": "Introduce the name once, clearly, then move on."
+          },
           "words": [
+            "The",
+            "method",
             "LESA",
-            "Learnable",
-            "Stage-Aware",
+            "learnable",
+            "stage-aware",
             "predictors",
             "gives",
             "each",
@@ -437,12 +512,12 @@
             "own",
             "expert."
           ],
-          "word_count": 10,
-          "speaking_seconds": 4.566,
+          "word_count": 12,
+          "speaking_seconds": 5.663,
           "dwell_seconds": 0.8,
-          "start": 78.543,
-          "end": 83.109,
-          "end_with_dwell": 83.909
+          "start": 80.379,
+          "end": 86.041,
+          "end_with_dwell": 86.841
         },
         {
           "beat_id": "window",
@@ -463,16 +538,16 @@
           "word_count": 10,
           "speaking_seconds": 4.566,
           "dwell_seconds": 0.25,
-          "start": 83.909,
-          "end": 88.474,
-          "end_with_dwell": 88.724
+          "start": 86.841,
+          "end": 91.407,
+          "end_with_dwell": 91.657
         }
       ],
-      "start": 68.083,
-      "end": 88.724,
-      "duration_seconds": 20.641,
+      "start": 69.919,
+      "end": 91.657,
+      "duration_seconds": 21.739,
       "tail_dwell": 0.25,
-      "word_count": 41
+      "word_count": 43
     },
     {
       "id": "lesa_05_expert_internals",
@@ -485,6 +560,10 @@
           "kind": "introduction",
           "visual_cue": "zoom",
           "text": "Zoom into one expert.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 500
+          },
           "words": [
             "Zoom",
             "into",
@@ -494,9 +573,9 @@
           "word_count": 4,
           "speaking_seconds": 1.994,
           "dwell_seconds": 0.8,
-          "start": 88.724,
-          "end": 90.719,
-          "end_with_dwell": 91.519
+          "start": 91.657,
+          "end": 93.651,
+          "end_with_dwell": 94.451
         },
         {
           "beat_id": "history",
@@ -516,15 +595,20 @@
           "word_count": 9,
           "speaking_seconds": 4.417,
           "dwell_seconds": 0.25,
-          "start": 91.519,
-          "end": 95.936,
-          "end_with_dwell": 96.186
+          "start": 94.451,
+          "end": 98.869,
+          "end_with_dwell": 99.119
         },
         {
           "beat_id": "spatial",
           "kind": "introduction",
           "visual_cue": "spatial",
           "text": "A learned linear projection mixes that history into a vector, z.",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 500,
+            "direction": "Slow down at \"projection\"; this is the first new operation."
+          },
           "words": [
             "A",
             "learned",
@@ -541,40 +625,58 @@
           "word_count": 11,
           "speaking_seconds": 5.114,
           "dwell_seconds": 0.8,
-          "start": 96.186,
-          "end": 101.3,
-          "end_with_dwell": 102.1
+          "start": 99.119,
+          "end": 104.233,
+          "end_with_dwell": 105.033
         },
         {
           "beat_id": "temporal",
           "kind": "introduction",
           "visual_cue": "temporal",
-          "text": "A KAN (Kolmogorov-Arnold Network) turns timestep offsets into one number, alpha.",
+          "text": "A small network called a KAN (Kolmogorov-Arnold network) turns the timestep offset into one number, alpha.",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 600,
+            "direction": "Slow down around the new term. Say the expansion clearly, then the result."
+          },
           "words": [
             "A",
+            "small",
+            "network",
+            "called",
+            "a",
             "KAN",
             "Kolmogorov-Arnold",
-            "Network",
+            "network",
             "turns",
+            "the",
             "timestep",
-            "offsets",
+            "offset",
             "into",
             "one",
             "number",
             "alpha."
           ],
-          "word_count": 11,
-          "speaking_seconds": 5.114,
+          "word_count": 16,
+          "speaking_seconds": 7.257,
           "dwell_seconds": 0.8,
-          "start": 102.1,
-          "end": 107.214,
-          "end_with_dwell": 108.014
+          "start": 105.033,
+          "end": 112.29,
+          "end_with_dwell": 113.09
         },
         {
           "beat_id": "combine",
           "kind": "equation",
           "visual_cue": "combine",
           "text": "The prediction adds a correction to the current feature, scaled by alpha.",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 700,
+            "emphasis": [
+              "scaled by alpha"
+            ],
+            "direction": "Read the equation through its meaning, not symbol by symbol."
+          },
           "words": [
             "The",
             "prediction",
@@ -592,16 +694,16 @@
           "word_count": 12,
           "speaking_seconds": 5.543,
           "dwell_seconds": 1.0,
-          "start": 108.014,
-          "end": 113.557,
-          "end_with_dwell": 114.557
+          "start": 113.09,
+          "end": 118.633,
+          "end_with_dwell": 119.633
         }
       ],
-      "start": 88.724,
-      "end": 114.557,
-      "duration_seconds": 25.833,
+      "start": 91.657,
+      "end": 119.633,
+      "duration_seconds": 27.976,
       "tail_dwell": 1.0,
-      "word_count": 47
+      "word_count": 52
     },
     {
       "id": "lesa_06_training",
@@ -614,6 +716,10 @@
           "kind": "introduction",
           "visual_cue": "gt",
           "text": "Training has two steps. First it learns from accurate features.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 450
+          },
           "words": [
             "Training",
             "has",
@@ -629,9 +735,9 @@
           "word_count": 10,
           "speaking_seconds": 4.846,
           "dwell_seconds": 0.8,
-          "start": 114.557,
-          "end": 119.403,
-          "end_with_dwell": 120.203
+          "start": 119.633,
+          "end": 124.479,
+          "end_with_dwell": 125.279
         },
         {
           "beat_id": "inference",
@@ -651,15 +757,22 @@
           "word_count": 9,
           "speaking_seconds": 4.257,
           "dwell_seconds": 0.25,
-          "start": 120.203,
-          "end": 124.46,
-          "end_with_dwell": 124.71
+          "start": 125.279,
+          "end": 129.536,
+          "end_with_dwell": 129.786
         },
         {
           "beat_id": "drift",
           "kind": "comparison",
           "visual_cue": "drift",
           "text": "If it never sees its own mistakes, small errors build up.",
+          "delivery": {
+            "emphasis": [
+              "never sees"
+            ],
+            "pause_before_ms": 250,
+            "pause_after_ms": 450
+          },
           "words": [
             "If",
             "it",
@@ -676,15 +789,20 @@
           "word_count": 11,
           "speaking_seconds": 5.114,
           "dwell_seconds": 0.8,
-          "start": 124.71,
-          "end": 129.824,
-          "end_with_dwell": 130.624
+          "start": 129.786,
+          "end": 134.9,
+          "end_with_dwell": 135.7
         },
         {
           "beat_id": "closed_loop",
           "kind": "conclusion",
           "visual_cue": "closed_loop",
           "text": "So training feeds it its own predictions, as at inference.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "pause_after_ms": 650,
+            "direction": "This is the conclusion of the training idea. Restrained confidence, no flourish."
+          },
           "words": [
             "So",
             "training",
@@ -700,13 +818,13 @@
           "word_count": 10,
           "speaking_seconds": 4.686,
           "dwell_seconds": 0.6,
-          "start": 130.624,
-          "end": 135.31,
-          "end_with_dwell": 135.91
+          "start": 135.7,
+          "end": 140.386,
+          "end_with_dwell": 140.986
         }
       ],
-      "start": 114.557,
-      "end": 135.91,
+      "start": 119.633,
+      "end": 140.986,
       "duration_seconds": 21.353,
       "tail_dwell": 0.6,
       "word_count": 40
@@ -730,9 +848,9 @@
           "word_count": 4,
           "speaking_seconds": 1.994,
           "dwell_seconds": 0.25,
-          "start": 135.91,
-          "end": 137.904,
-          "end_with_dwell": 138.154
+          "start": 140.986,
+          "end": 142.98,
+          "end_with_dwell": 143.23
         },
         {
           "beat_id": "stages",
@@ -751,9 +869,9 @@
           "word_count": 8,
           "speaking_seconds": 3.829,
           "dwell_seconds": 0.25,
-          "start": 138.154,
-          "end": 141.983,
-          "end_with_dwell": 142.233
+          "start": 143.23,
+          "end": 147.059,
+          "end_with_dwell": 147.309
         },
         {
           "beat_id": "experts",
@@ -774,15 +892,23 @@
           "word_count": 10,
           "speaking_seconds": 4.686,
           "dwell_seconds": 0.25,
-          "start": 142.233,
-          "end": 146.919,
-          "end_with_dwell": 147.169
+          "start": 147.309,
+          "end": 151.994,
+          "end_with_dwell": 152.244
         },
         {
           "beat_id": "recap",
           "kind": "conclusion",
           "visual_cue": "recap",
           "text": "Stages, experts, predicted features: that is how LESA accelerates diffusion.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 700,
+            "emphasis": [
+              "predicted features"
+            ],
+            "direction": "Compress the whole method into one sentence. Finish cleanly; do not trail off."
+          },
           "words": [
             "Stages",
             "experts",
@@ -798,19 +924,19 @@
           "word_count": 10,
           "speaking_seconds": 5.086,
           "dwell_seconds": 0.6,
-          "start": 147.169,
-          "end": 152.254,
-          "end_with_dwell": 152.854
+          "start": 152.244,
+          "end": 157.33,
+          "end_with_dwell": 157.93
         }
       ],
-      "start": 135.91,
-      "end": 152.854,
+      "start": 140.986,
+      "end": 157.93,
       "duration_seconds": 16.944,
       "tail_dwell": 0.6,
       "word_count": 32
     }
   ],
-  "duration_seconds": 152.854,
-  "word_count": 291,
+  "duration_seconds": 157.93,
+  "word_count": 301,
   "target_wpm": 140
 }
