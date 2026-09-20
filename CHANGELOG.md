@@ -3,6 +3,48 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.7.0] - 2026-09-20
+
+### Added
+
+- **Template-driven LaTeX Beamer renderer is now the default output.** `wrs
+  build` writes a PDF by default; the editable PPTX backend remains available
+  with `--renderer pptx` (or a `.pptx` output path).
+  - versioned template `templates/academic-beamer/` (`version.json`,
+    `theme.tex`, `macros.tex`): fonts, margins, frame chrome, minimal footer,
+    semantic bands, status colours, citation style and a tikz vocabulary;
+  - semantic generator `src/beamer/renderTex.js`: every schema archetype maps to
+    macros (`\wrsLead`, `\wrsband`, `\wrsStatus`, `\wrsClaimTransition`,
+    `\wrsDiagId`, `\wrsMethodTransition`, tikz nodes/vectors), never to
+    coordinates or colours;
+  - `src/beamer/build.js`: build directory + `build_manifest.json`, compile with
+    `pdflatex`/`latexmk`, log QA, handout build, `pdftoppm` page renders and a
+    Pillow contact sheet (`scripts/pdf_contact_sheet.py`);
+  - compile QA is hard-failing: compile errors, overfull boxes ≥ 1pt, missing
+    files, undefined citations/references;
+  - handout mode (`\documentclass[...,handout]`), speaker notes via `\note{}`,
+    Unicode engine fallback to `lualatex`;
+  - `wrs qa --input deck.pdf` re-checks the compile log and page count;
+    `wrs render --input deck.pdf` renders pages + contact sheet; `wrs doctor`
+    reports the TeX toolchain and required packages;
+  - the critique loop accepts `--renderer beamer` and inspects real PDF page
+    pixels.
+- README gallery is now the compiled PDF (one contact sheet), with an honest
+  before/after: legacy PowerPoint shapes vs the compiled Beamer diagnostic
+  slide. Several figure/video embeds became links to cut image count.
+- Tests: `tests/beamer.test.js` (template metadata, archetype coverage, the
+  Beamer subtitle trap, escaping, log QA, compile + handout, page renders, CLI).
+
+### Changed
+
+- `wrs build` default output is `out.pdf`; `.pptx` still routes to the legacy
+  backend. `wrs demo` now also produces the Beamer PDF, handout and page
+  renders.
+- README/SKILL describe the Beamer renderer as primary and the academic
+  PowerPoint styles as a backend option.
+- `npm run assets` also refreshes the Beamer gallery assets from the demo
+  build; banner and architecture diagrams reflect the new default.
+
 ## [0.6.0] - 2026-09-20
 
 ### Added

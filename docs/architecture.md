@@ -21,25 +21,48 @@ research_state.yaml + weekly material
         v
   slide_spec.yaml         validated against schemas/slide_spec.schema.json
         |
-        v
-   scene (renderer-agnostic geometry, typed primitives with semantic ids)
+        +--> semantic LaTeX (src/beamer/renderTex.js, macros only)
+        |         |
+        |         v
+        |    templates/academic-beamer/ (theme.tex, macros.tex, version.json)
+        |         |
+        |         v
+        |    compile (pdflatex/latexmk) + log QA -> presentation.pdf / handout.pdf
+        |         |
+        |         v
+        |    pdftoppm page renders + contact sheet
         |
-        +--> pptxRenderer  -> native editable .pptx
-        +--> svgRenderer   -> vector previews + contact sheets
-        |
-        v
-  optional motion (OOXML <p:transition> / <p:timing>)
-        |
-        v
-  QA: scientific, geometry, continuity, pptx package
+        +--> scene (renderer-agnostic geometry, typed primitives with semantic ids)
+                  |
+                  +--> pptxRenderer  -> native editable .pptx
+                  +--> svgRenderer   -> vector previews + contact sheets
+                  |
+                  v
+            optional motion (OOXML <p:transition> / <p:timing>)
+                  |
+                  v
+            QA: scientific, geometry, continuity, pptx package
 ```
+
+## Beamer renderer (`src/beamer/`)
+
+The default output. `renderTex.js` maps each archetype to semantic macros and
+never emits coordinates or colours; `templates/academic-beamer/` owns the
+presentation and is versioned. `build.js` prepares the build directory
+(`preamble.tex`, `slides.tex`, `presentation.tex`, `handout.tex`,
+`build_manifest.json`), compiles with `pdflatex`/`latexmk`, parses the LaTeX log
+(compile errors, overfull boxes, missing files, undefined citations/references),
+builds the handout, and renders pages with `pdftoppm`. `scripts/pdf_contact_sheet.py`
+composes the contact sheet. See `references/beamer-template.md`.
 
 ## The scene
 
+The scene is the PPTX/SVG intermediate. Beamer does not consume it: it works
+from the semantic spec directly, because its layout is owned by the template.
 Layouts do not talk to PowerPoint. They produce a **scene**: a list of
 primitives (`text`, `rect`, `roundRect`, `ellipse`, `line`) with coordinates in
-inches and a stable `id`. Both renderers consume the same scene, so geometry QA,
-previews, and the PPTX can never disagree about layout.
+inches and a stable `id`. Both PPTX and SVG renderers consume the same scene, so
+geometry QA, previews, and the PPTX can never disagree about layout.
 
 ## Layouts and archetypes
 
@@ -67,6 +90,8 @@ is a separate file.
 
 Style is separated from slide implementations: typography, colour, layout,
 blocks, outer frame, figure treatment and decoration policy live in a profile.
+This system applies to the **legacy PPTX backend**; the Beamer template carries
+its own equivalent vocabulary.
 
 ```text
 styles.js (academic-beamer | academic-metropolis | paper-figure | dark-explainer)
@@ -117,7 +142,7 @@ method_model.yaml          (shared semantic model)
         |                                   frames + contact sheet (QA)
         |                                         |
         v                                         v
-   slide_spec.yaml -> PPTX                 keyframes.yaml + PNG (PPT bridge)
+   slide_spec.yaml -> Beamer PDF / PPTX     keyframes.yaml + PNG (PPT bridge)
 ```
 
 The narration script is authored with the visual beats and is the source of
@@ -142,7 +167,7 @@ A third consumer of the same method model:
 ```text
 method_model.yaml          (shared semantic model)
         |
-        +--> slide_spec.yaml -> PPTX
+        +--> slide_spec.yaml -> Beamer PDF / PPTX
         +--> scene_spec.yaml -> Manim MP4
         |
         v
@@ -168,7 +193,11 @@ method_model.yaml          (shared semantic model)
 ## Extension points
 
 - Add an archetype: add a layout function and register it in
-  `src/layouts/index.js`, then add it to the `slide_spec` schema enum.
+  `src/layouts/index.js`, add a Beamer renderer in `src/beamer/renderTex.js`,
+  then add it to the `slide_spec` schema enum.
+- Restyle the default output: bump `templates/academic-beamer/version.json` and
+  edit `theme.tex` / `macros.tex`; generated `.tex` is never edited.
 - Add a visual object kind: extend `NODE_STYLE` / `ARROW_STYLE` in
-  `src/visual-grammar/draw.js`.
+  `src/visual-grammar/draw.js` (PPTX backend) or the tikz styles in the Beamer
+  theme.
 - Add a QA rule: push findings from a new function in `src/qa/`.

@@ -10,20 +10,22 @@
 
 An [Agent Skill](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview)
 for weekly research meetings with a supervisor, PI, mentor, or research group.
-It is not a generic PowerPoint generator. It tracks what changed in the science
-across weeks and turns that change into a concise, visually explanatory deck
-that stays fully editable in PowerPoint.
+It is not a generic slide generator. It tracks what changed in the science
+across weeks and turns that change into a concise, visually explanatory deck.
+The default output is a **template-driven LaTeX Beamer PDF**; a native,
+editable PowerPoint backend remains available when hand editing matters.
 
 ## Why this exists
 
 Weekly research presentations are hard for a specific reason: the value is not
 in restating the project, it is in communicating **what changed** and **what it
 means for the current claims**. Generic slide generators produce bullet-heavy
-decks that treat every week like a fresh start, blur the line between what was
-measured and what it might mean, and lock the result into uneditable images.
+decks that treat every week like a fresh start and blur the line between what
+was measured and what it might mean.
 
 This skill keeps a persistent project state, computes the week's delta, and
-renders an argument with native PowerPoint objects you can still edit.
+renders an argument through a versioned academic template. The Beamer PDF is the
+deliverable by default; the same source also renders an editable `.pptx`.
 
 ## Core idea: research delta
 
@@ -67,58 +69,69 @@ A second, survey-stage example is in
 
 ## Gallery
 
-Previews are rendered from the same `slide_spec.yaml` scene that produces the
-PPTX (see [Current limitations](#current-limitations) for how to rasterize the
-actual PPTX instead).
+The demo source is
+[`examples/diagnostic-week/slide_spec.yaml`](examples/diagnostic-week/slide_spec.yaml).
+The default output is the 10-page Beamer PDF
+[`output/demo-weekly-research-slides.pdf`](examples/diagnostic-week/output/demo-weekly-research-slides.pdf),
+built together with a handout PDF and per-page PNG renders by `npm run demo`.
 
-[![gallery contact sheet](docs/images/gallery-contact-sheet.png)](docs/images/gallery-contact-sheet.png)
+[![Beamer demo deck](docs/images/beamer-contact-sheet.png)](examples/diagnostic-week/output/demo-weekly-research-slides.pdf)
 
-| Object continuity (slides 4-5) | Diagnostic separation (slide 6) |
+The contact sheet is rendered from the compiled PDF with `pdftoppm`, not from
+the source scene, so it shows the actual deliverable.
+
+## Beamer PDF (default renderer)
+
+`wrs build` now writes a LaTeX Beamer PDF by default. The generator emits only
+semantic content (`\wrsband{measurement}{...}`, `\wrsStatus{weakened}`, tikz
+nodes with semantic ids); the versioned template
+[`templates/academic-beamer/`](templates/academic-beamer/) owns fonts, margins,
+footer, blocks and citations. Compile QA is hard-failing: a broken build, an
+overfull box, a missing figure/citation or an undefined reference stops the
+pipeline, because the PDF is the deliverable.
+
+Before (legacy PowerPoint default) vs after (Beamer template), same diagnostic
+slide:
+
+| before — hand-placed PowerPoint shapes | after — compiled Beamer |
 |---|---|
-| ![geometry slide 4](docs/images/gallery-slide-04.png) | ![diagnostic slide 6](docs/images/gallery-slide-06.png) |
+| ![diagnostic before](docs/images/legacy-diagnostic.png) | ![diagnostic after](docs/images/beamer-slide-06.png) |
 
-| Benchmark delta (slide 7) | Claim update (slide 8) |
-|---|---|
-| ![benchmark slide 7](docs/images/gallery-slide-07.png) | ![diagnostic slide 9](docs/images/gallery-slide-09.png) |
-
-## Academic PowerPoint style
-
-The default visual language is academic: **PowerPoint mechanics, Beamer-like
-restraint**. It does not replicate LaTeX Beamer; it keeps native editability,
-figures, video and animation while adopting the clarity of strong academic
-slides.
-
-Before (previous default) vs after (`academic-beamer`):
-
-| before | after |
-|---|---|
-| ![before contact sheet](docs/images/legacy-contact-sheet.png) | ![academic contact sheet](docs/images/gallery-contact-sheet.png) |
-
-A diagnostic slide, before and after:
-
-| before | after |
-|---|---|
-| ![diagnostic before](docs/images/legacy-diagnostic.png) | ![academic diagnostic](docs/images/gallery-slide-06.png) |
+This is a renderer change, not a palette tweak: the new default is compiled
+LaTeX (frame rules, semantic bands, booktabs tables, tikz geometry) instead of
+positioned PowerPoint shapes. The PowerPoint backend is still there for native
+editability.
 
 ```bash
-node src/cli.js build --input slide_spec.yaml --output out.pptx \
-  --style academic-beamer     # default
-node src/cli.js build --input slide_spec.yaml --output out.pptx \
-  --style academic-metropolis # more whitespace + thin progress line
+node src/cli.js build --input slide_spec.yaml --output deck.pdf      # default
+node src/cli.js build --input slide_spec.yaml --output deck.pdf \
+  --render-pages                                                     # + page PNGs
+node src/cli.js build --input slide_spec.yaml --output deck.pdf \
+  --no-handout --engine pdflatex|lualatex|xelatex
+node src/cli.js build --input slide_spec.yaml --output deck.pptx \
+  --renderer pptx                                                    # legacy backend
 ```
 
-Styles: `academic-beamer` (default), `academic-metropolis`, `paper-figure`,
-`dark-explainer`. The `academic-metropolis` variant (more whitespace + a thin
-progress line) is compared at
-[`docs/images/academic-metropolis-contact-sheet.png`](docs/images/academic-metropolis-contact-sheet.png).
-See [`references/academic-slide-style.md`](references/academic-slide-style.md)
-and the editable
-[`examples/diagnostic-week/output/demo-weekly-research-slides.pptx`](examples/diagnostic-week/output/demo-weekly-research-slides.pptx).
+See [`references/beamer-template.md`](references/beamer-template.md) for the
+template contract and versioning.
 
-Design: typography-led hierarchy, near-black text on light ground, at most two
-accents, left-aligned one-line titles, minimal footer, semantic blocks used
-sparingly, figures given 60–85% of the slide, no gradients/shadows/decorative
-icons. `academic-metropolis` adds a thin progress line and more whitespace.
+## PowerPoint backend (legacy)
+
+The native, editable PPTX path is preserved for workflows that need hand
+editing, native motion, or PPTX delivery. It uses the same `slide_spec.yaml`
+and the academic style system (`--style academic-beamer`, default for this
+backend; `academic-metropolis` adds more whitespace and a thin progress line).
+
+```bash
+node src/cli.js build --input slide_spec.yaml --output out.pptx --renderer pptx \
+  --style academic-beamer
+node src/cli.js build --input slide_spec.yaml --output out.pptx --renderer pptx \
+  --style academic-metropolis
+```
+
+Contact sheet: [`docs/images/gallery-contact-sheet.png`](docs/images/gallery-contact-sheet.png)
+(source preview, not a PPTX rasterization). See
+[`references/academic-slide-style.md`](references/academic-slide-style.md).
 
 ## Editorial critique loop
 
@@ -178,9 +191,8 @@ for Diffusion Model Acceleration** (Cai et al., arXiv:2602.20497): why caching
 diffusion features is worth doing, why a single fixed reuse/forecast scheme
 fails, the stage-dependent observation, the stage-aware experts, what one expert
 predictor computes, and why training becomes closed-loop. It is a silent visual
-explanation; the researcher narrates live.
-
-[![LESA contact sheet](docs/images/lesa-contact-sheet.png)](docs/images/lesa-contact-sheet.png)
+explanation; the researcher narrates live. Full keyframe grid:
+[`docs/images/lesa-contact-sheet.png`](docs/images/lesa-contact-sheet.png).
 
 ```bash
 npm run video:doctor
@@ -263,14 +275,11 @@ Comparison figures normalize both methods into one visual language with a single
 shared style profile: shared components are gray, competitor-only amber, ours
 blue. Only the real structural difference is visible.
 
-![method delta](docs/images/figure-method-delta.png)
-
-Method-delta figures reuse the weekly-delta idea: unchanged parts keep their
-coordinates and are muted, added parts are green, removed parts red.
+Method-delta and style-transfer examples:
+[`figure-method-delta.png`](docs/images/figure-method-delta.png),
+[`figure-style-transfer.png`](docs/images/figure-style-transfer.png).
 
 ### Style extraction and transfer
-
-![style transfer](docs/images/figure-style-transfer.png)
 
 A reusable style profile is extracted from a reference figure — palette,
 typography hierarchy, module geometry, edge grammar — and applied to *different*
@@ -287,10 +296,9 @@ npm run figure:qa
 
 ### One method, three carriers
 
-![LESA method figure](docs/images/figure-lesa.png)
-
-The LESA method model that produces the Manim video also produces this figure and
-the slide source, so one method is never explained three different ways.
+The LESA method model that produces the Manim video also produces a figure and
+the slide source, so one method is never explained three different ways. Figure:
+[`docs/images/figure-lesa.png`](docs/images/figure-lesa.png).
 
 ## Features
 
@@ -306,8 +314,14 @@ the slide source, so one method is never explained three different ways.
   diagnostic links to the claims it tests.
 - **Epistemic separation** — measurement, observation, interpretation, claim,
   and hypothesis are never collapsed.
-- **Native, editable PPTX** — text boxes, shapes, arrows. No screenshot decks.
-  Every object has a stable semantic name.
+- **Beamer PDF by default** — a versioned LaTeX template
+  (`templates/academic-beamer/`, version 1) owns presentation; the generator
+  emits semantic macros and tikz with semantic ids only.
+- **Compile QA** — hard failures on compile errors, overfull boxes, missing
+  figures/citations and undefined references; handout PDF and `pdftoppm` page
+  renders from the same build.
+- **Native, editable PPTX (legacy backend)** — text boxes, shapes, arrows. No
+  screenshot decks. Every object has a stable semantic name.
 - **Object permanence** — reused ids keep objects in place across slides;
   Morph-ready by construction.
 - **Scientific + geometry + continuity + package QA** and an optional native
@@ -343,10 +357,14 @@ npm run doctor          # runtime + optional tools
 npm run demo            # build + QA the bundled example deck
 ```
 
-Build a deck and run QA:
+Build a deck and run QA (Beamer PDF is the default):
 
 ```bash
-npm run build -- --input examples/diagnostic-week/slide_spec.yaml --output out.pptx
+npm run build -- --input examples/diagnostic-week/slide_spec.yaml --output out.pdf
+npm run qa   -- --input out.pdf --spec examples/diagnostic-week/slide_spec.yaml
+
+# legacy editable PPTX backend
+npm run build -- --input examples/diagnostic-week/slide_spec.yaml --output out.pptx --renderer pptx
 npm run qa   -- --input out.pptx --spec examples/diagnostic-week/slide_spec.yaml
 ```
 
@@ -389,18 +407,24 @@ research_state.yaml + weekly material
         v
   slide_spec.yaml          the renderable source of truth
         |
-        v
-  editable PPTX            wrs build  (native objects, semantic names)
+        +--> semantic Beamer source      wrs build --output deck.pdf   [default]
+        |         |
+        |         v
+        |    compile + log QA (pdflatex/latexmk)
+        |         |
+        |         v
+        |    presentation.pdf + handout.pdf + page renders (pdftoppm)
         |
-        v
-  optional motion          wrs build --motion
-        |
-        v
-  render + QA              wrs render / wrs qa
+        +--> scene -> editable PPTX      wrs build --output deck.pptx --renderer pptx
+                  |
+                  v
+             optional motion         wrs build --motion m.yaml
 ```
 
-Only the standard library of the project is used: Node.js, `pptxgenjs`,
-`js-yaml`, `ajv`, `jszip`, and `fast-xml-parser`. No hosted backend.
+The default pipeline needs a TeX distribution (TeX Live or TinyTeX) with
+`pdflatex`/`latexmk` and Poppler's `pdftoppm`; `wrs doctor` reports the exact
+state. The PPTX backend uses `pptxgenjs`, `js-yaml`, `ajv`, `jszip`, and
+`fast-xml-parser`. No hosted backend either way.
 
 ## Research state and claim tracking
 
@@ -429,17 +453,22 @@ diagnostics:
 Run `wrs diff` to get the week-over-week delta, then `wrs plan` to get the
 argument skeleton, then author the `slide_spec.yaml`.
 
-## Editable PowerPoint philosophy
+## Renderers and editability
 
-The primary output is `.pptx`, built in this order of preference:
+The default output is a Beamer PDF: the generator writes semantic LaTeX and the
+versioned template renders it. To change a deck, change `slide_spec.yaml` and
+rebuild; generated `.tex` is reproducible and never patched.
+
+The legacy PowerPoint backend builds native objects in this order of preference:
 
 1. native PowerPoint objects (text, shapes, connectors),
 2. editable vector content,
 3. layered raster only when unavoidable (never for the normal path).
 
-The user can open the result in PowerPoint and move, restyle, or delete any
-object. Object names are semantic (`concept-zs`, `claimdelta-C1`,
-`diag-D1-measurement`) so diagrams survive authoring and are Motion-ready.
+In the PPTX backend the user can open the result in PowerPoint and move,
+restyle, or delete any object. Object names are semantic (`concept-zs`,
+`claimdelta-C1`, `diag-D1-measurement`) so diagrams survive authoring and are
+Motion-ready.
 
 ## Project structure
 
@@ -449,14 +478,17 @@ weekly-research-slides/
 ├── README.md
 ├── LICENSE  CONTRIBUTING.md  CHANGELOG.md
 ├── package.json
-├── references/               # progressive-disclosure guidance (11 docs)
+├── references/               # progressive-disclosure guidance
 ├── schemas/                  # research_state, weekly_delta, storyboard, slide_spec, motion_spec
-├── scripts/                  # make_docs_assets.js
+├── templates/
+│   └── academic-beamer/      # versioned Beamer template (theme.tex, macros.tex)
+├── scripts/                  # make_docs_assets.js, pdf_contact_sheet.py, slide_image_metrics.py
 ├── src/
 │   ├── model/                # validate.js, plan.js, diff.js
 │   ├── renderer/             # scene.js, buildScene.js, pptxRenderer.js, svgRenderer.js, theme.js
 │   ├── layouts/              # narrative.js, method.js, evidence.js, common.js
 │   ├── visual-grammar/       # draw.js
+│   ├── beamer/               # renderTex.js (semantic LaTeX), build.js (compile + log QA + pages)
 │   ├── pptx/                 # inspect.js, edit.js, motion.js
 │   ├── qa/                   # geometry.js, continuity.js, scientific.js, pptxPackage.js
 │   └── cli.js
@@ -473,16 +505,20 @@ weekly-research-slides/
 
 | command | purpose |
 |---|---|
-| `wrs doctor` | runtime and optional tool check |
-| `wrs build --input slide_spec.yaml --output out.pptx [--motion m.yaml] [--preview dir]` | render native PPTX |
+| `wrs doctor` | runtime, optional tools, and the LaTeX/Beamer stack |
+| `wrs build --input slide_spec.yaml --output out.pdf [--render-pages] [--no-handout] [--engine pdflatex]` | render semantic LaTeX, compile (hard QA), handout PDF, page PNGs |
+| `wrs build --input slide_spec.yaml --output out.pptx --renderer pptx [--motion m.yaml] [--preview dir]` | legacy native PPTX + optional motion |
+| `wrs qa --input out.pdf --spec slide_spec.yaml [--build-dir dir] [--report r.json]` | PDF checks + compile-log QA + scientific/geometry/continuity QA |
 | `wrs qa --input out.pptx --spec slide_spec.yaml [--delta d.yaml] [--report r.json]` | scientific + geometry + continuity + package QA |
+| `wrs render --input deck.pdf --output dir/` | render PDF pages to PNG + contact sheet |
 | `wrs render --input deck.pptx --output dir/` | rasterize PPTX (LibreOffice) or render source previews |
+| `wrs critique --input slide_spec.yaml --deck out.pdf --renderer beamer` | source-first critique loop with PDF page inspection |
 | `wrs inspect --input deck.pptx [--json]` | list shapes, names, text, geometry |
 | `wrs edit --input deck.pptx --ops ops.yaml --output deck2.pptx` | conservative edits |
 | `wrs plan --state state.yaml [--delta d.yaml] [--stage diagnostic]` | emit `storyboard.yaml` |
 | `wrs diff --prev a.yaml --curr b.yaml` | emit `weekly_delta.yaml` |
 | `wrs validate --schema slide_spec --input spec.yaml` | schema validation |
-| `wrs demo` | build + QA the bundled example |
+| `wrs demo` | build + QA the bundled example (PDF + PPTX + page renders) |
 | `npm run video:doctor` | check Python, Manim, ffmpeg, LaTeX |
 | `npm run video:render` / `video:render:final` | render the LESA explainer (draft / final) |
 | `npm run video:qa` | extract frames, contact sheet, heuristics |
@@ -497,11 +533,17 @@ weekly-research-slides/
 
 ## Current limitations
 
+- **Beamer needs a local TeX distribution.** The default pipeline requires
+  `pdflatex` (or `lualatex`/`xelatex` for non-Latin-1 content), `latexmk` or the
+  engine itself, and `pdftoppm` for page renders. Without them the build fails
+  with an actionable message and the PPTX backend still works.
+- **Beamer frames are static.** Overlays/progressive disclosure are not emitted;
+  `beats` drive the speaker notes and PPTX motion instead. Handout mode drops
+  notes by design.
 - **No native PPTX rasterization by default.** If LibreOffice (`soffice`) is
   installed, `wrs render --input deck.pptx` converts the real deck. Otherwise
-  `wrs render --input slide_spec.yaml` renders vector previews from the same
-  scene used to build the PPTX. The committed gallery is source-rendered and is
-  labeled as such.
+  source previews are vector renders from the same scene used to build the
+  PPTX. PPTX gallery assets are source-rendered and labeled as such.
 - **No Morph generation.** The deck is Morph-ready (stable names and positions)
   but Morph transitions are not injected in v0.1.
 - **Edit support is conservative.** `set_text`, `move`, `resize`, and
@@ -521,8 +563,9 @@ weekly-research-slides/
   extraction from raster images recovers palette and density but not fonts or
   exact geometry, and records that as low confidence. Reconstruction is
   agent-assisted, not a universal automatic converter.
-- **TikZ is not implemented.** It remains an optional future backend; draw.io is
-  the editable source.
+- **TikZ is used only inside the Beamer template** (feature-space geometry and
+  method pipelines). It is not a general figure backend; draw.io remains the
+  editable figure source.
 
 ## Roadmap
 
@@ -557,6 +600,12 @@ reused; concepts were reimplemented.
 - [`LikC1606/lab-meeting-report-skill`](https://github.com/LikC1606/lab-meeting-report-skill)
   — source-grounded lab-meeting reporting and honest handling of negative
   results.
+
+For the Beamer renderer, design principles were studied from
+[LaTeX Beamer](https://ctan.org/pkg/beamer) (GPL-2.0-or-later / LPPL-1.3c) and
+the [Metropolis theme](https://github.com/matze/mtheme) (CC BY-SA 4.0). No
+code, fonts or assets are reused; `templates/academic-beamer/` is an independent
+implementation that depends on the user's own TeX distribution.
 
 For the figure sub-capability, concepts were studied from these projects (no
 bundled assets copied; code was reimplemented):

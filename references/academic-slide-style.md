@@ -1,14 +1,19 @@
 # Academic slide style
 
-The default visual language is academic, not startup. The principle:
+This document describes the **legacy PowerPoint backend** style system. The
+default renderer is now a real LaTeX Beamer template; see
+[`beamer-template.md`](beamer-template.md). Both share the same design rules
+below, so the two outputs read as one system.
+
+The principle:
 
 ```
 academic ≠ dense
 ```
 
-The goal is a serious research talk rendered as an editable PowerPoint, with the
-restraint of LaTeX Beamer — not its exact look. Powerpoint stays the editable
-backend; the design grammar borrows from Beamer and the Metropolis theme.
+The goal is a serious research talk, with the restraint of LaTeX Beamer.
+PowerPoint remains an editable backend; the design grammar borrows from Beamer
+and the Metropolis theme.
 
 ## Design references (principles only)
 
@@ -33,10 +38,10 @@ chosen palette and metrics.
 
 ## Style selection
 
-The style is chosen per build:
+The style is chosen per build (PPTX backend):
 
 ```bash
-node src/cli.js build --input slide_spec.yaml --output out.pptx --style academic-beamer
+node src/cli.js build --input slide_spec.yaml --output out.pptx --renderer pptx --style academic-beamer
 ```
 
 Available: `academic-beamer` (default), `academic-metropolis`, `paper-figure`,

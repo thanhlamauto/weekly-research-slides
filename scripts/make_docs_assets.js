@@ -42,8 +42,8 @@ function bannerSvg() {
     + `<text x="90" y="120" font-family="Helvetica, Arial" font-size="20" font-weight="700" fill="#245B78">AGENT SKILL · ALPHA v0.1</text>`
     + `<text x="90" y="210" font-family="Helvetica, Arial" font-size="66" font-weight="700" fill="#1A1A1A">weekly-research-slides</text>`
     + `<text x="90" y="272" font-family="Helvetica, Arial" font-size="27" fill="#3A3A3A">Turn weekly changes in methods, evidence, claims, and</text>`
-    + `<text x="90" y="312" font-family="Helvetica, Arial" font-size="27" fill="#3A3A3A">diagnostics into editable PowerPoint research updates.</text>`
-    + `<text x="90" y="390" font-family="Helvetica, Arial" font-size="19" fill="#6B6B6B">delta-first · stage-adaptive · claim + diagnostic tracking · native, editable objects</text>`
+    + `<text x="90" y="312" font-family="Helvetica, Arial" font-size="27" fill="#3A3A3A">diagnostics into template-driven Beamer PDF research updates.</text>`
+    + `<text x="90" y="390" font-family="Helvetica, Arial" font-size="19" fill="#6B6B6B">delta-first · stage-adaptive · claim + diagnostic tracking · LaTeX Beamer + editable PPTX</text>`
     + node(1160, 210, 62, 'Z_s', 'cached source')
     + node(1440, 210, 62, 'Z~', 'corrected')
     + node(1300, 80, 62, 'Z_d', 'desired future')
@@ -62,9 +62,9 @@ function architectureSvg() {
     ['weekly_delta.yaml', '#EAF1F4', '#245B78'],
     ['storyboard.yaml', '#EAF1F4', '#245B78'],
     ['slide_spec.yaml', '#EAF1F4', '#245B78'],
-    ['editable PPTX', '#E9F1EC', '#2F6B4F'],
-    ['+ optional motion', '#F6EDE3', '#A1602A'],
-    ['render + QA', '#EDEAF4', '#5B4B8A'],
+    ['Beamer PDF (default)', '#E9F1EC', '#2F6B4F'],
+    ['+ editable PPTX', '#F6EDE3', '#A1602A'],
+    ['compile + QA', '#EDEAF4', '#5B4B8A'],
   ];
   const bw = 210; const bh = 84; const gap = 26; const x0 = 60; const y = 130;
   const W = x0 * 2 + stages.length * bw + (stages.length - 1) * gap;
@@ -81,7 +81,7 @@ function architectureSvg() {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`
     + `<rect width="${W}" height="${H}" fill="#FFFFFF"/>`
     + `<text x="${x0}" y="66" font-family="Helvetica, Arial" font-size="30" font-weight="700" fill="#1A1A1A">Source-first pipeline</text>`
-    + `<text x="${x0}" y="98" font-family="Helvetica, Arial" font-size="18" fill="#6B6B6B">Structured source is the truth. Fix the source and rebuild; never patch the generated PPTX.</text>`
+    + `<text x="${x0}" y="98" font-family="Helvetica, Arial" font-size="18" fill="#6B6B6B">Structured source is the truth. Fix the source and rebuild; never patch the generated PDF/PPTX.</text>`
     + boxes
     + `<defs><marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#9B9B9B"/></marker></defs>`
     + `<text x="${x0}" y="262" font-family="Helvetica, Arial" font-size="16" fill="#6B6B6B">read delta -> plan -> author -> build -> QA -> rebuild</text>`
@@ -113,7 +113,21 @@ function main() {
     if (png(fs.readFileSync(path.join(OUT, src), 'utf8'), path.join(OUT, dst))) ok += 1;
     else console.warn(`  (rsvg-convert unavailable; wrote SVG only for ${dst})`);
   }
-  console.log(`Wrote docs/images assets: ${conversions.length} SVG, ${ok} PNG`);
+
+  // Beamer gallery: copy page renders produced by `npm run demo` (compiled PDF
+  // -> pdftoppm), so the README shows the real default output.
+  const beamerPages = path.join(EX, 'output', 'beamer-pages');
+  const beamerAssets = [
+    ['contact-sheet.png', 'beamer-contact-sheet.png'],
+    ['slide-06.png', 'beamer-slide-06.png'],
+  ];
+  let beamerOk = 0;
+  for (const [src, dst] of beamerAssets) {
+    const from = path.join(beamerPages, src);
+    if (fs.existsSync(from)) { fs.copyFileSync(from, path.join(OUT, dst)); beamerOk += 1; }
+    else console.warn(`  (${from} missing; run npm run demo to refresh Beamer gallery assets)`);
+  }
+  console.log(`Wrote docs/images assets: ${conversions.length} SVG, ${ok} PNG, ${beamerOk} Beamer render(s)`);
 }
 
 main();
