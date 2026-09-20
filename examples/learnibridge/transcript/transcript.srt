@@ -1,0 +1,181 @@
+1
+00:00:00,000 --> 00:00:03,709
+Diffusion runs a large network at every
+step.
+
+2
+00:00:04,509 --> 00:00:07,789
+Neighbouring steps compute almost the same
+thing.
+
+3
+00:00:08,039 --> 00:00:13,581
+Caching stores one feature and reuses it
+later, skipping the repeated work.
+
+4
+00:00:13,831 --> 00:00:18,826
+The question is how far one stored feature
+can be pushed.
+
+5
+00:00:19,426 --> 00:00:23,991
+The cached feature is held while the true
+feature moves.
+
+6
+00:00:24,791 --> 00:00:28,620
+Skip one step, and the error is small.
+
+7
+00:00:28,870 --> 00:00:33,127
+Skip many steps, and the stale feature
+drifts away.
+
+8
+00:00:33,927 --> 00:00:36,470
+Errors accumulate, and quality degrades.
+
+9
+00:00:36,720 --> 00:00:40,549
+Reuse is cheap, but stale features become
+wrong.
+
+10
+00:00:41,149 --> 00:00:45,714
+Most caching methods predict the future
+feature from the past.
+
+11
+00:00:46,514 --> 00:00:48,937
+LearniBridge asks a different question.
+
+12
+00:00:49,187 --> 00:00:54,330
+What correction makes a cached computation
+behave like the skipped full computation?
+
+13
+00:00:54,580 --> 00:00:59,146
+Cached computation plus a small correction
+approximates the future one.
+
+14
+00:01:00,146 --> 00:01:04,831
+Stack layer inputs from many samples, one
+column per sample.
+
+15
+00:01:05,631 --> 00:01:09,340
+The correction is the layer difference
+between timesteps.
+
+16
+00:01:09,590 --> 00:01:13,299
+Model it as a matrix times those inputs.
+
+17
+00:01:13,549 --> 00:01:18,114
+The best matrix is E times the
+pseudo-inverse of X.
+
+18
+00:01:18,364 --> 00:01:23,639
+Its singular values decay fast: energy
+sits in a few directions.
+
+19
+00:01:24,439 --> 00:01:27,719
+The required correction is therefore low
+rank.
+
+20
+00:01:28,319 --> 00:01:31,599
+Split one hundred prompts into disjoint
+groups.
+
+21
+00:01:32,399 --> 00:01:35,250
+Fit the optimal correction per group.
+
+22
+00:01:35,500 --> 00:01:38,351
+Each has its own principal subspace.
+
+23
+00:01:38,601 --> 00:01:41,024
+Measure the angles between them.
+
+24
+00:01:41,824 --> 00:01:44,247
+They come out consistently small.
+
+25
+00:01:44,497 --> 00:01:47,777
+So a few calibration prompts can
+generalize.
+
+26
+00:01:48,377 --> 00:01:51,229
+Look at the last Transformer block.
+
+27
+00:01:52,029 --> 00:01:54,451
+Keep the pretrained weights frozen.
+
+28
+00:01:54,701 --> 00:01:58,530
+Add a thin low-rank path, LoRA (low-rank
+adaptation).
+
+29
+00:01:58,780 --> 00:02:02,489
+The cached input goes through this
+augmented block.
+
+30
+00:02:02,739 --> 00:02:05,590
+It approximates the skipped full
+computation.
+
+31
+00:02:05,840 --> 00:02:08,691
+Low rank follows from the analysis.
+
+32
+00:02:09,291 --> 00:02:12,143
+Calibration runs a few full trajectories.
+
+33
+00:02:12,943 --> 00:02:19,746
+Record the final-block input at a computed
+step, and the true output at a skipped
+
+34
+00:02:19,746 --> 00:02:20,200
+one.
+
+35
+00:02:20,450 --> 00:02:24,587
+Train only the LoRA weights to connect the
+two.
+
+36
+00:02:24,837 --> 00:02:29,951
+At inference, compute fully every N steps
+and cache that input.
+
+37
+00:02:30,201 --> 00:02:33,601
+In between, skip the earlier blocks
+entirely.
+
+38
+00:02:34,401 --> 00:02:38,350
+Only the final block, with its adapter,
+runs.
+
+39
+00:02:38,600 --> 00:02:43,646
+Stale cache, structured correction, low
+rank, few prompts, lightweight bridge.

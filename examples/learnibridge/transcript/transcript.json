@@ -1,0 +1,1140 @@
+{
+  "video": {
+    "id": "learnibridge-method-explainer",
+    "title": "LearniBridge: calibrating cached features with a low-rank bridge",
+    "method": "learnibridge"
+  },
+  "audience": {
+    "level": "adjacent-researcher"
+  },
+  "narration": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-preview-tts",
+    "voice": {
+      "name": "Kore"
+    },
+    "profile": "research-explainer",
+    "pacing": {
+      "target_wpm": 140,
+      "min_concept_dwell_ms": 500
+    },
+    "fallback": {
+      "backend": "say",
+      "voice": "Samantha"
+    }
+  },
+  "timing": {
+    "animation_seconds": {
+      "lb_01_why_cache": 7.03,
+      "lb_02_stale_cache": 6.1,
+      "lb_03_change_question": 5.23,
+      "lb_04_low_rank": 6.93,
+      "lb_05_prompt_invariant": 4.57,
+      "lb_06_lora_bridge": 6.08,
+      "lb_07_training_inference": 7.62
+    },
+    "hooks": {
+      "lb_01_why_cache": [
+        "trace",
+        "reuse"
+      ],
+      "lb_02_stale_cache": [
+        "skip_small",
+        "skip_large",
+        "accumulate"
+      ],
+      "lb_03_change_question": [
+        "ask",
+        "reframe",
+        "setup"
+      ],
+      "lb_04_low_rank": [
+        "collect",
+        "residual",
+        "linear",
+        "closed_form",
+        "spectrum"
+      ],
+      "lb_05_prompt_invariant": [
+        "split",
+        "per_group",
+        "subspaces",
+        "angles",
+        "small"
+      ],
+      "lb_06_lora_bridge": [
+        "final_block",
+        "freeze",
+        "lora",
+        "bridge",
+        "output"
+      ],
+      "lb_07_training_inference": [
+        "training",
+        "pair",
+        "train",
+        "inference",
+        "skip",
+        "run"
+      ]
+    }
+  },
+  "mode": "silent",
+  "scenes": [
+    {
+      "id": "lb_01_why_cache",
+      "title": "Why cache diffusion features?",
+      "purpose": "Establish diffusion inference cost and the caching idea.",
+      "takeaway": "Caching skips repeated computation, so the question becomes how far one stored feature can be pushed.",
+      "narration": [
+        {
+          "beat_id": "establish",
+          "kind": "introduction",
+          "visual_cue": "establish",
+          "text": "Diffusion runs a large network at every step.",
+          "delivery": {
+            "intent": "setup",
+            "direction": "State the cost plainly; this is the problem."
+          },
+          "words": [
+            "Diffusion",
+            "runs",
+            "a",
+            "large",
+            "network",
+            "at",
+            "every",
+            "step."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.8,
+          "start": 0.0,
+          "end": 3.709,
+          "end_with_dwell": 4.509
+        },
+        {
+          "beat_id": "trace",
+          "visual_cue": "trace",
+          "text": "Neighbouring steps compute almost the same thing.",
+          "words": [
+            "Neighbouring",
+            "steps",
+            "compute",
+            "almost",
+            "the",
+            "same",
+            "thing."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.25,
+          "start": 4.509,
+          "end": 7.789,
+          "end_with_dwell": 8.039
+        },
+        {
+          "beat_id": "reuse",
+          "visual_cue": "reuse",
+          "text": "Caching stores one feature and reuses it later, skipping the repeated work.",
+          "words": [
+            "Caching",
+            "stores",
+            "one",
+            "feature",
+            "and",
+            "reuses",
+            "it",
+            "later",
+            "skipping",
+            "the",
+            "repeated",
+            "work."
+          ],
+          "word_count": 12,
+          "speaking_seconds": 5.543,
+          "dwell_seconds": 0.25,
+          "start": 8.039,
+          "end": 13.581,
+          "end_with_dwell": 13.831
+        },
+        {
+          "beat_id": "conclude",
+          "kind": "conclusion",
+          "visual_cue": "conclude",
+          "text": "The question is how far one stored feature can be pushed.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "emphasis": [
+              "how far"
+            ],
+            "direction": "Land the question; do not sound like a slogan."
+          },
+          "words": [
+            "The",
+            "question",
+            "is",
+            "how",
+            "far",
+            "one",
+            "stored",
+            "feature",
+            "can",
+            "be",
+            "pushed."
+          ],
+          "word_count": 11,
+          "speaking_seconds": 4.994,
+          "dwell_seconds": 0.6,
+          "start": 13.831,
+          "end": 18.826,
+          "end_with_dwell": 19.426
+        }
+      ],
+      "start": 0.0,
+      "end": 19.426,
+      "duration_seconds": 19.426,
+      "tail_dwell": 0.6,
+      "word_count": 38
+    },
+    {
+      "id": "lb_02_stale_cache",
+      "title": "Long-range reuse goes stale",
+      "purpose": "Show stale-feature error accumulating with skip distance.",
+      "takeaway": "Reuse is cheap, but the stale feature drifts and the error accumulates.",
+      "narration": [
+        {
+          "beat_id": "establish",
+          "kind": "introduction",
+          "visual_cue": "establish",
+          "text": "The cached feature is held while the true feature moves.",
+          "delivery": {
+            "intent": "define",
+            "direction": "Set up the comparison; no judgement yet."
+          },
+          "words": [
+            "The",
+            "cached",
+            "feature",
+            "is",
+            "held",
+            "while",
+            "the",
+            "true",
+            "feature",
+            "moves."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 0.8,
+          "start": 19.426,
+          "end": 23.991,
+          "end_with_dwell": 24.791
+        },
+        {
+          "beat_id": "skip_small",
+          "visual_cue": "skip_small",
+          "text": "Skip one step, and the error is small.",
+          "words": [
+            "Skip",
+            "one",
+            "step",
+            "and",
+            "the",
+            "error",
+            "is",
+            "small."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.829,
+          "dwell_seconds": 0.25,
+          "start": 24.791,
+          "end": 28.62,
+          "end_with_dwell": 28.87
+        },
+        {
+          "beat_id": "skip_large",
+          "kind": "comparison",
+          "visual_cue": "skip_large",
+          "text": "Skip many steps, and the stale feature drifts away.",
+          "delivery": {
+            "intent": "contrast",
+            "pause_before_ms": 350,
+            "emphasis": [
+              "drifts far"
+            ],
+            "direction": "The contrast starts here; stay measured."
+          },
+          "words": [
+            "Skip",
+            "many",
+            "steps",
+            "and",
+            "the",
+            "stale",
+            "feature",
+            "drifts",
+            "away."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.257,
+          "dwell_seconds": 0.8,
+          "start": 28.87,
+          "end": 33.127,
+          "end_with_dwell": 33.927
+        },
+        {
+          "beat_id": "accumulate",
+          "visual_cue": "accumulate",
+          "text": "Errors accumulate, and quality degrades.",
+          "words": [
+            "Errors",
+            "accumulate",
+            "and",
+            "quality",
+            "degrades."
+          ],
+          "word_count": 5,
+          "speaking_seconds": 2.543,
+          "dwell_seconds": 0.25,
+          "start": 33.927,
+          "end": 36.47,
+          "end_with_dwell": 36.72
+        },
+        {
+          "beat_id": "conclude",
+          "kind": "conclusion",
+          "visual_cue": "conclude",
+          "text": "Reuse is cheap, but stale features become wrong.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 600
+          },
+          "words": [
+            "Reuse",
+            "is",
+            "cheap",
+            "but",
+            "stale",
+            "features",
+            "become",
+            "wrong."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.829,
+          "dwell_seconds": 0.6,
+          "start": 36.72,
+          "end": 40.549,
+          "end_with_dwell": 41.149
+        }
+      ],
+      "start": 19.426,
+      "end": 41.149,
+      "duration_seconds": 21.723,
+      "tail_dwell": 0.6,
+      "word_count": 40
+    },
+    {
+      "id": "lb_03_change_question",
+      "title": "Change the question",
+      "purpose": "Reframe prediction as correction.",
+      "takeaway": "Ask what correction makes a cached computation behave like the skipped full computation.",
+      "narration": [
+        {
+          "beat_id": "ask",
+          "kind": "introduction",
+          "visual_cue": "ask",
+          "text": "Most caching methods predict the future feature from the past.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Most",
+            "caching",
+            "methods",
+            "predict",
+            "the",
+            "future",
+            "feature",
+            "from",
+            "the",
+            "past."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 0.8,
+          "start": 41.149,
+          "end": 45.714,
+          "end_with_dwell": 46.514
+        },
+        {
+          "beat_id": "reframe",
+          "visual_cue": "reframe",
+          "text": "LearniBridge asks a different question.",
+          "delivery": {
+            "pause_before_ms": 400,
+            "pause_after_ms": 600,
+            "emphasis": [
+              "different question"
+            ],
+            "direction": "This is the intellectual move; give it space."
+          },
+          "words": [
+            "LearniBridge",
+            "asks",
+            "a",
+            "different",
+            "question."
+          ],
+          "word_count": 5,
+          "speaking_seconds": 2.423,
+          "dwell_seconds": 0.25,
+          "start": 46.514,
+          "end": 48.937,
+          "end_with_dwell": 49.187
+        },
+        {
+          "beat_id": "setup",
+          "visual_cue": "setup",
+          "text": "What correction makes a cached computation behave like the skipped full computation?",
+          "delivery": {
+            "pace": "slightly-slower",
+            "pause_after_ms": 650,
+            "direction": "A genuine question. Do not rush the ending."
+          },
+          "words": [
+            "What",
+            "correction",
+            "makes",
+            "a",
+            "cached",
+            "computation",
+            "behave",
+            "like",
+            "the",
+            "skipped",
+            "full",
+            "computation"
+          ],
+          "word_count": 12,
+          "speaking_seconds": 5.143,
+          "dwell_seconds": 0.25,
+          "start": 49.187,
+          "end": 54.33,
+          "end_with_dwell": 54.58
+        },
+        {
+          "beat_id": "sketch",
+          "kind": "equation",
+          "visual_cue": "sketch",
+          "text": "Cached computation plus a small correction approximates the future one.",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 650
+          },
+          "words": [
+            "Cached",
+            "computation",
+            "plus",
+            "a",
+            "small",
+            "correction",
+            "approximates",
+            "the",
+            "future",
+            "one."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 1.0,
+          "start": 54.58,
+          "end": 59.146,
+          "end_with_dwell": 60.146
+        }
+      ],
+      "start": 41.149,
+      "end": 60.146,
+      "duration_seconds": 18.997,
+      "tail_dwell": 1.0,
+      "word_count": 37
+    },
+    {
+      "id": "lb_04_low_rank",
+      "title": "The correction is low-rank",
+      "purpose": "Present the low-rank analysis; separate observation from consequence.",
+      "takeaway": "The input matrix has rapidly decaying singular values, so under the paper's linear model the optimal correction is low-rank.",
+      "narration": [
+        {
+          "beat_id": "collect",
+          "kind": "introduction",
+          "visual_cue": "collect",
+          "text": "Stack layer inputs from many samples, one column per sample.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Stack",
+            "layer",
+            "inputs",
+            "from",
+            "many",
+            "samples",
+            "one",
+            "column",
+            "per",
+            "sample."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.686,
+          "dwell_seconds": 0.8,
+          "start": 60.146,
+          "end": 64.831,
+          "end_with_dwell": 65.631
+        },
+        {
+          "beat_id": "residual",
+          "visual_cue": "residual",
+          "text": "The correction is the layer difference between timesteps.",
+          "words": [
+            "The",
+            "correction",
+            "is",
+            "the",
+            "layer",
+            "difference",
+            "between",
+            "timesteps."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.25,
+          "start": 65.631,
+          "end": 69.34,
+          "end_with_dwell": 69.59
+        },
+        {
+          "beat_id": "linear",
+          "visual_cue": "linear",
+          "text": "Model it as a matrix times those inputs.",
+          "delivery": {
+            "pace": "slightly-slower",
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Model",
+            "it",
+            "as",
+            "a",
+            "matrix",
+            "times",
+            "those",
+            "inputs."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.25,
+          "start": 69.59,
+          "end": 73.299,
+          "end_with_dwell": 73.549
+        },
+        {
+          "beat_id": "closed_form",
+          "visual_cue": "closed_form",
+          "text": "The best matrix is E times the pseudo-inverse of X.",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 550,
+            "direction": "Read this as the answer to the previous sentence, not symbol by symbol."
+          },
+          "words": [
+            "The",
+            "best",
+            "matrix",
+            "is",
+            "E",
+            "times",
+            "the",
+            "pseudo-inverse",
+            "of",
+            "X."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 0.25,
+          "start": 73.549,
+          "end": 78.114,
+          "end_with_dwell": 78.364
+        },
+        {
+          "beat_id": "spectrum",
+          "kind": "comparison",
+          "visual_cue": "spectrum",
+          "text": "Its singular values decay fast: energy sits in a few directions.",
+          "delivery": {
+            "pace": "slightly-slower",
+            "pause_after_ms": 600,
+            "emphasis": [
+              "a few directions"
+            ],
+            "direction": "This is an observation from measurements; say it that way."
+          },
+          "words": [
+            "Its",
+            "singular",
+            "values",
+            "decay",
+            "fast",
+            "energy",
+            "sits",
+            "in",
+            "a",
+            "few",
+            "directions."
+          ],
+          "word_count": 11,
+          "speaking_seconds": 5.274,
+          "dwell_seconds": 0.8,
+          "start": 78.364,
+          "end": 83.639,
+          "end_with_dwell": 84.439
+        },
+        {
+          "beat_id": "consequence",
+          "kind": "conclusion",
+          "visual_cue": "consequence",
+          "text": "The required correction is therefore low rank.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "pause_after_ms": 650,
+            "direction": "This follows under the paper's linear model; keep the qualifier in your tone."
+          },
+          "words": [
+            "The",
+            "required",
+            "correction",
+            "is",
+            "therefore",
+            "low",
+            "rank."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.6,
+          "start": 84.439,
+          "end": 87.719,
+          "end_with_dwell": 88.319
+        }
+      ],
+      "start": 60.146,
+      "end": 88.319,
+      "duration_seconds": 28.173,
+      "tail_dwell": 0.6,
+      "word_count": 54
+    },
+    {
+      "id": "lb_05_prompt_invariant",
+      "title": "A few prompts are enough",
+      "purpose": "Present prompt-invariance evidence and its interpretation.",
+      "takeaway": "Corrections fitted on disjoint prompt groups point in similar directions, so a few calibration prompts can generalize.",
+      "narration": [
+        {
+          "beat_id": "split",
+          "kind": "introduction",
+          "visual_cue": "split",
+          "text": "Split one hundred prompts into disjoint groups.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 450
+          },
+          "words": [
+            "Split",
+            "one",
+            "hundred",
+            "prompts",
+            "into",
+            "disjoint",
+            "groups."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.8,
+          "start": 88.319,
+          "end": 91.599,
+          "end_with_dwell": 92.399
+        },
+        {
+          "beat_id": "per_group",
+          "visual_cue": "per_group",
+          "text": "Fit the optimal correction per group.",
+          "words": [
+            "Fit",
+            "the",
+            "optimal",
+            "correction",
+            "per",
+            "group."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.25,
+          "start": 92.399,
+          "end": 95.25,
+          "end_with_dwell": 95.5
+        },
+        {
+          "beat_id": "subspaces",
+          "visual_cue": "subspaces",
+          "text": "Each has its own principal subspace.",
+          "words": [
+            "Each",
+            "has",
+            "its",
+            "own",
+            "principal",
+            "subspace."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.25,
+          "start": 95.5,
+          "end": 98.351,
+          "end_with_dwell": 98.601
+        },
+        {
+          "beat_id": "angles",
+          "kind": "comparison",
+          "visual_cue": "angles",
+          "text": "Measure the angles between them.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Measure",
+            "the",
+            "angles",
+            "between",
+            "them."
+          ],
+          "word_count": 5,
+          "speaking_seconds": 2.423,
+          "dwell_seconds": 0.8,
+          "start": 98.601,
+          "end": 101.024,
+          "end_with_dwell": 101.824
+        },
+        {
+          "beat_id": "small",
+          "visual_cue": "small",
+          "text": "They come out consistently small.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "emphasis": [
+              "consistently small"
+            ]
+          },
+          "words": [
+            "They",
+            "come",
+            "out",
+            "consistently",
+            "small."
+          ],
+          "word_count": 5,
+          "speaking_seconds": 2.423,
+          "dwell_seconds": 0.25,
+          "start": 101.824,
+          "end": 104.247,
+          "end_with_dwell": 104.497
+        },
+        {
+          "beat_id": "consequence",
+          "kind": "conclusion",
+          "visual_cue": "consequence",
+          "text": "So a few calibration prompts can generalize.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 650,
+            "direction": "This is the interpretation of the measurement, not a guarantee."
+          },
+          "words": [
+            "So",
+            "a",
+            "few",
+            "calibration",
+            "prompts",
+            "can",
+            "generalize."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.6,
+          "start": 104.497,
+          "end": 107.777,
+          "end_with_dwell": 108.377
+        }
+      ],
+      "start": 88.319,
+      "end": 108.377,
+      "duration_seconds": 20.059,
+      "tail_dwell": 0.6,
+      "word_count": 36
+    },
+    {
+      "id": "lb_06_lora_bridge",
+      "title": "Low rank suggests LoRA",
+      "purpose": "Derive the parameterization from the measured structure.",
+      "takeaway": "A low-rank correction is exactly what a LoRA adapter on the final block provides.",
+      "narration": [
+        {
+          "beat_id": "final_block",
+          "kind": "introduction",
+          "visual_cue": "final_block",
+          "text": "Look at the last Transformer block.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 450
+          },
+          "words": [
+            "Look",
+            "at",
+            "the",
+            "last",
+            "Transformer",
+            "block."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.8,
+          "start": 108.377,
+          "end": 111.229,
+          "end_with_dwell": 112.029
+        },
+        {
+          "beat_id": "freeze",
+          "visual_cue": "freeze",
+          "text": "Keep the pretrained weights frozen.",
+          "words": [
+            "Keep",
+            "the",
+            "pretrained",
+            "weights",
+            "frozen."
+          ],
+          "word_count": 5,
+          "speaking_seconds": 2.423,
+          "dwell_seconds": 0.25,
+          "start": 112.029,
+          "end": 114.451,
+          "end_with_dwell": 114.701
+        },
+        {
+          "beat_id": "lora",
+          "visual_cue": "lora",
+          "text": "Add a thin low-rank path, LoRA (low-rank adaptation).",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 600,
+            "direction": "Introduce the name once, clearly, then move on."
+          },
+          "words": [
+            "Add",
+            "a",
+            "thin",
+            "low-rank",
+            "path",
+            "LoRA",
+            "low-rank",
+            "adaptation"
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.829,
+          "dwell_seconds": 0.25,
+          "start": 114.701,
+          "end": 118.53,
+          "end_with_dwell": 118.78
+        },
+        {
+          "beat_id": "bridge",
+          "visual_cue": "bridge",
+          "text": "The cached input goes through this augmented block.",
+          "words": [
+            "The",
+            "cached",
+            "input",
+            "goes",
+            "through",
+            "this",
+            "augmented",
+            "block."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.25,
+          "start": 118.78,
+          "end": 122.489,
+          "end_with_dwell": 122.739
+        },
+        {
+          "beat_id": "output",
+          "visual_cue": "output",
+          "text": "It approximates the skipped full computation.",
+          "delivery": {
+            "pause_after_ms": 550
+          },
+          "words": [
+            "It",
+            "approximates",
+            "the",
+            "skipped",
+            "full",
+            "computation."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.25,
+          "start": 122.739,
+          "end": 125.59,
+          "end_with_dwell": 125.84
+        },
+        {
+          "beat_id": "fit",
+          "kind": "conclusion",
+          "visual_cue": "fit",
+          "text": "Low rank follows from the analysis.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 600,
+            "emphasis": [
+              "follows from the analysis"
+            ]
+          },
+          "words": [
+            "Low",
+            "rank",
+            "follows",
+            "from",
+            "the",
+            "analysis."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.6,
+          "start": 125.84,
+          "end": 128.691,
+          "end_with_dwell": 129.291
+        }
+      ],
+      "start": 108.377,
+      "end": 129.291,
+      "duration_seconds": 20.914,
+      "tail_dwell": 0.6,
+      "word_count": 39
+    },
+    {
+      "id": "lb_07_training_inference",
+      "title": "Calibration and inference",
+      "purpose": "Make the calibration data and the inference path completely clear, then recap.",
+      "takeaway": "Train the adapter on cached inputs and ground-truth targets; at inference only the augmented final block runs between full steps.",
+      "narration": [
+        {
+          "beat_id": "training",
+          "kind": "introduction",
+          "visual_cue": "training",
+          "text": "Calibration runs a few full trajectories.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 450
+          },
+          "words": [
+            "Calibration",
+            "runs",
+            "a",
+            "few",
+            "full",
+            "trajectories."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.8,
+          "start": 129.291,
+          "end": 132.143,
+          "end_with_dwell": 132.943
+        },
+        {
+          "beat_id": "pair",
+          "visual_cue": "pair",
+          "text": "Record the final-block input at a computed step, and the true output at a skipped one.",
+          "delivery": {
+            "pace": "slightly-slower",
+            "pause_after_ms": 550,
+            "direction": "One cached input, one ground-truth target. Make the pair obvious."
+          },
+          "words": [
+            "Record",
+            "the",
+            "final-block",
+            "input",
+            "at",
+            "a",
+            "computed",
+            "step",
+            "and",
+            "the",
+            "true",
+            "output",
+            "at",
+            "a",
+            "skipped",
+            "one."
+          ],
+          "word_count": 16,
+          "speaking_seconds": 7.257,
+          "dwell_seconds": 0.25,
+          "start": 132.943,
+          "end": 140.2,
+          "end_with_dwell": 140.45
+        },
+        {
+          "beat_id": "train",
+          "visual_cue": "train",
+          "text": "Train only the LoRA weights to connect the two.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Train",
+            "only",
+            "the",
+            "LoRA",
+            "weights",
+            "to",
+            "connect",
+            "the",
+            "two."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.137,
+          "dwell_seconds": 0.25,
+          "start": 140.45,
+          "end": 144.587,
+          "end_with_dwell": 144.837
+        },
+        {
+          "beat_id": "inference",
+          "visual_cue": "inference",
+          "text": "At inference, compute fully every N steps and cache that input.",
+          "words": [
+            "At",
+            "inference",
+            "compute",
+            "fully",
+            "every",
+            "N",
+            "steps",
+            "and",
+            "cache",
+            "that",
+            "input."
+          ],
+          "word_count": 11,
+          "speaking_seconds": 5.114,
+          "dwell_seconds": 0.25,
+          "start": 144.837,
+          "end": 149.951,
+          "end_with_dwell": 150.201
+        },
+        {
+          "beat_id": "skip",
+          "kind": "comparison",
+          "visual_cue": "skip",
+          "text": "In between, skip the earlier blocks entirely.",
+          "delivery": {
+            "emphasis": [
+              "skip"
+            ],
+            "pause_after_ms": 500
+          },
+          "words": [
+            "In",
+            "between",
+            "skip",
+            "the",
+            "earlier",
+            "blocks",
+            "entirely."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.4,
+          "dwell_seconds": 0.8,
+          "start": 150.201,
+          "end": 153.601,
+          "end_with_dwell": 154.401
+        },
+        {
+          "beat_id": "run",
+          "visual_cue": "run",
+          "text": "Only the final block, with its adapter, runs.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 550
+          },
+          "words": [
+            "Only",
+            "the",
+            "final",
+            "block",
+            "with",
+            "its",
+            "adapter",
+            "runs."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.949,
+          "dwell_seconds": 0.25,
+          "start": 154.401,
+          "end": 158.35,
+          "end_with_dwell": 158.6
+        },
+        {
+          "beat_id": "recap",
+          "kind": "conclusion",
+          "visual_cue": "recap",
+          "text": "Stale cache, structured correction, low rank, few prompts, lightweight bridge.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "pause_after_ms": 700,
+            "direction": "Compress the whole method into one sentence. Finish cleanly."
+          },
+          "words": [
+            "Stale",
+            "cache",
+            "structured",
+            "correction",
+            "low",
+            "rank",
+            "few",
+            "prompts",
+            "lightweight",
+            "bridge."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 5.046,
+          "dwell_seconds": 0.6,
+          "start": 158.6,
+          "end": 163.646,
+          "end_with_dwell": 164.246
+        }
+      ],
+      "start": 129.291,
+      "end": 164.246,
+      "duration_seconds": 34.954,
+      "tail_dwell": 0.6,
+      "word_count": 67
+    }
+  ],
+  "duration_seconds": 164.246,
+  "word_count": 311,
+  "target_wpm": 140
+}

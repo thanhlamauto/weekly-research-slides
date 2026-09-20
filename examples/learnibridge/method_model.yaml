@@ -1,0 +1,124 @@
+# Method semantic model for LearniBridge.
+# Source: "LearniBridge: Learnable Calibration of Feature Caching for Diffusion
+# Models Acceleration", Huang, Chen, Shen, Zhang. arXiv:2606.26778 (25 Jun 2026),
+# Proc. ICML 2026. Read from the paper PDF; synthetic demo, no endorsement implied.
+
+method:
+  name: LearniBridge
+  short_name: LB
+  kind: ours
+  paper_title: "LearniBridge: Learnable Calibration of Feature Caching for Diffusion Models Acceleration"
+  source_url: "https://arxiv.org/abs/2606.26778"
+  venue: ICML
+  year: 2026
+
+problem: >-
+  Diffusion Transformers are expensive because they run a large network at every
+  denoising step. Feature caching accelerates inference by reusing intermediate
+  representations, but existing methods reuse or forecast from historical
+  features and accumulate severe error at high acceleration ratios.
+
+baseline: >-
+  Cache and reuse or forecast: approximate the block output at a skipped
+  timestep from historical cached features, e.g. F_hat(x_{t-k}) = Phi(cached
+  features) with direct reuse or a Taylor-series extrapolation.
+
+key_observation: >-
+  The requisite correction is structured. Writing the cross-timestep residual as
+  E and the reference input matrix as X, the optimal linear correction satisfies
+  E ~= dW X. The singular values of X decay rapidly across many prompts, so dW
+  is constrained to low rank; and the principal subspaces of dW computed from
+  disjoint prompt groups have consistently small pairwise angles, i.e. the
+  correction pattern is prompt-invariant enough that a few calibration prompts
+  generalize.
+
+assumption_of_previous_methods: >-
+  The future feature can be reconstructed from historical features alone, using
+  a fixed reuse or extrapolation rule, and the required correction has no
+  exploitable structure.
+
+failure_of_previous_methods: >-
+  At long cache intervals the cached feature is stale; a fixed rule cannot track
+  how the representation actually changes, so the error accumulates and
+  generation quality degrades.
+
+motivation: >-
+  Change the question: instead of predicting the future feature from history,
+  ask what correction is required for a cached computation to behave like the
+  skipped full computation, and parameterize that correction efficiently.
+
+mechanism:
+  inputs:
+    - "cached final-block input x^L_t recorded at a full-computation timestep t"
+    - "ground-truth final-block output F^L(x^L_{t-k}) at the skipped timestep t-k"
+  operations:
+    - "analyse the cross-timestep residual E and the input matrix X"
+    - "fit a low-rank correction dW = B A (LoRA) on the linear layers of the final block"
+    - "at inference, feed the cached input into the LoRA-augmented final block only"
+  outputs:
+    - "approximation F_hat^L(x^L_t) of the full-computation output at t-k"
+
+components:
+  - { id: low_rank_analysis, name: Low-Rank Analysis, role: analysis,
+      description: "E ~= dW X, dW = E X^+, with rapidly decaying singular values of X" }
+  - { id: prompt_invariance, name: Prompt-Invariant Subspace, role: evidence,
+      description: "small principal-subspace angles between dW fitted on disjoint prompt groups" }
+  - { id: lora_final_block, name: LoRA Final Block, role: design,
+      description: "low-rank adapters on all linear layers of the last Transformer block" }
+  - { id: calibration_data, name: Calibration Data, role: training,
+      description: "3-5 prompts, full trajectories, cached input and ground-truth target" }
+
+equations:
+  - { id: residual, plain: "e_{t->t-k} = f(x_{t-k}) - f(x_t)",
+      meaning: "cross-timestep residual of a linear layer output" }
+  - { id: linear_model, plain: "E ~= dW X",
+      meaning: "the requisite correction is modelled as a linear map of the reference input" }
+  - { id: closed_form, plain: "dW = E X^+",
+      meaning: "least-squares solution, X^+ is the Moore-Penrose pseudo-inverse" }
+  - { id: svd, plain: "X = U Sigma V^T, dW = E V Sigma^+ U^T",
+      meaning: "spectral view; rapid decay of Sigma concentrates energy in few directions" }
+  - { id: rank_bound, plain: "rank(dW) <= rank(X) <= r",
+      meaning: "the optimal correction is inherently low-rank" }
+  - { id: lora, plain: "dW = B A,  r << min(d_in, d_out)",
+      meaning: "low-rank parameterization; base weights stay frozen" }
+  - { id: loss, plain: "L = sum_i || F_hat^L(x^L_t,i) - F^L(x^L_{t-k},i) ||^2",
+      meaning: "train the LoRA-augmented final block to reproduce the full output" }
+
+training:
+  - "Pre-calibration pass: run full diffusion trajectories on 3-5 prompts."
+  - "Record the final-block input x^L_t at full-computation timesteps and the ground-truth output F^L(x^L_{t-k}) at timesteps that will be skipped."
+  - "Train LoRA adapters in the final block only; all base weights stay frozen."
+
+inference:
+  - "Run full computation every N timesteps and cache the final-block input."
+  - "At skipped timesteps, bypass blocks g^1..g^{L-1}; feed the cached input into the LoRA-augmented final block g^L."
+  - "Reported acceleration: up to 5.87x on FLUX, 5.75x on HunyuanVideo, 4.10x on WAN 2.1, with VBench +1.28% over the previous SOTA at 4.10x."
+
+claims:
+  - "The optimal calibration update lies in a shared low-rank subspace across diverse prompts."
+  - "A LoRA bridge on the final block with a few prompts recovers skipped-timestep representations well enough for high-ratio acceleration."
+
+assumptions:
+  - "The linear model E ~= dW X captures the requisite correction."
+  - "The low-rank and prompt-invariance findings are empirical observations on the tested models and prompt sets."
+  - "Calibrating only the final block is sufficient; earlier blocks are bypassed."
+
+limitations:
+  - "Training-based calibration (a pre-calibration pass and LoRA finetuning)."
+  - "Only the final Transformer block is calibrated."
+  - "The rank and prompt-count choices are design decisions; quality saturates beyond a few prompts."
+
+relation_to_our_work: >-
+  A structured, learnable correction instead of a hand-designed forecasting rule;
+  complementary to any caching schedule and relevant whenever stale-cache error
+  dominates at high acceleration.
+
+notation:
+  x_t: "DiT feature at timestep t"
+  x^L_t: "input to the final Transformer block at timestep t"
+  F^L: "final Transformer block"
+  N: "cache interval (steps between full computations)"
+  E: "matrix of cross-timestep residuals"
+  X: "matrix of reference inputs, one column per sample"
+  dW: "linear correction, parameterized as B A"
+  r: "LoRA rank"

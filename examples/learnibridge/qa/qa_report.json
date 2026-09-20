@@ -1,0 +1,82 @@
+{
+  "video": "examples/learnibridge/renders/final/learnibridge-method-explainer.mp4",
+  "duration_seconds": 105.3,
+  "frames": [
+    {
+      "frame": "learnibridge-method-explainer_frame_00.png",
+      "content_fraction": 0.0801,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_01.png",
+      "content_fraction": 0.0899,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_02.png",
+      "content_fraction": 0.0197,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_03.png",
+      "content_fraction": 0.0306,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_04.png",
+      "content_fraction": 0.0823,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_05.png",
+      "content_fraction": 0.009,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_06.png",
+      "content_fraction": 0.0477,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_07.png",
+      "content_fraction": 0.0061,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_08.png",
+      "content_fraction": 0.0326,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_09.png",
+      "content_fraction": 0.0612,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_10.png",
+      "content_fraction": 0.0478,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_11.png",
+      "content_fraction": 0.0104,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_12.png",
+      "content_fraction": 0.0809,
+      "edge_touch": false
+    },
+    {
+      "frame": "learnibridge-method-explainer_frame_13.png",
+      "content_fraction": 0.0865,
+      "edge_touch": false
+    }
+  ],
+  "findings": [
+    {
+      "level": "info",
+      "message": "duration 105.30s, size 4.40 MB"
+    }
+  ]
+}

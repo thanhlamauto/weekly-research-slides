@@ -25,6 +25,14 @@ examples/lesa/renders/**/*_concat.txt
 examples/lesa/qa/frames/
 examples/lesa/transcript/audio/
 
+# research-method-video examples: keep final videos, draft concat and QA;
+# drop manim scratch, local narration audio, extracted frames and per-scene drafts
+examples/**/transcript/audio/
+examples/**/renders/_media/
+examples/**/renders/_narrated_work/
+examples/**/renders/draft/*_*.mp4
+examples/**/qa/frames/
+
 # voice work: never commit credentials; keep raw A/B audio local (compressed
 # samples and comparison.md are committed instead)
 .env

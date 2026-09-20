@@ -1,0 +1,37 @@
+video: ''
+keyframes:
+- scene: lb_01_why_cache
+  title: Why cache diffusion features?
+  timestamp: 12.195
+  purpose: caching benefit summary
+  png: qa/keyframes/lb_01_why_cache.png
+- scene: lb_02_stale_cache
+  title: Long-range reuse goes stale
+  timestamp: 10.05
+  purpose: stale-cache drift
+  png: qa/keyframes/lb_02_stale_cache.png
+- scene: lb_03_change_question
+  title: Change the question
+  timestamp: 11.7
+  purpose: reframing sketch
+  png: qa/keyframes/lb_03_change_question.png
+- scene: lb_04_low_rank
+  title: The correction is low-rank
+  timestamp: 12.64
+  purpose: spectrum and low-rank consequence
+  png: qa/keyframes/lb_04_low_rank.png
+- scene: lb_05_prompt_invariant
+  title: A few prompts are enough
+  timestamp: 11.348
+  purpose: aligned subspaces
+  png: qa/keyframes/lb_05_prompt_invariant.png
+- scene: lb_06_lora_bridge
+  title: Low rank suggests LoRA
+  timestamp: 13.185
+  purpose: LoRA bridge path
+  png: qa/keyframes/lb_06_lora_bridge.png
+- scene: lb_07_training_inference
+  title: Calibration and inference
+  timestamp: 17.24
+  purpose: inference path with skipped blocks
+  png: qa/keyframes/lb_07_training_inference.png

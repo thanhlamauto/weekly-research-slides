@@ -1,0 +1,320 @@
+# Authored narration source for the LearniBridge method explainer.
+# Written for listening: short sentences, one concept per beat, equations after
+# intuition. The canonical text never depends on a TTS provider; delivery
+# metadata says HOW each beat should be spoken.
+video:
+  id: learnibridge-method-explainer
+  title: "LearniBridge: calibrating cached features with a low-rank bridge"
+  method: learnibridge
+
+audience:
+  level: adjacent-researcher
+  target_wpm: 145
+
+narration:
+  backend: gemini
+  model: gemini-2.5-flash-preview-tts
+  voice:
+    name: Kore
+  profile: research-explainer
+  pacing:
+    target_wpm: 140
+    min_concept_dwell_ms: 500
+  fallback:
+    backend: say
+    voice: Samantha
+
+
+# Timing hints: the beats each Manim scene waits on, and animation-only seconds
+# measured from a draft render. Actual audio duration is distributed into these
+# hooks so the video follows the voice instead of freezing on the last frame.
+timing:
+  animation_seconds:
+    lb_01_why_cache: 7.03
+    lb_02_stale_cache: 6.1
+    lb_03_change_question: 5.23
+    lb_04_low_rank: 6.93
+    lb_05_prompt_invariant: 4.57
+    lb_06_lora_bridge: 6.08
+    lb_07_training_inference: 7.62
+  hooks:
+    lb_01_why_cache: [trace, reuse]
+    lb_02_stale_cache: [skip_small, skip_large, accumulate]
+    lb_03_change_question: [ask, reframe, setup]
+    lb_04_low_rank: [collect, residual, linear, closed_form, spectrum]
+    lb_05_prompt_invariant: [split, per_group, subspaces, angles, small]
+    lb_06_lora_bridge: [final_block, freeze, lora, bridge, output]
+    lb_07_training_inference: [training, pair, train, inference, skip, run]
+
+mode: silent
+
+scenes:
+  - id: lb_01_why_cache
+    title: Why cache diffusion features?
+    purpose: Establish diffusion inference cost and the caching idea.
+    takeaway: Caching skips repeated computation, so the question becomes how far one stored feature can be pushed.
+    narration:
+      - beat_id: establish
+        kind: introduction
+        visual_cue: establish
+        text: Diffusion runs a large network at every step.
+        delivery:
+          intent: setup
+          direction: State the cost plainly; this is the problem.
+      - beat_id: trace
+        visual_cue: trace
+        text: Neighbouring steps compute almost the same thing.
+      - beat_id: reuse
+        visual_cue: reuse
+        text: Caching stores one feature and reuses it later, skipping the repeated work.
+      - beat_id: conclude
+        kind: conclusion
+        visual_cue: conclude
+        text: The question is how far one stored feature can be pushed.
+        delivery:
+          pause_before_ms: 350
+          emphasis: [how far]
+          direction: Land the question; do not sound like a slogan.
+
+  - id: lb_02_stale_cache
+    title: Long-range reuse goes stale
+    purpose: Show stale-feature error accumulating with skip distance.
+    takeaway: Reuse is cheap, but the stale feature drifts and the error accumulates.
+    narration:
+      - beat_id: establish
+        kind: introduction
+        visual_cue: establish
+        text: The cached feature is held while the true feature moves.
+        delivery:
+          intent: define
+          direction: Set up the comparison; no judgement yet.
+      - beat_id: skip_small
+        visual_cue: skip_small
+        text: Skip one step, and the error is small.
+      - beat_id: skip_large
+        kind: comparison
+        visual_cue: skip_large
+        text: Skip many steps, and the stale feature drifts away.
+        delivery:
+          intent: contrast
+          pause_before_ms: 350
+          emphasis: [drifts far]
+          direction: The contrast starts here; stay measured.
+      - beat_id: accumulate
+        visual_cue: accumulate
+        text: Errors accumulate, and quality degrades.
+      - beat_id: conclude
+        kind: conclusion
+        visual_cue: conclude
+        text: Reuse is cheap, but stale features become wrong.
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 600
+
+  - id: lb_03_change_question
+    title: Change the question
+    purpose: Reframe prediction as correction.
+    takeaway: Ask what correction makes a cached computation behave like the skipped full computation.
+    narration:
+      - beat_id: ask
+        kind: introduction
+        visual_cue: ask
+        text: Most caching methods predict the future feature from the past.
+        delivery:
+          intent: define
+          pause_after_ms: 500
+      - beat_id: reframe
+        visual_cue: reframe
+        text: LearniBridge asks a different question.
+        delivery:
+          pause_before_ms: 400
+          pause_after_ms: 600
+          emphasis: [different question]
+          direction: This is the intellectual move; give it space.
+      - beat_id: setup
+        visual_cue: setup
+        text: What correction makes a cached computation behave like the skipped full computation?
+        delivery:
+          pace: slightly-slower
+          pause_after_ms: 650
+          direction: A genuine question. Do not rush the ending.
+      - beat_id: sketch
+        kind: equation
+        visual_cue: sketch
+        text: Cached computation plus a small correction approximates the future one.
+        delivery:
+          pace: slower
+          pause_after_ms: 650
+
+  - id: lb_04_low_rank
+    title: The correction is low-rank
+    purpose: Present the low-rank analysis; separate observation from consequence.
+    takeaway: The input matrix has rapidly decaying singular values, so under the paper's linear model the optimal correction is low-rank.
+    narration:
+      - beat_id: collect
+        kind: introduction
+        visual_cue: collect
+        text: Stack layer inputs from many samples, one column per sample.
+        delivery:
+          intent: define
+          pause_after_ms: 500
+      - beat_id: residual
+        visual_cue: residual
+        text: The correction is the layer difference between timesteps.
+      - beat_id: linear
+        visual_cue: linear
+        text: Model it as a matrix times those inputs.
+        delivery:
+          pace: slightly-slower
+          pause_after_ms: 500
+      - beat_id: closed_form
+        visual_cue: closed_form
+        text: The best matrix is E times the pseudo-inverse of X.
+        delivery:
+          pace: slower
+          pause_after_ms: 550
+          direction: Read this as the answer to the previous sentence, not symbol by symbol.
+      - beat_id: spectrum
+        kind: comparison
+        visual_cue: spectrum
+        text: "Its singular values decay fast: energy sits in a few directions."
+        delivery:
+          pace: slightly-slower
+          pause_after_ms: 600
+          emphasis: [a few directions]
+          direction: This is an observation from measurements; say it that way.
+      - beat_id: consequence
+        kind: conclusion
+        visual_cue: consequence
+        text: The required correction is therefore low rank.
+        delivery:
+          pause_before_ms: 350
+          pause_after_ms: 650
+          direction: This follows under the paper's linear model; keep the qualifier in your tone.
+
+  - id: lb_05_prompt_invariant
+    title: A few prompts are enough
+    purpose: Present prompt-invariance evidence and its interpretation.
+    takeaway: Corrections fitted on disjoint prompt groups point in similar directions, so a few calibration prompts can generalize.
+    narration:
+      - beat_id: split
+        kind: introduction
+        visual_cue: split
+        text: Split one hundred prompts into disjoint groups.
+        delivery:
+          intent: define
+          pause_after_ms: 450
+      - beat_id: per_group
+        visual_cue: per_group
+        text: Fit the optimal correction per group.
+      - beat_id: subspaces
+        visual_cue: subspaces
+        text: Each has its own principal subspace.
+      - beat_id: angles
+        kind: comparison
+        visual_cue: angles
+        text: Measure the angles between them.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: small
+        visual_cue: small
+        text: They come out consistently small.
+        delivery:
+          pause_before_ms: 350
+          emphasis: [consistently small]
+      - beat_id: consequence
+        kind: conclusion
+        visual_cue: consequence
+        text: So a few calibration prompts can generalize.
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 650
+          direction: This is the interpretation of the measurement, not a guarantee.
+
+  - id: lb_06_lora_bridge
+    title: Low rank suggests LoRA
+    purpose: Derive the parameterization from the measured structure.
+    takeaway: A low-rank correction is exactly what a LoRA adapter on the final block provides.
+    narration:
+      - beat_id: final_block
+        kind: introduction
+        visual_cue: final_block
+        text: Look at the last Transformer block.
+        delivery:
+          intent: define
+          pause_after_ms: 450
+      - beat_id: freeze
+        visual_cue: freeze
+        text: Keep the pretrained weights frozen.
+      - beat_id: lora
+        visual_cue: lora
+        text: "Add a thin low-rank path, LoRA (low-rank adaptation)."
+        delivery:
+          pace: slower
+          pause_after_ms: 600
+          direction: Introduce the name once, clearly, then move on.
+      - beat_id: bridge
+        visual_cue: bridge
+        text: The cached input goes through this augmented block.
+      - beat_id: output
+        visual_cue: output
+        text: It approximates the skipped full computation.
+        delivery:
+          pause_after_ms: 550
+      - beat_id: fit
+        kind: conclusion
+        visual_cue: fit
+        text: Low rank follows from the analysis.
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 600
+          emphasis: [follows from the analysis]
+
+  - id: lb_07_training_inference
+    title: Calibration and inference
+    purpose: Make the calibration data and the inference path completely clear, then recap.
+    takeaway: Train the adapter on cached inputs and ground-truth targets; at inference only the augmented final block runs between full steps.
+    narration:
+      - beat_id: training
+        kind: introduction
+        visual_cue: training
+        text: Calibration runs a few full trajectories.
+        delivery:
+          intent: define
+          pause_after_ms: 450
+      - beat_id: pair
+        visual_cue: pair
+        text: Record the final-block input at a computed step, and the true output at a skipped one.
+        delivery:
+          pace: slightly-slower
+          pause_after_ms: 550
+          direction: One cached input, one ground-truth target. Make the pair obvious.
+      - beat_id: train
+        visual_cue: train
+        text: Train only the LoRA weights to connect the two.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: inference
+        visual_cue: inference
+        text: At inference, compute fully every N steps and cache that input.
+      - beat_id: skip
+        kind: comparison
+        visual_cue: skip
+        text: In between, skip the earlier blocks entirely.
+        delivery:
+          emphasis: [skip]
+          pause_after_ms: 500
+      - beat_id: run
+        visual_cue: run
+        text: Only the final block, with its adapter, runs.
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 550
+      - beat_id: recap
+        kind: conclusion
+        visual_cue: recap
+        text: Stale cache, structured correction, low rank, few prompts, lightweight bridge.
+        delivery:
+          pause_before_ms: 350
+          pause_after_ms: 700
+          direction: Compress the whole method into one sentence. Finish cleanly.

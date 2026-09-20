@@ -1,0 +1,194 @@
+# Scene spec for the LearniBridge method explainer.
+# Scientific understanding comes from method_model.yaml; geometry is implemented
+# in src/. Actors carry stable ids so objects persist across scenes.
+video:
+  title: "LearniBridge: calibrating cached features with a low-rank bridge"
+  method: learnibridge
+  mode: ours
+  method_model: method_model.yaml
+  description: >-
+    Why long-range feature caching goes stale, why the required correction is
+    low-rank and prompt-invariant, and how a tiny LoRA bridge on the final
+    Transformer block recovers skipped-timestep representations.
+  audience: adjacent-researcher
+  target_duration_seconds: 130
+  canvas: light
+  theme: wrs-light
+
+scenes:
+  - id: lb_01_why_cache
+    title: Why cache diffusion features?
+    manim_class: LB01WhyCache
+    mode: baseline
+    purpose: Establish diffusion inference cost and the caching idea.
+    question: Why is feature caching worth doing?
+    method_refs: [problem, baseline]
+    actors:
+      - { id: denoise_timeline, type: timeline, label: "timesteps", persistent: true, role: axis }
+      - { id: dit_block, type: module, label: "DiT", persistent: true, role: model }
+      - { id: feature_t, type: feature, label: "h_{t}", persistent: true, role: feature }
+      - { id: cache, type: cache, label: "cache", persistent: true, role: cache }
+    start_state: A denoising timestep axis with an expensive block repeated at every step.
+    beats:
+      - { id: establish, pattern: ESTABLISH, action: draw the denoising trajectory and the repeated block, duration_seconds: 3 }
+      - { id: trace, pattern: TRACE, action: move the feature through consecutive blocks, duration_seconds: 4, speaker_note: "every step recomputes almost the same thing" }
+      - { id: reuse, pattern: MORPH, action: store the feature in a cache and mark later blocks skipped, duration_seconds: 4 }
+      - { id: conclude, pattern: REVEAL, action: pose the question of how far one cached feature can be pushed, duration_seconds: 3 }
+    end_state: One cached feature feeding several skipped steps.
+    transition_to: lb_02_stale_cache
+    keyframe: { fraction: 0.9, purpose: "caching benefit summary" }
+    narration_note: "Diffusion is many expensive steps; adjacent steps repeat work; cache and skip."
+    speaker_note: "Do not mention the method yet."
+
+  - id: lb_02_stale_cache
+    title: Long-range reuse goes stale
+    manim_class: LB02StaleCache
+    mode: baseline
+    purpose: Show stale-feature error accumulating with skip distance.
+    question: Why does caching degrade at high acceleration?
+    method_refs: [assumption_of_previous_methods, failure_of_previous_methods]
+    actors:
+      - { id: feature_true, type: feature, label: "true", persistent: true, role: ground_truth }
+      - { id: feature_cached, type: feature, label: "cached", persistent: true, role: predicted }
+      - { id: error_gap, type: dot, label: "error", persistent: true, role: drift }
+      - { id: skip_timeline, type: timeline, label: "skip distance", persistent: true, role: axis }
+    start_state: Cached and true features start at the same point.
+    beats:
+      - { id: establish, pattern: ESTABLISH, action: hold the cached feature while the true feature moves, duration_seconds: 3 }
+      - { id: skip_small, pattern: TRACE, action: skip one step and show a small gap, duration_seconds: 4 }
+      - { id: skip_large, pattern: ACCUMULATION, action: skip many steps and grow the gap into drift, duration_seconds: 5, speaker_note: "stale feature drifts far from the truth" }
+      - { id: accumulate, pattern: ACCUMULATION, action: accumulate output error across skipped steps, duration_seconds: 3 }
+      - { id: conclude, pattern: REVEAL, action: state that reuse is cheap but stale features become wrong, duration_seconds: 2 }
+    end_state: A large gap between the cached feature and the true feature.
+    transition_to: lb_03_change_question
+    keyframe: { fraction: 0.75, purpose: "stale-cache drift" }
+    narration_note: "Reuse is cheap; the error is the problem, not the concept of caching."
+    speaker_note: "Mechanistic failure, not a benchmark."
+
+  - id: lb_03_change_question
+    title: Change the question
+    manim_class: LB03ChangeQuestion
+    mode: ours
+    purpose: Reframe prediction as correction.
+    question: What correction makes a cached computation behave like the skipped full one?
+    method_refs: [motivation, mechanism]
+    actors:
+      - { id: cached_computation, type: module, label: "cached", persistent: true, role: model }
+      - { id: correction, type: operator, label: "+", persistent: true, role: learned }
+      - { id: future_computation, type: module, label: "future", persistent: true, role: model }
+    start_state: The historical-features framing used by previous methods.
+    beats:
+      - { id: ask, pattern: ESTABLISH, action: show previous methods predicting the future feature from the past, duration_seconds: 4 }
+      - { id: reframe, pattern: REVEAL, action: LearniBridge asks for the required correction, duration_seconds: 3 }
+      - { id: setup, pattern: REVEAL, action: cached computation plus a small correction approximates the future computation, duration_seconds: 4 }
+      - { id: sketch, pattern: BUILD, action: show the correction as a small structured update, duration_seconds: 4 }
+    end_state: The sketch cached + correction ~= future.
+    transition_to: lb_04_low_rank
+    keyframe: { fraction: 0.9, purpose: "reframing sketch" }
+    narration_note: "The intellectual move is the question, not the architecture."
+    speaker_note: "Pause before the reframe."
+
+  - id: lb_04_low_rank
+    title: The correction is low-rank
+    manim_class: LB04LowRank
+    mode: ours
+    purpose: Present the low-rank analysis and separate observation from consequence.
+    question: What structure does the requisite correction have?
+    method_refs: [key_observation, equations]
+    actors:
+      - { id: input_matrix, type: panel, label: "X", persistent: true, role: data }
+      - { id: residual_matrix, type: panel, label: "E", persistent: true, role: data }
+      - { id: dW, type: learned, label: "dW", persistent: true, role: learned }
+      - { id: spectrum, type: dot, label: "singular values", persistent: true, role: spectrum }
+    start_state: Many prompt inputs, one per column.
+    beats:
+      - { id: collect, pattern: ESTABLISH, action: stack layer inputs from many prompts, duration_seconds: 4 }
+      - { id: residual, pattern: BUILD, action: form the cross-timestep output difference, duration_seconds: 4 }
+      - { id: linear, pattern: BUILD, action: model the correction as E ~= dW X, duration_seconds: 4 }
+      - { id: closed_form, pattern: REVEAL, action: show the closed form dW = E X^+, duration_seconds: 4 }
+      - { id: spectrum, pattern: TRAJECTORY, action: plot the singular values of X decaying rapidly, duration_seconds: 5, speaker_note: "energy concentrates in a few directions" }
+      - { id: consequence, pattern: REVEAL, action: derive that dW is constrained to low rank, duration_seconds: 4 }
+    end_state: A rapidly decaying spectrum and a low-rank dW.
+    transition_to: lb_05_prompt_invariant
+    keyframe: { fraction: 0.8, purpose: "spectrum and low-rank consequence" }
+    narration_note: "Decay is measured; low rank follows under the paper's linear model."
+    speaker_note: "Keep the distinction between observation and consequence."
+
+  - id: lb_05_prompt_invariant
+    title: A few prompts are enough
+    manim_class: LB05PromptInvariant
+    mode: ours
+    purpose: Present prompt-invariance evidence and its interpretation.
+    question: Do different prompts need different corrections?
+    method_refs: [key_observation]
+    actors:
+      - { id: prompt_groups, type: panel, label: "prompt groups", persistent: true, role: data }
+      - { id: subspace, type: stage, label: "subspace", persistent: true, role: learned }
+      - { id: angle, type: dot, label: "angle", persistent: true, role: measurement }
+    start_state: One hundred prompts ready to be split.
+    beats:
+      - { id: split, pattern: BUILD, action: split the prompts into disjoint groups, duration_seconds: 3 }
+      - { id: per_group, pattern: BUILD, action: fit the optimal correction per group, duration_seconds: 3 }
+      - { id: subspaces, pattern: REVEAL, action: show each correction's principal subspace, duration_seconds: 3 }
+      - { id: angles, pattern: COMPARE, action: measure pairwise angles between subspaces, duration_seconds: 4 }
+      - { id: small, pattern: REVEAL, action: the angles are consistently small, duration_seconds: 3, speaker_note: "similar directions, not identical corrections" }
+      - { id: consequence, pattern: REVEAL, action: a few calibration prompts can generalize, duration_seconds: 4 }
+    end_state: Aligned subspaces and the calibration-set consequence.
+    transition_to: lb_06_lora_bridge
+    keyframe: { fraction: 0.85, purpose: "aligned subspaces" }
+    narration_note: "Measurement first, interpretation second."
+    speaker_note: "Do not overclaim identical corrections."
+
+  - id: lb_06_lora_bridge
+    title: Low rank suggests LoRA
+    manim_class: LB06LoraBridge
+    mode: ours
+    purpose: Derive the parameterization from the structure.
+    question: How do we parameterize a low-rank correction?
+    method_refs: [mechanism, equations]
+    actors:
+      - { id: final_block, type: panel, label: "final block", persistent: true, role: model }
+      - { id: linear_layers, type: module, label: "linear", persistent: true, role: model }
+      - { id: lora_path, type: learned, label: "BA", persistent: true, role: learned }
+      - { id: feature_out, type: feature, label: "output", persistent: true, role: feature }
+    start_state: The final Transformer block with its linear layers.
+    beats:
+      - { id: final_block, pattern: ZOOM, action: zoom into the last Transformer block, duration_seconds: 3 }
+      - { id: freeze, pattern: FOCUS, action: freeze the pretrained weights, duration_seconds: 3 }
+      - { id: lora, pattern: BUILD, action: add the thin low-rank path dW = B A, duration_seconds: 4 }
+      - { id: bridge, pattern: TRACE, action: pass the cached final-block input through the augmented block, duration_seconds: 4 }
+      - { id: output, pattern: REVEAL, action: it approximates the skipped full computation, duration_seconds: 3 }
+      - { id: fit, pattern: REVEAL, action: low rank follows from the analysis, duration_seconds: 3 }
+    end_state: Cached input through the LoRA-augmented final block to an approximated output.
+    transition_to: lb_07_training_inference
+    keyframe: { fraction: 0.9, purpose: "LoRA bridge path" }
+    narration_note: "LoRA is the natural parameterization, not a popular add-on."
+    speaker_note: "Do not say LoRA runs through every block."
+
+  - id: lb_07_training_inference
+    title: Calibration and inference
+    manim_class: LB07TrainingInference
+    mode: ours
+    purpose: Make the calibration data and the inference path completely clear, then recap.
+    question: What runs at a skipped timestep?
+    method_refs: [training, inference]
+    actors:
+      - { id: trajectory, type: timeline, label: "trajectory", persistent: true, role: axis }
+      - { id: cached_input, type: feature, label: "x^L_t", persistent: true, role: cache }
+      - { id: target_output, type: feature, label: "target", persistent: true, role: ground_truth }
+      - { id: final_block_lora, type: panel, label: "final block + BA", persistent: true, role: learned }
+      - { id: skipped_blocks, type: module, label: "blocks", persistent: true, role: skip }
+    start_state: A full trajectory with recorded final-block inputs and outputs.
+    beats:
+      - { id: training, pattern: ESTABLISH, action: run a few full calibration trajectories, duration_seconds: 4 }
+      - { id: pair, pattern: BUILD, action: record the final-block input at a computed step and the true output at a skipped step, duration_seconds: 5, speaker_note: "one cached input, one ground-truth target" }
+      - { id: train, pattern: CORRECTION, action: train only the LoRA weights, duration_seconds: 4 }
+      - { id: inference, pattern: REPLAY, action: compute fully every N steps and cache the final-block input, duration_seconds: 4 }
+      - { id: skip, pattern: FOCUS, action: cross out the earlier blocks between full steps, duration_seconds: 3 }
+      - { id: run, pattern: TRACE, action: only the LoRA-augmented final block runs, duration_seconds: 4 }
+      - { id: recap, pattern: RECAP, action: compress stale cache to structured correction to low rank to few prompts to a lightweight bridge, duration_seconds: 4 }
+    end_state: The accelerated inference path with skipped blocks marked.
+    transition_to: ""
+    keyframe: { fraction: 0.8, purpose: "inference path with skipped blocks" }
+    narration_note: "The viewer must not think LoRA runs everywhere."
+    speaker_note: "End on the mechanism, not on a leaderboard."

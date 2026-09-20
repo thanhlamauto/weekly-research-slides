@@ -1,0 +1,17 @@
+{
+  "errors": 0,
+  "warnings": 0,
+  "infos": 2,
+  "findings": [
+    {
+      "level": "info",
+      "where": "lb_02_stale_cache/conclude",
+      "message": "no delivery direction for a key beat; add one for expressiveness"
+    },
+    {
+      "level": "info",
+      "where": "lb_06_lora_bridge/fit",
+      "message": "no delivery direction for a key beat; add one for expressiveness"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_01_why_cache.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_02_stale_cache.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_03_change_question.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_04_low_rank.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_05_prompt_invariant.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_06_lora_bridge.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/_narrated_work/final/lb_07_training_inference.mp4'

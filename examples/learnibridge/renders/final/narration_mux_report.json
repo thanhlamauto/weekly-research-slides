@@ -1,0 +1,57 @@
+{
+  "quality": "final",
+  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/transcript/audio",
+  "scenes": [
+    {
+      "id": "lb_01_why_cache",
+      "video": 13.15,
+      "audio": 12.951,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.199
+    },
+    {
+      "id": "lb_02_stale_cache",
+      "video": 14.8,
+      "audio": 14.617,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.183
+    },
+    {
+      "id": "lb_03_change_question",
+      "video": 14.7,
+      "audio": 14.656,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.044
+    },
+    {
+      "id": "lb_04_low_rank",
+      "video": 19.517,
+      "audio": 19.089,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.428
+    },
+    {
+      "id": "lb_05_prompt_invariant",
+      "video": 14.883,
+      "audio": 14.375,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.508
+    },
+    {
+      "id": "lb_06_lora_bridge",
+      "video": 15.917,
+      "audio": 15.434,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.483
+    },
+    {
+      "id": "lb_07_training_inference",
+      "video": 26.0,
+      "audio": 25.611,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.389
+    }
+  ],
+  "total_end_frame_padding": 0.0,
+  "output": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/renders/final/learnibridge-method-explainer-narrated.mp4"
+}
