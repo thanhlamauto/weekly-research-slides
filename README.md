@@ -92,13 +92,13 @@ Before (previous default) vs after (`academic-beamer`):
 
 | before | after |
 |---|---|
-| ![before contact sheet](docs/images/gallery-contact-sheet.png) | ![academic contact sheet](docs/images/academic-beamer-contact-sheet.png) |
+| ![before contact sheet](docs/images/legacy-contact-sheet.png) | ![academic contact sheet](docs/images/gallery-contact-sheet.png) |
 
 A diagnostic slide, before and after:
 
 | before | after |
 |---|---|
-| ![diagnostic before](docs/images/gallery-slide-06.png) | ![academic diagnostic](docs/images/academic-diagnostic.png) |
+| ![diagnostic before](docs/images/legacy-diagnostic.png) | ![academic diagnostic](docs/images/gallery-slide-06.png) |
 
 ```bash
 node src/cli.js build --input slide_spec.yaml --output out.pptx \
@@ -108,7 +108,10 @@ node src/cli.js build --input slide_spec.yaml --output out.pptx \
 ```
 
 Styles: `academic-beamer` (default), `academic-metropolis`, `paper-figure`,
-`dark-explainer`. See [`references/academic-slide-style.md`](references/academic-slide-style.md)
+`dark-explainer`. The `academic-metropolis` variant (more whitespace + a thin
+progress line) is compared at
+[`docs/images/academic-metropolis-contact-sheet.png`](docs/images/academic-metropolis-contact-sheet.png).
+See [`references/academic-slide-style.md`](references/academic-slide-style.md)
 and the editable
 [`examples/diagnostic-week/output/demo-weekly-research-slides.pptx`](examples/diagnostic-week/output/demo-weekly-research-slides.pptx).
 

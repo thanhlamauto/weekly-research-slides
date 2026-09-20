@@ -1,28 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1279.968" height="720" viewBox="0 0 1279.968 720"><defs><marker id="arw-B91C1C" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B91C1C"/></marker></defs>
-  <rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">GEOMETRY</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Correction is nearly orthogonal to the desired direction</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">5 / 10</tspan></text>
-  <ellipse cx="278.4" cy="432.0" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="438.8">Z_s</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="278.4" y="496.1">cached source</tspan></text>
-  <ellipse cx="835.2" cy="432.0" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="835.2" y="438.8">Z~</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="835.2" y="496.1">corrected</tspan><tspan x="835.2" y="512.6">estimate</tspan></text>
-  <ellipse cx="278.4" cy="201.6" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="208.4">Z_d</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="278.4" y="265.7">desired future</tspan></text>
-  <line x1="328.3" y1="432.0" x2="785.3" y2="432.0" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="412.3">dZ (cos 0.117 vs desired)</tspan></text>
-  <line x1="278.4" y1="382.1" x2="278.4" y2="251.5" stroke="#9CA3AF" stroke-width="1.00" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="297.1">desired</tspan></text>
-  <line x1="59.5" y1="619.2" x2="107.5" y2="619.2" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="119.0" y="623.7">correction ΔZ (what moved)</tspan></text>
-  <line x1="481.9" y1="619.2" x2="529.9" y2="619.2" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="541.4" y="623.7">desired direction Z_d − Z_s</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#374151" text-anchor="middle" ><tspan x="640.0" y="670.5">Same objects and positions as the previous slide; the measured dZ is ~90 degrees from desired.</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1279.968" height="720" viewBox="0 0 1279.968 720"><defs><marker id="arw-9E3B32" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9E3B32"/></marker></defs>
+  <rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Correction is nearly orthogonal to the desired direction</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">5 / 10</tspan></text>
+  <ellipse cx="278.4" cy="432.0" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="438.8">Z_s</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="278.4" y="509.9">cached source</tspan></text>
+  <ellipse cx="835.2" cy="432.0" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="835.2" y="438.8">Z~</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="835.2" y="509.9">corrected estimate</tspan></text>
+  <ellipse cx="278.4" cy="201.6" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="208.4">Z_d</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="278.4" y="279.5">desired future</tspan></text>
+  <line x1="342.7" y1="432.0" x2="770.9" y2="432.0" stroke="#9E3B32" stroke-width="2.67" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="412.0">dZ (cos 0.117 vs desired)</tspan></text>
+  <line x1="278.4" y1="367.7" x2="278.4" y2="265.9" stroke="#9B9B9B" stroke-width="1.00" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="296.8">desired</tspan></text>
+  <line x1="69.1" y1="619.2" x2="117.1" y2="619.2" stroke="#9E3B32" stroke-width="2.80" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="128.6" y="623.5">correction ΔZ (what moved)</tspan></text>
+  <line x1="491.5" y1="619.2" x2="539.5" y2="619.2" stroke="#9B9B9B" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="551.0" y="623.5">desired direction Z_d − Z_s</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#3A3A3A" text-anchor="middle" ><tspan x="640.0" y="670.3">Same objects and positions as the previous slide; the measured dZ is ~90 degrees from desired.</tspan></text>
 </svg>

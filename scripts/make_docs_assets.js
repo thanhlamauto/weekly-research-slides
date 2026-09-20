@@ -33,58 +33,58 @@ function png(svg, outPng) {
 function bannerSvg() {
   const W = 1600; const H = 520;
   const node = (cx, cy, r, label, sub) =>
-    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#FFFFFF" stroke="#111827" stroke-width="2.5"/>`
-    + `<text x="${cx}" y="${cy + 7}" font-family="Helvetica, Arial" font-size="22" font-weight="700" fill="#111827" text-anchor="middle">${label}</text>`
-    + (sub ? `<text x="${cx}" y="${cy + r + 26}" font-family="Helvetica, Arial" font-size="15" fill="#6B7280" text-anchor="middle">${sub}</text>` : '');
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="2.5"/>`
+    + `<text x="${cx}" y="${cy + 7}" font-family="Helvetica, Arial" font-size="22" font-weight="700" fill="#1A1A1A" text-anchor="middle">${label}</text>`
+    + (sub ? `<text x="${cx}" y="${cy + r + 26}" font-family="Helvetica, Arial" font-size="15" fill="#6B6B6B" text-anchor="middle">${sub}</text>` : '');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`
     + `<rect width="${W}" height="${H}" fill="#FFFFFF"/>`
-    + `<rect x="0" y="0" width="12" height="${H}" fill="#2563EB"/>`
-    + `<text x="90" y="120" font-family="Helvetica, Arial" font-size="20" font-weight="700" fill="#2563EB">AGENT SKILL · ALPHA v0.1</text>`
-    + `<text x="90" y="210" font-family="Helvetica, Arial" font-size="66" font-weight="800" fill="#111827">weekly-research-slides</text>`
-    + `<text x="90" y="272" font-family="Helvetica, Arial" font-size="27" fill="#374151">Turn weekly changes in methods, evidence, claims, and</text>`
-    + `<text x="90" y="312" font-family="Helvetica, Arial" font-size="27" fill="#374151">diagnostics into editable PowerPoint research updates.</text>`
-    + `<text x="90" y="390" font-family="Helvetica, Arial" font-size="19" fill="#6B7280">delta-first · stage-adaptive · claim + diagnostic tracking · native, editable objects</text>`
+    + `<rect x="0" y="0" width="12" height="${H}" fill="#245B78"/>`
+    + `<text x="90" y="120" font-family="Helvetica, Arial" font-size="20" font-weight="700" fill="#245B78">AGENT SKILL · ALPHA v0.1</text>`
+    + `<text x="90" y="210" font-family="Helvetica, Arial" font-size="66" font-weight="700" fill="#1A1A1A">weekly-research-slides</text>`
+    + `<text x="90" y="272" font-family="Helvetica, Arial" font-size="27" fill="#3A3A3A">Turn weekly changes in methods, evidence, claims, and</text>`
+    + `<text x="90" y="312" font-family="Helvetica, Arial" font-size="27" fill="#3A3A3A">diagnostics into editable PowerPoint research updates.</text>`
+    + `<text x="90" y="390" font-family="Helvetica, Arial" font-size="19" fill="#6B6B6B">delta-first · stage-adaptive · claim + diagnostic tracking · native, editable objects</text>`
     + node(1160, 210, 62, 'Z_s', 'cached source')
     + node(1440, 210, 62, 'Z~', 'corrected')
     + node(1300, 80, 62, 'Z_d', 'desired future')
-    + `<line x1="1222" y1="210" x2="1378" y2="210" stroke="#B91C1C" stroke-width="7" marker-end="url(#a)"/>`
-    + `<line x1="1300" y1="142" x2="1300" y2="118" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="7 6"/>`
-    + `<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#B91C1C"/></marker></defs>`
-    + `<text x="1230" y="300" font-family="Helvetica, Arial" font-size="17" font-weight="700" fill="#B91C1C">correction ΔZ</text>`
-    + `<text x="1300" y="390" font-family="Helvetica, Arial" font-size="16" fill="#6B7280" text-anchor="middle">one story per week, tracked across weeks</text>`
+    + `<line x1="1222" y1="210" x2="1378" y2="210" stroke="#9E3B32" stroke-width="7" marker-end="url(#a)"/>`
+    + `<line x1="1300" y1="142" x2="1300" y2="118" stroke="#9B9B9B" stroke-width="2" stroke-dasharray="7 6"/>`
+    + `<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#9E3B32"/></marker></defs>`
+    + `<text x="1230" y="300" font-family="Helvetica, Arial" font-size="17" font-weight="700" fill="#9E3B32">correction ΔZ</text>`
+    + `<text x="1300" y="390" font-family="Helvetica, Arial" font-size="16" fill="#6B6B6B" text-anchor="middle">one story per week, tracked across weeks</text>`
     + `</svg>`;
 }
 
 function architectureSvg() {
   const stages = [
-    ['research_state.yaml', '#F1F5F9', '#64748B'],
-    ['+ weekly material', '#F1F5F9', '#64748B'],
-    ['weekly_delta.yaml', '#EAF1FE', '#2563EB'],
-    ['storyboard.yaml', '#EAF1FE', '#2563EB'],
-    ['slide_spec.yaml', '#EAF1FE', '#2563EB'],
-    ['editable PPTX', '#DCFCE7', '#047857'],
-    ['+ optional motion', '#FEF3C7', '#B45309'],
-    ['render + QA', '#EDE9FE', '#6D28D9'],
+    ['research_state.yaml', '#F6F6F4', '#6B6B6B'],
+    ['+ weekly material', '#F6F6F4', '#6B6B6B'],
+    ['weekly_delta.yaml', '#EAF1F4', '#245B78'],
+    ['storyboard.yaml', '#EAF1F4', '#245B78'],
+    ['slide_spec.yaml', '#EAF1F4', '#245B78'],
+    ['editable PPTX', '#E9F1EC', '#2F6B4F'],
+    ['+ optional motion', '#F6EDE3', '#A1602A'],
+    ['render + QA', '#EDEAF4', '#5B4B8A'],
   ];
   const bw = 210; const bh = 84; const gap = 26; const x0 = 60; const y = 130;
   const W = x0 * 2 + stages.length * bw + (stages.length - 1) * gap;
   const boxes = stages.map(([label, fill, color], i) => {
     const x = x0 + i * (bw + gap);
     const arrow = i < stages.length - 1
-      ? `<line x1="${x + bw}" y1="${y + bh / 2}" x2="${x + bw + gap}" y2="${y + bh / 2}" stroke="#9CA3AF" stroke-width="3" marker-end="url(#m)"/>`
+      ? `<line x1="${x + bw}" y1="${y + bh / 2}" x2="${x + bw + gap}" y2="${y + bh / 2}" stroke="#9B9B9B" stroke-width="3" marker-end="url(#m)"/>`
       : '';
-    return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="12" fill="${fill}" stroke="${color}" stroke-width="2"/>`
-      + `<text x="${x + bw / 2}" y="${y + bh / 2 + 7}" font-family="Helvetica, Arial" font-size="20" font-weight="700" fill="#111827" text-anchor="middle">${esc(label)}</text>`
+    return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="6" fill="${fill}" stroke="${color}" stroke-width="2"/>`
+      + `<text x="${x + bw / 2}" y="${y + bh / 2 + 7}" font-family="Helvetica, Arial" font-size="20" font-weight="700" fill="#1A1A1A" text-anchor="middle">${esc(label)}</text>`
       + arrow;
   }).join('');
   const H = 300;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">`
     + `<rect width="${W}" height="${H}" fill="#FFFFFF"/>`
-    + `<text x="${x0}" y="66" font-family="Helvetica, Arial" font-size="30" font-weight="800" fill="#111827">Source-first pipeline</text>`
-    + `<text x="${x0}" y="98" font-family="Helvetica, Arial" font-size="18" fill="#6B7280">Structured source is the truth. Fix the source and rebuild; never patch the generated PPTX.</text>`
+    + `<text x="${x0}" y="66" font-family="Helvetica, Arial" font-size="30" font-weight="700" fill="#1A1A1A">Source-first pipeline</text>`
+    + `<text x="${x0}" y="98" font-family="Helvetica, Arial" font-size="18" fill="#6B6B6B">Structured source is the truth. Fix the source and rebuild; never patch the generated PPTX.</text>`
     + boxes
-    + `<defs><marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#9CA3AF"/></marker></defs>`
-    + `<text x="${x0}" y="262" font-family="Helvetica, Arial" font-size="16" fill="#6B7280">read delta -> plan -> author -> build -> QA -> rebuild</text>`
+    + `<defs><marker id="m" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#9B9B9B"/></marker></defs>`
+    + `<text x="${x0}" y="262" font-family="Helvetica, Arial" font-size="16" fill="#6B6B6B">read delta -> plan -> author -> build -> QA -> rebuild</text>`
     + `</svg>`;
 }
 

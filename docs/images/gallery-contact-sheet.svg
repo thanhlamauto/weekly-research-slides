@@ -1,274 +1,254 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1709" height="1330" viewBox="0 0 1709 1330"><rect width="100%" height="100%" fill="#F3F4F6"/><defs><marker id="arw-B91C1C" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#B91C1C"/></marker><marker id="arw-2563EB" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#2563EB"/></marker><marker id="arw-374151" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#374151"/></marker></defs>
-<g transform="translate(24.0,24.0) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">1 / 10</tspan></text>
-  <rect x="59.5" y="225.6" width="86.4" height="4.8" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="20.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="262.2">Cached Future-Feature Prediction</tspan></text>
-  <text font-family="Calibri" font-size="50.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="329.8">Does correction recover</tspan><tspan x="59.5" y="392.6">the future feature?</tspan></text>
-  <text font-family="Calibri" font-size="24.0" fill="#374151" text-anchor="start" ><tspan x="59.5" y="478.1">Week 6 · an oracle diagnostic splits feature recovery</tspan><tspan x="59.5" y="507.8">from output recovery, and claim C1 weakens.</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#6B7280" text-anchor="start" ><tspan x="59.5" y="590.8">Weekly research update · synthetic demo · version 0.1</tspan></text>
-  <ellipse cx="837.6" cy="458.4" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="837.6" y="465.2">Z_s</tspan></text>
-  <ellipse cx="1044.0" cy="458.4" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="1044.0" y="465.2">Z~</tspan></text>
-  <ellipse cx="941.3" cy="295.2" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="941.3" y="302.0">Z_d</tspan></text>
-  <line x1="892.8" y1="458.9" x2="988.8" y2="458.9" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <line x1="868.5" y1="405.1" x2="936.0" y2="350.4" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
-  <line x1="1099.2" y1="410.9" x2="1012.8" y2="355.9" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="950.4" y="561.3">cached features drift; correction moves them</tspan></text></g>
-<g transform="translate(585.6,24.0) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">RECAP</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Where we are, and what changed this week</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">2 / 10</tspan></text>
-  <rect x="59.5" y="165.1" width="557.2" height="451.2" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="80.6" y="201.2">Established (unchanged)</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="82.6" y="251.0">P1</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="82.6" y="276.4">Cached hidden features go stale; reusing them as</tspan><tspan x="82.6" y="299.5">future features drifts.</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="82.6" y="351.8">Method</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="82.6" y="377.2">Cache reuse followed by a learned correction toward</tspan><tspan x="82.6" y="400.3">the future feature.</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="82.6" y="452.6">Baseline</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="82.6" y="478.0">Reuse only scores rollout cosine 0.42.</tspan></text>
-  <rect x="651.6" y="165.1" width="568.9" height="451.2" rx="10.6" fill="#F1F5F9" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="678.5" y="206.1">WHERE WE ARE NOW</tspan></text>
-  <text font-family="Calibri" font-size="21.3" fill="#111827" text-anchor="start" ><tspan x="678.5" y="254.8">Method v4 adds a correction objective and an</tspan><tspan x="678.5" y="281.3">oracle diagnostic. The question this week is</tspan><tspan x="678.5" y="307.7">whether the correction moves toward the future</tspan><tspan x="678.5" y="334.2">feature, or whether a different downstream-valid</tspan><tspan x="678.5" y="360.6">direction is enough.</tspan></text>
-  <rect x="678.5" y="566.4" width="153.6" height="30.7" rx="15.4" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="755.3" y="586.3">Last week: v3</tspan></text></g>
-<g transform="translate(1147.2,24.0) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">WHAT CHANGED</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">What changed in the method: v3 to v4</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">3 / 10</tspan></text>
-  <rect x="59.5" y="170.9" width="163.2" height="59.5" rx="12.5" fill="#F1F5F9" stroke="#6B7280" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="22.7" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="141.1" y="208.3">v3</tspan></text>
-  <line x1="234.2" y1="200.6" x2="342.7" y2="200.6" stroke="#2563EB" stroke-width="2.13" marker-end="url(#arw-2563EB)" stroke-linecap="round"/>
-  <rect x="354.2" y="170.9" width="182.4" height="59.5" rx="12.5" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="22.7" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="445.4" y="208.3">v4</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="568.3" y="195.4">v4 adds a correction objective and an oracle diagnostic, and scales</tspan><tspan x="568.3" y="218.6">down the correction.</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="59.5" y="277.2">CHANGES THIS WEEK</tspan></text>
-  <rect x="59.5" y="298.6" width="4.8" height="73.6" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="80.6" y="318.8">Added a correction objective</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#6B7280" text-anchor="start" ><tspan x="80.6" y="345.3">Penalize deviation from the future feature so the correction is</tspan><tspan x="80.6" y="364.3">supervised directly.</tspan></text>
-  <rect x="59.5" y="391.4" width="4.8" height="73.6" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="80.6" y="411.6">Added an oracle diagnostic</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#6B7280" text-anchor="start" ><tspan x="80.6" y="438.1">Separate feature recovery from output recovery to test C1 and C2.</tspan></text>
-  <rect x="59.5" y="484.2" width="4.8" height="73.6" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="80.6" y="504.4">Scaled down the correction magnitude</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#6B7280" text-anchor="start" ><tspan x="80.6" y="530.9">Reduce drift when the correction is applied over long rollouts.</tspan></text>
-  <rect x="674.8" y="283.2" width="545.6" height="307.2" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="697.9" y="318.5">UNCHANGED</tspan></text>
-  <text font-family="Calibri" font-size="17.3" fill="#6B7280" text-anchor="start" ><tspan x="697.9" y="356.7">Cache layout and update schedule</tspan></text>
-  <text font-family="Calibri" font-size="17.3" fill="#6B7280" text-anchor="start" ><tspan x="697.9" y="428.7">Backbone and dataset split</tspan></text>
-  <text font-family="Calibri" font-size="17.3" fill="#6B7280" text-anchor="start" ><tspan x="697.9" y="500.7">Rollout evaluation protocol</tspan></text></g>
-<g transform="translate(24.0,350.4) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">GEOMETRY</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Two stories for what the correction does</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">4 / 10</tspan></text>
-  <ellipse cx="278.4" cy="432.0" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="438.8">Z_s</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="278.4" y="496.1">cached source</tspan></text>
-  <ellipse cx="835.2" cy="432.0" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="835.2" y="438.8">Z~</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="835.2" y="496.1">corrected</tspan><tspan x="835.2" y="512.6">estimate</tspan></text>
-  <ellipse cx="278.4" cy="201.6" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="208.4">Z_d</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="278.4" y="265.7">desired future</tspan></text>
-  <line x1="328.3" y1="432.0" x2="785.3" y2="432.0" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="412.3">dZ correction</tspan></text>
-  <line x1="278.4" y1="382.1" x2="278.4" y2="251.5" stroke="#9CA3AF" stroke-width="1.00" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="297.1">desired</tspan></text>
-  <line x1="789.1" y1="412.9" x2="324.5" y2="220.7" stroke="#9CA3AF" stroke-width="1.00" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="297.1">residual</tspan></text>
-  <line x1="59.5" y1="619.2" x2="107.5" y2="619.2" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="119.0" y="623.7">correction ΔZ (what moved)</tspan></text>
-  <line x1="481.9" y1="619.2" x2="529.9" y2="619.2" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="541.4" y="623.7">desired direction Z_d − Z_s</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#374151" text-anchor="middle" ><tspan x="640.0" y="670.5">C1 says dZ follows the desired direction; C2 says dZ can be orthogonal and still be useful.</tspan></text></g>
-<g transform="translate(585.6,350.4) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">GEOMETRY</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Correction is nearly orthogonal to the desired direction</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">5 / 10</tspan></text>
-  <ellipse cx="278.4" cy="432.0" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="438.8">Z_s</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="278.4" y="496.1">cached source</tspan></text>
-  <ellipse cx="835.2" cy="432.0" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="835.2" y="438.8">Z~</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="835.2" y="496.1">corrected</tspan><tspan x="835.2" y="512.6">estimate</tspan></text>
-  <ellipse cx="278.4" cy="201.6" rx="48.0" ry="48.0" fill="#FFFFFF" stroke="#111827" stroke-width="1.73"/>
-  <text font-family="Calibri" font-size="20.0" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="208.4">Z_d</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="middle" ><tspan x="278.4" y="265.7">desired future</tspan></text>
-  <line x1="328.3" y1="432.0" x2="785.3" y2="432.0" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="412.3">dZ (cos 0.117 vs desired)</tspan></text>
-  <line x1="278.4" y1="382.1" x2="278.4" y2="251.5" stroke="#9CA3AF" stroke-width="1.00" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="15.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="297.1">desired</tspan></text>
-  <line x1="59.5" y1="619.2" x2="107.5" y2="619.2" stroke="#B91C1C" stroke-width="2.80" marker-end="url(#arw-B91C1C)" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="119.0" y="623.7">correction ΔZ (what moved)</tspan></text>
-  <line x1="481.9" y1="619.2" x2="529.9" y2="619.2" stroke="#9CA3AF" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="541.4" y="623.7">desired direction Z_d − Z_s</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#374151" text-anchor="middle" ><tspan x="640.0" y="670.5">Same objects and positions as the previous slide; the measured dZ is ~90 degrees from desired.</tspan></text></g>
-<g transform="translate(1147.2,350.4) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">DIAGNOSTIC</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Diagnostic D1: does the correction aim at the future feature?</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">6 / 10</tspan></text>
-  <rect x="59.5" y="161.3" width="1160.9" height="82.6" rx="10.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="17.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="84.5" y="191.2">D1</tspan></text>
-  <text font-family="Calibri" font-size="22.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="189.1" y="210.3">Does the correction direction point toward the future feature?</tspan></text>
-  <rect x="1052.4" y="186.2" width="74.9" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="1089.9" y="207.1">tests C1</tspan></text>
-  <rect x="59.5" y="263.0" width="661.7" height="109.4" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="80.6" y="289.7">MEASUREMENT</tspan></text>
-  <text font-family="Consolas" font-size="20.0" fill="#111827" text-anchor="start" ><tspan x="80.6" y="319.8">cos(deltaZ, Z_d - Z_s) = 0.1168</tspan></text>
-  <rect x="59.5" y="382.1" width="661.7" height="109.4" rx="10.6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#374151" text-anchor="start" font-weight="700" ><tspan x="80.6" y="408.7">OBSERVATION</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="80.6" y="437.7">The correction direction is nearly orthogonal to the direction</tspan><tspan x="80.6" y="460.8">from the cached feature to the future feature.</tspan></text>
-  <rect x="59.5" y="501.1" width="661.7" height="109.4" rx="10.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="80.6" y="527.7">INTERPRETATION</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="80.6" y="556.7">Output recovery may not require moving toward the exact future</tspan><tspan x="80.6" y="579.8">hidden state.</tspan></text>
-  <rect x="756.1" y="263.0" width="464.4" height="109.4" rx="10.6" fill="#DCFCE7" stroke="#047857" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="start" font-weight="700" ><tspan x="777.2" y="289.7">CAN CONCLUDE</tspan></text>
-  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="316.2">C1 as stated is not supported; the correction is not</tspan><tspan x="777.2" y="336.0">simply moving toward Z_d.</tspan></text>
-  <rect x="756.1" y="382.1" width="464.4" height="109.4" rx="10.6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#B91C1C" text-anchor="start" font-weight="700" ><tspan x="777.2" y="408.7">CANNOT CONCLUDE</tspan></text>
-  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="435.2">That the correction is uninformative, or that the</tspan><tspan x="777.2" y="455.0">method fails.</tspan></text>
-  <rect x="756.1" y="501.1" width="464.4" height="109.4" rx="10.6" fill="#F9FAFB" stroke="#6B7280" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="777.2" y="527.7">ALTERNATIVE TARGETED</tspan></text>
-  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="554.2">The correction may exploit a downstream-valid</tspan><tspan x="777.2" y="574.1">direction that is not the future-feature direction.</tspan></text></g>
-<g transform="translate(24.0,676.8) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">COMPARISON</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Comparison: competitor, last week, this week</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">7 / 10</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="59.5" y="234.9">Method</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="235.6">Rollout cosine</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" ><tspan x="485.8" y="260.9">higher is better</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="235.6">Downstream acc.</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" ><tspan x="776.8" y="260.9">higher is better</tspan></text>
-  <rect x="630.8" y="201.6" width="1.2" height="305.3" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="15.3" fill="#111827" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="235.6">Feature recovery R2</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" ><tspan x="1067.8" y="260.9">higher is better</tspan></text>
-  <rect x="921.8" y="201.6" width="1.2" height="305.3" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="59.5" y="304.4">Cache reuse only</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" font-weight="700" ><tspan x="59.5" y="330.9">COMPETITOR</tspan></text>
-  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="306.2">0.42</tspan></text>
-  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="306.2">0.74</tspan></text>
-  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="306.2">0.28</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="59.5" y="387.0">Ours (v3, last week)</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="59.5" y="413.5">OURS · LAST WEEK</tspan></text>
-  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="388.8">0.51</tspan></text>
-  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="388.8">0.83</tspan></text>
-  <text font-family="Consolas" font-size="24.0" fill="#374151" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="388.8">0.30</tspan></text>
-  <rect x="48.0" y="418.6" width="1184.0" height="78.7" rx="9.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="469.5">Ours (v4, this week)</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="496.1">OURS · THIS WEEK</tspan></text>
-  <text font-family="Consolas" font-size="28.0" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="472.7">0.58</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="middle" font-weight="700" ><tspan x="485.8" y="493.2">+0.07</tspan></text>
-  <text font-family="Consolas" font-size="28.0" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="472.7">0.91</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="493.2">+0.08</tspan></text>
-  <text font-family="Consolas" font-size="28.0" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="472.7">0.34</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="middle" font-weight="700" ><tspan x="1067.8" y="493.2">+0.04</tspan></text>
-  <rect x="59.5" y="533.8" width="1160.9" height="91.2" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="86.4" y="574.6">v4 improves both downstream metrics over v3. Feature recovery stays low; that is the evidence behind the weakened C1</tspan><tspan x="86.4" y="597.8">and the emerging C2, not a hidden weakness.</tspan></text></g>
-<g transform="translate(585.6,676.8) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">CLAIM UPDATE</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">What this week does to our claims</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">8 / 10</tspan></text>
-  <rect x="59.5" y="170.9" width="1160.9" height="148.8" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="21.3" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="82.6" y="207.9">C1</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="82.6" y="236.1">The learned correction approximates the true future feature.</tspan></text>
-  <rect x="831.6" y="229.0" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="910.8" y="249.8">plausible</tspan></text>
-  <line x1="994.8" y1="245.3" x2="1047.6" y2="245.3" stroke="#374151" stroke-width="1.47" marker-end="url(#arw-374151)" stroke-linecap="round"/>
-  <rect x="1059.2" y="229.0" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#B91C1C" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#B91C1C" text-anchor="middle" font-weight="700" ><tspan x="1138.4" y="249.8">weakened</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="802.5" y="299.3">D1: cos 0.117</tspan></text>
-  <rect x="59.5" y="331.2" width="1160.9" height="148.8" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="21.3" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="82.6" y="368.2">C2</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="82.6" y="396.4">An alternative downstream-valid pre-image may be sufficient; output recovery</tspan><tspan x="82.6" y="419.5">does not require feature recovery.</tspan></text>
-  <rect x="831.6" y="389.3" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#9CA3AF" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="middle" font-weight="700" ><tspan x="910.8" y="410.1">absent</tspan></text>
-  <line x1="994.8" y1="405.6" x2="1047.6" y2="405.6" stroke="#374151" stroke-width="1.47" marker-end="url(#arw-374151)" stroke-linecap="round"/>
-  <rect x="1059.2" y="389.3" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#B45309" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#B45309" text-anchor="middle" font-weight="700" ><tspan x="1138.4" y="410.1">emerging</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" ><tspan x="802.5" y="459.6">D2: high output, low feature recovery</tspan></text>
-  <text font-family="Calibri" font-size="15.3" fill="#6B7280" text-anchor="start" ><tspan x="59.5" y="510.4">Neither claim is refuted or confirmed; both remain under test.</tspan></text></g>
-<g transform="translate(1147.2,676.8) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">DIAGNOSTIC</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Diagnostic D2: does output recovery require feature recovery?</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">9 / 10</tspan></text>
-  <rect x="59.5" y="161.3" width="1160.9" height="82.6" rx="10.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="17.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="84.5" y="191.2">D2</tspan></text>
-  <text font-family="Calibri" font-size="22.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="189.1" y="210.3">Does output recovery require feature recovery?</tspan></text>
-  <rect x="1052.4" y="186.2" width="74.9" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="middle" font-weight="700" ><tspan x="1089.9" y="207.1">tests C2</tspan></text>
-  <rect x="59.5" y="263.0" width="661.7" height="109.4" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="80.6" y="289.7">MEASUREMENT</tspan></text>
-  <text font-family="Consolas" font-size="20.0" fill="#111827" text-anchor="start" ><tspan x="80.6" y="319.8">linear probe R^2 for recovering Z_d from the corrected</tspan><tspan x="80.6" y="344.6">feature = 0.34; downstream accuracy = 0.91</tspan></text>
-  <rect x="59.5" y="382.1" width="661.7" height="109.4" rx="10.6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#374151" text-anchor="start" font-weight="700" ><tspan x="80.6" y="408.7">OBSERVATION</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="80.6" y="437.7">Downstream accuracy is high while feature recovery remains low.</tspan></text>
-  <rect x="59.5" y="501.1" width="661.7" height="109.4" rx="10.6" fill="#EAF1FE" stroke="#2563EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="80.6" y="527.7">INTERPRETATION</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" ><tspan x="80.6" y="556.7">A downstream-valid pre-image that is not the true future feature</tspan><tspan x="80.6" y="579.8">may be sufficient.</tspan></text>
-  <rect x="756.1" y="263.0" width="464.4" height="109.4" rx="10.6" fill="#DCFCE7" stroke="#047857" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#047857" text-anchor="start" font-weight="700" ><tspan x="777.2" y="289.7">CAN CONCLUDE</tspan></text>
-  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="316.2">Output recovery can occur without strong feature</tspan><tspan x="777.2" y="336.0">recovery in this setup.</tspan></text>
-  <rect x="756.1" y="382.1" width="464.4" height="109.4" rx="10.6" fill="#FEE2E2" stroke="#B91C1C" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#B91C1C" text-anchor="start" font-weight="700" ><tspan x="777.2" y="408.7">CANNOT CONCLUDE</tspan></text>
-  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="435.2">That no valid feature recovery exists, or that the</tspan><tspan x="777.2" y="455.0">probe is a complete measurement.</tspan></text>
-  <rect x="756.1" y="501.1" width="464.4" height="109.4" rx="10.6" fill="#F9FAFB" stroke="#6B7280" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="start" font-weight="700" ><tspan x="777.2" y="527.7">ALTERNATIVE TARGETED</tspan></text>
-  <text font-family="Calibri" font-size="16.0" fill="#374151" text-anchor="start" ><tspan x="777.2" y="554.2">The probe may fail to decode information that is</tspan><tspan x="777.2" y="574.1">present in the feature.</tspan></text></g>
-<g transform="translate(24.0,1003.2) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="16.0" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="59.5" y="56.3">LIMITATIONS</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#6B7280" text-anchor="end" ><tspan x="1220.4" y="55.4">Cached Future-Feature Prediction · Week 6</tspan></text>
-  <text font-family="Calibri" font-size="36.0" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="59.5" y="106.3">Limitations and open questions</tspan></text>
-  <rect x="59.5" y="130.6" width="1160.9" height="2.1" rx="0.0" fill="#E5E7EB" stroke="none" stroke-width="1.47"/>
-  <rect x="59.5" y="130.6" width="110.4" height="2.1" rx="0.0" fill="#2563EB" stroke="none" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="start" ><tspan x="59.5" y="690.9">Cached Future-Feature Prediction · synthetic demo</tspan></text>
-  <text font-family="Calibri" font-size="13.3" fill="#9CA3AF" text-anchor="end" ><tspan x="1220.4" y="690.9">10 / 10</tspan></text>
-  <rect x="59.5" y="165.1" width="603.7" height="451.2" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="80.6" y="201.2">Current limitations</tspan></text>
-  <text font-family="Calibri" font-size="20.0" fill="#B91C1C" text-anchor="start" font-weight="700" ><tspan x="84.5" y="260.2">1</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="124.8" y="251.4">Alternative valid pre-images have not been directly</tspan><tspan x="124.8" y="274.6">characterized.</tspan></text>
-  <text font-family="Calibri" font-size="20.0" fill="#B91C1C" text-anchor="start" font-weight="700" ><tspan x="84.5" y="354.3">2</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="124.8" y="345.5">The oracle diagnostic uses the future feature as an</tspan><tspan x="124.8" y="368.6">upper bound and is unavailable at inference.</tspan></text>
-  <text font-family="Calibri" font-size="20.0" fill="#B91C1C" text-anchor="start" font-weight="700" ><tspan x="84.5" y="448.4">3</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="124.8" y="439.6">Feature recovery is measured with a single linear</tspan><tspan x="124.8" y="462.7">probe.</tspan></text>
-  <rect x="698.0" y="165.1" width="522.4" height="451.2" rx="10.6" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.47"/>
-  <text font-family="Calibri" font-size="18.7" fill="#111827" text-anchor="start" font-weight="700" ><tspan x="719.2" y="201.2">Open questions</tspan></text>
-  <text font-family="Calibri" font-size="21.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="723.0" y="260.7">?</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="763.3" y="251.4">Can we characterize downstream-valid</tspan><tspan x="763.3" y="274.6">pre-images without the oracle?</tspan></text>
-  <text font-family="Calibri" font-size="21.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="723.0" y="354.8">?</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="763.3" y="345.5">Does the correction generalize to horizons</tspan><tspan x="763.3" y="368.6">beyond the training horizon?</tspan></text>
-  <text font-family="Calibri" font-size="21.3" fill="#2563EB" text-anchor="start" font-weight="700" ><tspan x="723.0" y="448.9">?</tspan></text>
-  <text font-family="Calibri" font-size="18.7" fill="#374151" text-anchor="start" ><tspan x="763.3" y="439.6">Would the same orthogonality appear for other</tspan><tspan x="763.3" y="462.7">cached-feature tasks?</tspan></text></g>
+<svg xmlns="http://www.w3.org/2000/svg" width="1709" height="1330" viewBox="0 0 1709 1330"><rect width="100%" height="100%" fill="#F3F4F6"/><defs><marker id="arw-9E3B32" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#9E3B32"/></marker><marker id="arw-245B78" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#245B78"/></marker><marker id="arw-3A3A3A" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#3A3A3A"/></marker></defs>
+<g transform="translate(24.0,24.0) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="225.6" width="86.4" height="4.8" rx="0.0" fill="#245B78" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="20.0" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="69.1" y="262.2">Cached Future-Feature Prediction</tspan></text>
+  <text font-family="Calibri" font-size="42.7" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="317.7">Does correction recover the</tspan><tspan x="69.1" y="370.6">future feature?</tspan></text>
+  <text font-family="Calibri" font-size="21.3" fill="#3A3A3A" text-anchor="start" ><tspan x="69.1" y="463.1">Week 6 · an oracle diagnostic splits feature recovery from</tspan><tspan x="69.1" y="489.6">output recovery, and claim C1 weakens.</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#6B6B6B" text-anchor="start" ><tspan x="69.1" y="590.6">Weekly research update · synthetic demo · version 0.1</tspan></text>
+  <ellipse cx="837.6" cy="458.4" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="18.7" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="837.6" y="464.7">Z_s</tspan></text>
+  <ellipse cx="1044.0" cy="458.4" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="18.7" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="1044.0" y="464.7">Z~</tspan></text>
+  <ellipse cx="941.3" cy="295.2" rx="55.2" ry="55.2" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="18.7" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="941.3" y="301.5">Z_d</tspan></text>
+  <line x1="892.8" y1="458.9" x2="988.8" y2="458.9" stroke="#9E3B32" stroke-width="2.67" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <line x1="868.5" y1="405.1" x2="936.0" y2="350.4" stroke="#9B9B9B" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <line x1="1099.2" y1="410.9" x2="1012.8" y2="355.9" stroke="#9B9B9B" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="950.4" y="561.1">cached features drift; correction moves them</tspan></text></g>
+<g transform="translate(585.6,24.0) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Where we are, and what changed this week</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">2 / 10</tspan></text>
+  <rect x="69.1" y="165.1" width="548.0" height="451.2" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="17.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="90.2" y="200.8">Established (unchanged)</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="92.2" y="250.7">P1</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="92.2" y="275.8">Cached hidden features go stale; reusing them as future</tspan><tspan x="92.2" y="298.1">features drifts.</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="92.2" y="351.5">Method</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="92.2" y="376.6">Cache reuse followed by a learned correction toward the</tspan><tspan x="92.2" y="398.9">future feature.</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="92.2" y="452.3">Baseline</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="92.2" y="477.4">Reuse only scores rollout cosine 0.42.</tspan></text>
+  <rect x="651.4" y="165.1" width="559.4" height="451.2" rx="2.9" fill="#F2F2F0" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="678.3" y="205.9">WHERE WE ARE NOW</tspan></text>
+  <text font-family="Calibri" font-size="21.3" fill="#1A1A1A" text-anchor="start" ><tspan x="678.3" y="254.8">Method v4 adds a correction objective and an</tspan><tspan x="678.3" y="281.3">oracle diagnostic. The question this week is</tspan><tspan x="678.3" y="307.7">whether the correction moves toward the future</tspan><tspan x="678.3" y="334.2">feature, or whether a different</tspan><tspan x="678.3" y="360.6">downstream-valid direction is enough.</tspan></text>
+  <rect x="678.3" y="566.4" width="153.6" height="30.7" rx="15.4" fill="#FFFFFF" stroke="#D9D9D9" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="755.1" y="586.1">Last week: v3</tspan></text></g>
+<g transform="translate(1147.2,24.0) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">What changed in the method: v3 to v4</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">3 / 10</tspan></text>
+  <rect x="69.1" y="170.9" width="163.2" height="59.5" rx="12.5" fill="#F2F2F0" stroke="#6B6B6B" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="22.7" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="150.7" y="208.3">v3</tspan></text>
+  <line x1="243.8" y1="200.6" x2="352.3" y2="200.6" stroke="#245B78" stroke-width="2.00" marker-end="url(#arw-245B78)" stroke-linecap="round"/>
+  <rect x="363.8" y="170.9" width="182.4" height="59.5" rx="12.5" fill="#EAF1F4" stroke="#245B78" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="22.7" fill="#245B78" text-anchor="middle" font-weight="700" ><tspan x="455.0" y="208.3">v4</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="577.9" y="195.6">v4 adds a correction objective and an oracle diagnostic, and scales</tspan><tspan x="577.9" y="217.9">down the correction.</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" font-weight="700" ><tspan x="69.1" y="276.9">CHANGES THIS WEEK</tspan></text>
+  <rect x="69.1" y="298.6" width="4.8" height="73.6" rx="0.0" fill="#245B78" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="90.2" y="318.8">Added a correction objective</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#6B6B6B" text-anchor="start" ><tspan x="90.2" y="344.7">Penalize deviation from the future feature so the correction is</tspan><tspan x="90.2" y="362.9">supervised directly.</tspan></text>
+  <rect x="69.1" y="391.4" width="4.8" height="73.6" rx="0.0" fill="#245B78" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="90.2" y="411.6">Added an oracle diagnostic</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#6B6B6B" text-anchor="start" ><tspan x="90.2" y="437.5">Separate feature recovery from output recovery to test C1 and C2.</tspan></text>
+  <rect x="69.1" y="484.2" width="4.8" height="73.6" rx="0.0" fill="#245B78" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="90.2" y="504.4">Scaled down the correction magnitude</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#6B6B6B" text-anchor="start" ><tspan x="90.2" y="530.3">Reduce drift when the correction is applied over long rollouts.</tspan></text>
+  <rect x="674.2" y="283.2" width="536.6" height="307.2" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" font-weight="700" ><tspan x="697.3" y="318.2">UNCHANGED</tspan></text>
+  <text font-family="Calibri" font-size="16.7" fill="#6B6B6B" text-anchor="start" ><tspan x="697.3" y="356.1">Cache layout and update schedule</tspan></text>
+  <text font-family="Calibri" font-size="16.7" fill="#6B6B6B" text-anchor="start" ><tspan x="697.3" y="428.1">Backbone and dataset split</tspan></text>
+  <text font-family="Calibri" font-size="16.7" fill="#6B6B6B" text-anchor="start" ><tspan x="697.3" y="500.1">Rollout evaluation protocol</tspan></text></g>
+<g transform="translate(24.0,350.4) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Two stories for what the correction does</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">4 / 10</tspan></text>
+  <ellipse cx="278.4" cy="432.0" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="438.8">Z_s</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="278.4" y="509.9">cached source</tspan></text>
+  <ellipse cx="835.2" cy="432.0" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="835.2" y="438.8">Z~</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="835.2" y="509.9">corrected estimate</tspan></text>
+  <ellipse cx="278.4" cy="201.6" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="208.4">Z_d</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="278.4" y="279.5">desired future</tspan></text>
+  <line x1="342.7" y1="432.0" x2="770.9" y2="432.0" stroke="#9E3B32" stroke-width="2.67" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="412.0">dZ correction</tspan></text>
+  <line x1="278.4" y1="367.7" x2="278.4" y2="265.9" stroke="#9B9B9B" stroke-width="1.00" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="296.8">desired</tspan></text>
+  <line x1="775.8" y1="407.4" x2="337.8" y2="226.2" stroke="#9B9B9B" stroke-width="1.00" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="296.8">residual</tspan></text>
+  <line x1="69.1" y1="619.2" x2="117.1" y2="619.2" stroke="#9E3B32" stroke-width="2.80" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="128.6" y="623.5">correction ΔZ (what moved)</tspan></text>
+  <line x1="491.5" y1="619.2" x2="539.5" y2="619.2" stroke="#9B9B9B" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="551.0" y="623.5">desired direction Z_d − Z_s</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#3A3A3A" text-anchor="middle" ><tspan x="640.0" y="670.3">C1 says dZ follows the desired direction; C2 says dZ can be orthogonal and still be useful.</tspan></text></g>
+<g transform="translate(585.6,350.4) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Correction is nearly orthogonal to the desired direction</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">5 / 10</tspan></text>
+  <ellipse cx="278.4" cy="432.0" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="438.8">Z_s</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="278.4" y="509.9">cached source</tspan></text>
+  <ellipse cx="835.2" cy="432.0" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="835.2" y="438.8">Z~</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="835.2" y="509.9">corrected estimate</tspan></text>
+  <ellipse cx="278.4" cy="201.6" rx="62.4" ry="62.4" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.60"/>
+  <text font-family="Calibri" font-size="20.0" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="208.4">Z_d</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="middle" ><tspan x="278.4" y="279.5">desired future</tspan></text>
+  <line x1="342.7" y1="432.0" x2="770.9" y2="432.0" stroke="#9E3B32" stroke-width="2.67" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="556.8" y="412.0">dZ (cos 0.117 vs desired)</tspan></text>
+  <line x1="278.4" y1="367.7" x2="278.4" y2="265.9" stroke="#9B9B9B" stroke-width="1.00" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="14.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="278.4" y="296.8">desired</tspan></text>
+  <line x1="69.1" y1="619.2" x2="117.1" y2="619.2" stroke="#9E3B32" stroke-width="2.80" marker-end="url(#arw-9E3B32)" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="128.6" y="623.5">correction ΔZ (what moved)</tspan></text>
+  <line x1="491.5" y1="619.2" x2="539.5" y2="619.2" stroke="#9B9B9B" stroke-width="1.20" stroke-dasharray="9 7" stroke-linecap="round"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="551.0" y="623.5">desired direction Z_d − Z_s</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#3A3A3A" text-anchor="middle" ><tspan x="640.0" y="670.3">Same objects and positions as the previous slide; the measured dZ is ~90 degrees from desired.</tspan></text></g>
+<g transform="translate(1147.2,350.4) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Diagnostic D1: does the correction aim at the future feature?</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">6 / 10</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="69.1" y="174.9">D1</tspan></text>
+  <text font-family="Calibri" font-size="20.7" fill="#1A1A1A" text-anchor="start" ><tspan x="155.5" y="186.5">Does the correction direction point toward the future feature?</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="end" ><tspan x="1148.4" y="178.1">tests C1</tspan></text>
+  <rect x="69.1" y="225.6" width="650.8" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="225.6" width="3.4" height="124.8" rx="0.0" fill="#3A3A3A" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#3A3A3A" text-anchor="start" ><tspan x="86.4" y="252.9">Measurement</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#1A1A1A" text-anchor="start" ><tspan x="86.4" y="286.1">cos(deltaZ, Z_d - Z_s) = 0.1168</tspan></text>
+  <rect x="69.1" y="361.9" width="650.8" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="361.9" width="3.4" height="124.8" rx="0.0" fill="#6B6B6B" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="86.4" y="389.3">Observation</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="86.4" y="416.9">The correction direction is nearly orthogonal to the direction from</tspan><tspan x="86.4" y="439.2">the cached feature to the future feature.</tspan></text>
+  <rect x="69.1" y="498.2" width="650.8" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="498.2" width="3.4" height="124.8" rx="0.0" fill="#245B78" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#245B78" text-anchor="start" ><tspan x="86.4" y="525.6">Interpretation</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="86.4" y="553.2">Output recovery may not require moving toward the exact future</tspan><tspan x="86.4" y="575.5">hidden state.</tspan></text>
+  <rect x="754.2" y="225.6" width="456.7" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="754.2" y="225.6" width="3.4" height="124.8" rx="0.0" fill="#2F6B4F" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#2F6B4F" text-anchor="start" ><tspan x="771.4" y="252.9">Can conclude</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#3A3A3A" text-anchor="start" ><tspan x="771.4" y="278.1">C1 as stated is not supported; the correction is not</tspan><tspan x="771.4" y="297.1">simply moving toward Z_d.</tspan></text>
+  <rect x="754.2" y="361.9" width="456.7" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="754.2" y="361.9" width="3.4" height="124.8" rx="0.0" fill="#9E3B32" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9E3B32" text-anchor="start" ><tspan x="771.4" y="389.3">Cannot conclude</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#3A3A3A" text-anchor="start" ><tspan x="771.4" y="414.4">That the correction is uninformative, or that the</tspan><tspan x="771.4" y="433.4">method fails.</tspan></text>
+  <rect x="754.2" y="498.2" width="456.7" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="754.2" y="498.2" width="3.4" height="124.8" rx="0.0" fill="#6B6B6B" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="771.4" y="525.6">Alternative targeted</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#3A3A3A" text-anchor="start" ><tspan x="771.4" y="550.7">The correction may exploit a downstream-valid direction</tspan><tspan x="771.4" y="569.8">that is not the future-feature direction.</tspan></text></g>
+<g transform="translate(24.0,676.8) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Comparison: competitor, last week, this week</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">7 / 10</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" font-weight="700" ><tspan x="69.1" y="234.7">Method</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="492.2" y="235.4">Rollout cosine</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="middle" ><tspan x="492.2" y="260.6">higher is better</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="235.4">Downstream acc.</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="middle" ><tspan x="776.8" y="260.6">higher is better</tspan></text>
+  <rect x="634.0" y="201.6" width="1.2" height="305.3" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="14.7" fill="#1A1A1A" text-anchor="middle" font-weight="700" ><tspan x="1061.4" y="235.4">Feature recovery R2</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="middle" ><tspan x="1061.4" y="260.6">higher is better</tspan></text>
+  <rect x="918.6" y="201.6" width="1.2" height="305.3" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="69.1" y="304.2">Cache reuse only</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" font-weight="700" ><tspan x="69.1" y="330.7">COMPETITOR</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="492.2" y="306.2">0.42</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="306.2">0.74</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="1061.4" y="306.2">0.28</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="69.1" y="386.8">Ours (v3, last week)</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" font-weight="700" ><tspan x="69.1" y="413.3">OURS · LAST WEEK</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="492.2" y="388.8">0.51</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="388.8">0.83</tspan></text>
+  <text font-family="Consolas" font-size="24.0" fill="#3A3A3A" text-anchor="middle" font-weight="700" ><tspan x="1061.4" y="388.8">0.30</tspan></text>
+  <rect x="57.6" y="418.6" width="1164.8" height="78.7" rx="9.6" fill="#EAF1F4" stroke="#245B78" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="469.3">Ours (v4, this week)</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="69.1" y="495.8">OURS · THIS WEEK</tspan></text>
+  <text font-family="Consolas" font-size="28.0" fill="#245B78" text-anchor="middle" font-weight="700" ><tspan x="492.2" y="472.7">0.58</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#2F6B4F" text-anchor="middle" font-weight="700" ><tspan x="492.2" y="492.9">+0.07</tspan></text>
+  <text font-family="Consolas" font-size="28.0" fill="#245B78" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="472.7">0.91</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#2F6B4F" text-anchor="middle" font-weight="700" ><tspan x="776.8" y="492.9">+0.08</tspan></text>
+  <text font-family="Consolas" font-size="28.0" fill="#245B78" text-anchor="middle" font-weight="700" ><tspan x="1061.4" y="472.7">0.34</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#2F6B4F" text-anchor="middle" font-weight="700" ><tspan x="1061.4" y="492.9">+0.04</tspan></text>
+  <rect x="69.1" y="533.8" width="1141.7" height="91.2" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="96.0" y="574.8">v4 improves both downstream metrics over v3. Feature recovery stays low; that is the evidence behind the weakened C1 and</tspan><tspan x="96.0" y="597.1">the emerging C2, not a hidden weakness.</tspan></text></g>
+<g transform="translate(585.6,676.8) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">What this week does to our claims</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">8 / 10</tspan></text>
+  <rect x="69.1" y="170.9" width="1141.7" height="148.8" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="21.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="92.2" y="207.9">C1</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="92.2" y="235.4">The learned correction approximates the true future feature.</tspan></text>
+  <rect x="822.0" y="229.0" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#245B78" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#245B78" text-anchor="middle" font-weight="700" ><tspan x="901.2" y="249.6">plausible</tspan></text>
+  <line x1="985.2" y1="245.3" x2="1038.0" y2="245.3" stroke="#3A3A3A" stroke-width="1.33" marker-end="url(#arw-3A3A3A)" stroke-linecap="round"/>
+  <rect x="1049.6" y="229.0" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#9E3B32" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9E3B32" text-anchor="middle" font-weight="700" ><tspan x="1128.8" y="249.6">weakened</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="799.8" y="299.0">D1: cos 0.117</tspan></text>
+  <rect x="69.1" y="331.2" width="1141.7" height="148.8" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="21.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="92.2" y="368.2">C2</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="92.2" y="395.8">An alternative downstream-valid pre-image may be sufficient; output recovery</tspan><tspan x="92.2" y="418.1">does not require feature recovery.</tspan></text>
+  <rect x="822.0" y="389.3" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#9B9B9B" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="middle" font-weight="700" ><tspan x="901.2" y="409.9">absent</tspan></text>
+  <line x1="985.2" y1="405.6" x2="1038.0" y2="405.6" stroke="#3A3A3A" stroke-width="1.33" marker-end="url(#arw-3A3A3A)" stroke-linecap="round"/>
+  <rect x="1049.6" y="389.3" width="158.4" height="32.6" rx="16.3" fill="#FFFFFF" stroke="#A1602A" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#A1602A" text-anchor="middle" font-weight="700" ><tspan x="1128.8" y="409.9">emerging</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="799.8" y="459.3">D2: high output, low feature recovery</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#6B6B6B" text-anchor="start" ><tspan x="69.1" y="509.8">Neither claim is refuted or confirmed; both remain under test.</tspan></text></g>
+<g transform="translate(1147.2,676.8) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Diagnostic D2: does output recovery require feature recovery?</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">9 / 10</tspan></text>
+  <text font-family="Calibri" font-size="14.7" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="69.1" y="174.9">D2</tspan></text>
+  <text font-family="Calibri" font-size="20.7" fill="#1A1A1A" text-anchor="start" ><tspan x="155.5" y="186.5">Does output recovery require feature recovery?</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="end" ><tspan x="1148.4" y="178.1">tests C2</tspan></text>
+  <rect x="69.1" y="225.6" width="650.8" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="225.6" width="3.4" height="124.8" rx="0.0" fill="#3A3A3A" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#3A3A3A" text-anchor="start" ><tspan x="86.4" y="252.9">Measurement</tspan></text>
+  <text font-family="Consolas" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="86.4" y="280.6">linear probe R^2 for recovering Z_d from the corrected feature =</tspan><tspan x="86.4" y="302.9">0.34; downstream accuracy = 0.91</tspan></text>
+  <rect x="69.1" y="361.9" width="650.8" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="361.9" width="3.4" height="124.8" rx="0.0" fill="#6B6B6B" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="86.4" y="389.3">Observation</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="86.4" y="416.9">Downstream accuracy is high while feature recovery remains low.</tspan></text>
+  <rect x="69.1" y="498.2" width="650.8" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="69.1" y="498.2" width="3.4" height="124.8" rx="0.0" fill="#245B78" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#245B78" text-anchor="start" ><tspan x="86.4" y="525.6">Interpretation</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#1A1A1A" text-anchor="start" ><tspan x="86.4" y="553.2">A downstream-valid pre-image that is not the true future feature may</tspan><tspan x="86.4" y="575.5">be sufficient.</tspan></text>
+  <rect x="754.2" y="225.6" width="456.7" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="754.2" y="225.6" width="3.4" height="124.8" rx="0.0" fill="#2F6B4F" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#2F6B4F" text-anchor="start" ><tspan x="771.4" y="252.9">Can conclude</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#3A3A3A" text-anchor="start" ><tspan x="771.4" y="278.1">Output recovery can occur without strong feature</tspan><tspan x="771.4" y="297.1">recovery in this setup.</tspan></text>
+  <rect x="754.2" y="361.9" width="456.7" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="754.2" y="361.9" width="3.4" height="124.8" rx="0.0" fill="#9E3B32" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9E3B32" text-anchor="start" ><tspan x="771.4" y="389.3">Cannot conclude</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#3A3A3A" text-anchor="start" ><tspan x="771.4" y="414.4">That no valid feature recovery exists, or that the</tspan><tspan x="771.4" y="433.4">probe is a complete measurement.</tspan></text>
+  <rect x="754.2" y="498.2" width="456.7" height="124.8" rx="2.9" fill="#F6F6F4" stroke="none" stroke-width="1.33"/>
+  <rect x="754.2" y="498.2" width="3.4" height="124.8" rx="0.0" fill="#6B6B6B" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#6B6B6B" text-anchor="start" ><tspan x="771.4" y="525.6">Alternative targeted</tspan></text>
+  <text font-family="Calibri" font-size="15.3" fill="#3A3A3A" text-anchor="start" ><tspan x="771.4" y="550.7">The probe may fail to decode information that is</tspan><tspan x="771.4" y="569.8">present in the feature.</tspan></text></g>
+<g transform="translate(24.0,1003.2) scale(0.42)"><rect x="0" y="0" width="1279.968" height="720" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/><rect x="0.0" y="0.0" width="1280.0" height="720.0" rx="0.0" fill="#FFFFFF" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="29.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="69.1" y="97.3">Limitations and open questions</tspan></text>
+  <rect x="69.1" y="123.8" width="1141.7" height="1.2" rx="0.0" fill="#D9D9D9" stroke="none" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="start" ><tspan x="69.1" y="693.6">Cached Future-Feature Prediction · synthetic demo</tspan></text>
+  <text font-family="Calibri" font-size="12.7" fill="#9B9B9B" text-anchor="end" ><tspan x="1210.8" y="693.6">10 / 10</tspan></text>
+  <rect x="69.1" y="165.1" width="593.7" height="451.2" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="17.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="90.2" y="200.8">Current limitations</tspan></text>
+  <text font-family="Calibri" font-size="20.0" fill="#9E3B32" text-anchor="start" font-weight="700" ><tspan x="94.1" y="260.2">1</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="134.4" y="250.8">Alternative valid pre-images have not been directly</tspan><tspan x="134.4" y="273.1">characterized.</tspan></text>
+  <text font-family="Calibri" font-size="20.0" fill="#9E3B32" text-anchor="start" font-weight="700" ><tspan x="94.1" y="354.3">2</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="134.4" y="344.9">The oracle diagnostic uses the future feature as an</tspan><tspan x="134.4" y="367.2">upper bound and is unavailable at inference.</tspan></text>
+  <text font-family="Calibri" font-size="20.0" fill="#9E3B32" text-anchor="start" font-weight="700" ><tspan x="94.1" y="448.4">3</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="134.4" y="439.0">Feature recovery is measured with a single linear</tspan><tspan x="134.4" y="461.3">probe.</tspan></text>
+  <rect x="697.1" y="165.1" width="513.8" height="451.2" rx="2.9" fill="#F6F6F4" stroke="#E3E3E0" stroke-width="1.33"/>
+  <text font-family="Calibri" font-size="17.3" fill="#1A1A1A" text-anchor="start" font-weight="700" ><tspan x="718.2" y="200.8">Open questions</tspan></text>
+  <text font-family="Calibri" font-size="21.3" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="722.0" y="260.7">?</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="762.4" y="250.8">Can we characterize downstream-valid</tspan><tspan x="762.4" y="273.1">pre-images without the oracle?</tspan></text>
+  <text font-family="Calibri" font-size="21.3" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="722.0" y="354.8">?</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="762.4" y="344.9">Does the correction generalize to horizons</tspan><tspan x="762.4" y="367.2">beyond the training horizon?</tspan></text>
+  <text font-family="Calibri" font-size="21.3" fill="#245B78" text-anchor="start" font-weight="700" ><tspan x="722.0" y="448.9">?</tspan></text>
+  <text font-family="Calibri" font-size="18.0" fill="#3A3A3A" text-anchor="start" ><tspan x="762.4" y="439.0">Would the same orthogonality appear for other</tspan><tspan x="762.4" y="461.3">cached-feature tasks?</tspan></text></g>
 </svg>
