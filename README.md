@@ -213,6 +213,36 @@ The video and the deck share one method model, so a competitor method is never
 explained two different ways. A video is only worth generating when movement
 carries the argument; otherwise a static diagram is preferable.
 
+### Paper explainers: LearniBridge and LinCa
+
+Two acceptance-test demos that read a full paper and produce a standalone
+explainer. Paper figures are not animated; the mechanisms are redrawn from the
+shared visual grammar.
+
+| | LearniBridge | LinCa |
+|---|---|---|
+| paper | [arXiv:2606.26778](https://arxiv.org/abs/2606.26778) | [arXiv:2608.17973](https://arxiv.org/abs/2608.17973) |
+| one-sentence idea | the required cached-feature correction is low-rank and prompt-invariant, so a tiny LoRA bridge on the final block recovers skipped-timestep representations | one prediction rule cannot fit a feature whose dimensions have different continuity, so LinCa learns an invertible decomposition and predicts each group at a matched order |
+| scenes | 7 | 7 |
+| silent / narrated | 105.3 s / 119.0 s | 90.2 s / 110.1 s |
+| voice in the committed render | macOS `say` (Samantha); Gemini Kore is the configured preferred backend | same |
+| contact sheet | [`examples/learnibridge/qa/contact-sheet.png`](examples/learnibridge/qa/contact-sheet.png) | [`examples/linca/qa/contact-sheet.png`](examples/linca/qa/contact-sheet.png) |
+| revision log | [`examples/learnibridge/qa/revision-log.md`](examples/learnibridge/qa/revision-log.md) | [`examples/linca/qa/revision-log.md`](examples/linca/qa/revision-log.md) |
+
+```bash
+python skills/research-method-video/scripts/render_scene.py --project examples/learnibridge \
+  --quality final --timing transcript --concat examples/learnibridge/renders/final/learnibridge-method-explainer.mp4
+python skills/research-method-video/scripts/tts_narration.py --project examples/learnibridge --backend say --voice Samantha
+python skills/research-method-video/scripts/mux_narration.py --project examples/learnibridge --quality final --backend say
+```
+
+Known limitations: the committed narrated renders use the local `say` fallback
+because the Gemini TTS free quota was exhausted during the run (`--backend
+gemini` is the preferred path); LinCa retains 5.8 s of end-frame padding on two
+scenes, recorded in its revision log; both videos were reviewed by frame
+inspection and self-review against the comprehension gates, not by a human
+panel.
+
 ## Transcript and narration
 
 Narration is a first-class part of the video pipeline, written **before**
