@@ -263,7 +263,71 @@ A LESA excerpt (`examples/lesa/transcript/narration.md`), rewritten for an
 
 Animation shows *what* changes; narration explains *why* it matters.
 
+## Scientific diagram backends
+
+One semantic figure spec, several renderers, one Beamer deck:
+
+```text
+                     SCIENTIFIC CONTENT
+                            |
+                 semantic figure spec / Figure IR
+                            |
+                  renderer selection (recorded)
+        +-------------------+-------------------+------------------+
+        v                   v                   v                  v
+      TikZ              Draw.io            Python/PGFPlots       Manim
+  conceptual,         large editable      quantitative         animated
+  math-heavy          architecture        plots                explanations
+        |                   |                   |                  |
+        v                   v                   v                  v
+   native .tex         PDF/SVG ->           plot assets          MP4
+   inside Beamer       \includegraphics
+        +-------------------+-------------------+
+                            v
+                      one Beamer PDF
+```
+
+TikZ is the default for small-to-medium conceptual and math-heavy diagrams.
+Draw.io is not replaced: it stays the backend for large, editable, reconstructed
+architecture figures. The router records why it chose a backend:
+
+```bash
+wrs route --input examples/diagram-backends/large_architecture.figure.yaml
+# -> drawio: figure type 'architecture' is an architecture-scale view;
+#            16 semantic objects (TikZ budget 12); 18 edges (TikZ budget 15)
+```
+
+| TikZ: feature-space geometry | TikZ: competitor vs ours |
+|---|---|
+| ![feature-space geometry](docs/images/tikz-preimage_geometry.png) | ![competitor vs ours](docs/images/tikz-cached_vs_corrected.png) |
+
+| TikZ: method delta | Mixed deck: TikZ + Draw.io + Beamer |
+|---|---|
+| ![method delta](docs/images/tikz-v3_v4.png) | ![mixed-renderer deck](docs/images/diagram-backends-contact-sheet.png) |
+
+The mixed deck in [`examples/diagram-backends/`](examples/diagram-backends/)
+compiles native TikZ figures, a Draw.io PDF export and Beamer-native slides
+into one PDF — with progressive overlays in presentation mode (10 pages) and a
+collapsed handout (8 pages). Figures inherit the Beamer palette and math
+typography; there are no rasterized labels.
+
+```bash
+npm run demo:figures
+wrs route   --input figure_spec.yaml [--json]
+wrs tikz    --input figure_spec.yaml --output figure.tex --standalone out/
+wrs tikz:qa --input figure_spec.yaml --output-dir qa/figure
+```
+
+Policy, grammar, archetypes and the QA/repair loop:
+[`references/diagram-routing.md`](references/diagram-routing.md),
+[`references/tikz-visual-grammar.md`](references/tikz-visual-grammar.md),
+[`references/tikz-archetypes.md`](references/tikz-archetypes.md),
+[`references/tikz-qa.md`](references/tikz-qa.md).
+
 ## Scientific method figures
+
+The Draw.io backend. It remains the editable, architecture-scale path: large
+system views, style extraction, reconstruction, and frequent manual editing.
 
 The same method model also drives publication-quality, editable figures. The
 bundled **`research-method-figure`** sub-skill keeps `.drawio` as the canonical

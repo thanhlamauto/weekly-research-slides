@@ -3,6 +3,51 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.8.0] - 2026-09-20
+
+### Added
+
+- **Native TikZ scientific-diagram backend** (`src/renderers/tikz/`): a
+  semantic figure spec (or the Figure IR from `skills/research-method-figure`)
+  renders to native LaTeX — styles, layout, primitives, renderer, preflight and
+  critique. No hex colors and no rasterized labels: figures inherit the Beamer
+  palette (`templates/academic-beamer/tikz.tex`) and math typography.
+- **Renderer routing** (`src/renderers/router.js`): `backend: auto|tikz|drawio|
+  python|manim|external`, with documented heuristics (node/edge budgets,
+  figure type, topology, math-heavy labels) and an inspectable
+  `renderer_decision` recorded in every build manifest.
+- **TikZ archetypes**: `feature-space` (points, vectors, reference directions,
+  angle arc, measurement labels), `competitor-vs-ours` (shared semantic ids
+  aligned across panels), `method-delta` (shared layers kept, additions
+  highlighted), `linear-flow`, `branch-flow`, `stage-split`/timeline and
+  `process-loop` feedback edges.
+- **Progressive overlays**: `rendering.overlays` emits `\wrsReveal`, which is
+  `\uncover<n->` in Beamer and a plain include in standalone/paper mode.
+- **Standalone export**: `wrs tikz --standalone` compiles a figure with the
+  `standalone` class for paper reuse (`--mode paper|presentation`).
+- **TikZ QA and repair loop**: `wrs tikz:qa` runs geometric preflight and
+  rendered-image critique, and writes `tikz_qa.json` + an actionable
+  `defect-log.md` (`reroute_edge`, `increase_figure_scale`, `reduce_node_text`,
+  `route_to_drawio`, ...). New CLI: `wrs route`, `wrs tikz`, `wrs tikz:qa`.
+- **`figure` slide archetype** and Beamer integration: a slide references a
+  figure spec or IR; the build routes it, writes TikZ sources or copies the
+  Draw.io export, and emits `\wrsDiagram` / `\wrsFigure`. Deck builds report
+  figure findings alongside compile QA.
+- **Mixed-renderer demo** (`examples/diagram-backends/`): TikZ feature-space,
+  competitor-vs-ours and method-delta figures plus a Draw.io architecture PDF in
+  one Beamer deck (10 presentation pages, 8 handout pages), with standalone
+  figure PDFs, QA reports and a rendered-inspection revision log.
+
+### Changed
+
+- `texDoctor` also reports `standalone.cls` and `pgfplots.sty`; standalone
+  export needs the `standalone` package (`tlmgr install standalone`).
+- The README documents the backend selection policy with real generated
+  figures; Draw.io remains fully supported for large editable architecture
+  figures.
+- Tests: 18 new cases cover routing, IR conversion, generation, alignment,
+  preflight, critique actions, standalone compile and the mixed deck.
+
 ## [0.7.0] - 2026-09-20
 
 ### Added

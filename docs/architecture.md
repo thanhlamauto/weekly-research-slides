@@ -55,6 +55,34 @@ presentation and is versioned. `build.js` prepares the build directory
 builds the handout, and renders pages with `pdftoppm`. `scripts/pdf_contact_sheet.py`
 composes the contact sheet. See `references/beamer-template.md`.
 
+## Scientific diagram backends (`src/renderers/`)
+
+One semantic figure spec (or the Figure IR from `skills/research-method-figure`)
+is routed to a renderer:
+
+```text
+figure_spec.yaml / figure.ir.json
+        |
+        v
+src/renderers/router.js        auto heuristics + explicit backend; records reason
+        |
+        +--> src/renderers/tikz/  styles.js, layout.js, primitives.js,
+        |                         renderer.js, validation.js, critique.js
+        |         |
+        |         v
+        |    figures/<id>.tex -> \wrsDiagram -> native TikZ in Beamer
+        |                    \-> standalone export (papers)
+        |
+        +--> Draw.io export (PDF/SVG) -> \wrsFigure -> \includegraphics
+```
+
+`figure.js` prepares every figure a deck references: it converts IR to a
+semantic spec, routes it, writes TikZ sources into the Beamer build directory
+(or copies the Draw.io export), and collects validation/critique findings.
+`renderTex.js` only emits `\wrsDiagram` / `\wrsFigure`; it never knows which
+backend produced the artifact. Palette and TikZ styles live in
+`templates/academic-beamer/tikz.tex`, shared by slides and standalone figures.
+
 ## The scene
 
 The scene is the PPTX/SVG intermediate. Beamer does not consume it: it works

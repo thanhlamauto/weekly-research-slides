@@ -130,14 +130,41 @@ script sets the pacing (silent mode), and the same transcript produces subtitles
 Do not generate a video for every method. See
 `skills/research-method-video/SKILL.md`.
 
+## Scientific diagram backends
+
+Route the visual before drawing it; the decision is recorded, never hidden:
+
+```text
+would motion materially help?     -> Manim
+is it a quantitative data plot?   -> Python / PGFPlots
+simple, conceptual, math-heavy?   -> TikZ (default)
+large, editable, or a
+reconstruction / style transfer?  -> Draw.io
+```
+
+TikZ figures are generated from the semantic figure spec (or the Figure IR from
+the figure subsystem), compiled natively inside Beamer, inherit the theme
+palette and math typography, support progressive overlays, and export
+standalone for paper reuse. Generated `.tex` is inspectable and editable.
+
+```bash
+wrs route   --input figure_spec.yaml [--json]
+wrs tikz    --input figure_spec.yaml --output figure.tex --standalone out/
+wrs tikz:qa --input figure_spec.yaml --output-dir qa/figure
+```
+
+Compiling is not proof a figure looks good: `tikz:qa` compiles, renders, and
+reports actionable defects (`reroute_edge`, `increase_figure_scale`,
+`reduce_node_text`, `route_to_drawio`, ...). See
+`references/diagram-routing.md` and `references/tikz-qa.md`.
+
 ## Scientific method figures
 
-When the deliverable is a paper figure — a method overview, an architecture, a
-mechanism zoom, a training/inference diagram, a competitor-vs-ours comparison,
-or a method delta — use the bundled **`research-method-figure`** sub-skill. It
-draws from the same method model as the slides and the video, keeps
-`.drawio` as the canonical editable source, and exports SVG/PDF/PNG plus native
-PowerPoint.
+Draw.io remains the canonical editable backend for large architecture figures,
+style extraction and reconstruction. When the deliverable is such a paper
+figure, use the bundled **`research-method-figure`** sub-skill. It draws from
+the same method model as the slides and the video, keeps `.drawio` as the
+canonical editable source, and exports SVG/PDF/PNG plus native PowerPoint.
 
 ```text
 METHOD MODEL
@@ -168,6 +195,10 @@ content. See `skills/research-method-figure/SKILL.md`.
 - `references/editorial-critique.md` — content / visual / deck critique loop.
 - `references/beamer-template.md` — the default renderer: template contract,
   archetype mapping, compile QA, versioning, engines.
+- `references/diagram-routing.md` — TikZ / Draw.io / Python / Manim selection.
+- `references/tikz-visual-grammar.md` — semantic roles, shapes, arrows, overlays.
+- `references/tikz-archetypes.md` — feature-space, comparison, delta, timeline.
+- `references/tikz-qa.md` — preflight, rendered-image critique, repair loop.
 - `references/academic-slide-style.md` — the academic visual language shared by
   both renderers (PPTX style variants).
 - `skills/research-method-video/SKILL.md` — method → Manim explainer video.
@@ -183,6 +214,7 @@ npm run demo    # builds the example as Beamer PDF + handout + page renders (+ l
 npm run build -- --input examples/diagnostic-week/slide_spec.yaml --output out.pdf --render-pages
 npm run qa -- --input out.pdf --spec examples/diagnostic-week/slide_spec.yaml
 npm run build -- --input examples/diagnostic-week/slide_spec.yaml --output out.pptx --renderer pptx
+npm run demo:figures   # mixed-renderer deck: TikZ + Draw.io + Beamer native
 ```
 
 Local, deterministic, no hosted backend. The default Beamer pipeline needs a

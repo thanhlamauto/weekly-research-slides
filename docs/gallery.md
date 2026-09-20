@@ -46,6 +46,16 @@ npm run assets
 which copies the Beamer contact sheet and diagnostic page from the demo output
 and rebuilds the banner, architecture diagram and PPTX source previews.
 
+## Mixed-renderer deck
+
+`examples/diagram-backends/` is a second demo: native Beamer layout, three
+native TikZ figures, a Draw.io architecture export and a results table in one
+deck. Build it with `npm run demo:figures`; outputs are
+`output/diagram-backends.pdf` (10 pages, overlays included),
+`output/diagram-backends-handout.pdf` (8 pages), `output/pages/contact-sheet.png`,
+standalone figure PDFs under `output/figures/`, and per-figure QA under `qa/`
+(`tikz_qa.json`, `defect-log.md`, `revision-log.md`).
+
 ## What the demo shows
 
 - this week's question on the title slide;

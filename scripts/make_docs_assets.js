@@ -127,7 +127,29 @@ function main() {
     if (fs.existsSync(from)) { fs.copyFileSync(from, path.join(OUT, dst)); beamerOk += 1; }
     else console.warn(`  (${from} missing; run npm run demo to refresh Beamer gallery assets)`);
   }
-  console.log(`Wrote docs/images assets: ${conversions.length} SVG, ${ok} PNG, ${beamerOk} Beamer render(s)`);
+
+  // Diagram backends: mixed-renderer contact sheet + real TikZ figure renders
+  // (standalone PDF -> pdftoppm). Never mockups.
+  const diagramEx = path.join(ROOT, 'examples', 'diagram-backends');
+  const diagramPages = path.join(diagramEx, 'output', 'pages', 'contact-sheet.png');
+  let diagramOk = 0;
+  if (fs.existsSync(diagramPages)) {
+    fs.copyFileSync(diagramPages, path.join(OUT, 'diagram-backends-contact-sheet.png'));
+    diagramOk += 1;
+  } else {
+    console.warn('  (examples/diagram-backends/output/pages/contact-sheet.png missing; run npm run demo:figures)');
+  }
+  const pdftoppm = spawnSync('which', ['pdftoppm'], { encoding: 'utf8' }).stdout.trim();
+  for (const name of ['preimage_geometry', 'cached_vs_corrected', 'v3_v4']) {
+    const pdf = path.join(diagramEx, 'output', 'figures', name, 'standalone.pdf');
+    const png = path.join(OUT, `tikz-${name}.png`);
+    if (!fs.existsSync(pdf)) { console.warn(`  (${pdf} missing; run npm run demo:figures)`); continue; }
+    if (!pdftoppm) { console.warn('  (pdftoppm unavailable; TikZ figure PNGs not refreshed)'); continue; }
+    const r = spawnSync(pdftoppm, ['-png', '-r', '160', '-singlefile', pdf, png.replace(/\.png$/, '')], { encoding: 'utf8' });
+    if (r.status === 0 && fs.existsSync(png)) diagramOk += 1;
+    else console.warn(`  (pdftoppm failed for ${name})`);
+  }
+  console.log(`Wrote docs/images assets: ${conversions.length} SVG, ${ok} PNG, ${beamerOk} Beamer render(s), ${diagramOk} diagram asset(s)`);
 }
 
 main();
