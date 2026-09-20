@@ -129,13 +129,19 @@ def delivery_for(beat: dict, profile: str = DEFAULT_PROFILE, narration_cfg: dict
 # ---------------------------------------------------------------------------
 # Semantic chunking: one coherent explanatory thought per TTS request
 # ---------------------------------------------------------------------------
+def _beat_seconds(beat: dict, wpm: float) -> float:
+    words = beat.get("word_count") or len(str(beat.get("text", "")).split())
+    return max(0.8, words / max(1.0, wpm) * 60.0)
+
+
 def chunk_beats(beats: list[dict], *, min_seconds: float = 8.0, max_seconds: float = 25.0,
                 wpm: float = 140.0) -> list[list[dict]]:
     """Group consecutive beats into semantic chunks (8-25s by default).
 
     Chunk boundaries use a stable text-derived estimate, not whatever timing the
     last audio backend produced, so the plan (and its cache keys) does not drift
-    when narration is regenerated. A beat is never split.
+    when narration is regenerated. A beat is never split. A too-small trailing
+    chunk is merged into its predecessor to avoid a prosody reset on a fragment.
     """
     if not beats:
         return []
@@ -143,8 +149,7 @@ def chunk_beats(beats: list[dict], *, min_seconds: float = 8.0, max_seconds: flo
     current: list[dict] = []
     current_s = 0.0
     for beat in beats:
-        words = beat.get("word_count") or len(str(beat.get("text", "")).split())
-        seconds = max(0.8, words / max(1.0, wpm) * 60.0)
+        seconds = _beat_seconds(beat, wpm)
         if current and current_s + seconds > max_seconds:
             chunks.append(current)
             current, current_s = [], 0.0
@@ -155,6 +160,12 @@ def chunk_beats(beats: list[dict], *, min_seconds: float = 8.0, max_seconds: flo
             current, current_s = [], 0.0
     if current:
         chunks.append(current)
+    if len(chunks) >= 2:
+        last_s = sum(_beat_seconds(b, wpm) for b in chunks[-1])
+        prev_s = sum(_beat_seconds(b, wpm) for b in chunks[-2])
+        if last_s < min_seconds and prev_s + last_s <= max_seconds * 1.25:
+            chunks[-2] = chunks[-2] + chunks[-1]
+            chunks.pop()
     return chunks
 
 

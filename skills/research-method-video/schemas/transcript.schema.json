@@ -60,6 +60,21 @@
         }
       }
     },
+    "timing": {
+      "type": "object",
+      "description": "Scene timing hints: which beats the Manim scenes wait on (hooks) and measured animation-only seconds per scene. Used to distribute actual audio duration into waits instead of a frozen final frame.",
+      "additionalProperties": false,
+      "properties": {
+        "hooks": {
+          "type": "object",
+          "additionalProperties": { "type": "array", "items": { "type": "string" } }
+        },
+        "animation_seconds": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0 }
+        }
+      }
+    },
     "duration_seconds": { "type": "number", "description": "Computed total duration." },
     "word_count": { "type": "integer" },
     "target_wpm": { "type": "number" },
@@ -106,7 +121,7 @@
                 "speaking_seconds": { "type": "number" },
                 "word_count": { "type": "integer" },
                 "words": { "type": "array", "items": { "type": "string" } },
-                "dwell_source": { "type": "string", "enum": ["kind", "audio-surplus", "authored"] },
+                "dwell_source": { "type": "string", "enum": ["kind", "audio-surplus", "audio-budget", "authored"] },
                 "audio": {
                   "type": "object",
                   "additionalProperties": false,

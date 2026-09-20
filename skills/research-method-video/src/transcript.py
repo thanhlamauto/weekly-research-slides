@@ -154,16 +154,23 @@ DWELL_SURPLUS_WEIGHT = {"introduction": 3.0, "aha": 4.0, "comparison": 2.5, "equ
 
 
 def apply_audio_timing(data: dict, scene_audio: dict[str, float],
-                       chunk_map: dict[str, list[dict]] | None = None) -> dict:
+                       chunk_map: dict[str, list[dict]] | None = None,
+                       animations: dict[str, float] | None = None) -> dict:
     """Replace estimated timings with actual narration audio durations.
 
     ``scene_audio`` maps scene id -> synthesized scene audio seconds.
     ``chunk_map`` optionally maps scene id -> [{chunk_id, beat_ids, duration}]
     so speaking time is distributed per semantic chunk rather than per scene.
-    The words never change; only timing does.
+    ``animations`` (or ``data.timing.animation_seconds``) gives measured
+    animation-only seconds per scene; when both are known, the surplus between
+    audio and animation is distributed into the scene's ``timing.hooks`` beats,
+    which the Manim scenes actually wait on. The words never change.
     """
     out = copy.deepcopy(data)
     out["mode"] = "tts"
+    timing_cfg = out.get("timing") or {}
+    hooks_cfg = timing_cfg.get("hooks") or {}
+    anim_cfg = timing_cfg.get("animation_seconds") or {}
     cursor = 0.0
     for scene in out["scenes"]:
         beats = scene["narration"]
@@ -181,20 +188,46 @@ def apply_audio_timing(data: dict, scene_audio: dict[str, float],
             for b, w in zip(members, weights):
                 b["speaking_seconds"] = round(chunk["duration"] * w / total_w, 3)
                 b["audio"] = {"chunk_id": chunk["chunk_id"], "duration": round(chunk["duration"], 3)}
-        base_speak = sum(b.get("speaking_seconds", 0.0) for b in beats)
-        base_dwell = sum(b.get("dwell_seconds", 0.0) for b in beats)
-        base_total = base_speak + base_dwell
-        if actual >= base_total:
-            surplus = actual - base_total
-            weights = [DWELL_SURPLUS_WEIGHT.get(b.get("kind", "normal"), 1.0) for b in beats]
+        hooks = [b for b in beats if b["beat_id"] in (hooks_cfg.get(scene["id"]) or [])]
+        animation = (animations or {}).get(scene["id"]) or anim_cfg.get(scene["id"])
+        duration_override = None
+        # Reset dwells to their kind defaults so repeated applications are
+        # idempotent (audio timing may be re-applied after a new TTS run).
+        for b in beats:
+            b["dwell_seconds"] = DWELL_BY_KIND.get(b.get("kind", "normal"), DWELL_BY_KIND["normal"])
+            b.pop("dwell_source", None)
+        if hooks and animation:
+            # The scene lasts exactly as long as its audio: speaking fills the
+            # timeline, and the surplus over the animation is spent in hook
+            # beats (which the scene waits on) plus the default tail.
+            weights = [max(1, b.get("word_count") or len(words_of(b["text"]))) for b in beats]
             total_w = sum(weights) or 1
             for b, w in zip(beats, weights):
-                b["dwell_seconds"] = round(b.get("dwell_seconds", 0.0) + surplus * w / total_w, 3)
-                b["dwell_source"] = "audio-surplus"
-        elif base_speak > 0:
-            factor = max(0.6, (actual - base_dwell) / base_speak)
-            for b in beats:
-                b["speaking_seconds"] = round(b.get("speaking_seconds", 0.0) * factor, 3)
+                b["speaking_seconds"] = round(actual * w / total_w, 3)
+            tail_default = max(0.25, beats[-1].get("dwell_seconds", 0.25))
+            base_hook = sum(DWELL_BY_KIND.get(b.get("kind", "normal"), DWELL_BY_KIND["normal"]) for b in hooks)
+            budget = max(0.0, actual - float(animation) - tail_default - base_hook)
+            per = budget / len(hooks)
+            for b in hooks:
+                base = DWELL_BY_KIND.get(b.get("kind", "normal"), DWELL_BY_KIND["normal"])
+                b["dwell_seconds"] = round(base + per, 3)
+                b["dwell_source"] = "audio-budget"
+            duration_override = actual
+        else:
+            base_speak = sum(b.get("speaking_seconds", 0.0) for b in beats)
+            base_dwell = sum(b.get("dwell_seconds", 0.0) for b in beats)
+            base_total = base_speak + base_dwell
+            if actual >= base_total:
+                surplus = actual - base_total
+                weights = [DWELL_SURPLUS_WEIGHT.get(b.get("kind", "normal"), 1.0) for b in beats]
+                total_w = sum(weights) or 1
+                for b, w in zip(beats, weights):
+                    b["dwell_seconds"] = round(b.get("dwell_seconds", 0.0) + surplus * w / total_w, 3)
+                    b["dwell_source"] = "audio-surplus"
+            elif base_speak > 0:
+                factor = max(0.6, (actual - base_dwell) / base_speak)
+                for b in beats:
+                    b["speaking_seconds"] = round(b.get("speaking_seconds", 0.0) * factor, 3)
         t = cursor
         for b in beats:
             b["start"] = round(t, 3)
@@ -202,12 +235,13 @@ def apply_audio_timing(data: dict, scene_audio: dict[str, float],
             b["end"] = round(t, 3)
             t += b.get("dwell_seconds", 0.0)
             b["end_with_dwell"] = round(t, 3)
+        scene_end = cursor + (duration_override if duration_override is not None else (t - cursor))
         scene["start"] = round(cursor, 3)
-        scene["end"] = round(t, 3)
-        scene["duration_seconds"] = round(t - cursor, 3)
+        scene["end"] = round(scene_end, 3)
+        scene["duration_seconds"] = round(scene_end - cursor, 3)
         scene["audio_duration_seconds"] = round(actual, 3)
         scene["tail_dwell"] = round(beats[-1].get("dwell_seconds", 0.0) if beats else 0.0, 3)
-        cursor = t
+        cursor = scene_end
     out["duration_seconds"] = round(cursor, 3)
     out["word_count"] = sum(s.get("word_count", 0) for s in out["scenes"])
     return out

@@ -73,9 +73,10 @@ def tail(sid: str, default: float, anim_estimate: float | None = None,
          max_hold: float = 6.0) -> float:
     """Final dwell for a scene, derived from its narration length.
 
-    ``anim_estimate`` is the scene's approximate animation length in seconds.
-    The hold fills the gap up to the narration duration, capped by ``max_hold``
-    so a silent render never sits on a dead frame for too long.
+    ``anim_estimate`` is the scene's animation-only length in seconds (measured
+    from a draft render). Beats listed in ``timing.hooks`` are waited on inside
+    the scene, so their surplus dwell is subtracted here: the audio budget is
+    distributed across hooks first, and the tail only covers the remainder.
     """
     s = _scene(sid)
     if not s:
@@ -84,6 +85,17 @@ def tail(sid: str, default: float, anim_estimate: float | None = None,
     if anim_estimate is None or not s.get("duration_seconds"):
         return round(base, 3)
     remaining = s["duration_seconds"] - anim_estimate
+    hooks = (((_load() or {}).get("timing") or {}).get("hooks") or {}).get(sid) or []
+    if hooks:
+        from transcript import DWELL_BY_KIND
+        waited = 0.0
+        defaults = 0.0
+        for beat in s.get("narration", []):
+            if beat.get("beat_id") not in hooks:
+                continue
+            waited += beat.get("dwell_seconds", 0.0)
+            defaults += DWELL_BY_KIND.get(beat.get("kind", "normal"), 0.25)
+        remaining -= max(0.0, waited - defaults)
     return round(max(base, min(remaining, max_hold)), 3)
 
 
