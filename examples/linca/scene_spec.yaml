@@ -1,0 +1,194 @@
+# Scene spec for the LinCa method explainer.
+video:
+  title: "LinCa: learnable decomposed feature caching"
+  method: linca
+  mode: ours
+  method_model: method_model.yaml
+  description: >-
+    Why one prediction rule cannot fit a feature whose dimensions have different
+    temporal behaviours, how LinCa learns an invertible decomposition that
+    groups them, and how order-matched prediction plus lossless reconstruction
+    accelerates diffusion sampling.
+  audience: adjacent-researcher
+  target_duration_seconds: 130
+  canvas: light
+  theme: wrs-light
+
+scenes:
+  - id: lc_01_one_predictor
+    title: One rule for the whole feature
+    manim_class: LC01OnePredictor
+    mode: baseline
+    purpose: Establish caching and the uniform-prediction baseline.
+    question: Is one prediction rule enough for the whole feature?
+    method_refs: [problem, baseline]
+    actors:
+      - { id: trajectory, type: timeline, label: "timesteps", persistent: true, role: axis }
+      - { id: full_step, type: dot, label: "compute", persistent: true, role: ground_truth }
+      - { id: predicted_step, type: dot, label: "predict", persistent: true, role: prediction }
+      - { id: feature, type: feature, label: "x_t", persistent: true, role: feature }
+    start_state: A timestep axis with full computation every N steps.
+    beats:
+      - { id: full, pattern: ESTABLISH, action: mark full computation steps on the trajectory, duration_seconds: 3 }
+      - { id: reuse, pattern: TRACE, action: predict the steps in between from cached history, duration_seconds: 4 }
+      - { id: uniform, pattern: BUILD, action: one prediction rule applied to the whole feature, duration_seconds: 4 }
+      - { id: ask, pattern: REVEAL, action: ask whether one rule fits every part of the feature, duration_seconds: 3 }
+    end_state: One prediction rule spanning the whole feature vector.
+    transition_to: lc_02_dynamics_mismatch
+    keyframe: { fraction: 0.9, purpose: "uniform prediction baseline" }
+    narration_note: "Fair baseline first: full steps plus prediction in between."
+    speaker_note: "Do not strawman the baseline."
+
+  - id: lc_02_dynamics_mismatch
+    title: Dimensions do not evolve the same way
+    manim_class: LC02DynamicsMismatch
+    mode: ours
+    purpose: The aha moment; dimensions have different continuity.
+    question: Do all dimensions evolve the same way?
+    method_refs: [key_observation, assumption_of_previous_methods, failure_of_previous_methods]
+    actors:
+      - { id: feature_dims, type: feature, label: "feature", persistent: true, role: feature }
+      - { id: unstable, type: dot, label: "unstable", persistent: true, role: drift }
+      - { id: smooth, type: dot, label: "smooth", persistent: true, role: prediction }
+      - { id: curved, type: dot, label: "curved", persistent: true, role: learned }
+      - { id: trajectory, type: timeline, label: "trajectory", persistent: true, role: axis }
+    start_state: A single feature followed across the denoising trajectory.
+    beats:
+      - { id: replay, pattern: ESTABLISH, action: follow the feature across the trajectory, duration_seconds: 3 }
+      - { id: unstable, pattern: TRAJECTORY, action: show dimensions that jump around, duration_seconds: 4, speaker_note: "hard to predict directly" }
+      - { id: smooth, pattern: TRAJECTORY, action: show dimensions that evolve almost linearly, duration_seconds: 4 }
+      - { id: curved, pattern: TRAJECTORY, action: show dimensions with gentle curvature, duration_seconds: 4 }
+      - { id: interleaved, pattern: COMPARE, action: show the behaviours interleaved in one vector, duration_seconds: 4 }
+      - { id: mismatch, pattern: REVEAL, action: one order cannot match all of them, duration_seconds: 3 }
+    end_state: An interleaved vector with three behaviours highlighted.
+    transition_to: lc_03_partitioning
+    keyframe: { fraction: 0.8, purpose: "three behaviours interleaved" }
+    narration_note: "One new behaviour per beat; dwell on each trajectory."
+    speaker_note: "This is the conceptual heart of the video."
+
+  - id: lc_03_partitioning
+    title: A naive split is not enough
+    manim_class: LC03Partitioning
+    mode: ours
+    purpose: Motivate the learned mapping.
+    question: Can we separate dimensions by index?
+    method_refs: [key_observation]
+    actors:
+      - { id: vector, type: feature, label: "vector", persistent: true, role: feature }
+      - { id: naive_split, type: panel, label: "split", persistent: true, role: neutral }
+      - { id: group_question, type: text, label: "learn a grouping", persistent: true, role: learned }
+    start_state: The interleaved vector from the previous scene.
+    beats:
+      - { id: split, pattern: BUILD, action: try a contiguous split of the vector, duration_seconds: 3 }
+      - { id: naive, pattern: COMPARE, action: smooth and unstable dimensions land in the same group, duration_seconds: 4 }
+      - { id: question, pattern: REVEAL, action: ask for a learned representation grouped by behaviour, duration_seconds: 4 }
+    end_state: The question that motivates the learned mapping.
+    transition_to: lc_04_decompose
+    keyframe: { fraction: 0.9, purpose: "why index splits fail" }
+    narration_note: "Keep this short; it only sets up the mapping."
+    speaker_note: "Do not overexplain."
+
+  - id: lc_04_decompose
+    title: Learnable decomposition
+    manim_class: LC04Decompose
+    mode: ours
+    purpose: Introduce the invertible mapping and the three groups.
+    question: What does the learned mapping do?
+    method_refs: [mechanism, equations]
+    actors:
+      - { id: mapping, type: learned, label: "E_theta", persistent: true, role: learned }
+      - { id: z0, type: feature, label: "z0", persistent: true, role: drift }
+      - { id: z1, type: feature, label: "z1", persistent: true, role: prediction }
+      - { id: z2, type: feature, label: "z2", persistent: true, role: learned }
+    start_state: The mixed feature vector.
+    beats:
+      - { id: map, pattern: BUILD, action: pass the cached feature through a learnable mapping, duration_seconds: 4 }
+      - { id: groups, pattern: MORPH, action: move mixed dimensions into three groups, duration_seconds: 4 }
+      - { id: z0, pattern: REVEAL, action: the unstable group, duration_seconds: 3 }
+      - { id: z1, pattern: REVEAL, action: the smooth group, duration_seconds: 3 }
+      - { id: z2, pattern: REVEAL, action: the gently curved group, duration_seconds: 3 }
+      - { id: note, pattern: REVEAL, action: three groups is the paper's design choice, duration_seconds: 3 }
+    end_state: Three semantic groups from one mixed vector.
+    transition_to: lc_05_predictors
+    keyframe: { fraction: 0.85, purpose: "three semantic groups" }
+    narration_note: "The regrouping should be visually satisfying."
+    speaker_note: "M=3 is a design choice, say it."
+
+  - id: lc_05_predictors
+    title: Matched predictors, then reconstruct
+    manim_class: LC05Predictors
+    mode: ours
+    purpose: Order-matched prediction and the inverse mapping.
+    question: How is each group predicted?
+    method_refs: [equations, mechanism]
+    actors:
+      - { id: group0, type: feature, label: "z0", persistent: true, role: drift }
+      - { id: group1, type: feature, label: "z1", persistent: true, role: prediction }
+      - { id: group2, type: feature, label: "z2", persistent: true, role: learned }
+      - { id: reuse_rule, type: module, label: "reuse", persistent: true, role: neutral }
+      - { id: hermite_rule, type: learned, label: "Hermite", persistent: true, role: learned }
+      - { id: inverse, type: learned, label: "inverse", persistent: true, role: learned }
+    start_state: The three groups from the decomposition.
+    beats:
+      - { id: predict0, pattern: BUILD, action: each group gets a predictor that fits it, duration_seconds: 3 }
+      - { id: reuse, pattern: REVEAL, action: the unstable group is reused from the nearest cache, duration_seconds: 3 }
+      - { id: hermite, pattern: REVEAL, action: the smoother groups use Hermite extrapolation at matched order, duration_seconds: 4, speaker_note: "z1 first order, z2 second order" }
+      - { id: recon, pattern: TRACE, action: the inverse mapping reconstructs the full feature, duration_seconds: 4 }
+      - { id: why, pattern: RECAP, action: "same feature, different subspaces, different rules", duration_seconds: 3 }
+    end_state: Predicted groups reconstructed into one feature.
+    transition_to: lc_06_invertible
+    keyframe: { fraction: 0.9, purpose: "order-matched predictors and reconstruction" }
+    narration_note: "Do not present the Hermite coefficients; the idea is matched order."
+    speaker_note: "One rule per group, then reconstruct."
+
+  - id: lc_06_invertible
+    title: Why the mapping must be invertible
+    manim_class: LC06Invertible
+    mode: ours
+    purpose: Explain the invertible block and its precise scope.
+    question: Why must the mapping be invertible?
+    method_refs: [components, equations]
+    actors:
+      - { id: block, type: panel, label: "block", persistent: true, role: learned }
+      - { id: halves, type: feature, label: "u1 u2", persistent: true, role: feature }
+      - { id: coupling, type: operator, label: "F G", persistent: true, role: learned }
+      - { id: inverse, type: learned, label: "inverse", persistent: true, role: learned }
+    start_state: One invertible block with two halves.
+    beats:
+      - { id: question, pattern: ESTABLISH, action: ask why invertibility is required, duration_seconds: 3 }
+      - { id: lossless, pattern: REVEAL, action: so the decomposition itself loses no information, duration_seconds: 3 }
+      - { id: block, pattern: ZOOM, action: zoom into one invertible block, duration_seconds: 4 }
+      - { id: fwd, pattern: BUILD, action: "one half updates the other, then the roles swap", duration_seconds: 4 }
+      - { id: inv, pattern: REPLAY, action: run the explicit inverse, duration_seconds: 4 }
+      - { id: scope, pattern: REVEAL, action: prediction can still be wrong; only the mapping is exact, duration_seconds: 4 }
+    end_state: Forward and inverse arrows on the same block.
+    transition_to: lc_07_segments_training
+    keyframe: { fraction: 0.8, purpose: "invertible block forward and inverse" }
+    narration_note: "Keep it to one block; not a flow lecture."
+    speaker_note: "State the scope: lossless mapping, not lossless prediction."
+
+  - id: lc_07_segments_training
+    title: Timestep segments and training
+    manim_class: LC07SegmentsTraining
+    mode: ours
+    purpose: Distinguish segment specialization from subspace decomposition; show the training signals; recap.
+    question: How do segments differ from groups?
+    method_refs: [components, training, inference]
+    actors:
+      - { id: trajectory, type: timeline, label: "trajectory", persistent: true, role: axis }
+      - { id: segments, type: stage, label: "stages", persistent: true, role: learned }
+      - { id: predictor, type: learned, label: "predictor", persistent: true, role: learned }
+      - { id: loss, type: operator, label: "L", persistent: true, role: measurement }
+    start_state: The denoising trajectory with three stages.
+    beats:
+      - { id: segments, pattern: ESTABLISH, action: split the trajectory into stages, duration_seconds: 4 }
+      - { id: separate, pattern: BUILD, action: each stage trains its own predictor copy, duration_seconds: 3 }
+      - { id: distinct, pattern: COMPARE, action: separate from the subspace decomposition, duration_seconds: 4 }
+      - { id: data, pattern: REVEAL, action: training uses a few hundred pre-generated features, duration_seconds: 3 }
+      - { id: losses, pattern: BUILD, action: "one loss matches the feature, another matches each component", duration_seconds: 4 }
+      - { id: recap, pattern: RECAP, action: "decompose, predict, reconstruct", duration_seconds: 4 }
+    end_state: The Decompose-Predict-Reconstruct recap.
+    transition_to: ""
+    keyframe: { fraction: 0.85, purpose: "segments and the recap" }
+    narration_note: "Keep the two specializations distinct."
+    speaker_note: "End on the pipeline, not on a leaderboard."

@@ -1,0 +1,314 @@
+# Authored narration source for the LinCa method explainer.
+video:
+  id: linca-method-explainer
+  title: "LinCa: learnable decomposed feature caching"
+  method: linca
+
+audience:
+  level: adjacent-researcher
+  target_wpm: 145
+
+narration:
+  backend: gemini
+  model: gemini-2.5-flash-preview-tts
+  voice:
+    name: Kore
+  profile: research-explainer
+  pacing:
+    target_wpm: 140
+    min_concept_dwell_ms: 500
+  fallback:
+    backend: say
+    voice: Samantha
+
+# Timing hints: beats each scene waits on (hooks) and animation-only seconds
+# measured from a draft render. Audio time is distributed into these hooks.
+timing:
+  animation_seconds:
+    lc_01_one_predictor: 4.77
+    lc_02_dynamics_mismatch: 2.0
+    lc_03_partitioning: 3.07
+    lc_04_decompose: 5.83
+    lc_05_predictors: 5.5
+    lc_06_invertible: 3.7
+    lc_07_segments_training: 5.12
+  hooks:
+    lc_01_one_predictor: [full, reuse, uniform]
+    lc_02_dynamics_mismatch: [replay, unstable, smooth, curved, interleaved]
+    lc_03_partitioning: [split, naive]
+    lc_04_decompose: [map, groups, z0, z1, z2]
+    lc_05_predictors: [predict0, reuse, hermite, recon]
+    lc_06_invertible: [question, block, fwd, inv]
+    lc_07_segments_training: [segments, separate, distinct, data, losses]
+
+mode: silent
+
+scenes:
+  - id: lc_01_one_predictor
+    title: One rule for the whole feature
+    purpose: Establish caching and the uniform-prediction baseline.
+    takeaway: Caching predicts skipped features from history, and existing methods use one rule for the whole feature.
+    narration:
+      - beat_id: full
+        kind: introduction
+        visual_cue: full
+        text: Caching runs the full network every N steps.
+        delivery:
+          intent: setup
+          direction: State the schedule plainly.
+      - beat_id: reuse
+        visual_cue: reuse
+        text: In between, it predicts the missing features from history.
+      - beat_id: uniform
+        visual_cue: uniform
+        text: Existing methods apply one prediction rule to the whole feature.
+      - beat_id: ask
+        kind: aha
+        visual_cue: ask
+        text: But is one rule enough for every part of a feature?
+        delivery:
+          intent: reveal
+          pause_before_ms: 400
+          pause_after_ms: 650
+          emphasis: [every part]
+          direction: A genuine question. Leave space after it.
+
+  - id: lc_02_dynamics_mismatch
+    title: Dimensions do not evolve the same way
+    purpose: The aha moment; dimensions have different continuity.
+    takeaway: Dimensions with different continuity are interleaved in the same vector, so one prediction order cannot match all of them.
+    narration:
+      - beat_id: replay
+        kind: introduction
+        visual_cue: replay
+        text: Follow a single feature across the denoising trajectory.
+        delivery:
+          intent: define
+          pause_after_ms: 500
+      - beat_id: unstable
+        visual_cue: unstable
+        text: Some dimensions jump around, and they are hard to predict.
+        delivery:
+          pace: slightly-slower
+          pause_after_ms: 550
+          emphasis: [jump around]
+      - beat_id: smooth
+        visual_cue: smooth
+        text: Others change smoothly, almost linearly.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: curved
+        visual_cue: curved
+        text: And some curve gently, so higher-order prediction helps.
+        delivery:
+          pause_after_ms: 550
+      - beat_id: interleaved
+        kind: comparison
+        visual_cue: interleaved
+        text: These behaviours are mixed together inside the same vector.
+        delivery:
+          pause_before_ms: 350
+          pause_after_ms: 600
+          direction: This is the key observation; slow down and let the mixing land.
+      - beat_id: mismatch
+        kind: conclusion
+        visual_cue: mismatch
+        text: One prediction order cannot match all of them.
+        delivery:
+          pause_before_ms: 350
+          pause_after_ms: 700
+
+  - id: lc_03_partitioning
+    title: A naive split is not enough
+    purpose: Motivate the learned mapping.
+    takeaway: A contiguous split mixes behaviours, so the grouping must be learned.
+    narration:
+      - beat_id: split
+        kind: introduction
+        visual_cue: split
+        text: Could we just split the vector into blocks?
+        delivery:
+          intent: define
+          pause_after_ms: 450
+      - beat_id: naive
+        kind: comparison
+        visual_cue: naive
+        text: A contiguous split puts smooth and unstable dimensions in the same group.
+        delivery:
+          pace: slightly-slower
+          pause_after_ms: 550
+      - beat_id: question
+        visual_cue: question
+        text: Can we learn a representation that groups them by behaviour?
+        delivery:
+          pause_before_ms: 400
+          pause_after_ms: 700
+          emphasis: [by behaviour]
+          direction: This question motivates everything that follows.
+
+  - id: lc_04_decompose
+    title: Learnable decomposition
+    purpose: Introduce the invertible mapping and the three groups.
+    takeaway: A learned invertible mapping regroups dimensions by temporal behaviour into three groups.
+    narration:
+      - beat_id: map
+        kind: introduction
+        visual_cue: map
+        text: LinCa learns an invertible mapping of the cached feature.
+        delivery:
+          intent: define
+          pause_after_ms: 550
+      - beat_id: groups
+        kind: comparison
+        visual_cue: groups
+        text: It rearranges the dimensions into three groups.
+        delivery:
+          pause_after_ms: 550
+          direction: Let the regrouping animation finish before naming the groups.
+      - beat_id: z0
+        visual_cue: z0
+        text: The first group collects the unstable dimensions.
+        delivery:
+          pause_after_ms: 450
+      - beat_id: z1
+        visual_cue: z1
+        text: The second collects those that evolve smoothly.
+        delivery:
+          pause_after_ms: 450
+      - beat_id: z2
+        visual_cue: z2
+        text: The third collects the gently curved ones.
+        delivery:
+          pause_after_ms: 450
+      - beat_id: note
+        kind: conclusion
+        visual_cue: note
+        text: Three groups is the design choice used in the paper.
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 600
+          direction: Keep the qualifier; it is a design choice, not a law.
+
+  - id: lc_05_predictors
+    title: Matched predictors, then reconstruct
+    purpose: Order-matched prediction and the inverse mapping.
+    takeaway: Each group is predicted at its matched order, then the inverse mapping reconstructs the full feature.
+    narration:
+      - beat_id: predict0
+        kind: introduction
+        visual_cue: predict0
+        text: Each group now gets a predictor that fits it.
+        delivery:
+          intent: define
+          pause_after_ms: 450
+      - beat_id: reuse
+        visual_cue: reuse
+        text: The unstable group is simply reused from the nearest cache.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: hermite
+        visual_cue: hermite
+        text: The smoother groups use Hermite extrapolation at matched order.
+        delivery:
+          pace: slower
+          pause_after_ms: 600
+          emphasis: [matched order]
+          direction: Slow down at the new term; do not read coefficients.
+      - beat_id: recon
+        visual_cue: recon
+        text: Then the inverse mapping reconstructs the full feature.
+        delivery:
+          pause_after_ms: 550
+      - beat_id: why
+        kind: conclusion
+        visual_cue: why
+        text: Same feature, different subspaces, different rules.
+        delivery:
+          pause_before_ms: 300
+          pause_after_ms: 650
+
+  - id: lc_06_invertible
+    title: Why the mapping must be invertible
+    purpose: Explain the invertible block and its precise scope.
+    takeaway: Strict invertibility keeps the decomposition lossless; prediction can still be wrong.
+    narration:
+      - beat_id: question
+        kind: introduction
+        visual_cue: question
+        text: Why must the mapping be invertible?
+        delivery:
+          intent: define
+          pause_after_ms: 550
+      - beat_id: lossless
+        visual_cue: lossless
+        text: So the decomposition itself loses no information.
+        delivery:
+          pause_after_ms: 550
+      - beat_id: block
+        visual_cue: block
+        text: Each block mixes channels and couples two halves.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: fwd
+        visual_cue: fwd
+        text: One half updates the other, and then the roles swap.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: inv
+        visual_cue: inv
+        text: Every step has an explicit inverse.
+        delivery:
+          pause_after_ms: 550
+      - beat_id: scope
+        kind: conclusion
+        visual_cue: scope
+        text: The prediction can still be wrong; only the mapping is exact.
+        delivery:
+          pause_before_ms: 400
+          pause_after_ms: 700
+          emphasis: [only the mapping]
+          direction: This scope statement matters; do not let it sound like a disclaimer.
+
+  - id: lc_07_segments_training
+    title: Timestep segments and training
+    purpose: Distinguish segment specialization from subspace decomposition; show training signals; recap.
+    takeaway: Separate predictors per timestep segment adapt to stage dynamics; training matches the feature and each component.
+    narration:
+      - beat_id: segments
+        kind: introduction
+        visual_cue: segments
+        text: The denoising trajectory is also split into stages.
+        delivery:
+          intent: define
+          pause_after_ms: 550
+      - beat_id: separate
+        visual_cue: separate
+        text: Each stage trains its own copy of the predictor.
+        delivery:
+          pause_after_ms: 500
+      - beat_id: distinct
+        kind: comparison
+        visual_cue: distinct
+        text: That is separate from the subspace decomposition.
+        delivery:
+          pause_before_ms: 350
+          pause_after_ms: 600
+          emphasis: [separate]
+          direction: Keep the two kinds of specialization clearly apart.
+      - beat_id: data
+        visual_cue: data
+        text: Training uses a few hundred pre-generated features.
+      - beat_id: losses
+        visual_cue: losses
+        text: One loss matches the feature; another matches each component.
+        delivery:
+          pause_after_ms: 550
+      - beat_id: recap
+        kind: conclusion
+        visual_cue: recap
+        text: "Decompose, predict, reconstruct: that is LinCa."
+        delivery:
+          pause_before_ms: 400
+          pause_after_ms: 750
+          emphasis: [Decompose, predict, reconstruct]
+          direction: Finish the video cleanly on the pipeline.

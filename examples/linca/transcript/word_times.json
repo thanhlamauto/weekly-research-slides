@@ -1,0 +1,2098 @@
+{
+  "method": "estimated",
+  "words": [
+    {
+      "word": "Caching",
+      "start": 0.0,
+      "end": 0.702,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "runs",
+      "start": 0.702,
+      "end": 1.103,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "the",
+      "start": 1.103,
+      "end": 1.403,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "full",
+      "start": 1.403,
+      "end": 1.804,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "network",
+      "start": 1.804,
+      "end": 2.506,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "every",
+      "start": 2.506,
+      "end": 3.007,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "N",
+      "start": 3.007,
+      "end": 3.107,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "steps.",
+      "start": 3.107,
+      "end": 3.709,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "full"
+    },
+    {
+      "word": "In",
+      "start": 4.509,
+      "end": 4.682,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "between",
+      "start": 4.682,
+      "end": 5.29,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "it",
+      "start": 5.29,
+      "end": 5.464,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "predicts",
+      "start": 5.464,
+      "end": 6.159,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "the",
+      "start": 6.159,
+      "end": 6.42,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "missing",
+      "start": 6.42,
+      "end": 7.028,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "features",
+      "start": 7.028,
+      "end": 7.723,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "from",
+      "start": 7.723,
+      "end": 8.071,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "history.",
+      "start": 8.071,
+      "end": 8.766,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "Existing",
+      "start": 9.016,
+      "end": 9.68,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "methods",
+      "start": 9.68,
+      "end": 10.261,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "apply",
+      "start": 10.261,
+      "end": 10.676,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "one",
+      "start": 10.676,
+      "end": 10.925,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "prediction",
+      "start": 10.925,
+      "end": 11.755,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "rule",
+      "start": 11.755,
+      "end": 12.087,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "to",
+      "start": 12.087,
+      "end": 12.253,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "the",
+      "start": 12.253,
+      "end": 12.502,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "whole",
+      "start": 12.502,
+      "end": 12.917,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "feature.",
+      "start": 12.917,
+      "end": 13.581,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "uniform"
+    },
+    {
+      "word": "But",
+      "start": 13.831,
+      "end": 14.185,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "is",
+      "start": 14.185,
+      "end": 14.421,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "one",
+      "start": 14.421,
+      "end": 14.774,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "rule",
+      "start": 14.774,
+      "end": 15.246,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "enough",
+      "start": 15.246,
+      "end": 15.953,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "for",
+      "start": 15.953,
+      "end": 16.306,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "every",
+      "start": 16.306,
+      "end": 16.896,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "part",
+      "start": 16.896,
+      "end": 17.367,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "of",
+      "start": 17.367,
+      "end": 17.603,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "a",
+      "start": 17.603,
+      "end": 17.721,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "feature",
+      "start": 17.721,
+      "end": 18.546,
+      "scene_id": "lc_01_one_predictor",
+      "beat_id": "ask"
+    },
+    {
+      "word": "Follow",
+      "start": 19.846,
+      "end": 20.3,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "a",
+      "start": 20.3,
+      "end": 20.376,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "single",
+      "start": 20.376,
+      "end": 20.83,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "feature",
+      "start": 20.83,
+      "end": 21.359,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "across",
+      "start": 21.359,
+      "end": 21.814,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "the",
+      "start": 21.814,
+      "end": 22.041,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "denoising",
+      "start": 22.041,
+      "end": 22.722,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "trajectory.",
+      "start": 22.722,
+      "end": 23.554,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "replay"
+    },
+    {
+      "word": "Some",
+      "start": 24.354,
+      "end": 24.745,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "dimensions",
+      "start": 24.745,
+      "end": 25.721,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "jump",
+      "start": 25.721,
+      "end": 26.111,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "around",
+      "start": 26.111,
+      "end": 26.697,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "and",
+      "start": 26.697,
+      "end": 26.99,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "they",
+      "start": 26.99,
+      "end": 27.38,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "are",
+      "start": 27.38,
+      "end": 27.673,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "hard",
+      "start": 27.673,
+      "end": 28.064,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "to",
+      "start": 28.064,
+      "end": 28.259,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "predict.",
+      "start": 28.259,
+      "end": 29.04,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "unstable"
+    },
+    {
+      "word": "Others",
+      "start": 29.29,
+      "end": 29.726,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "smooth"
+    },
+    {
+      "word": "change",
+      "start": 29.726,
+      "end": 30.162,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "smooth"
+    },
+    {
+      "word": "smoothly",
+      "start": 30.162,
+      "end": 30.743,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "smooth"
+    },
+    {
+      "word": "almost",
+      "start": 30.743,
+      "end": 31.179,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "smooth"
+    },
+    {
+      "word": "linearly.",
+      "start": 31.179,
+      "end": 31.833,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "smooth"
+    },
+    {
+      "word": "And",
+      "start": 32.083,
+      "end": 32.322,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "some",
+      "start": 32.322,
+      "end": 32.641,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "curve",
+      "start": 32.641,
+      "end": 33.04,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "gently",
+      "start": 33.04,
+      "end": 33.519,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "so",
+      "start": 33.519,
+      "end": 33.678,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "higher-order",
+      "start": 33.678,
+      "end": 34.635,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "prediction",
+      "start": 34.635,
+      "end": 35.433,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "helps.",
+      "start": 35.433,
+      "end": 35.911,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "curved"
+    },
+    {
+      "word": "These",
+      "start": 36.161,
+      "end": 36.567,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "behaviours",
+      "start": 36.567,
+      "end": 37.378,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "are",
+      "start": 37.378,
+      "end": 37.622,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "mixed",
+      "start": 37.622,
+      "end": 38.027,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "together",
+      "start": 38.027,
+      "end": 38.676,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "inside",
+      "start": 38.676,
+      "end": 39.163,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "the",
+      "start": 39.163,
+      "end": 39.406,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "same",
+      "start": 39.406,
+      "end": 39.731,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "vector.",
+      "start": 39.731,
+      "end": 40.299,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "interleaved"
+    },
+    {
+      "word": "One",
+      "start": 41.099,
+      "end": 41.384,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "prediction",
+      "start": 41.384,
+      "end": 42.335,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "order",
+      "start": 42.335,
+      "end": 42.81,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "cannot",
+      "start": 42.81,
+      "end": 43.381,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "match",
+      "start": 43.381,
+      "end": 43.856,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "all",
+      "start": 43.856,
+      "end": 44.142,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "of",
+      "start": 44.142,
+      "end": 44.332,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "them.",
+      "start": 44.332,
+      "end": 44.807,
+      "scene_id": "lc_02_dynamics_mismatch",
+      "beat_id": "mismatch"
+    },
+    {
+      "word": "Could",
+      "start": 45.407,
+      "end": 45.897,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "we",
+      "start": 45.897,
+      "end": 46.093,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "just",
+      "start": 46.093,
+      "end": 46.485,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "split",
+      "start": 46.485,
+      "end": 46.974,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "the",
+      "start": 46.974,
+      "end": 47.268,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "vector",
+      "start": 47.268,
+      "end": 47.856,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "into",
+      "start": 47.856,
+      "end": 48.248,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "blocks",
+      "start": 48.248,
+      "end": 48.836,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "split"
+    },
+    {
+      "word": "A",
+      "start": 49.636,
+      "end": 49.723,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "contiguous",
+      "start": 49.723,
+      "end": 50.598,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "split",
+      "start": 50.598,
+      "end": 51.035,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "puts",
+      "start": 51.035,
+      "end": 51.385,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "smooth",
+      "start": 51.385,
+      "end": 51.91,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "and",
+      "start": 51.91,
+      "end": 52.172,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "unstable",
+      "start": 52.172,
+      "end": 52.872,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "dimensions",
+      "start": 52.872,
+      "end": 53.747,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "in",
+      "start": 53.747,
+      "end": 53.922,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "the",
+      "start": 53.922,
+      "end": 54.184,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "same",
+      "start": 54.184,
+      "end": 54.534,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "group.",
+      "start": 54.534,
+      "end": 55.059,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "naive"
+    },
+    {
+      "word": "Can",
+      "start": 55.859,
+      "end": 56.116,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "we",
+      "start": 56.116,
+      "end": 56.287,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "learn",
+      "start": 56.287,
+      "end": 56.716,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "a",
+      "start": 56.716,
+      "end": 56.801,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "representation",
+      "start": 56.801,
+      "end": 58.001,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "that",
+      "start": 58.001,
+      "end": 58.344,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "groups",
+      "start": 58.344,
+      "end": 58.859,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "them",
+      "start": 58.859,
+      "end": 59.201,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "by",
+      "start": 59.201,
+      "end": 59.373,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "behaviour",
+      "start": 59.373,
+      "end": 60.144,
+      "scene_id": "lc_03_partitioning",
+      "beat_id": "question"
+    },
+    {
+      "word": "LinCa",
+      "start": 60.394,
+      "end": 60.816,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "learns",
+      "start": 60.816,
+      "end": 61.323,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "an",
+      "start": 61.323,
+      "end": 61.492,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "invertible",
+      "start": 61.492,
+      "end": 62.336,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "mapping",
+      "start": 62.336,
+      "end": 62.927,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "of",
+      "start": 62.927,
+      "end": 63.096,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "the",
+      "start": 63.096,
+      "end": 63.349,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "cached",
+      "start": 63.349,
+      "end": 63.856,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "feature.",
+      "start": 63.856,
+      "end": 64.531,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "map"
+    },
+    {
+      "word": "It",
+      "start": 65.331,
+      "end": 65.491,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "rearranges",
+      "start": 65.491,
+      "end": 66.291,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "the",
+      "start": 66.291,
+      "end": 66.531,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "dimensions",
+      "start": 66.531,
+      "end": 67.331,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "into",
+      "start": 67.331,
+      "end": 67.651,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "three",
+      "start": 67.651,
+      "end": 68.051,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "groups.",
+      "start": 68.051,
+      "end": 68.611,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "groups"
+    },
+    {
+      "word": "The",
+      "start": 69.411,
+      "end": 69.64,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "first",
+      "start": 69.64,
+      "end": 70.022,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "group",
+      "start": 70.022,
+      "end": 70.403,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "collects",
+      "start": 70.403,
+      "end": 71.013,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "the",
+      "start": 71.013,
+      "end": 71.242,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "unstable",
+      "start": 71.242,
+      "end": 71.852,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "dimensions.",
+      "start": 71.852,
+      "end": 72.691,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z0"
+    },
+    {
+      "word": "The",
+      "start": 72.941,
+      "end": 73.181,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "second",
+      "start": 73.181,
+      "end": 73.661,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "collects",
+      "start": 73.661,
+      "end": 74.301,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "those",
+      "start": 74.301,
+      "end": 74.701,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "that",
+      "start": 74.701,
+      "end": 75.021,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "evolve",
+      "start": 75.021,
+      "end": 75.501,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "smoothly.",
+      "start": 75.501,
+      "end": 76.221,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z1"
+    },
+    {
+      "word": "The",
+      "start": 76.471,
+      "end": 76.745,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "third",
+      "start": 76.745,
+      "end": 77.2,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "collects",
+      "start": 77.2,
+      "end": 77.929,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "the",
+      "start": 77.929,
+      "end": 78.203,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "gently",
+      "start": 78.203,
+      "end": 78.749,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "curved",
+      "start": 78.749,
+      "end": 79.296,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "ones.",
+      "start": 79.296,
+      "end": 79.751,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "z2"
+    },
+    {
+      "word": "Three",
+      "start": 80.001,
+      "end": 80.532,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "groups",
+      "start": 80.532,
+      "end": 81.169,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "is",
+      "start": 81.169,
+      "end": 81.382,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "the",
+      "start": 81.382,
+      "end": 81.7,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "design",
+      "start": 81.7,
+      "end": 82.337,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "choice",
+      "start": 82.337,
+      "end": 82.974,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "used",
+      "start": 82.974,
+      "end": 83.399,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "in",
+      "start": 83.399,
+      "end": 83.612,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "the",
+      "start": 83.612,
+      "end": 83.93,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "paper.",
+      "start": 83.93,
+      "end": 84.567,
+      "scene_id": "lc_04_decompose",
+      "beat_id": "note"
+    },
+    {
+      "word": "Each",
+      "start": 85.167,
+      "end": 85.614,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "group",
+      "start": 85.614,
+      "end": 86.173,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "now",
+      "start": 86.173,
+      "end": 86.509,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "gets",
+      "start": 86.509,
+      "end": 86.956,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "a",
+      "start": 86.956,
+      "end": 87.068,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "predictor",
+      "start": 87.068,
+      "end": 88.074,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "that",
+      "start": 88.074,
+      "end": 88.522,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "fits",
+      "start": 88.522,
+      "end": 88.969,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "it.",
+      "start": 88.969,
+      "end": 89.304,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "predict0"
+    },
+    {
+      "word": "The",
+      "start": 90.104,
+      "end": 90.378,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "unstable",
+      "start": 90.378,
+      "end": 91.109,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "group",
+      "start": 91.109,
+      "end": 91.565,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "is",
+      "start": 91.565,
+      "end": 91.748,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "simply",
+      "start": 91.748,
+      "end": 92.296,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "reused",
+      "start": 92.296,
+      "end": 92.844,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "from",
+      "start": 92.844,
+      "end": 93.209,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "the",
+      "start": 93.209,
+      "end": 93.483,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "nearest",
+      "start": 93.483,
+      "end": 94.122,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "cache.",
+      "start": 94.122,
+      "end": 94.67,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "reuse"
+    },
+    {
+      "word": "The",
+      "start": 94.92,
+      "end": 95.146,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "smoother",
+      "start": 95.146,
+      "end": 95.747,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "groups",
+      "start": 95.747,
+      "end": 96.199,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "use",
+      "start": 96.199,
+      "end": 96.424,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "Hermite",
+      "start": 96.424,
+      "end": 96.951,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "extrapolation",
+      "start": 96.951,
+      "end": 97.929,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "at",
+      "start": 97.929,
+      "end": 98.079,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "matched",
+      "start": 98.079,
+      "end": 98.606,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "order.",
+      "start": 98.606,
+      "end": 99.057,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "hermite"
+    },
+    {
+      "word": "Then",
+      "start": 99.307,
+      "end": 99.616,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "the",
+      "start": 99.616,
+      "end": 99.848,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "inverse",
+      "start": 99.848,
+      "end": 100.389,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "mapping",
+      "start": 100.389,
+      "end": 100.93,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "reconstructs",
+      "start": 100.93,
+      "end": 101.857,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "the",
+      "start": 101.857,
+      "end": 102.089,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "full",
+      "start": 102.089,
+      "end": 102.398,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "feature.",
+      "start": 102.398,
+      "end": 103.016,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "recon"
+    },
+    {
+      "word": "Same",
+      "start": 103.266,
+      "end": 103.547,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "why"
+    },
+    {
+      "word": "feature",
+      "start": 103.547,
+      "end": 104.039,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "why"
+    },
+    {
+      "word": "different",
+      "start": 104.039,
+      "end": 104.671,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "why"
+    },
+    {
+      "word": "subspaces",
+      "start": 104.671,
+      "end": 105.303,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "why"
+    },
+    {
+      "word": "different",
+      "start": 105.303,
+      "end": 105.936,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "why"
+    },
+    {
+      "word": "rules.",
+      "start": 105.936,
+      "end": 106.357,
+      "scene_id": "lc_05_predictors",
+      "beat_id": "why"
+    },
+    {
+      "word": "Why",
+      "start": 106.957,
+      "end": 107.223,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "question"
+    },
+    {
+      "word": "must",
+      "start": 107.223,
+      "end": 107.578,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "question"
+    },
+    {
+      "word": "the",
+      "start": 107.578,
+      "end": 107.844,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "question"
+    },
+    {
+      "word": "mapping",
+      "start": 107.844,
+      "end": 108.465,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "question"
+    },
+    {
+      "word": "be",
+      "start": 108.465,
+      "end": 108.642,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "question"
+    },
+    {
+      "word": "invertible",
+      "start": 108.642,
+      "end": 109.529,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "question"
+    },
+    {
+      "word": "So",
+      "start": 110.329,
+      "end": 110.481,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "the",
+      "start": 110.481,
+      "end": 110.71,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "decomposition",
+      "start": 110.71,
+      "end": 111.702,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "itself",
+      "start": 111.702,
+      "end": 112.159,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "loses",
+      "start": 112.159,
+      "end": 112.541,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "no",
+      "start": 112.541,
+      "end": 112.693,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "information.",
+      "start": 112.693,
+      "end": 113.609,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "lossless"
+    },
+    {
+      "word": "Each",
+      "start": 113.859,
+      "end": 114.212,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "block",
+      "start": 114.212,
+      "end": 114.653,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "mixes",
+      "start": 114.653,
+      "end": 115.095,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "channels",
+      "start": 115.095,
+      "end": 115.801,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "and",
+      "start": 115.801,
+      "end": 116.066,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "couples",
+      "start": 116.066,
+      "end": 116.684,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "two",
+      "start": 116.684,
+      "end": 116.949,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "halves.",
+      "start": 116.949,
+      "end": 117.567,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "block"
+    },
+    {
+      "word": "One",
+      "start": 117.817,
+      "end": 118.152,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "half",
+      "start": 118.152,
+      "end": 118.598,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "updates",
+      "start": 118.598,
+      "end": 119.379,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "the",
+      "start": 119.379,
+      "end": 119.714,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "other",
+      "start": 119.714,
+      "end": 120.272,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "and",
+      "start": 120.272,
+      "end": 120.606,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "then",
+      "start": 120.606,
+      "end": 121.053,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "the",
+      "start": 121.053,
+      "end": 121.387,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "roles",
+      "start": 121.387,
+      "end": 121.945,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "swap.",
+      "start": 121.945,
+      "end": 122.503,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "fwd"
+    },
+    {
+      "word": "Every",
+      "start": 122.753,
+      "end": 123.228,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "inv"
+    },
+    {
+      "word": "step",
+      "start": 123.228,
+      "end": 123.608,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "inv"
+    },
+    {
+      "word": "has",
+      "start": 123.608,
+      "end": 123.893,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "inv"
+    },
+    {
+      "word": "an",
+      "start": 123.893,
+      "end": 124.084,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "inv"
+    },
+    {
+      "word": "explicit",
+      "start": 124.084,
+      "end": 124.844,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "inv"
+    },
+    {
+      "word": "inverse.",
+      "start": 124.844,
+      "end": 125.604,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "inv"
+    },
+    {
+      "word": "The",
+      "start": 125.854,
+      "end": 126.171,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "prediction",
+      "start": 126.171,
+      "end": 127.226,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "can",
+      "start": 127.226,
+      "end": 127.542,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "still",
+      "start": 127.542,
+      "end": 128.069,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "be",
+      "start": 128.069,
+      "end": 128.28,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "wrong",
+      "start": 128.28,
+      "end": 128.808,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "only",
+      "start": 128.808,
+      "end": 129.23,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "the",
+      "start": 129.23,
+      "end": 129.546,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "mapping",
+      "start": 129.546,
+      "end": 130.285,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "is",
+      "start": 130.285,
+      "end": 130.496,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "exact.",
+      "start": 130.496,
+      "end": 131.129,
+      "scene_id": "lc_06_invertible",
+      "beat_id": "scope"
+    },
+    {
+      "word": "The",
+      "start": 131.729,
+      "end": 131.981,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "denoising",
+      "start": 131.981,
+      "end": 132.74,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "trajectory",
+      "start": 132.74,
+      "end": 133.583,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "is",
+      "start": 133.583,
+      "end": 133.751,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "also",
+      "start": 133.751,
+      "end": 134.089,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "split",
+      "start": 134.089,
+      "end": 134.51,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "into",
+      "start": 134.51,
+      "end": 134.847,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "stages.",
+      "start": 134.847,
+      "end": 135.437,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "segments"
+    },
+    {
+      "word": "Each",
+      "start": 136.237,
+      "end": 136.651,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "stage",
+      "start": 136.651,
+      "end": 137.168,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "trains",
+      "start": 137.168,
+      "end": 137.789,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "its",
+      "start": 137.789,
+      "end": 138.099,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "own",
+      "start": 138.099,
+      "end": 138.409,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "copy",
+      "start": 138.409,
+      "end": 138.823,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "of",
+      "start": 138.823,
+      "end": 139.03,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "the",
+      "start": 139.03,
+      "end": 139.34,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "predictor.",
+      "start": 139.34,
+      "end": 140.374,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "separate"
+    },
+    {
+      "word": "That",
+      "start": 140.624,
+      "end": 140.929,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "is",
+      "start": 140.929,
+      "end": 141.082,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "separate",
+      "start": 141.082,
+      "end": 141.692,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "from",
+      "start": 141.692,
+      "end": 141.997,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "the",
+      "start": 141.997,
+      "end": 142.226,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "subspace",
+      "start": 142.226,
+      "end": 142.836,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "decomposition.",
+      "start": 142.836,
+      "end": 143.904,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "distinct"
+    },
+    {
+      "word": "Training",
+      "start": 144.704,
+      "end": 145.287,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "uses",
+      "start": 145.287,
+      "end": 145.579,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "a",
+      "start": 145.579,
+      "end": 145.652,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "few",
+      "start": 145.652,
+      "end": 145.871,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "hundred",
+      "start": 145.871,
+      "end": 146.381,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "pre-generated",
+      "start": 146.381,
+      "end": 147.328,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "features.",
+      "start": 147.328,
+      "end": 147.984,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "data"
+    },
+    {
+      "word": "One",
+      "start": 148.234,
+      "end": 148.489,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "loss",
+      "start": 148.489,
+      "end": 148.829,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "matches",
+      "start": 148.829,
+      "end": 149.424,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "the",
+      "start": 149.424,
+      "end": 149.678,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "feature",
+      "start": 149.678,
+      "end": 150.273,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "another",
+      "start": 150.273,
+      "end": 150.868,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "matches",
+      "start": 150.868,
+      "end": 151.462,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "each",
+      "start": 151.462,
+      "end": 151.802,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "component.",
+      "start": 151.802,
+      "end": 152.651,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "losses"
+    },
+    {
+      "word": "Decompose",
+      "start": 152.901,
+      "end": 153.679,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "recap"
+    },
+    {
+      "word": "predict",
+      "start": 153.679,
+      "end": 154.285,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "recap"
+    },
+    {
+      "word": "reconstruct",
+      "start": 154.285,
+      "end": 155.235,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "recap"
+    },
+    {
+      "word": "that",
+      "start": 155.235,
+      "end": 155.581,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "recap"
+    },
+    {
+      "word": "is",
+      "start": 155.581,
+      "end": 155.754,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "recap"
+    },
+    {
+      "word": "LinCa.",
+      "start": 155.754,
+      "end": 156.273,
+      "scene_id": "lc_07_segments_training",
+      "beat_id": "recap"
+    }
+  ]
+}

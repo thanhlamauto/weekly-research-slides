@@ -1,0 +1,175 @@
+1
+00:00:00,000 --> 00:00:03,709
+Caching runs the full network every N
+steps.
+
+2
+00:00:04,509 --> 00:00:08,766
+In between, it predicts the missing
+features from history.
+
+3
+00:00:09,016 --> 00:00:13,581
+Existing methods apply one prediction rule
+to the whole feature.
+
+4
+00:00:13,831 --> 00:00:18,546
+But is one rule enough for every part of a
+feature?
+
+5
+00:00:19,846 --> 00:00:23,554
+Follow a single feature across the
+denoising trajectory.
+
+6
+00:00:24,354 --> 00:00:29,040
+Some dimensions jump around, and they are
+hard to predict.
+
+7
+00:00:29,290 --> 00:00:31,833
+Others change smoothly, almost linearly.
+
+8
+00:00:32,083 --> 00:00:35,911
+And some curve gently, so higher-order
+prediction helps.
+
+9
+00:00:36,161 --> 00:00:40,299
+These behaviours are mixed together inside
+the same vector.
+
+10
+00:00:41,099 --> 00:00:44,807
+One prediction order cannot match all of
+them.
+
+11
+00:00:45,407 --> 00:00:48,836
+Could we just split the vector into
+blocks?
+
+12
+00:00:49,636 --> 00:00:55,059
+A contiguous split puts smooth and
+unstable dimensions in the same group.
+
+13
+00:00:55,859 --> 00:01:00,144
+Can we learn a representation that groups
+them by behaviour?
+
+14
+00:01:00,394 --> 00:01:04,531
+LinCa learns an invertible mapping of the
+cached feature.
+
+15
+00:01:05,331 --> 00:01:08,611
+It rearranges the dimensions into three
+groups.
+
+16
+00:01:09,411 --> 00:01:12,691
+The first group collects the unstable
+dimensions.
+
+17
+00:01:12,941 --> 00:01:16,221
+The second collects those that evolve
+smoothly.
+
+18
+00:01:16,471 --> 00:01:19,751
+The third collects the gently curved ones.
+
+19
+00:01:20,001 --> 00:01:24,567
+Three groups is the design choice used in
+the paper.
+
+20
+00:01:25,167 --> 00:01:29,304
+Each group now gets a predictor that fits
+it.
+
+21
+00:01:30,104 --> 00:01:34,670
+The unstable group is simply reused from
+the nearest cache.
+
+22
+00:01:34,920 --> 00:01:39,057
+The smoother groups use Hermite
+extrapolation at matched order.
+
+23
+00:01:39,307 --> 00:01:43,016
+Then the inverse mapping reconstructs the
+full feature.
+
+24
+00:01:43,266 --> 00:01:46,357
+Same feature, different subspaces,
+different rules.
+
+25
+00:01:46,957 --> 00:01:49,529
+Why must the mapping be invertible?
+
+26
+00:01:50,329 --> 00:01:53,609
+So the decomposition itself loses no
+information.
+
+27
+00:01:53,859 --> 00:01:57,567
+Each block mixes channels and couples two
+halves.
+
+28
+00:01:57,817 --> 00:02:02,503
+One half updates the other, and then the
+roles swap.
+
+29
+00:02:02,753 --> 00:02:05,604
+Every step has an explicit inverse.
+
+30
+00:02:05,854 --> 00:02:11,129
+The prediction can still be wrong; only
+the mapping is exact.
+
+31
+00:02:11,729 --> 00:02:15,437
+The denoising trajectory is also split
+into stages.
+
+32
+00:02:16,237 --> 00:02:20,374
+Each stage trains its own copy of the
+predictor.
+
+33
+00:02:20,624 --> 00:02:23,904
+That is separate from the subspace
+decomposition.
+
+34
+00:02:24,704 --> 00:02:27,984
+Training uses a few hundred pre-generated
+features.
+
+35
+00:02:28,234 --> 00:02:32,651
+One loss matches the feature; another
+matches each component.
+
+36
+00:02:32,901 --> 00:02:36,273
+Decompose, predict, reconstruct: that is
+LinCa.

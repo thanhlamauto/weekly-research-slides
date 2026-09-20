@@ -1,0 +1,7 @@
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_01_one_predictor.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_02_dynamics_mismatch.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_03_partitioning.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_04_decompose.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_05_predictors.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_06_invertible.mp4'
+file '/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/draft/lc_07_segments_training.mp4'

@@ -1,0 +1,37 @@
+video: ''
+keyframes:
+- scene: lc_01_one_predictor
+  title: One rule for the whole feature
+  timestamp: 10.77
+  purpose: uniform prediction baseline
+  png: qa/keyframes/lc_01_one_predictor.png
+- scene: lc_02_dynamics_mismatch
+  title: Dimensions do not evolve the same way
+  timestamp: 12.893
+  purpose: three behaviours interleaved
+  png: qa/keyframes/lc_02_dynamics_mismatch.png
+- scene: lc_03_partitioning
+  title: A naive split is not enough
+  timestamp: 9.24
+  purpose: why index splits fail
+  png: qa/keyframes/lc_03_partitioning.png
+- scene: lc_04_decompose
+  title: Learnable decomposition
+  timestamp: 12.991
+  purpose: three semantic groups
+  png: qa/keyframes/lc_04_decompose.png
+- scene: lc_05_predictors
+  title: Matched predictors, then reconstruct
+  timestamp: 14.265
+  purpose: order-matched predictors and reconstruction
+  png: qa/keyframes/lc_05_predictors.png
+- scene: lc_06_invertible
+  title: Why the mapping must be invertible
+  timestamp: 11.8
+  purpose: invertible block forward and inverse
+  png: qa/keyframes/lc_06_invertible.png
+- scene: lc_07_segments_training
+  title: Timestep segments and training
+  timestamp: 17.057
+  purpose: segments and the recap
+  png: qa/keyframes/lc_07_segments_training.png

@@ -1,0 +1,57 @@
+{
+  "quality": "final",
+  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/transcript/audio",
+  "scenes": [
+    {
+      "id": "lc_01_one_predictor",
+      "video": 11.967,
+      "audio": 12.004,
+      "end_frame_padding": 0.038,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lc_02_dynamics_mismatch",
+      "video": 16.117,
+      "audio": 18.81,
+      "end_frame_padding": 2.693,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lc_03_partitioning",
+      "video": 10.267,
+      "audio": 9.611,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.656
+    },
+    {
+      "id": "lc_04_decompose",
+      "video": 15.283,
+      "audio": 16.154,
+      "end_frame_padding": 0.87,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lc_05_predictors",
+      "video": 15.85,
+      "audio": 15.694,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.156
+    },
+    {
+      "id": "lc_06_invertible",
+      "video": 14.75,
+      "audio": 16.918,
+      "end_frame_padding": 2.168,
+      "audio_silence": 0.0
+    },
+    {
+      "id": "lc_07_segments_training",
+      "video": 20.067,
+      "audio": 19.563,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.503
+    }
+  ],
+  "total_end_frame_padding": 5.769,
+  "output": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/final/linca-method-explainer-narrated.mp4"
+}

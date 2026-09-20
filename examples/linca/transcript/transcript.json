@@ -1,0 +1,1113 @@
+{
+  "video": {
+    "id": "linca-method-explainer",
+    "title": "LinCa: learnable decomposed feature caching",
+    "method": "linca"
+  },
+  "audience": {
+    "level": "adjacent-researcher"
+  },
+  "narration": {
+    "backend": "gemini",
+    "model": "gemini-2.5-flash-preview-tts",
+    "voice": {
+      "name": "Kore"
+    },
+    "profile": "research-explainer",
+    "pacing": {
+      "target_wpm": 140,
+      "min_concept_dwell_ms": 500
+    },
+    "fallback": {
+      "backend": "say",
+      "voice": "Samantha"
+    }
+  },
+  "timing": {
+    "animation_seconds": {
+      "lc_01_one_predictor": 4.77,
+      "lc_02_dynamics_mismatch": 2.0,
+      "lc_03_partitioning": 3.07,
+      "lc_04_decompose": 5.83,
+      "lc_05_predictors": 5.5,
+      "lc_06_invertible": 3.7,
+      "lc_07_segments_training": 5.12
+    },
+    "hooks": {
+      "lc_01_one_predictor": [
+        "full",
+        "reuse",
+        "uniform"
+      ],
+      "lc_02_dynamics_mismatch": [
+        "replay",
+        "unstable",
+        "smooth",
+        "curved",
+        "interleaved"
+      ],
+      "lc_03_partitioning": [
+        "split",
+        "naive"
+      ],
+      "lc_04_decompose": [
+        "map",
+        "groups",
+        "z0",
+        "z1",
+        "z2"
+      ],
+      "lc_05_predictors": [
+        "predict0",
+        "reuse",
+        "hermite",
+        "recon"
+      ],
+      "lc_06_invertible": [
+        "question",
+        "block",
+        "fwd",
+        "inv"
+      ],
+      "lc_07_segments_training": [
+        "segments",
+        "separate",
+        "distinct",
+        "data",
+        "losses"
+      ]
+    }
+  },
+  "mode": "silent",
+  "scenes": [
+    {
+      "id": "lc_01_one_predictor",
+      "title": "One rule for the whole feature",
+      "purpose": "Establish caching and the uniform-prediction baseline.",
+      "takeaway": "Caching predicts skipped features from history, and existing methods use one rule for the whole feature.",
+      "narration": [
+        {
+          "beat_id": "full",
+          "kind": "introduction",
+          "visual_cue": "full",
+          "text": "Caching runs the full network every N steps.",
+          "delivery": {
+            "intent": "setup",
+            "direction": "State the schedule plainly."
+          },
+          "words": [
+            "Caching",
+            "runs",
+            "the",
+            "full",
+            "network",
+            "every",
+            "N",
+            "steps."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.8,
+          "start": 0.0,
+          "end": 3.709,
+          "end_with_dwell": 4.509
+        },
+        {
+          "beat_id": "reuse",
+          "visual_cue": "reuse",
+          "text": "In between, it predicts the missing features from history.",
+          "words": [
+            "In",
+            "between",
+            "it",
+            "predicts",
+            "the",
+            "missing",
+            "features",
+            "from",
+            "history."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.257,
+          "dwell_seconds": 0.25,
+          "start": 4.509,
+          "end": 8.766,
+          "end_with_dwell": 9.016
+        },
+        {
+          "beat_id": "uniform",
+          "visual_cue": "uniform",
+          "text": "Existing methods apply one prediction rule to the whole feature.",
+          "words": [
+            "Existing",
+            "methods",
+            "apply",
+            "one",
+            "prediction",
+            "rule",
+            "to",
+            "the",
+            "whole",
+            "feature."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 0.25,
+          "start": 9.016,
+          "end": 13.581,
+          "end_with_dwell": 13.831
+        },
+        {
+          "beat_id": "ask",
+          "kind": "aha",
+          "visual_cue": "ask",
+          "text": "But is one rule enough for every part of a feature?",
+          "delivery": {
+            "intent": "reveal",
+            "pause_before_ms": 400,
+            "pause_after_ms": 650,
+            "emphasis": [
+              "every part"
+            ],
+            "direction": "A genuine question. Leave space after it."
+          },
+          "words": [
+            "But",
+            "is",
+            "one",
+            "rule",
+            "enough",
+            "for",
+            "every",
+            "part",
+            "of",
+            "a",
+            "feature"
+          ],
+          "word_count": 11,
+          "speaking_seconds": 4.714,
+          "dwell_seconds": 1.3,
+          "start": 13.831,
+          "end": 18.546,
+          "end_with_dwell": 19.846
+        }
+      ],
+      "start": 0.0,
+      "end": 19.846,
+      "duration_seconds": 19.846,
+      "tail_dwell": 1.3,
+      "word_count": 38
+    },
+    {
+      "id": "lc_02_dynamics_mismatch",
+      "title": "Dimensions do not evolve the same way",
+      "purpose": "The aha moment; dimensions have different continuity.",
+      "takeaway": "Dimensions with different continuity are interleaved in the same vector, so one prediction order cannot match all of them.",
+      "narration": [
+        {
+          "beat_id": "replay",
+          "kind": "introduction",
+          "visual_cue": "replay",
+          "text": "Follow a single feature across the denoising trajectory.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Follow",
+            "a",
+            "single",
+            "feature",
+            "across",
+            "the",
+            "denoising",
+            "trajectory."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.8,
+          "start": 19.846,
+          "end": 23.554,
+          "end_with_dwell": 24.354
+        },
+        {
+          "beat_id": "unstable",
+          "visual_cue": "unstable",
+          "text": "Some dimensions jump around, and they are hard to predict.",
+          "delivery": {
+            "pace": "slightly-slower",
+            "pause_after_ms": 550,
+            "emphasis": [
+              "jump around"
+            ]
+          },
+          "words": [
+            "Some",
+            "dimensions",
+            "jump",
+            "around",
+            "and",
+            "they",
+            "are",
+            "hard",
+            "to",
+            "predict."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.686,
+          "dwell_seconds": 0.25,
+          "start": 24.354,
+          "end": 29.04,
+          "end_with_dwell": 29.29
+        },
+        {
+          "beat_id": "smooth",
+          "visual_cue": "smooth",
+          "text": "Others change smoothly, almost linearly.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Others",
+            "change",
+            "smoothly",
+            "almost",
+            "linearly."
+          ],
+          "word_count": 5,
+          "speaking_seconds": 2.543,
+          "dwell_seconds": 0.25,
+          "start": 29.29,
+          "end": 31.833,
+          "end_with_dwell": 32.083
+        },
+        {
+          "beat_id": "curved",
+          "visual_cue": "curved",
+          "text": "And some curve gently, so higher-order prediction helps.",
+          "delivery": {
+            "pause_after_ms": 550
+          },
+          "words": [
+            "And",
+            "some",
+            "curve",
+            "gently",
+            "so",
+            "higher-order",
+            "prediction",
+            "helps."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.829,
+          "dwell_seconds": 0.25,
+          "start": 32.083,
+          "end": 35.911,
+          "end_with_dwell": 36.161
+        },
+        {
+          "beat_id": "interleaved",
+          "kind": "comparison",
+          "visual_cue": "interleaved",
+          "text": "These behaviours are mixed together inside the same vector.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "pause_after_ms": 600,
+            "direction": "This is the key observation; slow down and let the mixing land."
+          },
+          "words": [
+            "These",
+            "behaviours",
+            "are",
+            "mixed",
+            "together",
+            "inside",
+            "the",
+            "same",
+            "vector."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.137,
+          "dwell_seconds": 0.8,
+          "start": 36.161,
+          "end": 40.299,
+          "end_with_dwell": 41.099
+        },
+        {
+          "beat_id": "mismatch",
+          "kind": "conclusion",
+          "visual_cue": "mismatch",
+          "text": "One prediction order cannot match all of them.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "pause_after_ms": 700
+          },
+          "words": [
+            "One",
+            "prediction",
+            "order",
+            "cannot",
+            "match",
+            "all",
+            "of",
+            "them."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.6,
+          "start": 41.099,
+          "end": 44.807,
+          "end_with_dwell": 45.407
+        }
+      ],
+      "start": 19.846,
+      "end": 45.407,
+      "duration_seconds": 25.561,
+      "tail_dwell": 0.6,
+      "word_count": 48
+    },
+    {
+      "id": "lc_03_partitioning",
+      "title": "A naive split is not enough",
+      "purpose": "Motivate the learned mapping.",
+      "takeaway": "A contiguous split mixes behaviours, so the grouping must be learned.",
+      "narration": [
+        {
+          "beat_id": "split",
+          "kind": "introduction",
+          "visual_cue": "split",
+          "text": "Could we just split the vector into blocks?",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 450
+          },
+          "words": [
+            "Could",
+            "we",
+            "just",
+            "split",
+            "the",
+            "vector",
+            "into",
+            "blocks"
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.429,
+          "dwell_seconds": 0.8,
+          "start": 45.407,
+          "end": 48.836,
+          "end_with_dwell": 49.636
+        },
+        {
+          "beat_id": "naive",
+          "kind": "comparison",
+          "visual_cue": "naive",
+          "text": "A contiguous split puts smooth and unstable dimensions in the same group.",
+          "delivery": {
+            "pace": "slightly-slower",
+            "pause_after_ms": 550
+          },
+          "words": [
+            "A",
+            "contiguous",
+            "split",
+            "puts",
+            "smooth",
+            "and",
+            "unstable",
+            "dimensions",
+            "in",
+            "the",
+            "same",
+            "group."
+          ],
+          "word_count": 12,
+          "speaking_seconds": 5.423,
+          "dwell_seconds": 0.8,
+          "start": 49.636,
+          "end": 55.059,
+          "end_with_dwell": 55.859
+        },
+        {
+          "beat_id": "question",
+          "visual_cue": "question",
+          "text": "Can we learn a representation that groups them by behaviour?",
+          "delivery": {
+            "pause_before_ms": 400,
+            "pause_after_ms": 700,
+            "emphasis": [
+              "by behaviour"
+            ],
+            "direction": "This question motivates everything that follows."
+          },
+          "words": [
+            "Can",
+            "we",
+            "learn",
+            "a",
+            "representation",
+            "that",
+            "groups",
+            "them",
+            "by",
+            "behaviour"
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.286,
+          "dwell_seconds": 0.25,
+          "start": 55.859,
+          "end": 60.144,
+          "end_with_dwell": 60.394
+        }
+      ],
+      "start": 45.407,
+      "end": 60.394,
+      "duration_seconds": 14.987,
+      "tail_dwell": 0.25,
+      "word_count": 30
+    },
+    {
+      "id": "lc_04_decompose",
+      "title": "Learnable decomposition",
+      "purpose": "Introduce the invertible mapping and the three groups.",
+      "takeaway": "A learned invertible mapping regroups dimensions by temporal behaviour into three groups.",
+      "narration": [
+        {
+          "beat_id": "map",
+          "kind": "introduction",
+          "visual_cue": "map",
+          "text": "LinCa learns an invertible mapping of the cached feature.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 550
+          },
+          "words": [
+            "LinCa",
+            "learns",
+            "an",
+            "invertible",
+            "mapping",
+            "of",
+            "the",
+            "cached",
+            "feature."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.137,
+          "dwell_seconds": 0.8,
+          "start": 60.394,
+          "end": 64.531,
+          "end_with_dwell": 65.331
+        },
+        {
+          "beat_id": "groups",
+          "kind": "comparison",
+          "visual_cue": "groups",
+          "text": "It rearranges the dimensions into three groups.",
+          "delivery": {
+            "pause_after_ms": 550,
+            "direction": "Let the regrouping animation finish before naming the groups."
+          },
+          "words": [
+            "It",
+            "rearranges",
+            "the",
+            "dimensions",
+            "into",
+            "three",
+            "groups."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.8,
+          "start": 65.331,
+          "end": 68.611,
+          "end_with_dwell": 69.411
+        },
+        {
+          "beat_id": "z0",
+          "visual_cue": "z0",
+          "text": "The first group collects the unstable dimensions.",
+          "delivery": {
+            "pause_after_ms": 450
+          },
+          "words": [
+            "The",
+            "first",
+            "group",
+            "collects",
+            "the",
+            "unstable",
+            "dimensions."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.25,
+          "start": 69.411,
+          "end": 72.691,
+          "end_with_dwell": 72.941
+        },
+        {
+          "beat_id": "z1",
+          "visual_cue": "z1",
+          "text": "The second collects those that evolve smoothly.",
+          "delivery": {
+            "pause_after_ms": 450
+          },
+          "words": [
+            "The",
+            "second",
+            "collects",
+            "those",
+            "that",
+            "evolve",
+            "smoothly."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.25,
+          "start": 72.941,
+          "end": 76.221,
+          "end_with_dwell": 76.471
+        },
+        {
+          "beat_id": "z2",
+          "visual_cue": "z2",
+          "text": "The third collects the gently curved ones.",
+          "delivery": {
+            "pause_after_ms": 450
+          },
+          "words": [
+            "The",
+            "third",
+            "collects",
+            "the",
+            "gently",
+            "curved",
+            "ones."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.25,
+          "start": 76.471,
+          "end": 79.751,
+          "end_with_dwell": 80.001
+        },
+        {
+          "beat_id": "note",
+          "kind": "conclusion",
+          "visual_cue": "note",
+          "text": "Three groups is the design choice used in the paper.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 600,
+            "direction": "Keep the qualifier; it is a design choice, not a law."
+          },
+          "words": [
+            "Three",
+            "groups",
+            "is",
+            "the",
+            "design",
+            "choice",
+            "used",
+            "in",
+            "the",
+            "paper."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 0.6,
+          "start": 80.001,
+          "end": 84.567,
+          "end_with_dwell": 85.167
+        }
+      ],
+      "start": 60.394,
+      "end": 85.167,
+      "duration_seconds": 24.773,
+      "tail_dwell": 0.6,
+      "word_count": 47
+    },
+    {
+      "id": "lc_05_predictors",
+      "title": "Matched predictors, then reconstruct",
+      "purpose": "Order-matched prediction and the inverse mapping.",
+      "takeaway": "Each group is predicted at its matched order, then the inverse mapping reconstructs the full feature.",
+      "narration": [
+        {
+          "beat_id": "predict0",
+          "kind": "introduction",
+          "visual_cue": "predict0",
+          "text": "Each group now gets a predictor that fits it.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 450
+          },
+          "words": [
+            "Each",
+            "group",
+            "now",
+            "gets",
+            "a",
+            "predictor",
+            "that",
+            "fits",
+            "it."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.137,
+          "dwell_seconds": 0.8,
+          "start": 85.167,
+          "end": 89.304,
+          "end_with_dwell": 90.104
+        },
+        {
+          "beat_id": "reuse",
+          "visual_cue": "reuse",
+          "text": "The unstable group is simply reused from the nearest cache.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "The",
+            "unstable",
+            "group",
+            "is",
+            "simply",
+            "reused",
+            "from",
+            "the",
+            "nearest",
+            "cache."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.566,
+          "dwell_seconds": 0.25,
+          "start": 90.104,
+          "end": 94.67,
+          "end_with_dwell": 94.92
+        },
+        {
+          "beat_id": "hermite",
+          "visual_cue": "hermite",
+          "text": "The smoother groups use Hermite extrapolation at matched order.",
+          "delivery": {
+            "pace": "slower",
+            "pause_after_ms": 600,
+            "emphasis": [
+              "matched order"
+            ],
+            "direction": "Slow down at the new term; do not read coefficients."
+          },
+          "words": [
+            "The",
+            "smoother",
+            "groups",
+            "use",
+            "Hermite",
+            "extrapolation",
+            "at",
+            "matched",
+            "order."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.137,
+          "dwell_seconds": 0.25,
+          "start": 94.92,
+          "end": 99.057,
+          "end_with_dwell": 99.307
+        },
+        {
+          "beat_id": "recon",
+          "visual_cue": "recon",
+          "text": "Then the inverse mapping reconstructs the full feature.",
+          "delivery": {
+            "pause_after_ms": 550
+          },
+          "words": [
+            "Then",
+            "the",
+            "inverse",
+            "mapping",
+            "reconstructs",
+            "the",
+            "full",
+            "feature."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.25,
+          "start": 99.307,
+          "end": 103.016,
+          "end_with_dwell": 103.266
+        },
+        {
+          "beat_id": "why",
+          "kind": "conclusion",
+          "visual_cue": "why",
+          "text": "Same feature, different subspaces, different rules.",
+          "delivery": {
+            "pause_before_ms": 300,
+            "pause_after_ms": 650
+          },
+          "words": [
+            "Same",
+            "feature",
+            "different",
+            "subspaces",
+            "different",
+            "rules."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 3.091,
+          "dwell_seconds": 0.6,
+          "start": 103.266,
+          "end": 106.357,
+          "end_with_dwell": 106.957
+        }
+      ],
+      "start": 85.167,
+      "end": 106.957,
+      "duration_seconds": 21.79,
+      "tail_dwell": 0.6,
+      "word_count": 42
+    },
+    {
+      "id": "lc_06_invertible",
+      "title": "Why the mapping must be invertible",
+      "purpose": "Explain the invertible block and its precise scope.",
+      "takeaway": "Strict invertibility keeps the decomposition lossless; prediction can still be wrong.",
+      "narration": [
+        {
+          "beat_id": "question",
+          "kind": "introduction",
+          "visual_cue": "question",
+          "text": "Why must the mapping be invertible?",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 550
+          },
+          "words": [
+            "Why",
+            "must",
+            "the",
+            "mapping",
+            "be",
+            "invertible"
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.571,
+          "dwell_seconds": 0.8,
+          "start": 106.957,
+          "end": 109.529,
+          "end_with_dwell": 110.329
+        },
+        {
+          "beat_id": "lossless",
+          "visual_cue": "lossless",
+          "text": "So the decomposition itself loses no information.",
+          "delivery": {
+            "pause_after_ms": 550
+          },
+          "words": [
+            "So",
+            "the",
+            "decomposition",
+            "itself",
+            "loses",
+            "no",
+            "information."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.25,
+          "start": 110.329,
+          "end": 113.609,
+          "end_with_dwell": 113.859
+        },
+        {
+          "beat_id": "block",
+          "visual_cue": "block",
+          "text": "Each block mixes channels and couples two halves.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Each",
+            "block",
+            "mixes",
+            "channels",
+            "and",
+            "couples",
+            "two",
+            "halves."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.25,
+          "start": 113.859,
+          "end": 117.567,
+          "end_with_dwell": 117.817
+        },
+        {
+          "beat_id": "fwd",
+          "visual_cue": "fwd",
+          "text": "One half updates the other, and then the roles swap.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "One",
+            "half",
+            "updates",
+            "the",
+            "other",
+            "and",
+            "then",
+            "the",
+            "roles",
+            "swap."
+          ],
+          "word_count": 10,
+          "speaking_seconds": 4.686,
+          "dwell_seconds": 0.25,
+          "start": 117.817,
+          "end": 122.503,
+          "end_with_dwell": 122.753
+        },
+        {
+          "beat_id": "inv",
+          "visual_cue": "inv",
+          "text": "Every step has an explicit inverse.",
+          "delivery": {
+            "pause_after_ms": 550
+          },
+          "words": [
+            "Every",
+            "step",
+            "has",
+            "an",
+            "explicit",
+            "inverse."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 2.851,
+          "dwell_seconds": 0.25,
+          "start": 122.753,
+          "end": 125.604,
+          "end_with_dwell": 125.854
+        },
+        {
+          "beat_id": "scope",
+          "kind": "conclusion",
+          "visual_cue": "scope",
+          "text": "The prediction can still be wrong; only the mapping is exact.",
+          "delivery": {
+            "pause_before_ms": 400,
+            "pause_after_ms": 700,
+            "emphasis": [
+              "only the mapping"
+            ],
+            "direction": "This scope statement matters; do not let it sound like a disclaimer."
+          },
+          "words": [
+            "The",
+            "prediction",
+            "can",
+            "still",
+            "be",
+            "wrong",
+            "only",
+            "the",
+            "mapping",
+            "is",
+            "exact."
+          ],
+          "word_count": 11,
+          "speaking_seconds": 5.274,
+          "dwell_seconds": 0.6,
+          "start": 125.854,
+          "end": 131.129,
+          "end_with_dwell": 131.729
+        }
+      ],
+      "start": 106.957,
+      "end": 131.729,
+      "duration_seconds": 24.771,
+      "tail_dwell": 0.6,
+      "word_count": 48
+    },
+    {
+      "id": "lc_07_segments_training",
+      "title": "Timestep segments and training",
+      "purpose": "Distinguish segment specialization from subspace decomposition; show training signals; recap.",
+      "takeaway": "Separate predictors per timestep segment adapt to stage dynamics; training matches the feature and each component.",
+      "narration": [
+        {
+          "beat_id": "segments",
+          "kind": "introduction",
+          "visual_cue": "segments",
+          "text": "The denoising trajectory is also split into stages.",
+          "delivery": {
+            "intent": "define",
+            "pause_after_ms": 550
+          },
+          "words": [
+            "The",
+            "denoising",
+            "trajectory",
+            "is",
+            "also",
+            "split",
+            "into",
+            "stages."
+          ],
+          "word_count": 8,
+          "speaking_seconds": 3.709,
+          "dwell_seconds": 0.8,
+          "start": 131.729,
+          "end": 135.437,
+          "end_with_dwell": 136.237
+        },
+        {
+          "beat_id": "separate",
+          "visual_cue": "separate",
+          "text": "Each stage trains its own copy of the predictor.",
+          "delivery": {
+            "pause_after_ms": 500
+          },
+          "words": [
+            "Each",
+            "stage",
+            "trains",
+            "its",
+            "own",
+            "copy",
+            "of",
+            "the",
+            "predictor."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.137,
+          "dwell_seconds": 0.25,
+          "start": 136.237,
+          "end": 140.374,
+          "end_with_dwell": 140.624
+        },
+        {
+          "beat_id": "distinct",
+          "kind": "comparison",
+          "visual_cue": "distinct",
+          "text": "That is separate from the subspace decomposition.",
+          "delivery": {
+            "pause_before_ms": 350,
+            "pause_after_ms": 600,
+            "emphasis": [
+              "separate"
+            ],
+            "direction": "Keep the two kinds of specialization clearly apart."
+          },
+          "words": [
+            "That",
+            "is",
+            "separate",
+            "from",
+            "the",
+            "subspace",
+            "decomposition."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.8,
+          "start": 140.624,
+          "end": 143.904,
+          "end_with_dwell": 144.704
+        },
+        {
+          "beat_id": "data",
+          "visual_cue": "data",
+          "text": "Training uses a few hundred pre-generated features.",
+          "words": [
+            "Training",
+            "uses",
+            "a",
+            "few",
+            "hundred",
+            "pre-generated",
+            "features."
+          ],
+          "word_count": 7,
+          "speaking_seconds": 3.28,
+          "dwell_seconds": 0.25,
+          "start": 144.704,
+          "end": 147.984,
+          "end_with_dwell": 148.234
+        },
+        {
+          "beat_id": "losses",
+          "visual_cue": "losses",
+          "text": "One loss matches the feature; another matches each component.",
+          "delivery": {
+            "pause_after_ms": 550
+          },
+          "words": [
+            "One",
+            "loss",
+            "matches",
+            "the",
+            "feature",
+            "another",
+            "matches",
+            "each",
+            "component."
+          ],
+          "word_count": 9,
+          "speaking_seconds": 4.417,
+          "dwell_seconds": 0.25,
+          "start": 148.234,
+          "end": 152.651,
+          "end_with_dwell": 152.901
+        },
+        {
+          "beat_id": "recap",
+          "kind": "conclusion",
+          "visual_cue": "recap",
+          "text": "Decompose, predict, reconstruct: that is LinCa.",
+          "delivery": {
+            "pause_before_ms": 400,
+            "pause_after_ms": 750,
+            "emphasis": [
+              "Decompose",
+              "predict",
+              "reconstruct"
+            ],
+            "direction": "Finish the video cleanly on the pipeline."
+          },
+          "words": [
+            "Decompose",
+            "predict",
+            "reconstruct",
+            "that",
+            "is",
+            "LinCa."
+          ],
+          "word_count": 6,
+          "speaking_seconds": 3.371,
+          "dwell_seconds": 0.6,
+          "start": 152.901,
+          "end": 156.273,
+          "end_with_dwell": 156.873
+        }
+      ],
+      "start": 131.729,
+      "end": 156.873,
+      "duration_seconds": 25.144,
+      "tail_dwell": 0.6,
+      "word_count": 46
+    }
+  ],
+  "duration_seconds": 156.873,
+  "word_count": 299,
+  "target_wpm": 140
+}

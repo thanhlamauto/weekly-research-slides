@@ -1,0 +1,82 @@
+{
+  "video": "examples/linca/renders/final/linca-method-explainer.mp4",
+  "duration_seconds": 90.15,
+  "frames": [
+    {
+      "frame": "linca-method-explainer_frame_00.png",
+      "content_fraction": 0.012,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_01.png",
+      "content_fraction": 0.0305,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_02.png",
+      "content_fraction": 0.0194,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_03.png",
+      "content_fraction": 0.0358,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_04.png",
+      "content_fraction": 0.0196,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_05.png",
+      "content_fraction": 0.029,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_06.png",
+      "content_fraction": 0.0378,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_07.png",
+      "content_fraction": 0.0421,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_08.png",
+      "content_fraction": 0.0813,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_09.png",
+      "content_fraction": 0.0999,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_10.png",
+      "content_fraction": 0.0471,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_11.png",
+      "content_fraction": 0.0576,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_12.png",
+      "content_fraction": 0.1122,
+      "edge_touch": false
+    },
+    {
+      "frame": "linca-method-explainer_frame_13.png",
+      "content_fraction": 0.1221,
+      "edge_touch": false
+    }
+  ],
+  "findings": [
+    {
+      "level": "info",
+      "message": "duration 90.15s, size 3.62 MB"
+    }
+  ]
+}

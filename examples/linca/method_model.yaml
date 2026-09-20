@@ -1,0 +1,123 @@
+# Method semantic model for LinCa.
+# Source: "LinCa: Accelerating Diffusion Models via Learnable Decomposed Feature
+# Caching", Liu, Qin, Tu, Liu, Hu, Yan, Xie, Shen, Ren, Lin, Zhang, Zhang.
+# arXiv:2608.17973 (18 Aug 2026). Read from the paper PDF; synthetic demo.
+
+method:
+  name: LinCa
+  short_name: LinCa
+  kind: ours
+  paper_title: "LinCa: Accelerating Diffusion Models via Learnable Decomposed Feature Caching"
+  source_url: "https://arxiv.org/abs/2608.17973"
+  venue: arXiv
+  year: 2026
+
+problem: >-
+  Feature caching accelerates diffusion inference by reusing or predicting
+  intermediate features, but existing training-free methods apply one uniform
+  prediction strategy to the whole feature. Feature dynamics are heterogeneous
+  across timesteps and models, and even across dimensions of the same feature,
+  so a uniform rule degrades quality at high acceleration ratios.
+
+baseline: >-
+  Uniform prediction: run a full forward pass every N steps and predict the
+  remaining features from cached history with a single rule, e.g. 0th-order
+  reuse or a Taylor/Hermite extrapolation applied to all dimensions.
+
+key_observation: >-
+  Within the same model and timestep segment, feature dimensions exhibit
+  markedly different continuity: some are unstable with abrupt mutations, others
+  evolve smoothly or with gentle curvature. These dimensions are interleaved in
+  the original feature space, so they cannot be separated by a simple contiguous
+  split. Dynamics also differ across timestep segments and across models.
+
+assumption_of_previous_methods: >-
+  All feature dimensions share the same temporal continuity, so one prediction
+  order and one rule are enough for the whole feature at every timestep.
+
+failure_of_previous_methods: >-
+  Uniform prediction accumulates error under large caching intervals: high-order
+  extrapolation is unreliable on unstable dimensions, while low-order reuse
+  underfits the smooth ones.
+
+motivation: >-
+  Learn an invertible mapping that regroups dimensions by their temporal
+  behaviour, apply order-matched prediction to each group, and reconstruct the
+  feature without adding projection loss; train separate predictors for
+  different timestep segments.
+
+mechanism:
+  inputs:
+    - "cached cumulative residual feature x_t at the final layer"
+    - "the three most recent computation-step features x_t, x_{t+N}, x_{t+2N}"
+  operations:
+    - "decompose x_t through a learnable invertible mapping E_theta into M=3 sub-components"
+    - "predict z^(0) by reuse, z^(1) with 1st-order and z^(2) with 2nd-order Hermite extrapolation"
+    - "reconstruct x_hat = E_theta^{-1}([z_hat^(0) | z_hat^(1) | z_hat^(2)])"
+  outputs:
+    - "predicted feature x_hat_{t-k} for each skipped timestep"
+
+components:
+  - { id: invertible_decomposition, name: Invertible Decomposition, role: mapping,
+      description: "L=2 invertible blocks, hidden width 128, M=3 sub-components" }
+  - { id: differentiated_predictors, name: Differentiated Predictors, role: prediction,
+      description: "0th-order reuse for z^(0); m-th order Hermite extrapolation for z^(m), m>=1" }
+  - { id: invertible_projection, name: Invertible Projection, role: design,
+      description: "invertible 1x1 convolution plus additive coupling with MLPs F and G" }
+  - { id: segment_predictors, name: Segment Predictors, role: specialization,
+      description: "S=3 isomorphic but separately parameterized predictors along the trajectory" }
+
+equations:
+  - { id: decompose, plain: "z_t = E_theta(x_t) = [z_t^(0) | z_t^(1) | z_t^(2)]",
+      meaning: "learnable regroup of feature dimensions by temporal behaviour" }
+  - { id: reuse, plain: "z_hat^(0)_{t-k} = z_t^(0)",
+      meaning: "the unstable component is reused from the nearest cache" }
+  - { id: hermite, plain: "z_hat^(m)_{t-k} = z_t^(m) + sum_i alpha_i(k) Delta^i z^(m)",
+      meaning: "order-matched Hermite extrapolation for smoother components" }
+  - { id: reconstruct, plain: "x_hat_{t-k} = E_theta^{-1}([z_hat^(0) | z_hat^(1) | z_hat^(2)])",
+      meaning: "lossless reconstruction back to the original feature space" }
+  - { id: coupling, plain: "v1 = u1 + F(u2),  v2 = u2 + G(v1)",
+      meaning: "additive coupling; the inverse is u2 = v2 - G(v1), u1 = v1 - F(u2)" }
+  - { id: loss, plain: "L = L_feat + lambda * L_comp,  lambda = 1",
+      meaning: "match the reconstructed feature and each predicted sub-component" }
+
+training:
+  - "Pre-generate 100-200 feature trajectories; no diffusion model weights are loaded."
+  - "For each timestep segment, decompose historical and target features and predict the target sub-components."
+  - "Minimize the reconstructed-feature loss plus the sub-component prediction loss (lambda = 1)."
+  - "Training finishes in about one hour on a single 12GB GPU with <0.2% additional parameters."
+
+inference:
+  - "Warm up with a few full-compute steps (first_enhance), then alternate: full compute every N steps, LinCa prediction in between."
+  - "At computation steps, cache the feature and its decomposition; keep discrete differences for higher-order prediction."
+  - "At prediction steps the diffusion backbone is bypassed entirely; only the predictor runs (0.02 TFLOPs vs 74.39 TFLOPs per full FLUX computation)."
+  - "Reported acceleration: 5.51x FLUX, 6.95x Qwen-Image, 7.08x Qwen-Image-Edit, 5.50x HunyuanVideo."
+
+claims:
+  - "Decomposing features by continuity and applying order-matched prediction outperforms uniform prediction at the same acceleration."
+  - "Strict invertibility keeps the decomposition/reconstruction path from adding a projection bottleneck."
+  - "Per-segment predictors adapt to dynamics differences across denoising stages."
+
+assumptions:
+  - "The continuity differences across dimensions and segments are empirical observations on the tested models."
+  - "M=3 sub-components, S=3 segments, L=2 blocks and hidden width 128 are design choices, not learned."
+  - "The predictor only sees pre-generated features; it never loads the diffusion model."
+
+limitations:
+  - "Training-based: it needs pre-generated features and a short training run."
+  - "Invertibility makes the mapping lossless, not the prediction; prediction error remains."
+  - "Fixed number of components and segments; very few-step distilled models leave less redundancy to exploit."
+
+relation_to_our_work: >-
+  A learned, invertible decomposition that turns one prediction problem into
+  several easier ones; relevant whenever a representation mixes different
+  temporal behaviours that a single rule cannot capture.
+
+notation:
+  x_t: "cached cumulative residual feature at the final layer"
+  E_theta: "learnable invertible mapping"
+  z^(m): "m-th sub-component (group) of the decomposed feature"
+  M: "number of sub-components (3 in practice)"
+  N: "cache interval (steps between full computations)"
+  S: "number of timestep segments (3 in practice)"
+  k: "steps elapsed since the last computation step"
