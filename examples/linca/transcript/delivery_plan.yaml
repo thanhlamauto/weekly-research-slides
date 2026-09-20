@@ -6,11 +6,15 @@
   },
   "narration": {
     "backend": "gemini",
-    "model": "gemini-2.5-flash-preview-tts",
+    "model": "gemini-3.1-flash-tts-preview",
     "voice": {
       "name": "Kore"
     },
     "profile": "research-explainer",
+    "chunking": {
+      "min_seconds": 20,
+      "max_seconds": 45
+    },
     "pacing": {
       "target_wpm": 140,
       "min_concept_dwell_ms": 500
@@ -84,9 +88,12 @@
       "beat_ids": [
         "replay",
         "unstable",
-        "smooth"
+        "smooth",
+        "curved",
+        "interleaved",
+        "mismatch"
       ],
-      "text": "Follow a single feature across the denoising trajectory. Some dimensions jump around, and they are hard to predict. Others change smoothly, almost linearly.",
+      "text": "Follow a single feature across the denoising trajectory. Some dimensions jump around, and they are hard to predict. Others change smoothly, almost linearly. And some curve gently, so higher-order prediction helps.\n\nThese behaviours are mixed together inside the same vector.\n\nOne prediction order cannot match all of them.",
       "delivery": {
         "replay": {
           "intent": "define",
@@ -119,21 +126,7 @@
           "pause_after_ms": 500,
           "emphasis": [],
           "direction": ""
-        }
-      },
-      "estimated_seconds": 10.938,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Caching predicts skipped features from history, and existing methods use one rule for the whole feature.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Motivate the learned mapping..\n\nBEAT NOTES\n- [replay] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [unstable] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy: medium\n  emphasize: jump around\n  pause ~550ms after this beat\n- [smooth] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nFollow a single feature across the denoising trajectory. Some dimensions jump around, and they are hard to predict. Others change smoothly, almost linearly."
-    },
-    {
-      "chunk_id": "lc_02_dynamics_mismatch__c02",
-      "scene_id": "lc_02_dynamics_mismatch",
-      "beat_ids": [
-        "curved",
-        "interleaved",
-        "mismatch"
-      ],
-      "text": "And some curve gently, so higher-order prediction helps.\n\nThese behaviours are mixed together inside the same vector.\n\nOne prediction order cannot match all of them.",
-      "delivery": {
+        },
         "curved": {
           "intent": "explain",
           "tone": "calm-explanatory",
@@ -165,8 +158,8 @@
           "direction": ""
         }
       },
-      "estimated_seconds": 11.675,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Caching predicts skipped features from history, and existing methods use one rule for the whole feature.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Motivate the learned mapping..\n\nBEAT NOTES\n- [curved] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [interleaved] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~600ms after this beat\n  direction: This is the key observation; slow down and let the mixing land.\n- [mismatch] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~700ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nAnd some curve gently, so higher-order prediction helps.\n\nThese behaviours are mixed together inside the same vector.\n\nOne prediction order cannot match all of them."
+      "estimated_seconds": 22.613,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Caching predicts skipped features from history, and existing methods use one rule for the whole feature.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Motivate the learned mapping..\n\nBEAT NOTES\n- [replay] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [unstable] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy: medium\n  emphasize: jump around\n  pause ~550ms after this beat\n- [smooth] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [curved] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [interleaved] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~600ms after this beat\n  direction: This is the key observation; slow down and let the mixing land.\n- [mismatch] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~700ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nFollow a single feature across the denoising trajectory. Some dimensions jump around, and they are hard to predict. Others change smoothly, almost linearly. And some curve gently, so higher-order prediction helps.\n\nThese behaviours are mixed together inside the same vector.\n\nOne prediction order cannot match all of them."
     },
     {
       "chunk_id": "lc_03_partitioning__c01",
@@ -220,9 +213,12 @@
       "beat_ids": [
         "map",
         "groups",
-        "z0"
+        "z0",
+        "z1",
+        "z2",
+        "note"
       ],
-      "text": "LinCa learns an invertible mapping of the cached feature. It rearranges the dimensions into three groups. The first group collects the unstable dimensions.",
+      "text": "LinCa learns an invertible mapping of the cached feature. It rearranges the dimensions into three groups. The first group collects the unstable dimensions. The second collects those that evolve smoothly. The third collects the gently curved ones.\n\nThree groups is the design choice used in the paper.",
       "delivery": {
         "map": {
           "intent": "define",
@@ -253,21 +249,7 @@
           "pause_after_ms": 450,
           "emphasis": [],
           "direction": ""
-        }
-      },
-      "estimated_seconds": 10.697,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A contiguous split mixes behaviours, so the grouping must be learned.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Order-matched prediction and the inverse mapping..\n\nBEAT NOTES\n- [map] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~550ms after this beat\n- [groups] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~550ms after this beat\n  direction: Let the regrouping animation finish before naming the groups.\n- [z0] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~450ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nLinCa learns an invertible mapping of the cached feature. It rearranges the dimensions into three groups. The first group collects the unstable dimensions."
-    },
-    {
-      "chunk_id": "lc_04_decompose__c02",
-      "scene_id": "lc_04_decompose",
-      "beat_ids": [
-        "z1",
-        "z2",
-        "note"
-      ],
-      "text": "The second collects those that evolve smoothly. The third collects the gently curved ones.\n\nThree groups is the design choice used in the paper.",
-      "delivery": {
+        },
         "z1": {
           "intent": "explain",
           "tone": "calm-explanatory",
@@ -299,17 +281,20 @@
           "direction": "Keep the qualifier; it is a design choice, not a law."
         }
       },
-      "estimated_seconds": 11.126,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A contiguous split mixes behaviours, so the grouping must be learned.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Order-matched prediction and the inverse mapping..\n\nBEAT NOTES\n- [z1] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~450ms after this beat\n- [z2] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~450ms after this beat\n- [note] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~600ms after this beat\n  direction: Keep the qualifier; it is a design choice, not a law.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe second collects those that evolve smoothly. The third collects the gently curved ones.\n\nThree groups is the design choice used in the paper."
+      "estimated_seconds": 21.823,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A contiguous split mixes behaviours, so the grouping must be learned.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Order-matched prediction and the inverse mapping..\n\nBEAT NOTES\n- [map] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~550ms after this beat\n- [groups] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~550ms after this beat\n  direction: Let the regrouping animation finish before naming the groups.\n- [z0] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~450ms after this beat\n- [z1] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~450ms after this beat\n- [z2] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~450ms after this beat\n- [note] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~600ms after this beat\n  direction: Keep the qualifier; it is a design choice, not a law.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nLinCa learns an invertible mapping of the cached feature. It rearranges the dimensions into three groups. The first group collects the unstable dimensions. The second collects those that evolve smoothly. The third collects the gently curved ones.\n\nThree groups is the design choice used in the paper."
     },
     {
       "chunk_id": "lc_05_predictors__c01",
       "scene_id": "lc_05_predictors",
       "beat_ids": [
         "predict0",
-        "reuse"
+        "reuse",
+        "hermite",
+        "recon",
+        "why"
       ],
-      "text": "Each group now gets a predictor that fits it. The unstable group is simply reused from the nearest cache.",
+      "text": "Each group now gets a predictor that fits it. The unstable group is simply reused from the nearest cache. The smoother groups use Hermite extrapolation at matched order. Then the inverse mapping reconstructs the full feature.\n\nSame feature, different subspaces, different rules.",
       "delivery": {
         "predict0": {
           "intent": "define",
@@ -330,21 +315,7 @@
           "pause_after_ms": 500,
           "emphasis": [],
           "direction": ""
-        }
-      },
-      "estimated_seconds": 8.703,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A learned invertible mapping regroups dimensions by temporal behaviour into three groups.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain the invertible block and its precise scope..\n\nBEAT NOTES\n- [predict0] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [reuse] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nEach group now gets a predictor that fits it. The unstable group is simply reused from the nearest cache."
-    },
-    {
-      "chunk_id": "lc_05_predictors__c02",
-      "scene_id": "lc_05_predictors",
-      "beat_ids": [
-        "hermite",
-        "recon",
-        "why"
-      ],
-      "text": "The smoother groups use Hermite extrapolation at matched order. Then the inverse mapping reconstructs the full feature.\n\nSame feature, different subspaces, different rules.",
-      "delivery": {
+        },
         "hermite": {
           "intent": "explain",
           "tone": "calm-explanatory",
@@ -378,8 +349,8 @@
           "direction": ""
         }
       },
-      "estimated_seconds": 10.937,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A learned invertible mapping regroups dimensions by temporal behaviour into three groups.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain the invertible block and its precise scope..\n\nBEAT NOTES\n- [hermite] intent: explain, tone: calm-explanatory, pace: slower, energy: medium\n  emphasize: matched order\n  pause ~600ms after this beat\n  direction: Slow down at the new term; do not read coefficients.\n- [recon] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [why] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~650ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe smoother groups use Hermite extrapolation at matched order. Then the inverse mapping reconstructs the full feature.\n\nSame feature, different subspaces, different rules."
+      "estimated_seconds": 19.64,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A learned invertible mapping regroups dimensions by temporal behaviour into three groups.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Explain the invertible block and its precise scope..\n\nBEAT NOTES\n- [predict0] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [reuse] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [hermite] intent: explain, tone: calm-explanatory, pace: slower, energy: medium\n  emphasize: matched order\n  pause ~600ms after this beat\n  direction: Slow down at the new term; do not read coefficients.\n- [recon] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [why] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~650ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nEach group now gets a predictor that fits it. The unstable group is simply reused from the nearest cache. The smoother groups use Hermite extrapolation at matched order. Then the inverse mapping reconstructs the full feature.\n\nSame feature, different subspaces, different rules."
     },
     {
       "chunk_id": "lc_06_invertible__c01",
@@ -387,9 +358,12 @@
       "beat_ids": [
         "question",
         "lossless",
-        "block"
+        "block",
+        "fwd",
+        "inv",
+        "scope"
       ],
-      "text": "Why must the mapping be invertible? So the decomposition itself loses no information. Each block mixes channels and couples two halves.",
+      "text": "Why must the mapping be invertible? So the decomposition itself loses no information. Each block mixes channels and couples two halves. One half updates the other, and then the roles swap. Every step has an explicit inverse.\n\nThe prediction can still be wrong; only the mapping is exact.",
       "delivery": {
         "question": {
           "intent": "define",
@@ -420,21 +394,7 @@
           "pause_after_ms": 500,
           "emphasis": [],
           "direction": ""
-        }
-      },
-      "estimated_seconds": 9.56,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Each group is predicted at its matched order, then the inverse mapping reconstructs the full feature.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Distinguish segment specialization from subspace decomposition; show training signals; recap..\n\nBEAT NOTES\n- [question] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~550ms after this beat\n- [lossless] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [block] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nWhy must the mapping be invertible? So the decomposition itself loses no information. Each block mixes channels and couples two halves."
-    },
-    {
-      "chunk_id": "lc_06_invertible__c02",
-      "scene_id": "lc_06_invertible",
-      "beat_ids": [
-        "fwd",
-        "inv",
-        "scope"
-      ],
-      "text": "One half updates the other, and then the roles swap. Every step has an explicit inverse.\n\nThe prediction can still be wrong; only the mapping is exact.",
-      "delivery": {
+        },
         "fwd": {
           "intent": "explain",
           "tone": "calm-explanatory",
@@ -468,8 +428,8 @@
           "direction": "This scope statement matters; do not let it sound like a disclaimer."
         }
       },
-      "estimated_seconds": 12.811,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Each group is predicted at its matched order, then the inverse mapping reconstructs the full feature.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Distinguish segment specialization from subspace decomposition; show training signals; recap..\n\nBEAT NOTES\n- [fwd] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [inv] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [scope] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: only the mapping\n  pause ~400ms before this beat\n  pause ~700ms after this beat\n  direction: This scope statement matters; do not let it sound like a disclaimer.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nOne half updates the other, and then the roles swap. Every step has an explicit inverse.\n\nThe prediction can still be wrong; only the mapping is exact."
+      "estimated_seconds": 22.371,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Each group is predicted at its matched order, then the inverse mapping reconstructs the full feature.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Distinguish segment specialization from subspace decomposition; show training signals; recap..\n\nBEAT NOTES\n- [question] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~550ms after this beat\n- [lossless] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [block] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [fwd] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [inv] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [scope] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: only the mapping\n  pause ~400ms before this beat\n  pause ~700ms after this beat\n  direction: This scope statement matters; do not let it sound like a disclaimer.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nWhy must the mapping be invertible? So the decomposition itself loses no information. Each block mixes channels and couples two halves. One half updates the other, and then the roles swap. Every step has an explicit inverse.\n\nThe prediction can still be wrong; only the mapping is exact."
     },
     {
       "chunk_id": "lc_07_segments_training__c01",
@@ -477,9 +437,12 @@
       "beat_ids": [
         "segments",
         "separate",
-        "distinct"
+        "distinct",
+        "data",
+        "losses",
+        "recap"
       ],
-      "text": "The denoising trajectory is also split into stages. Each stage trains its own copy of the predictor.\n\nThat is separate from the subspace decomposition.",
+      "text": "The denoising trajectory is also split into stages. Each stage trains its own copy of the predictor.\n\nThat is separate from the subspace decomposition. Training uses a few hundred pre-generated features. One loss matches the feature; another matches each component.\n\nDecompose, predict, reconstruct: that is LinCa.",
       "delivery": {
         "segments": {
           "intent": "define",
@@ -512,21 +475,7 @@
             "separate"
           ],
           "direction": "Keep the two kinds of specialization clearly apart."
-        }
-      },
-      "estimated_seconds": 11.126,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Strict invertibility keeps the decomposition lossless; prediction can still be wrong.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [segments] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~550ms after this beat\n- [separate] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [distinct] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  emphasize: separate\n  pause ~350ms before this beat\n  pause ~600ms after this beat\n  direction: Keep the two kinds of specialization clearly apart.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe denoising trajectory is also split into stages. Each stage trains its own copy of the predictor.\n\nThat is separate from the subspace decomposition."
-    },
-    {
-      "chunk_id": "lc_07_segments_training__c02",
-      "scene_id": "lc_07_segments_training",
-      "beat_ids": [
-        "data",
-        "losses",
-        "recap"
-      ],
-      "text": "Training uses a few hundred pre-generated features. One loss matches the feature; another matches each component.\n\nDecompose, predict, reconstruct: that is LinCa.",
-      "delivery": {
+        },
         "data": {
           "intent": "explain",
           "tone": "calm-explanatory",
@@ -562,8 +511,8 @@
           "direction": "Finish the video cleanly on the pipeline."
         }
       },
-      "estimated_seconds": 11.068,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Strict invertibility keeps the decomposition lossless; prediction can still be wrong.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [data] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [losses] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [recap] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: Decompose, predict, reconstruct\n  pause ~400ms before this beat\n  pause ~750ms after this beat\n  direction: Finish the video cleanly on the pipeline.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nTraining uses a few hundred pre-generated features. One loss matches the feature; another matches each component.\n\nDecompose, predict, reconstruct: that is LinCa."
+      "estimated_seconds": 22.194,
+      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Strict invertibility keeps the decomposition lossless; prediction can still be wrong.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [segments] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~550ms after this beat\n- [separate] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [distinct] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  emphasize: separate\n  pause ~350ms before this beat\n  pause ~600ms after this beat\n  direction: Keep the two kinds of specialization clearly apart.\n- [data] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [losses] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [recap] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: Decompose, predict, reconstruct\n  pause ~400ms before this beat\n  pause ~750ms after this beat\n  direction: Finish the video cleanly on the pipeline.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe denoising trajectory is also split into stages. Each stage trains its own copy of the predictor.\n\nThat is separate from the subspace decomposition. Training uses a few hundred pre-generated features. One loss matches the feature; another matches each component.\n\nDecompose, predict, reconstruct: that is LinCa."
     }
   ],
   "word_count": 299

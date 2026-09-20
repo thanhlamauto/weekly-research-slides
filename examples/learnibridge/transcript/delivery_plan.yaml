@@ -1,579 +1,717 @@
-{
-  "video": "learnibridge-method-explainer",
-  "profile": "research-explainer",
-  "audience": {
-    "level": "adjacent-researcher"
-  },
-  "narration": {
-    "backend": "gemini",
-    "model": "gemini-2.5-flash-preview-tts",
-    "voice": {
-      "name": "Kore"
-    },
-    "profile": "research-explainer",
-    "pacing": {
-      "target_wpm": 140,
-      "min_concept_dwell_ms": 500
-    },
-    "fallback": {
-      "backend": "say",
-      "voice": "Samantha"
-    }
-  },
-  "chunks": [
-    {
-      "chunk_id": "lb_01_why_cache__c01",
-      "scene_id": "lb_01_why_cache",
-      "beat_ids": [
-        "establish",
-        "trace",
-        "reuse",
-        "conclude"
-      ],
-      "text": "Diffusion runs a large network at every step. Neighbouring steps compute almost the same thing. Caching stores one feature and reuses it later, skipping the repeated work.\n\nThe question is how far one stored feature can be pushed.",
-      "delivery": {
-        "establish": {
-          "intent": "setup",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": "State the cost plainly; this is the problem."
-        },
-        "trace": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "reuse": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "conclude": {
-          "intent": "conclude",
-          "tone": "confident-restrained",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 350,
-          "pause_after_ms": 550,
-          "emphasis": [
-            "how far"
-          ],
-          "direction": "Land the question; do not sound like a slogan."
-        }
-      },
-      "estimated_seconds": 17.526,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\nThe next section will Show stale-feature error accumulating with skip distance..\n\nBEAT NOTES\n- [establish] intent: setup, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n  direction: State the cost plainly; this is the problem.\n- [trace] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [reuse] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [conclude] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: how far\n  pause ~350ms before this beat\n  pause ~550ms after this beat\n  direction: Land the question; do not sound like a slogan.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nDiffusion runs a large network at every step. Neighbouring steps compute almost the same thing. Caching stores one feature and reuses it later, skipping the repeated work.\n\nThe question is how far one stored feature can be pushed."
-    },
-    {
-      "chunk_id": "lb_02_stale_cache__c01",
-      "scene_id": "lb_02_stale_cache",
-      "beat_ids": [
-        "establish",
-        "skip_small",
-        "skip_large",
-        "accumulate",
-        "conclude"
-      ],
-      "text": "The cached feature is held while the true feature moves. Skip one step, and the error is small.\n\nSkip many steps, and the stale feature drifts away. Errors accumulate, and quality degrades.\n\nReuse is cheap, but stale features become wrong.",
-      "delivery": {
-        "establish": {
-          "intent": "define",
-          "tone": "precise-introducing",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 150,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": "Set up the comparison; no judgement yet."
-        },
-        "skip_small": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "skip_large": {
-          "intent": "contrast",
-          "tone": "curious-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 350,
-          "pause_after_ms": 450,
-          "emphasis": [
-            "drifts far"
-          ],
-          "direction": "The contrast starts here; stay measured."
-        },
-        "accumulate": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "conclude": {
-          "intent": "conclude",
-          "tone": "confident-restrained",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 600,
-          "emphasis": [],
-          "direction": ""
-        }
-      },
-      "estimated_seconds": 19.024,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Caching skips repeated computation, so the question becomes how far one stored feature can be pushed.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Reframe prediction as correction..\n\nBEAT NOTES\n- [establish] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n  direction: Set up the comparison; no judgement yet.\n- [skip_small] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [skip_large] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  emphasize: drifts far\n  pause ~350ms before this beat\n  pause ~450ms after this beat\n  direction: The contrast starts here; stay measured.\n- [accumulate] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [conclude] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~600ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe cached feature is held while the true feature moves. Skip one step, and the error is small.\n\nSkip many steps, and the stale feature drifts away. Errors accumulate, and quality degrades.\n\nReuse is cheap, but stale features become wrong."
-    },
-    {
-      "chunk_id": "lb_03_change_question__c01",
-      "scene_id": "lb_03_change_question",
-      "beat_ids": [
-        "ask",
-        "reframe",
-        "setup",
-        "sketch"
-      ],
-      "text": "Most caching methods predict the future feature from the past.\n\nLearniBridge asks a different question. What correction makes a cached computation behave like the skipped full computation? Cached computation plus a small correction approximates the future one.",
-      "delivery": {
-        "ask": {
-          "intent": "define",
-          "tone": "precise-introducing",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 150,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "reframe": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 400,
-          "pause_after_ms": 600,
-          "emphasis": [
-            "different question"
-          ],
-          "direction": "This is the intellectual move; give it space."
-        },
-        "setup": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 650,
-          "emphasis": [],
-          "direction": "A genuine question. Do not rush the ending."
-        },
-        "sketch": {
-          "intent": "derive",
-          "tone": "precise",
-          "pace": "slower",
-          "energy": "medium",
-          "pause_before_ms": 200,
-          "pause_after_ms": 650,
-          "emphasis": [],
-          "direction": ""
-        }
-      },
-      "estimated_seconds": 16.698,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Reuse is cheap, but the stale feature drifts and the error accumulates.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Present the low-rank analysis; separate observation from consequence..\n\nBEAT NOTES\n- [ask] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [reframe] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  emphasize: different question\n  pause ~400ms before this beat\n  pause ~600ms after this beat\n  direction: This is the intellectual move; give it space.\n- [setup] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy: medium\n  pause ~650ms after this beat\n  direction: A genuine question. Do not rush the ending.\n- [sketch] intent: derive, tone: precise, pace: slower, energy: medium\n  pause ~200ms before this beat\n  pause ~650ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nMost caching methods predict the future feature from the past.\n\nLearniBridge asks a different question. What correction makes a cached computation behave like the skipped full computation? Cached computation plus a small correction approximates the future one."
-    },
-    {
-      "chunk_id": "lb_04_low_rank__c01",
-      "scene_id": "lb_04_low_rank",
-      "beat_ids": [
-        "collect",
-        "residual",
-        "linear"
-      ],
-      "text": "Stack layer inputs from many samples, one column per sample. The correction is the layer difference between timesteps. Model it as a matrix times those inputs.",
-      "delivery": {
-        "collect": {
-          "intent": "define",
-          "tone": "precise-introducing",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 150,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "residual": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "linear": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        }
-      },
-      "estimated_seconds": 12.104,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Ask what correction makes a cached computation behave like the skipped full computation.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Present prompt-invariance evidence and its interpretation..\n\nBEAT NOTES\n- [collect] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [residual] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [linear] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy: medium\n  pause ~500ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nStack layer inputs from many samples, one column per sample. The correction is the layer difference between timesteps. Model it as a matrix times those inputs."
-    },
-    {
-      "chunk_id": "lb_04_low_rank__c02",
-      "scene_id": "lb_04_low_rank",
-      "beat_ids": [
-        "closed_form",
-        "spectrum",
-        "consequence"
-      ],
-      "text": "The best matrix is E times the pseudo-inverse of X. Its singular values decay fast: energy sits in a few directions.\n\nThe required correction is therefore low rank.",
-      "delivery": {
-        "closed_form": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "slower",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 550,
-          "emphasis": [],
-          "direction": "Read this as the answer to the previous sentence, not symbol by symbol."
-        },
-        "spectrum": {
-          "intent": "contrast",
-          "tone": "curious-explanatory",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 600,
-          "emphasis": [
-            "a few directions"
-          ],
-          "direction": "This is an observation from measurements; say it that way."
-        },
-        "consequence": {
-          "intent": "conclude",
-          "tone": "confident-restrained",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 350,
-          "pause_after_ms": 650,
-          "emphasis": [],
-          "direction": "This follows under the paper's linear model; keep the qualifier in your tone."
-        }
-      },
-      "estimated_seconds": 13.12,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Ask what correction makes a cached computation behave like the skipped full computation.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Present prompt-invariance evidence and its interpretation..\n\nBEAT NOTES\n- [closed_form] intent: explain, tone: calm-explanatory, pace: slower, energy: medium\n  pause ~550ms after this beat\n  direction: Read this as the answer to the previous sentence, not symbol by symbol.\n- [spectrum] intent: contrast, tone: curious-explanatory, pace: slightly-slower, energy: medium\n  emphasize: a few directions\n  pause ~300ms before this beat\n  pause ~600ms after this beat\n  direction: This is an observation from measurements; say it that way.\n- [consequence] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~650ms after this beat\n  direction: This follows under the paper's linear model; keep the qualifier in your tone.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe best matrix is E times the pseudo-inverse of X. Its singular values decay fast: energy sits in a few directions.\n\nThe required correction is therefore low rank."
-    },
-    {
-      "chunk_id": "lb_05_prompt_invariant__c01",
-      "scene_id": "lb_05_prompt_invariant",
-      "beat_ids": [
-        "split",
-        "per_group",
-        "subspaces",
-        "angles",
-        "small",
-        "consequence"
-      ],
-      "text": "Split one hundred prompts into disjoint groups. Fit the optimal correction per group. Each has its own principal subspace. Measure the angles between them.\n\nThey come out consistently small.\n\nSo a few calibration prompts can generalize.",
-      "delivery": {
-        "split": {
-          "intent": "define",
-          "tone": "precise-introducing",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 150,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "per_group": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "subspaces": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "angles": {
-          "intent": "contrast",
-          "tone": "curious-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "small": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 350,
-          "pause_after_ms": 250,
-          "emphasis": [
-            "consistently small"
-          ],
-          "direction": ""
-        },
-        "consequence": {
-          "intent": "conclude",
-          "tone": "confident-restrained",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 650,
-          "emphasis": [],
-          "direction": "This is the interpretation of the measurement, not a guarantee."
-        }
-      },
-      "estimated_seconds": 17.108,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: The input matrix has rapidly decaying singular values, so under the paper's linear model the optimal correction is low-rank.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Derive the parameterization from the measured structure..\n\nBEAT NOTES\n- [split] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [per_group] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [subspaces] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [angles] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~500ms after this beat\n- [small] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  emphasize: consistently small\n  pause ~350ms before this beat\n  pause ~250ms after this beat\n- [consequence] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~650ms after this beat\n  direction: This is the interpretation of the measurement, not a guarantee.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nSplit one hundred prompts into disjoint groups. Fit the optimal correction per group. Each has its own principal subspace. Measure the angles between them.\n\nThey come out consistently small.\n\nSo a few calibration prompts can generalize."
-    },
-    {
-      "chunk_id": "lb_06_lora_bridge__c01",
-      "scene_id": "lb_06_lora_bridge",
-      "beat_ids": [
-        "final_block",
-        "freeze",
-        "lora"
-      ],
-      "text": "Look at the last Transformer block. Keep the pretrained weights frozen. Add a thin low-rank path, LoRA (low-rank adaptation).",
-      "delivery": {
-        "final_block": {
-          "intent": "define",
-          "tone": "precise-introducing",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 150,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "freeze": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "lora": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "slower",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 600,
-          "emphasis": [],
-          "direction": "Introduce the name once, clearly, then move on."
-        }
-      },
-      "estimated_seconds": 9.103,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Corrections fitted on disjoint prompt groups point in similar directions, so a few calibration prompts can generalize.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Make the calibration data and the inference path completely clear, then recap..\n\nBEAT NOTES\n- [final_block] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [freeze] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [lora] intent: explain, tone: calm-explanatory, pace: slower, energy: medium\n  pause ~600ms after this beat\n  direction: Introduce the name once, clearly, then move on.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nLook at the last Transformer block. Keep the pretrained weights frozen. Add a thin low-rank path, LoRA (low-rank adaptation)."
-    },
-    {
-      "chunk_id": "lb_06_lora_bridge__c02",
-      "scene_id": "lb_06_lora_bridge",
-      "beat_ids": [
-        "bridge",
-        "output",
-        "fit"
-      ],
-      "text": "The cached input goes through this augmented block. It approximates the skipped full computation.\n\nLow rank follows from the analysis.",
-      "delivery": {
-        "bridge": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        },
-        "output": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 550,
-          "emphasis": [],
-          "direction": ""
-        },
-        "fit": {
-          "intent": "conclude",
-          "tone": "confident-restrained",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 600,
-          "emphasis": [
-            "follows from the analysis"
-          ],
-          "direction": ""
-        }
-      },
-      "estimated_seconds": 9.411,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: Corrections fitted on disjoint prompt groups point in similar directions, so a few calibration prompts can generalize.\nContinue naturally from that thought; do not restart the topic.\nThe next section will Make the calibration data and the inference path completely clear, then recap..\n\nBEAT NOTES\n- [bridge] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [output] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms after this beat\n- [fit] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  emphasize: follows from the analysis\n  pause ~300ms before this beat\n  pause ~600ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nThe cached input goes through this augmented block. It approximates the skipped full computation.\n\nLow rank follows from the analysis."
-    },
-    {
-      "chunk_id": "lb_07_training_inference__c01",
-      "scene_id": "lb_07_training_inference",
-      "beat_ids": [
-        "training",
-        "pair"
-      ],
-      "text": "Calibration runs a few full trajectories. Record the final-block input at a computed step, and the true output at a skipped one.",
-      "delivery": {
-        "training": {
-          "intent": "define",
-          "tone": "precise-introducing",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 150,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "pair": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "slightly-slower",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 550,
-          "emphasis": [],
-          "direction": "One cached input, one ground-truth target. Make the pair obvious."
-        }
-      },
-      "estimated_seconds": 10.108,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A low-rank correction is exactly what a LoRA adapter on the final block provides.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [training] intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [pair] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy: medium\n  pause ~550ms after this beat\n  direction: One cached input, one ground-truth target. Make the pair obvious.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nCalibration runs a few full trajectories. Record the final-block input at a computed step, and the true output at a skipped one."
-    },
-    {
-      "chunk_id": "lb_07_training_inference__c02",
-      "scene_id": "lb_07_training_inference",
-      "beat_ids": [
-        "train",
-        "inference"
-      ],
-      "text": "Train only the LoRA weights to connect the two. At inference, compute fully every N steps and cache that input.",
-      "delivery": {
-        "train": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 500,
-          "emphasis": [],
-          "direction": ""
-        },
-        "inference": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 0,
-          "pause_after_ms": 250,
-          "emphasis": [],
-          "direction": ""
-        }
-      },
-      "estimated_seconds": 9.251,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A low-rank correction is exactly what a LoRA adapter on the final block provides.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [train] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [inference] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms after this beat\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nTrain only the LoRA weights to connect the two. At inference, compute fully every N steps and cache that input."
-    },
-    {
-      "chunk_id": "lb_07_training_inference__c03",
-      "scene_id": "lb_07_training_inference",
-      "beat_ids": [
-        "skip",
-        "run",
-        "recap"
-      ],
-      "text": "In between, skip the earlier blocks entirely.\n\nOnly the final block, with its adapter, runs.\n\nStale cache, structured correction, low rank, few prompts, lightweight bridge.",
-      "delivery": {
-        "skip": {
-          "intent": "contrast",
-          "tone": "curious-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 500,
-          "emphasis": [
-            "skip"
-          ],
-          "direction": ""
-        },
-        "run": {
-          "intent": "explain",
-          "tone": "calm-explanatory",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 300,
-          "pause_after_ms": 550,
-          "emphasis": [],
-          "direction": ""
-        },
-        "recap": {
-          "intent": "conclude",
-          "tone": "confident-restrained",
-          "pace": "moderate",
-          "energy": "medium",
-          "pause_before_ms": 350,
-          "pause_after_ms": 700,
-          "emphasis": [],
-          "direction": "Compress the whole method into one sentence. Finish cleanly."
-        }
-      },
-      "estimated_seconds": 12.395,
-      "prompt": "You are narrating a scientific visual explainer for researchers.\n\nAUDIO PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious, precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook, or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly when introducing a new technical concept. Use brief pauses before contrasts and conclusions. Allow the listener time to understand important visual transitions.\n\nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize contrast words when scientifically meaningful: 'but', 'however', 'instead', 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\nSpeak as if explaining a diagram on a whiteboard. The animation shows what changes; your voice explains why the change matters.\n\nCONTEXT\nThe previous section concluded: A low-rank correction is exactly what a LoRA adapter on the final block provides.\nContinue naturally from that thought; do not restart the topic.\n\nBEAT NOTES\n- [skip] intent: contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  emphasize: skip\n  pause ~300ms before this beat\n  pause ~500ms after this beat\n- [run] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~550ms after this beat\n- [recap] intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~700ms after this beat\n  direction: Compress the whole method into one sentence. Finish cleanly.\n\nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\nIn between, skip the earlier blocks entirely.\n\nOnly the final block, with its adapter, runs.\n\nStale cache, structured correction, low rank, few prompts, lightweight bridge."
-    }
-  ],
-  "word_count": 311
-}
+video: learnibridge-method-explainer
+profile: research-explainer
+audience:
+  level: adjacent-researcher
+narration:
+  backend: gemini
+  model: gemini-3.1-flash-tts-preview
+  voice:
+    name: Kore
+  profile: research-explainer
+  chunking:
+    min_seconds: 20
+    max_seconds: 45
+  pacing:
+    target_wpm: 140
+    min_concept_dwell_ms: 500
+  fallback:
+    backend: say
+    voice: Samantha
+chunks:
+- chunk_id: lb_01_why_cache__c01
+  scene_id: lb_01_why_cache
+  beat_ids:
+  - establish
+  - trace
+  - reuse
+  - conclude
+  text: 'Diffusion runs a large network at every step. Neighbouring steps compute
+    almost the same thing. Caching stores one feature and reuses it later, skipping
+    the repeated work.
+
+
+    The question is how far one stored feature can be pushed.'
+  delivery:
+    establish:
+      intent: setup
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 500
+      emphasis: []
+      direction: State the cost plainly; this is the problem.
+    trace:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    reuse:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    conclude:
+      intent: conclude
+      tone: confident-restrained
+      pace: moderate
+      energy: medium
+      pause_before_ms: 350
+      pause_after_ms: 550
+      emphasis:
+      - how far
+      direction: Land the question; do not sound like a slogan.
+  estimated_seconds: 17.526
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\nThe next section will Show stale-feature\
+    \ error accumulating with skip distance..\n\nBEAT NOTES\n- [establish] intent:\
+    \ setup, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~500ms\
+    \ after this beat\n  direction: State the cost plainly; this is the problem.\n\
+    - [trace] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n\
+    \  pause ~250ms after this beat\n- [reuse] intent: explain, tone: calm-explanatory,\
+    \ pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [conclude]\
+    \ intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n\
+    \  emphasize: how far\n  pause ~350ms before this beat\n  pause ~550ms after this\
+    \ beat\n  direction: Land the question; do not sound like a slogan.\n\nRead ONLY\
+    \ the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\
+    \nTRANSCRIPT\nDiffusion runs a large network at every step. Neighbouring steps\
+    \ compute almost the same thing. Caching stores one feature and reuses it later,\
+    \ skipping the repeated work.\n\nThe question is how far one stored feature can\
+    \ be pushed."
+- chunk_id: lb_02_stale_cache__c01
+  scene_id: lb_02_stale_cache
+  beat_ids:
+  - establish
+  - skip_small
+  - skip_large
+  - accumulate
+  - conclude
+  text: 'The cached feature is held while the true feature moves. Skip one step, and
+    the error is small.
+
+
+    Skip many steps, and the stale feature drifts away. Errors accumulate, and quality
+    degrades.
+
+
+    Reuse is cheap, but stale features become wrong.'
+  delivery:
+    establish:
+      intent: define
+      tone: precise-introducing
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 150
+      pause_after_ms: 500
+      emphasis: []
+      direction: Set up the comparison; no judgement yet.
+    skip_small:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    skip_large:
+      intent: contrast
+      tone: curious-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 350
+      pause_after_ms: 450
+      emphasis:
+      - drifts far
+      direction: The contrast starts here; stay measured.
+    accumulate:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    conclude:
+      intent: conclude
+      tone: confident-restrained
+      pace: moderate
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 600
+      emphasis: []
+      direction: ''
+  estimated_seconds: 19.024
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\n\nCONTEXT\nThe previous section\
+    \ concluded: Caching skips repeated computation, so the question becomes how far\
+    \ one stored feature can be pushed.\nContinue naturally from that thought; do\
+    \ not restart the topic.\nThe next section will Reframe prediction as correction..\n\
+    \nBEAT NOTES\n- [establish] intent: define, tone: precise-introducing, pace: slightly-slower,\
+    \ energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n\
+    \  direction: Set up the comparison; no judgement yet.\n- [skip_small] intent:\
+    \ explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms\
+    \ after this beat\n- [skip_large] intent: contrast, tone: curious-explanatory,\
+    \ pace: moderate, energy: medium\n  emphasize: drifts far\n  pause ~350ms before\
+    \ this beat\n  pause ~450ms after this beat\n  direction: The contrast starts\
+    \ here; stay measured.\n- [accumulate] intent: explain, tone: calm-explanatory,\
+    \ pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [conclude]\
+    \ intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n\
+    \  pause ~300ms before this beat\n  pause ~600ms after this beat\n\nRead ONLY\
+    \ the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\
+    \nTRANSCRIPT\nThe cached feature is held while the true feature moves. Skip one\
+    \ step, and the error is small.\n\nSkip many steps, and the stale feature drifts\
+    \ away. Errors accumulate, and quality degrades.\n\nReuse is cheap, but stale\
+    \ features become wrong."
+- chunk_id: lb_03_change_question__c01
+  scene_id: lb_03_change_question
+  beat_ids:
+  - ask
+  - reframe
+  - setup
+  - sketch
+  text: 'Most caching methods predict the future feature from the past.
+
+
+    LearniBridge asks a different question. What correction makes a cached computation
+    behave like the skipped full computation? Cached computation plus a small correction
+    approximates the future one.'
+  delivery:
+    ask:
+      intent: define
+      tone: precise-introducing
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 150
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    reframe:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 400
+      pause_after_ms: 600
+      emphasis:
+      - different question
+      direction: This is the intellectual move; give it space.
+    setup:
+      intent: explain
+      tone: calm-explanatory
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 650
+      emphasis: []
+      direction: A genuine question. Do not rush the ending.
+    sketch:
+      intent: derive
+      tone: precise
+      pace: slower
+      energy: medium
+      pause_before_ms: 200
+      pause_after_ms: 650
+      emphasis: []
+      direction: ''
+  estimated_seconds: 16.698
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\n\nCONTEXT\nThe previous section\
+    \ concluded: Reuse is cheap, but the stale feature drifts and the error accumulates.\n\
+    Continue naturally from that thought; do not restart the topic.\nThe next section\
+    \ will Present the low-rank analysis; separate observation from consequence..\n\
+    \nBEAT NOTES\n- [ask] intent: define, tone: precise-introducing, pace: slightly-slower,\
+    \ energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n\
+    - [reframe] intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n\
+    \  emphasize: different question\n  pause ~400ms before this beat\n  pause ~600ms\
+    \ after this beat\n  direction: This is the intellectual move; give it space.\n\
+    - [setup] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy:\
+    \ medium\n  pause ~650ms after this beat\n  direction: A genuine question. Do\
+    \ not rush the ending.\n- [sketch] intent: derive, tone: precise, pace: slower,\
+    \ energy: medium\n  pause ~200ms before this beat\n  pause ~650ms after this beat\n\
+    \nRead ONLY the transcript below, exactly as written. Do not add, drop or paraphrase\
+    \ words.\n\nTRANSCRIPT\nMost caching methods predict the future feature from the\
+    \ past.\n\nLearniBridge asks a different question. What correction makes a cached\
+    \ computation behave like the skipped full computation? Cached computation plus\
+    \ a small correction approximates the future one."
+- chunk_id: lb_04_low_rank__c01
+  scene_id: lb_04_low_rank
+  beat_ids:
+  - collect
+  - residual
+  - linear
+  - closed_form
+  - spectrum
+  - consequence
+  text: 'Stack layer inputs from many samples, one column per sample. The correction
+    is the layer difference between timesteps. Model it as a matrix times those inputs.
+    The best matrix is E times the pseudo-inverse of X. Its singular values decay
+    fast: energy sits in a few directions.
+
+
+    The required correction is therefore low rank.'
+  delivery:
+    collect:
+      intent: define
+      tone: precise-introducing
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 150
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    residual:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    linear:
+      intent: explain
+      tone: calm-explanatory
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    closed_form:
+      intent: explain
+      tone: calm-explanatory
+      pace: slower
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 550
+      emphasis: []
+      direction: Read this as the answer to the previous sentence, not symbol by symbol.
+    spectrum:
+      intent: contrast
+      tone: curious-explanatory
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 600
+      emphasis:
+      - a few directions
+      direction: This is an observation from measurements; say it that way.
+    consequence:
+      intent: conclude
+      tone: confident-restrained
+      pace: moderate
+      energy: medium
+      pause_before_ms: 350
+      pause_after_ms: 650
+      emphasis: []
+      direction: This follows under the paper's linear model; keep the qualifier in
+        your tone.
+  estimated_seconds: 25.224
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\n\nCONTEXT\nThe previous section\
+    \ concluded: Ask what correction makes a cached computation behave like the skipped\
+    \ full computation.\nContinue naturally from that thought; do not restart the\
+    \ topic.\nThe next section will Present prompt-invariance evidence and its interpretation..\n\
+    \nBEAT NOTES\n- [collect] intent: define, tone: precise-introducing, pace: slightly-slower,\
+    \ energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n\
+    - [residual] intent: explain, tone: calm-explanatory, pace: moderate, energy:\
+    \ medium\n  pause ~250ms after this beat\n- [linear] intent: explain, tone: calm-explanatory,\
+    \ pace: slightly-slower, energy: medium\n  pause ~500ms after this beat\n- [closed_form]\
+    \ intent: explain, tone: calm-explanatory, pace: slower, energy: medium\n  pause\
+    \ ~550ms after this beat\n  direction: Read this as the answer to the previous\
+    \ sentence, not symbol by symbol.\n- [spectrum] intent: contrast, tone: curious-explanatory,\
+    \ pace: slightly-slower, energy: medium\n  emphasize: a few directions\n  pause\
+    \ ~300ms before this beat\n  pause ~600ms after this beat\n  direction: This is\
+    \ an observation from measurements; say it that way.\n- [consequence] intent:\
+    \ conclude, tone: confident-restrained, pace: moderate, energy: medium\n  pause\
+    \ ~350ms before this beat\n  pause ~650ms after this beat\n  direction: This follows\
+    \ under the paper's linear model; keep the qualifier in your tone.\n\nRead ONLY\
+    \ the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\
+    \nTRANSCRIPT\nStack layer inputs from many samples, one column per sample. The\
+    \ correction is the layer difference between timesteps. Model it as a matrix times\
+    \ those inputs. The best matrix is E times the pseudo-inverse of X. Its singular\
+    \ values decay fast: energy sits in a few directions.\n\nThe required correction\
+    \ is therefore low rank."
+- chunk_id: lb_05_prompt_invariant__c01
+  scene_id: lb_05_prompt_invariant
+  beat_ids:
+  - split
+  - per_group
+  - subspaces
+  - angles
+  - small
+  - consequence
+  text: 'Split one hundred prompts into disjoint groups. Fit the optimal correction
+    per group. Each has its own principal subspace. Measure the angles between them.
+
+
+    They come out consistently small.
+
+
+    So a few calibration prompts can generalize.'
+  delivery:
+    split:
+      intent: define
+      tone: precise-introducing
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 150
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    per_group:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    subspaces:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    angles:
+      intent: contrast
+      tone: curious-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    small:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 350
+      pause_after_ms: 250
+      emphasis:
+      - consistently small
+      direction: ''
+    consequence:
+      intent: conclude
+      tone: confident-restrained
+      pace: moderate
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 650
+      emphasis: []
+      direction: This is the interpretation of the measurement, not a guarantee.
+  estimated_seconds: 17.108
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\n\nCONTEXT\nThe previous section\
+    \ concluded: The input matrix has rapidly decaying singular values, so under the\
+    \ paper's linear model the optimal correction is low-rank.\nContinue naturally\
+    \ from that thought; do not restart the topic.\nThe next section will Derive the\
+    \ parameterization from the measured structure..\n\nBEAT NOTES\n- [split] intent:\
+    \ define, tone: precise-introducing, pace: slightly-slower, energy: medium\n \
+    \ pause ~150ms before this beat\n  pause ~500ms after this beat\n- [per_group]\
+    \ intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause\
+    \ ~250ms after this beat\n- [subspaces] intent: explain, tone: calm-explanatory,\
+    \ pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [angles] intent:\
+    \ contrast, tone: curious-explanatory, pace: moderate, energy: medium\n  pause\
+    \ ~300ms before this beat\n  pause ~500ms after this beat\n- [small] intent: explain,\
+    \ tone: calm-explanatory, pace: moderate, energy: medium\n  emphasize: consistently\
+    \ small\n  pause ~350ms before this beat\n  pause ~250ms after this beat\n- [consequence]\
+    \ intent: conclude, tone: confident-restrained, pace: moderate, energy: medium\n\
+    \  pause ~300ms before this beat\n  pause ~650ms after this beat\n  direction:\
+    \ This is the interpretation of the measurement, not a guarantee.\n\nRead ONLY\
+    \ the transcript below, exactly as written. Do not add, drop or paraphrase words.\n\
+    \nTRANSCRIPT\nSplit one hundred prompts into disjoint groups. Fit the optimal\
+    \ correction per group. Each has its own principal subspace. Measure the angles\
+    \ between them.\n\nThey come out consistently small.\n\nSo a few calibration prompts\
+    \ can generalize."
+- chunk_id: lb_06_lora_bridge__c01
+  scene_id: lb_06_lora_bridge
+  beat_ids:
+  - final_block
+  - freeze
+  - lora
+  - bridge
+  - output
+  - fit
+  text: 'Look at the last Transformer block. Keep the pretrained weights frozen. Add
+    a thin low-rank path, LoRA (low-rank adaptation). The cached input goes through
+    this augmented block. It approximates the skipped full computation.
+
+
+    Low rank follows from the analysis.'
+  delivery:
+    final_block:
+      intent: define
+      tone: precise-introducing
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 150
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    freeze:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    lora:
+      intent: explain
+      tone: calm-explanatory
+      pace: slower
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 600
+      emphasis: []
+      direction: Introduce the name once, clearly, then move on.
+    bridge:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    output:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 550
+      emphasis: []
+      direction: ''
+    fit:
+      intent: conclude
+      tone: confident-restrained
+      pace: moderate
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 600
+      emphasis:
+      - follows from the analysis
+      direction: ''
+  estimated_seconds: 18.514
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\n\nCONTEXT\nThe previous section\
+    \ concluded: Corrections fitted on disjoint prompt groups point in similar directions,\
+    \ so a few calibration prompts can generalize.\nContinue naturally from that thought;\
+    \ do not restart the topic.\nThe next section will Make the calibration data and\
+    \ the inference path completely clear, then recap..\n\nBEAT NOTES\n- [final_block]\
+    \ intent: define, tone: precise-introducing, pace: slightly-slower, energy: medium\n\
+    \  pause ~150ms before this beat\n  pause ~500ms after this beat\n- [freeze] intent:\
+    \ explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~250ms\
+    \ after this beat\n- [lora] intent: explain, tone: calm-explanatory, pace: slower,\
+    \ energy: medium\n  pause ~600ms after this beat\n  direction: Introduce the name\
+    \ once, clearly, then move on.\n- [bridge] intent: explain, tone: calm-explanatory,\
+    \ pace: moderate, energy: medium\n  pause ~250ms after this beat\n- [output] intent:\
+    \ explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause ~550ms\
+    \ after this beat\n- [fit] intent: conclude, tone: confident-restrained, pace:\
+    \ moderate, energy: medium\n  emphasize: follows from the analysis\n  pause ~300ms\
+    \ before this beat\n  pause ~600ms after this beat\n\nRead ONLY the transcript\
+    \ below, exactly as written. Do not add, drop or paraphrase words.\n\nTRANSCRIPT\n\
+    Look at the last Transformer block. Keep the pretrained weights frozen. Add a\
+    \ thin low-rank path, LoRA (low-rank adaptation). The cached input goes through\
+    \ this augmented block. It approximates the skipped full computation.\n\nLow rank\
+    \ follows from the analysis."
+- chunk_id: lb_07_training_inference__c01
+  scene_id: lb_07_training_inference
+  beat_ids:
+  - training
+  - pair
+  - train
+  - inference
+  - skip
+  - run
+  - recap
+  text: 'Calibration runs a few full trajectories. Record the final-block input at
+    a computed step, and the true output at a skipped one. Train only the LoRA weights
+    to connect the two. At inference, compute fully every N steps and cache that input.
+    In between, skip the earlier blocks entirely.
+
+
+    Only the final block, with its adapter, runs.
+
+
+    Stale cache, structured correction, low rank, few prompts, lightweight bridge.'
+  delivery:
+    training:
+      intent: define
+      tone: precise-introducing
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 150
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    pair:
+      intent: explain
+      tone: calm-explanatory
+      pace: slightly-slower
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 550
+      emphasis: []
+      direction: One cached input, one ground-truth target. Make the pair obvious.
+    train:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 500
+      emphasis: []
+      direction: ''
+    inference:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 0
+      pause_after_ms: 250
+      emphasis: []
+      direction: ''
+    skip:
+      intent: contrast
+      tone: curious-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 500
+      emphasis:
+      - skip
+      direction: ''
+    run:
+      intent: explain
+      tone: calm-explanatory
+      pace: moderate
+      energy: medium
+      pause_before_ms: 300
+      pause_after_ms: 550
+      emphasis: []
+      direction: ''
+    recap:
+      intent: conclude
+      tone: confident-restrained
+      pace: moderate
+      energy: medium
+      pause_before_ms: 350
+      pause_after_ms: 700
+      emphasis: []
+      direction: Compress the whole method into one sentence. Finish cleanly.
+  estimated_seconds: 31.754
+  prompt: "You are narrating a scientific visual explainer for researchers.\n\nAUDIO\
+    \ PROFILE\nYou are a clear, thoughtful researcher explaining an idea to another\
+    \ strong researcher.\n\nSTYLE\nConversational academic explanation. Calm, curious,\
+    \ precise, and intellectually engaged.\nDo not sound like an advertisement, audiobook,\
+    \ or corporate presentation.\n\nPACING\nModerate natural pace. Slow down slightly\
+    \ when introducing a new technical concept. Use brief pauses before contrasts\
+    \ and conclusions. Allow the listener time to understand important visual transitions.\n\
+    \nPROSODY\nNatural pitch variation. Avoid a flat or repetitive cadence. Emphasize\
+    \ contrast words when scientifically meaningful: 'but', 'however', 'instead',\
+    \ 'the key point', 'this is the problem'. Do not exaggerate emphasis.\n\nDELIVERY\n\
+    Speak as if explaining a diagram on a whiteboard. The animation shows what changes;\
+    \ your voice explains why the change matters.\n\nCONTEXT\nThe previous section\
+    \ concluded: A low-rank correction is exactly what a LoRA adapter on the final\
+    \ block provides.\nContinue naturally from that thought; do not restart the topic.\n\
+    \nBEAT NOTES\n- [training] intent: define, tone: precise-introducing, pace: slightly-slower,\
+    \ energy: medium\n  pause ~150ms before this beat\n  pause ~500ms after this beat\n\
+    - [pair] intent: explain, tone: calm-explanatory, pace: slightly-slower, energy:\
+    \ medium\n  pause ~550ms after this beat\n  direction: One cached input, one ground-truth\
+    \ target. Make the pair obvious.\n- [train] intent: explain, tone: calm-explanatory,\
+    \ pace: moderate, energy: medium\n  pause ~500ms after this beat\n- [inference]\
+    \ intent: explain, tone: calm-explanatory, pace: moderate, energy: medium\n  pause\
+    \ ~250ms after this beat\n- [skip] intent: contrast, tone: curious-explanatory,\
+    \ pace: moderate, energy: medium\n  emphasize: skip\n  pause ~300ms before this\
+    \ beat\n  pause ~500ms after this beat\n- [run] intent: explain, tone: calm-explanatory,\
+    \ pace: moderate, energy: medium\n  pause ~300ms before this beat\n  pause ~550ms\
+    \ after this beat\n- [recap] intent: conclude, tone: confident-restrained, pace:\
+    \ moderate, energy: medium\n  pause ~350ms before this beat\n  pause ~700ms after\
+    \ this beat\n  direction: Compress the whole method into one sentence. Finish\
+    \ cleanly.\n\nRead ONLY the transcript below, exactly as written. Do not add,\
+    \ drop or paraphrase words.\n\nTRANSCRIPT\nCalibration runs a few full trajectories.\
+    \ Record the final-block input at a computed step, and the true output at a skipped\
+    \ one. Train only the LoRA weights to connect the two. At inference, compute fully\
+    \ every N steps and cache that input. In between, skip the earlier blocks entirely.\n\
+    \nOnly the final block, with its adapter, runs.\n\nStale cache, structured correction,\
+    \ low rank, few prompts, lightweight bridge."
+word_count: 311
