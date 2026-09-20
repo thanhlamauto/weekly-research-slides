@@ -20,7 +20,7 @@ import re
 
 from manim import (
     VGroup, Circle, RoundedRectangle, Rectangle, Line, DashedLine, Arrow, Dot,
-    Triangle, Text, Brace, DEGREES,
+    Triangle, Text, Brace, DEGREES, UP, DOWN,
 )
 import numpy as np
 
