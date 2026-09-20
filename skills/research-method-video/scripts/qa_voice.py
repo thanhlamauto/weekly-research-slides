@@ -39,6 +39,8 @@ def main() -> int:
     ap.add_argument("--project", default="examples/lesa")
     ap.add_argument("--audio-dir", default=None)
     ap.add_argument("--renders-dir", default=None)
+    ap.add_argument("--mux-report", default=None,
+                    help="use end-frame padding measured by mux_narration (default: renders/<quality>/narration_mux_report.json)")
     ap.add_argument("--output", default=None, help="default <project>/qa/voice/report.json")
     args = ap.parse_args()
 
@@ -63,8 +65,15 @@ def main() -> int:
 
     renders_dir = pathlib.Path(args.renders_dir) if args.renders_dir else proj["path"] / "renders" / "final"
     rendered = _rendered_durations(renders_dir)
+    mux_report = pathlib.Path(args.mux_report) if args.mux_report else renders_dir / "narration_mux_report.json"
+    if mux_report.exists():
+        # The narrated timeline is the truth: padding was measured at mux time,
+        # not by comparing silent renders against narration audio.
+        rendered = None
 
     findings = V.qa(data, plan, audio_dir=audio_dir, rendered=rendered, manifest=manifest)
+    if rendered is None and mux_report.exists():
+        findings.extend(V.padding_from_mux_report(json.loads(mux_report.read_text(encoding="utf-8"))))
     out = pathlib.Path(args.output) if args.output else proj["path"] / "qa" / "voice" / "report.json"
     report = V.write_report(findings, out)
     for f in findings:

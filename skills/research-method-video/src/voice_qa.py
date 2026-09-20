@@ -199,6 +199,21 @@ def padding_findings(scene_audio: dict[str, float], rendered: dict[str, float]) 
     return findings
 
 
+def padding_from_mux_report(report: dict) -> list[dict]:
+    """Padding as measured by the mux step (the narrated timeline is the truth)."""
+    findings: list[dict] = []
+    for scene in report.get("scenes", []):
+        pad = float(scene.get("end_frame_padding", 0.0))
+        sid = scene.get("id", "?")
+        if pad > PADDING_HIGH_SECONDS:
+            _add(findings, "error", sid,
+                 f"narration is {pad:.1f}s longer than the animation; rebuild the pacing around the audio")
+        elif pad > PADDING_WARN_SECONDS:
+            _add(findings, "warning", sid,
+                 f"narration is {pad:.1f}s longer than the animation; re-pace the scene")
+    return findings
+
+
 # ---------------------------------------------------------------------------
 # aggregate
 # ---------------------------------------------------------------------------

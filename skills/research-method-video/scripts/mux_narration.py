@@ -21,6 +21,20 @@ from audio import probe_duration
 AUDIO_EXTS = (".aiff", ".wav", ".m4a", ".mp3", ".flac")
 
 
+def _video_id(proj: dict) -> str:
+    """Narrated output name follows the transcript's video id, not a hardcoded one."""
+    transcript = proj["path"] / "transcript" / "transcript.json"
+    if transcript.exists():
+        try:
+            data = json.loads(transcript.read_text(encoding="utf-8"))
+            vid = (data.get("video") or {}).get("id")
+            if vid:
+                return vid
+        except Exception:
+            pass
+    return "method-explainer"
+
+
 def find_audio(audio_dir: pathlib.Path, scene_id: str) -> pathlib.Path | None:
     for ext in AUDIO_EXTS:
         p = audio_dir / f"{scene_id}{ext}"
@@ -110,7 +124,7 @@ def main() -> int:
         print(f"  {sid:<28} video {vd:5.1f}s  audio {ad:5.1f}s  ({note})")
 
     out = pathlib.Path(args.output) if args.output else \
-        proj["path"] / "renders" / args.quality / "lesa-method-explainer-narrated.mp4"
+        proj["path"] / "renders" / args.quality / f"{_video_id(proj)}-narrated.mp4"
     concat(pieces, out)
     total_pad = sum(s["end_frame_padding"] for s in report["scenes"])
     report["total_end_frame_padding"] = round(total_pad, 3)
