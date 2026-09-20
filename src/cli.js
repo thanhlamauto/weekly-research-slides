@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 'use strict';
 
+// The PowerPoint style must be selected before the renderer modules load.
+(function selectStyle() {
+  const argv = process.argv.slice(2);
+  const i = argv.findIndex((a) => a === '--style');
+  const eq = argv.find((a) => a.startsWith('--style='));
+  const name = eq ? eq.split('=')[1] : (i >= 0 ? argv[i + 1] : null);
+  if (name) process.env.WRS_PPT_STYLE = name;
+})();
+
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
@@ -370,6 +379,7 @@ async function main() {
       console.log('  scene    --input slide_spec.yaml [--output scene.json|--format svg]');
       console.log('  validate --schema slide_spec --input file.yaml');
       console.log('  critique --input slide_spec.yaml --output revised.yaml --deck out.pptx [--qa-dir qa] [--max-cycles 3] [--no-render]');
+      console.log('  (all commands accept --style academic-beamer|academic-metropolis|paper-figure|dark-explainer)');
       console.log('  demo     build + qa the bundled example');
   }
 }

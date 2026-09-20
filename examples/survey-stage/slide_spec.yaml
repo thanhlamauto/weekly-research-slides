@@ -48,6 +48,7 @@ slides:
     archetype: competitor-mechanism
     module: competitor-method
     title: Sequential matching, and where its assumption breaks
+    citation: "Author et al., CVPR 2026"
     content:
       name: Sequential matching
       module_label: align

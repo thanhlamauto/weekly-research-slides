@@ -1,59 +1,75 @@
 'use strict';
 
-const { LAYOUT, COLORS, FONT, STROKE } = require('../renderer/theme');
+const { LAYOUT, COLORS, FONT, STROKE, STYLE } = require('../renderer/theme');
 const d = require('../visual-grammar/draw');
 
 const CW = LAYOUT.w - LAYOUT.marginX * 2;
 
+// Academic frame: left-aligned frame title, subtle title rule, minimal footer,
+// optional thin progress line, optional understated citation. No eyebrow label
+// on every slide, no header metadata row, no accent bar.
 function chrome(slideObj, ctx) {
   const { deck } = ctx;
+  const S = STYLE;
   const out = [];
   out.push(d.rect('bg', 0, 0, LAYOUT.w, LAYOUT.h, { fill: COLORS.bg }));
 
+  if (S.frame.progressBar && ctx.total > 1) {
+    const frac = (ctx.index + 1) / ctx.total;
+    out.push(d.rect('frame-progress', 0, 0, LAYOUT.w, S.frame.progressWidth, { fill: COLORS.rule }));
+    out.push(d.rect('frame-progress-fill', 0, 0, LAYOUT.w * frac, S.frame.progressWidth, { fill: COLORS.blue }));
+  }
+
   if (slideObj.archetype === 'title') {
-    out.push(d.text('footer-slide-number', LAYOUT.marginX + CW * 0.86, LAYOUT.footerY, CW * 0.14, 0.26,
-      `${ctx.index + 1} / ${ctx.total}`, {
-        size: FONT.sizes.tiny, color: COLORS.faint, align: 'right', valign: 'middle',
-      }));
-    return out;
+    return out; // the title layout owns its composition
   }
 
-  const kicker = slideObj.kicker || defaultKicker(slideObj, ctx);
-  if (kicker) {
-    out.push(d.text('kicker', LAYOUT.marginX, 0.4, CW * 0.62, 0.26, String(kicker).toUpperCase(), {
-      size: FONT.sizes.kicker, bold: true, color: COLORS.blue, align: 'left', valign: 'middle',
+  if (slideObj.kicker) {
+    out.push(d.text('kicker', LAYOUT.marginX, 0.42, CW * 0.7, 0.22, String(slideObj.kicker).toUpperCase(), {
+      size: FONT.sizes.kicker, color: COLORS.muted, align: 'left', valign: 'middle',
     }));
   }
-  const rightMeta = [deck.project || deck.title, `Week ${deck.week}`].filter(Boolean).join('  ·  ');
-  out.push(d.text('header-meta', LAYOUT.marginX + CW * 0.55, 0.4, CW * 0.45, 0.26, rightMeta, {
-    size: FONT.sizes.tiny, color: COLORS.muted, align: 'right', valign: 'middle',
-  }));
 
+  const titleY = slideObj.kicker ? 0.64 : 0.58;
   if (slideObj.title) {
-    out.push(d.text('title-main', LAYOUT.marginX, 0.68, CW, 0.6, slideObj.title, {
-      size: FONT.sizes.title, bold: true, color: COLORS.ink, align: 'left', valign: 'middle',
-      lineSpacing: 30,
+    out.push(d.text('title-main', LAYOUT.marginX, titleY, CW, LAYOUT.titleH, slideObj.title, {
+      size: FONT.sizes.title,
+      bold: S.typography.titleWeight >= 600,
+      color: COLORS.ink, align: S.typography.titleAlign, valign: 'middle',
+      lineSpacing: FONT.sizes.title + 6,
     }));
   }
-  out.push(d.rect('chrome-rule', LAYOUT.marginX, 1.36, CW, 0.022, { fill: COLORS.rule }));
-  out.push(d.rect('chrome-rule-accent', LAYOUT.marginX, 1.36, 1.15, 0.022, { fill: COLORS.blue }));
+  const ruleY = titleY + LAYOUT.titleH + 0.05;
+  if (S.frame.titleRule === 'subtle') {
+    out.push(d.rect('chrome-rule', LAYOUT.marginX, ruleY, CW, 0.012, { fill: COLORS.rule }));
+  }
 
   if (slideObj.subtitle) {
-    out.push(d.text('subtitle-main', LAYOUT.marginX, 1.4, CW, 0.24, slideObj.subtitle, {
-      size: FONT.sizes.subtitle - 3, color: COLORS.muted, align: 'left', valign: 'middle',
+    out.push(d.text('subtitle-main', LAYOUT.marginX, ruleY + 0.08, CW, 0.24, slideObj.subtitle, {
+      size: FONT.sizes.subtitle, color: COLORS.muted, align: 'left', valign: 'middle',
     }));
   }
 
-  const footerLeft = deck.footer || '';
-  if (footerLeft) {
-    out.push(d.text('footer-text', LAYOUT.marginX, LAYOUT.footerY, CW * 0.75, 0.26, footerLeft, {
+  if (slideObj.citation && S.frame.citation) {
+    out.push(d.text('citation', LAYOUT.marginX, LAYOUT.footerY - 0.26, CW * 0.9, 0.22, slideObj.citation, {
       size: FONT.sizes.tiny, color: COLORS.faint, align: 'left', valign: 'middle',
     }));
   }
-  out.push(d.text('footer-slide-number', LAYOUT.marginX + CW * 0.86, LAYOUT.footerY, CW * 0.14, 0.26,
-    `${ctx.index + 1} / ${ctx.total}`, {
-      size: FONT.sizes.tiny, color: COLORS.faint, align: 'right', valign: 'middle',
-    }));
+
+  if (S.frame.footer !== 'none') {
+    const footerLeft = deck.footer || [deck.project || deck.title, `Week ${deck.week}`].filter(Boolean).join(' · ');
+    if (footerLeft) {
+      out.push(d.text('footer-text', LAYOUT.marginX, LAYOUT.footerY, CW * 0.8, 0.24, footerLeft, {
+        size: FONT.sizes.tiny, color: COLORS.faint, align: 'left', valign: 'middle',
+      }));
+    }
+  }
+  if (S.frame.pageNumber) {
+    out.push(d.text('footer-slide-number', LAYOUT.marginX + CW * 0.88, LAYOUT.footerY, CW * 0.12, 0.24,
+      `${ctx.index + 1} / ${ctx.total}`, {
+        size: FONT.sizes.tiny, color: COLORS.faint, align: 'right', valign: 'middle',
+      }));
+  }
   return out;
 }
 

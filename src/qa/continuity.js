@@ -27,6 +27,8 @@ function qaContinuity(scene) {
     const b = indexSlide(scene.slides[i + 1]);
     for (const [id, av] of a) {
       if (!b.has(id)) continue;
+      // The progress indicator intentionally changes width on every slide.
+      if (/^frame-progress/.test(id)) continue;
       const bv = b.get(id);
       if (av.kind === 'text' && bv.kind === 'text') {
         if (av.text !== bv.text && /^(concept-|vec-)/.test(id)) {

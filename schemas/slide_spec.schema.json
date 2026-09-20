@@ -57,6 +57,7 @@
           "title": { "type": "string", "minLength": 1 },
           "subtitle": { "type": "string" },
           "kicker": { "type": "string" },
+          "citation": { "type": "string", "description": "Understated citation shown near the footer (e.g. Author et al., CVPR 2026)." },
           "content": { "type": "object" },
           "beats": {
             "type": "array",

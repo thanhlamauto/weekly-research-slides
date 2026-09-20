@@ -31,7 +31,8 @@ function qaScene(scene) {
         || b.x + b.w > LAYOUT.w + 0.001 || b.y + b.h > LAYOUT.h + 0.001;
       if (outOfSlide) add('error', sl.id, p.id, `Out of slide bounds (${b.x.toFixed(2)},${b.y.toFixed(2)},${b.w.toFixed(2)}x${b.h.toFixed(2)})`);
 
-      if (p.id !== 'bg' && (p.kind === 'text' || p.kind === 'rect' || p.kind === 'roundRect' || p.kind === 'ellipse')) {
+      const isChrome = /^(bg|frame-progress)/.test(p.id || '');
+      if (!isChrome && (p.kind === 'text' || p.kind === 'rect' || p.kind === 'roundRect' || p.kind === 'ellipse')) {
         contentObjects += 1;
         const bx = b.x; const by = b.y;
         if (bx < LAYOUT.marginX - 0.35 || by < 0.3 || bx + b.w > LAYOUT.w - LAYOUT.marginX + 0.35 || by + b.h > LAYOUT.h - 0.18) {

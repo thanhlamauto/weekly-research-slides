@@ -15,11 +15,11 @@ function title(slide) {
   out.push(d.rect('title-accent', M, 2.35, 0.9, 0.05, { fill: COLORS.blue }));
   out.push(d.text('title-project', M, 2.5, CW * 0.6, 0.32,
     c.project || 'Research update', { size: 15, bold: true, color: COLORS.blue, valign: 'middle' }));
-  out.push(d.text('title-main', M, 2.95, CW * 0.58, 1.7,
-    c.headline || slide.title, { size: 38, bold: true, color: COLORS.ink, valign: 'top', lineSpacing: 42 }));
+  out.push(d.text('title-main', M, 2.9, CW * 0.58, 1.6,
+    c.headline || slide.title, { size: 32, bold: true, color: COLORS.ink, valign: 'top', lineSpacing: 38 }));
   if (c.question) {
-    out.push(d.text('title-question', M, 4.75, CW * 0.55, 1.0,
-      c.question, { size: 18, color: COLORS.inkSoft, valign: 'top', lineSpacing: 24 }));
+    out.push(d.text('title-question', M, 4.62, CW * 0.55, 0.95,
+      c.question, { size: 16, color: COLORS.inkSoft, valign: 'top', lineSpacing: 22 }));
   }
   if (c.byline) {
     out.push(d.text('title-byline', M, 5.95, CW * 0.55, 0.3, c.byline, {

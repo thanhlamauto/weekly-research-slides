@@ -1,6 +1,7 @@
 'use strict';
 
-const { COLORS, FONT, STROKE } = require('../renderer/theme');
+const { COLORS, FONT, STROKE, STYLE } = require('../renderer/theme');
+const BLOCK_RADIUS = (STYLE && STYLE.blocks && STYLE.blocks.radius !== undefined) ? STYLE.blocks.radius : 0.03;
 
 // ---------------------------------------------------------------------------
 // Primitive constructors
@@ -133,9 +134,35 @@ function card(id, x, y, w, h, opts = {}) {
   return roundRect(id, x, y, w, h, {
     fill: opts.fill === undefined ? COLORS.panel : opts.fill,
     line: opts.line === undefined ? COLORS.panelLine : opts.line,
-    radius: opts.radius === undefined ? 0.11 : opts.radius,
+    radius: opts.radius === undefined ? BLOCK_RADIUS : opts.radius,
     dash: opts.dash,
   });
+}
+
+// Semantic academic block: a subtle fill, no shadow, no thick border, and a
+// thin left rule whose colour carries the semantic category. Blocks communicate
+// category (observation / claim / limitation / ...), not decoration.
+function block(id, x, y, w, h, opts = {}) {
+  const out = [];
+  const accent = opts.accent || COLORS.blue;
+  const fill = opts.fill === undefined ? COLORS.panel : opts.fill;
+  out.push(roundRect(id, x, y, w, h, { fill, line: null, radius: BLOCK_RADIUS }));
+  out.push(rect(`${id}__rule`, x, y, 0.035, h, { fill: accent }));
+  let ty = y + 0.12;
+  if (opts.label) {
+    out.push(text(`${id}__label`, x + 0.18, ty, w - 0.34, 0.24, String(opts.label), {
+      size: FONT.sizes.tiny, color: opts.labelColor || accent, align: 'left', valign: 'middle',
+    }));
+    ty += 0.28;
+  }
+  if (opts.text) {
+    out.push(text(`${id}__text`, x + 0.18, ty, w - 0.34, h - (ty - y) - 0.12, opts.text, {
+      size: opts.size || FONT.sizes.body, color: opts.color || COLORS.inkSoft,
+      align: 'left', valign: 'top', fontFace: opts.mono ? FONT.mono : undefined,
+      lineSpacing: opts.lineSpacing,
+    }));
+  }
+  return out;
 }
 
 function chip(id, x, y, w, h, label, opts = {}) {
@@ -157,6 +184,6 @@ function rule(id, x, y, w, color) {
 
 module.exports = {
   text, rect, roundRect, ellipse, line, group,
-  semanticNode, arrow, card, chip, rule,
+  semanticNode, arrow, card, chip, rule, block,
   NODE_STYLE, ARROW_STYLE,
 };

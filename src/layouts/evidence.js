@@ -205,16 +205,17 @@ function diagnostic(slide) {
   const c = slide.content || {};
   const out = [];
   const id = c.id || 'D?';
-  out.push(d.card(`diag-${id}-q`, M, 1.68, CW, 0.86, { fill: COLORS.blueSoft, line: COLORS.blue }));
-  out.push(d.text(`diag-${id}-q-k`, M + 0.26, 1.78, 1.2, 0.3, id, {
-    size: 13, bold: true, color: COLORS.blue, valign: 'middle',
+
+  // Question is a quiet frame line, not a coloured banner.
+  out.push(d.text(`diag-${id}-q-k`, M, 1.62, 1.0, 0.3, id, {
+    size: FONT.sizes.small, bold: true, color: COLORS.blue, valign: 'middle',
   }));
-  out.push(d.text(`diag-${id}-q-t`, M + 1.35, 1.78, CW - 3.3, 0.66, c.question || slide.title, {
-    size: 17, bold: true, color: COLORS.ink, valign: 'middle',
+  out.push(d.text(`diag-${id}-q-t`, M + 0.9, 1.62, CW - 2.6, 0.5, c.question || slide.title, {
+    size: FONT.sizes.body + 2, color: COLORS.ink, valign: 'middle',
   }));
   (c.claim_ids || []).forEach((cid, i) => {
-    out.push(...d.chip(`diag-${id}-link-${i}`, M + CW - 1.75 + i * 0.85, 1.94, 0.78, 0.34, `tests ${cid}`, {
-      fill: COLORS.white, line: COLORS.blue, color: COLORS.blue,
+    out.push(d.text(`diag-${id}-link-${i}`, M + CW - 1.4 + i * 0.8, 1.66, 0.75, 0.3, `tests ${cid}`, {
+      size: FONT.sizes.tiny, color: COLORS.muted, align: 'right', valign: 'middle',
     }));
   });
 
@@ -222,38 +223,34 @@ function diagnostic(slide) {
   const colW = CW * 0.57;
   const rightX = M + CW * 0.6;
   const rightW = CW * 0.4;
-  const top = 2.74;
-  const bandH = 1.14;
+  const top = 2.35;
+  const bandH = 1.3;
   const bands = [
-    { k: 'measurement', label: 'MEASUREMENT', fill: COLORS.panel, line: COLORS.panelLine, accent: COLORS.muted, mono: true },
-    { k: 'observation', label: 'OBSERVATION', fill: COLORS.white, line: COLORS.panelLine, accent: COLORS.inkSoft, mono: false },
-    { k: 'interpretation', label: 'INTERPRETATION', fill: COLORS.blueSoft, line: COLORS.blue, accent: COLORS.blue, mono: false },
+    { k: 'measurement', label: 'Measurement', accent: COLORS.inkSoft, mono: true, size: FONT.sizes.equation },
+    { k: 'observation', label: 'Observation', accent: COLORS.muted, mono: false, size: FONT.sizes.body },
+    { k: 'interpretation', label: 'Interpretation', accent: COLORS.blue, mono: false, size: FONT.sizes.body },
   ];
   bands.forEach((b, i) => {
-    const y = top + i * (bandH + 0.1);
-    out.push(d.card(`diag-${id}-${b.k}`, colX, y, colW, bandH, { fill: b.fill, line: b.line }));
-    out.push(d.text(`diag-${id}-${b.k}-k`, colX + 0.22, y + 0.1, colW - 0.44, 0.26, b.label, {
-      size: FONT.sizes.tiny, bold: true, color: b.accent, valign: 'middle',
-    }));
-    out.push(d.text(`diag-${id}-${b.k}-t`, colX + 0.22, y + 0.4, colW - 0.44, bandH - 0.5, c[b.k] || '', {
-      size: b.mono ? 15 : FONT.sizes.body, color: COLORS.ink, valign: 'top',
-      fontFace: b.mono ? FONT.mono : FONT.face, lineSpacing: 18,
+    const y = top + i * (bandH + 0.12);
+    const text = c[b.k] || '';
+    // long measurements drop to body size so they stay inside the band
+    const size = b.mono && text.length > 70 ? FONT.sizes.body : b.size;
+    out.push(...d.block(`diag-${id}-${b.k}`, colX, y, colW, bandH, {
+      label: b.label, text, accent: b.accent, mono: b.mono,
+      size, color: COLORS.ink, labelColor: b.accent, lineSpacing: 16,
     }));
   });
 
   const rightBands = [
-    { k: 'can_conclude', label: 'CAN CONCLUDE', color: COLORS.green, fill: COLORS.greenSoft },
-    { k: 'cannot_conclude', label: 'CANNOT CONCLUDE', color: COLORS.red, fill: COLORS.redSoft },
-    { k: 'alternative_explanation', label: 'ALTERNATIVE TARGETED', color: COLORS.muted, fill: COLORS.panel },
+    { k: 'can_conclude', label: 'Can conclude', accent: COLORS.green },
+    { k: 'cannot_conclude', label: 'Cannot conclude', accent: COLORS.red },
+    { k: 'alternative_explanation', label: 'Alternative targeted', accent: COLORS.muted },
   ];
   rightBands.forEach((b, i) => {
-    const y = top + i * (bandH + 0.1);
-    out.push(d.card(`diag-${id}-${b.k}`, rightX, y, rightW, bandH, { fill: b.fill, line: b.color }));
-    out.push(d.text(`diag-${id}-${b.k}-k`, rightX + 0.22, y + 0.1, rightW - 0.44, 0.26, b.label, {
-      size: FONT.sizes.tiny, bold: true, color: b.color, valign: 'middle',
-    }));
-    out.push(d.text(`diag-${id}-${b.k}-t`, rightX + 0.22, y + 0.4, rightW - 0.44, bandH - 0.5, c[b.k] || '', {
-      size: FONT.sizes.small + 0.5, color: COLORS.inkSoft, valign: 'top', lineSpacing: 17,
+    const y = top + i * (bandH + 0.12);
+    out.push(...d.block(`diag-${id}-${b.k}`, rightX, y, rightW, bandH, {
+      label: b.label, text: c[b.k] || '', accent: b.accent, size: FONT.sizes.small + 0.5,
+      color: COLORS.inkSoft, labelColor: b.accent,
     }));
   });
   return out;
@@ -286,7 +283,8 @@ function featureSpace(slide) {
   const radius = {};
 
   nodes.forEach((nd, i) => {
-    const size = nd.size || 1.0;
+    // figure-first: geometric objects dominate the slide area
+    const size = nd.size || 1.3;
     const base = nd.role && ROLE_POS[nd.role] ? ROLE_POS[nd.role] : { x: 2.5 + i * 2.4, y: 3.5 };
     const cx = nd.cx !== undefined ? nd.cx : base.x;
     const cy = nd.cy !== undefined ? nd.cy : base.y;
