@@ -153,8 +153,22 @@ def _headers() -> dict:
     return {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
 
 
-def _parse_audio(payload: bytes) -> bytes:
+def _is_daily_quota(payload: bytes) -> bool:
+    """True when the 429 is the per-day cap (retrying is pointless)."""
     try:
+        data = json.loads(payload.decode("utf-8"))
+    except Exception:
+        return False
+    for detail in (data.get("error") or {}).get("details", []):
+        if not str(detail.get("@type", "")).endswith("QuotaFailure"):
+            continue
+        for violation in detail.get("violations", []):
+            if "PerDay" in str(violation.get("quotaId", "")):
+                return True
+    return False
+
+
+def _parse_audio(payload: bytes) -> bytes:    try:
         data = json.loads(payload.decode("utf-8"))
     except Exception as exc:
         raise GeminiError(f"Gemini TTS returned non-JSON payload ({len(payload)} bytes)") from exc
@@ -222,6 +236,12 @@ def synthesize(text: str, out_path: pathlib.Path, *, model: str = DEFAULT_MODEL,
                 return {"path": str(out_path), "duration": probe_duration(out_path),
                         "cached": False, "key": key}
             if status in (429, 500, 502, 503, 504) and attempt < retries:
+                if status == 429 and _is_daily_quota(payload):
+                    raise GeminiError(
+                        "Gemini TTS daily free-tier quota is exhausted for this project "
+                        "(GenerateRequestsPerDay). It resets on the next day; retrying now cannot help. "
+                        "Set GEMINI_API_KEY from another project, add billing, or wait for the reset."
+                    )
                 # Rate limits need a longer pause than transient 5xx errors.
                 time.sleep(max(12.0 * (attempt + 1), 12.0) if status == 429 else 2 ** attempt)
                 continue
