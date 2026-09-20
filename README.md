@@ -238,10 +238,18 @@ python skills/research-method-video/scripts/mux_narration.py --project examples/
 
 Known limitations: the committed narrated renders use the local `say` fallback
 because the Gemini TTS free quota was exhausted during the run (`--backend
-gemini` is the preferred path); LinCa retains 5.8 s of end-frame padding on two
-scenes, recorded in its revision log; both videos were reviewed by frame
-inspection and self-review against the comprehension gates, not by a human
-panel.
+gemini` is the preferred path). LearniBridge already has 5 of 7 Kore chunks
+cached; when quota is available again, finish it with:
+
+```bash
+python skills/research-method-video/scripts/tts_narration.py --project examples/learnibridge --backend gemini --delay 65
+python skills/research-method-video/scripts/render_scene.py --project examples/learnibridge --quality final --timing transcript
+python skills/research-method-video/scripts/mux_narration.py --project examples/learnibridge --quality final --backend gemini
+```
+
+LinCa retains 5.8 s of end-frame padding on two scenes, recorded in its revision
+log; both videos were reviewed by frame inspection and self-review against the
+comprehension gates, not by a human panel.
 
 ## Transcript and narration
 
