@@ -141,6 +141,17 @@ function critiqueContent(spec) {
         'one claim, one supporting visual, minimal text', null);
     }
 
+    // academic mode: when a figure carries the argument, it must dominate
+    if (['feature-space', 'benchmark', 'method-high-level', 'method-landscape',
+      'competitor-mechanism', 'experiment'].includes(slide.archetype) && a.proseWords > 16) {
+      const prose = a.entries.filter((e) => e.role === 'prose' && !isProtected(slide, e.path))
+        .sort((x, y) => words(y.text).length - words(x.text).length)[0];
+      add(slide, 'medium', 'beamer_overexplained',
+        `figure slide carries ${a.proseWords} words of prose; the figure should dominate`,
+        'state the point in the title or one annotation, move the rest to notes',
+        prose ? { op: 'move_to_notes', path: prose.path } : null);
+    }
+
     // preserve measurement/observation/interpretation separation (defensive)
     if (slide.archetype === 'diagnostic' && c.observation && c.interpretation
       && c.observation.trim() === c.interpretation.trim()) {

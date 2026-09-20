@@ -74,8 +74,24 @@ function critiqueVisual(spec, scene, images) {
     if (centeredBody.length >= 2) add(sl.id, 'medium', 'centered_body',
       `${centeredBody.length} centred multi-word text blocks`, 'left-align body text');
     const cards = prims.filter((p) => p.kind === 'roundRect').length;
+    if (cards > 6) add(sl.id, 'medium', 'card_layout',
+      `${cards} rounded cards; academic slides use blocks and figures, not card grids`, 'replace cards with a figure or semantic block');
     if (cards > 10) add(sl.id, 'medium', 'excessive_cards',
       `${cards} rounded cards`, 'reduce card usage; group instead');
+    if (['feature-space', 'benchmark', 'method-high-level'].includes(sl.archetype)) {
+      const slideArea = LAYOUT.w * LAYOUT.h;
+      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      prims.forEach((p) => {
+        if (p.kind === 'text' || /^(bg|chrome-|frame-|footer|kicker|title|header)/.test(p.id || '')) return;
+        const b = boundsOf(p);
+        minX = Math.min(minX, b.x); minY = Math.min(minY, b.y);
+        maxX = Math.max(maxX, b.x + b.w); maxY = Math.max(maxY, b.y + b.h);
+      });
+      const bbox = Number.isFinite(minX) ? Math.max(0, (maxX - minX) * (maxY - minY)) : 0;
+      if (bbox / slideArea < 0.28) add(sl.id, 'medium', 'figure_not_dominant',
+        `figure region occupies only ${(bbox / slideArea * 100).toFixed(0)}% of the slide`,
+        'enlarge the figure; move explanatory prose to notes');
+    }
     const specSlide = (spec.slides || []).find((s) => s.id === sl.id);
     if (specSlide) {
       const a = analyzeSlide(specSlide);

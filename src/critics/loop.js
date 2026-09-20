@@ -16,6 +16,7 @@ const { critiqueDeck } = require('./deck');
 const { applyRevisions } = require('./revise');
 const { analyzeImages } = require('./imageMetrics');
 const { deckMetrics } = require('./metrics');
+const { styleMetrics } = require('./metrics');
 
 function clone(o) { return JSON.parse(JSON.stringify(o)); }
 
@@ -65,6 +66,7 @@ async function runCritiqueLoop(opts) {
   let lastApplied = -1;
   let hardFailures = [];
   let unresolvedHigh = [];
+  let scene = null;
 
   for (let cycle = 1; cycle <= maxCycles; cycle += 1) {
     const cycleIssues = [];
@@ -87,7 +89,7 @@ async function runCritiqueLoop(opts) {
     spec = contentRev.spec;
 
     // 2. build + render
-    let scene = buildScene(spec);
+    scene = buildScene(spec);
     if (deckOut) await writePptx(scene, deckOut);
     if (doRender) {
       const pv = renderSlidePreviews(scene, path.join(qaDir, 'renders'));
@@ -133,6 +135,7 @@ async function runCritiqueLoop(opts) {
   writeJson(path.join(qaDir, 'visual_review.json'), { critic: 'visual', metrics, issues: visualIssues });
   writeJson(path.join(qaDir, 'deck_review.json'), { critic: 'deck', metrics, issues: deckIssues });
   writeJson(path.join(qaDir, 'editorial_metrics.json'), metrics);
+  writeJson(path.join(qaDir, 'style_metrics.json'), styleMetrics(scene));
   fs.mkdirSync(qaDir, { recursive: true });
   fs.writeFileSync(path.join(qaDir, 'revision_log.md'), revisionLogMarkdown(cycles));
 

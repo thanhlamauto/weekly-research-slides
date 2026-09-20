@@ -2,6 +2,7 @@
 
 const { BUDGETS, analyzeSlide, isCategoryTitle } = require('./budgets');
 const T = require('./textutil');
+const { walk } = require('../renderer/scene');
 
 function bodyText(slide) {
   const a = analyzeSlide(slide);
@@ -87,6 +88,21 @@ function critiqueDeck(spec, scene, images) {
       add(slides[i].id, 'medium', 'merge_candidates',
         `adjacent "${slides[i].archetype}" slides overlap (similarity ${sim.toFixed(2)})`,
         `merge into ${slides[i - 1].id}`, { op: 'merge_slides', from: slides[i].id, into: slides[i - 1].id });
+    }
+  }
+
+  // academic coherence: a research talk should not be a wall of cards
+  if (scene && scene.slides.length) {
+    const cardCounts = scene.slides.map((sl) => {
+      let cards = 0;
+      walk(sl.primitives, (p) => { if (p.kind === 'roundRect' && !/^(chrome-|frame-)/.test(p.id || '')) cards += 1; });
+      return cards;
+    });
+    const heavy = cardCounts.filter((n) => n > 6).length;
+    if (heavy > Math.max(1, Math.floor(cardCounts.length / 3))) {
+      add(slides[0].id, 'medium', 'card_heavy_deck',
+        `${heavy}/${cardCounts.length} slides are card-heavy`,
+        'replace card grids with figures and semantic blocks');
     }
   }
 
