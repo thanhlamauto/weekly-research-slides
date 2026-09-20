@@ -1,0 +1,36 @@
+# Acceptance test 3: method delta (v3 -> v4).
+# Shared components keep their layer across panels and stay muted; the inserted
+# correction is the only emphasised object.
+figure:
+  id: v3_v4
+  type: method-delta
+  mode: delta
+  title: "Method delta: v3 to v4"
+  purpose: Keep unchanged components in place, mute them, highlight what changed.
+  rendering:
+    backend: auto
+    width_cm: 10.5
+
+panels:
+  - { id: previous, label: "Last week (v3)", role: shared }
+  - { id: current, label: "This week (v4)", role: ours }
+
+nodes:
+  - { id: p-feature, panel: previous, semantic_id: feature.zs, type: feature, label: "$Z_s$", role: shared }
+  - { id: p-predictor, panel: previous, semantic_id: component.predictor, type: learned-module, label: predictor, role: shared }
+  - { id: p-output, panel: previous, semantic_id: output.z, type: output, label: output, role: shared }
+  - { id: c-feature, panel: current, semantic_id: feature.zs, type: feature, label: "$Z_s$", role: shared }
+  - { id: c-predictor, panel: current, semantic_id: component.predictor, type: learned-module, label: predictor, role: shared }
+  - { id: c-correction, panel: current, semantic_id: component.correction, type: learned-module, label: correction, detail: "supervises $\\Delta Z$", role: added }
+  - { id: c-output, panel: current, semantic_id: output.z, type: output, label: output, role: shared }
+
+edges:
+  - { from: p-feature, to: p-predictor, role: computation }
+  - { from: p-predictor, to: p-output, role: computation }
+  - { from: c-feature, to: c-predictor, role: computation }
+  - { from: c-predictor, to: c-correction, role: computation }
+  - { from: c-correction, to: c-output, role: computation }
+
+legend:
+  - { role: shared, label: unchanged }
+  - { role: added, label: new this week }

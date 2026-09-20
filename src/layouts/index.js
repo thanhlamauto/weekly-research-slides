@@ -24,6 +24,7 @@ const REGISTRY = {
   'feature-space': evidence.featureSpace,
   interpretation: narrative.interpretation,
   limitations: narrative.limitations,
+  figure: evidence.figure,
 };
 
 function getLayout(archetype) {

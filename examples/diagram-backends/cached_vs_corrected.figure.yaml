@@ -1,0 +1,39 @@
+# Acceptance test 2: competitor-vs-ours in one normalized coordinate system.
+# Same inputs, same cache, same output positions; only the middle operation
+# differs (direct reuse vs learned correction).
+figure:
+  id: cached_vs_corrected
+  type: method-comparison
+  mode: comparison
+  title: Direct reuse vs learned correction
+  purpose: The only structural difference is the operation between cache and output.
+  rendering:
+    backend: auto
+    width_cm: 11.0
+
+panels:
+  - { id: competitor, label: "Competitor: direct reuse", role: competitor }
+  - { id: ours, label: "Ours: learned correction", role: ours }
+
+nodes:
+  - { id: c-feature, panel: competitor, semantic_id: feature.zs, type: feature, label: "$Z_s$", role: shared }
+  - { id: c-cache, panel: competitor, semantic_id: component.cache, type: cache, label: cached feature, role: shared }
+  - { id: c-reuse, panel: competitor, semantic_id: operation.reuse, type: module, label: direct reuse, role: competitor }
+  - { id: c-out, panel: competitor, semantic_id: output.z, type: output, label: output, role: shared }
+  - { id: o-feature, panel: ours, semantic_id: feature.zs, type: feature, label: "$Z_s$", role: shared }
+  - { id: o-cache, panel: ours, semantic_id: component.cache, type: cache, label: cached feature, role: shared }
+  - { id: o-correct, panel: ours, semantic_id: operation.correction, type: learned-module, label: correction, role: ours }
+  - { id: o-out, panel: ours, semantic_id: output.z, type: output, label: output, role: shared }
+
+edges:
+  - { from: c-feature, to: c-cache, role: data }
+  - { from: c-cache, to: c-reuse, role: computation }
+  - { from: c-reuse, to: c-out, role: computation }
+  - { from: o-feature, to: o-cache, role: data }
+  - { from: o-cache, to: o-correct, role: computation }
+  - { from: o-correct, to: o-out, role: computation }
+
+legend:
+  - { role: shared, label: shared }
+  - { role: competitor, label: competitor only }
+  - { role: ours, label: ours only }

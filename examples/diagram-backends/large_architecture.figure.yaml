@@ -1,0 +1,54 @@
+# Acceptance test 4: complexity routing.
+# 16 nodes / 18 edges with nested groups. `backend: auto` must select Draw.io,
+# not force TikZ.
+figure:
+  id: serving_stack
+  type: architecture
+  mode: ours
+  title: Full serving stack
+  purpose: A large multi-group system view that needs editable freeform geometry.
+  rendering:
+    backend: auto
+
+panels:
+  - { id: ingest, label: Ingest }
+  - { id: core, label: Core }
+  - { id: serve, label: Serving }
+
+nodes:
+  - { id: n01, panel: ingest, semantic_id: ingest.client, type: input, label: client, role: neutral }
+  - { id: n02, panel: ingest, semantic_id: ingest.gateway, type: module, label: gateway, role: neutral }
+  - { id: n03, panel: ingest, semantic_id: ingest.auth, type: module, label: auth, role: neutral }
+  - { id: n04, panel: ingest, semantic_id: ingest.queue, type: cache, label: queue, role: auxiliary }
+  - { id: n05, panel: ingest, semantic_id: ingest.parser, type: module, label: parser, role: neutral }
+  - { id: n06, panel: ingest, semantic_id: ingest.schema, type: module, label: schema registry, role: neutral }
+  - { id: n07, panel: core, semantic_id: core.router, type: learned-module, label: router, role: ours }
+  - { id: n08, panel: core, semantic_id: core.cache, type: cache, label: feature cache, role: ours }
+  - { id: n09, panel: core, semantic_id: core.encoder, type: backbone, label: encoder, role: shared }
+  - { id: n10, panel: core, semantic_id: core.ranker, type: learned-module, label: ranker, role: ours }
+  - { id: n11, panel: core, semantic_id: core.budget, type: learned-module, label: budget controller, role: added }
+  - { id: n12, panel: core, semantic_id: core.metrics, type: module, label: metrics, role: auxiliary }
+  - { id: n13, panel: serve, semantic_id: serve.api, type: module, label: public API, role: neutral }
+  - { id: n14, panel: serve, semantic_id: serve.batcher, type: module, label: batcher, role: neutral }
+  - { id: n15, panel: serve, semantic_id: serve.decoder, type: head, label: decoder head, role: shared }
+  - { id: n16, panel: serve, semantic_id: serve.cache, type: cache, label: response cache, role: auxiliary }
+
+edges:
+  - { from: n01, to: n02, role: data }
+  - { from: n02, to: n03, role: computation }
+  - { from: n03, to: n04, role: data }
+  - { from: n04, to: n05, role: data }
+  - { from: n05, to: n06, role: computation }
+  - { from: n06, to: n07, role: data }
+  - { from: n07, to: n08, role: computation }
+  - { from: n08, to: n09, role: computation }
+  - { from: n09, to: n10, role: computation }
+  - { from: n07, to: n11, role: computation }
+  - { from: n11, to: n10, role: computation }
+  - { from: n10, to: n12, role: reference }
+  - { from: n10, to: n13, role: data }
+  - { from: n13, to: n14, role: computation }
+  - { from: n14, to: n15, role: computation }
+  - { from: n15, to: n16, role: data }
+  - { from: n16, to: n13, role: reuse }
+  - { from: n12, to: n14, role: feedback }

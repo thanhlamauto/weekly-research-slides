@@ -10,34 +10,8 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const { renderBeamer, TEMPLATE_DIR } = require('./renderTex');
-
-const CACHE = new Map();
-
-function findTool(name) {
-  if (CACHE.has(name)) return CACHE.get(name);
-  const candidates = [];
-  if (process.env.WRS_TEX_BIN) candidates.push(path.join(process.env.WRS_TEX_BIN, name));
-  for (const dir of (process.env.PATH || '').split(path.delimiter)) if (dir) candidates.push(path.join(dir, name));
-  candidates.push('/Library/TeX/texbin/' + name, '/opt/homebrew/bin/' + name, '/usr/local/bin/' + name);
-  const home = process.env.HOME || '';
-  if (home) {
-    candidates.push(path.join(home, 'Library', 'TinyTeX', 'bin', 'universal-darwin', name));
-    candidates.push(path.join(home, 'Library', 'TinyTeX', 'bin', 'aarch64-darwin', name));
-  }
-  for (const c of candidates) {
-    try { fs.accessSync(c, fs.constants.X_OK); CACHE.set(name, c); return c; } catch (e) { /* keep looking */ }
-  }
-  CACHE.set(name, null);
-  return null;
-}
-
-function pythonCandidates(root) {
-  return [
-    process.env.WRS_PYTHON,
-    path.join(root, '.venv-manim', 'bin', 'python'),
-    'python3',
-  ].filter(Boolean);
-}
+const { findTool, pythonCandidates } = require('./tools');
+const { prepareFigures } = require('../renderers/figure');
 
 function texDoctor() {
   const tools = {};
@@ -45,7 +19,8 @@ function texDoctor() {
     .forEach((t) => { tools[t] = findTool(t); });
   const packages = {};
   ['beamer.cls', 'iftex.sty', 'lmodern.sty', 'fontspec.sty', 'booktabs.sty', 'enumitem.sty',
-    'tikz.sty', 'pgf.sty', 'amsmath.sty', 'amssymb.sty', 'graphicx.sty', 'ragged2e.sty']
+    'tikz.sty', 'pgf.sty', 'amsmath.sty', 'amssymb.sty', 'graphicx.sty', 'ragged2e.sty',
+    'standalone.cls', 'pgfplots.sty']
     .forEach((p) => {
       if (!tools.kpsewhich) { packages[p] = null; return; }
       const r = spawnSync(tools.kpsewhich, [p], { encoding: 'utf8' });
@@ -66,22 +41,19 @@ function texDoctor() {
 // build directory
 // ---------------------------------------------------------------------------
 function prepareBuildDir(spec, buildDir, opts = {}) {
-  const rendered = renderBeamer(spec, { engine: opts.engine });
   fs.mkdirSync(path.join(buildDir, 'assets'), { recursive: true });
+  const fig = prepareFigures(spec, {
+    specDir: opts.specDir,
+    buildDir,
+    widthCm: opts.figureWidthCm,
+  });
+  const rendered = renderBeamer(spec, { engine: opts.engine, figures: fig.prepared });
   for (const [name, content] of Object.entries(rendered.files)) {
     fs.writeFileSync(path.join(buildDir, name), content);
   }
-  ['theme.tex', 'macros.tex', 'version.json'].forEach((f) => {
+  ['theme.tex', 'macros.tex', 'tikz.tex', 'version.json'].forEach((f) => {
     fs.copyFileSync(path.join(TEMPLATE_DIR, f), path.join(buildDir, f));
   });
-  const copiedFigures = [];
-  for (const name of rendered.figures) {
-    const src = path.join(opts.specDir || '.', name);
-    if (fs.existsSync(src)) {
-      fs.copyFileSync(src, path.join(buildDir, 'assets', name));
-      copiedFigures.push(name);
-    }
-  }
   const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'package.json'), 'utf8'));
   const manifest = {
     generator: `weekly-research-slides ${pkg.version}`,
@@ -89,11 +61,24 @@ function prepareBuildDir(spec, buildDir, opts = {}) {
     engine: rendered.engine,
     deck: spec.deck ? { title: spec.deck.title, stage: spec.deck.stage, week: spec.deck.week } : null,
     slides: (spec.slides || []).length,
-    figures: copiedFigures,
+    figures: Object.entries(fig.prepared).map(([key, v]) => ({
+      key,
+      backend: v.backend,
+      decision: v.decision,
+      source: v.source,
+    })),
     generated_at: new Date().toISOString(),
   };
   fs.writeFileSync(path.join(buildDir, 'build_manifest.json'), JSON.stringify(manifest, null, 2));
-  return { buildDir, engine: rendered.engine, warnings: rendered.warnings, figures: copiedFigures, manifest, rendered };
+  return {
+    buildDir,
+    engine: rendered.engine,
+    warnings: rendered.warnings,
+    figureFindings: fig.findings,
+    preparedFigures: fig.prepared,
+    manifest,
+    rendered,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -187,7 +172,7 @@ async function buildBeamer(spec, opts = {}) {
   const buildDir = opts.buildDir || path.join(path.dirname(path.resolve(output)), `${path.basename(output, '.pdf')}-build`);
   const prep = prepareBuildDir(spec, buildDir, { specDir: opts.specDir, engine: opts.engine });
   const presentation = compileBeamer(buildDir, { engine: prep.engine, file: 'presentation.tex', outPdf: output });
-  const findings = [...prep.warnings, ...presentation.findings];
+  const findings = [...prep.warnings, ...(prep.figureFindings || []), ...presentation.findings];
   let handout = null;
   if (opts.handout !== false) {
     handout = compileBeamer(buildDir, {

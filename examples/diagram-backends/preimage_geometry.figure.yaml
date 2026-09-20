@@ -1,0 +1,33 @@
+# Acceptance test 1: feature-space / diagnostic geometry (TikZ first-class).
+# Z_s, Z_d, Z~, the correction vector, the desired direction, the residual and
+# the angle between correction and desired direction. Geometry is semantic:
+# positions are diagram units, not pixels.
+figure:
+  id: preimage_geometry
+  type: diagnostic
+  mode: diagnostic
+  diagram: feature-space
+  title: Correction direction vs desired direction
+  purpose: Show that the correction moves away from the desired direction.
+  rendering:
+    backend: auto
+    width_cm: 7.5
+    overlays: [zs, zd, ztilde]
+  angle_at: zs
+
+nodes:
+  - { id: zs, semantic_id: concept.zs, type: feature, label: "$Z_s$", detail: cached source, role: shared, geometry: { x: 0.0, y: 0.0 } }
+  - { id: zd, semantic_id: concept.zd, type: feature, label: "$Z_d$", detail: desired future, role: auxiliary, geometry: { x: 0.9, y: 2.2 } }
+  - { id: ztilde, semantic_id: concept.ztilde, type: feature, label: "$\\tilde{Z}$", detail: corrected estimate, role: ours, geometry: { x: 4.6, y: 0.0 } }
+
+edges:
+  - { id: vec-delta, from: zs, to: ztilde, role: computation, label: "$\\Delta Z$", emphasis: true }
+  - { id: vec-desired, from: zs, to: zd, role: reference, label: "$Z_d - Z_s$" }
+  - { id: vec-residual, from: ztilde, to: zd, role: reference, label: residual }
+
+annotations:
+  - { id: angle-measurement, target: zs, role: measurement, text: "cos 0.117" }
+
+legend:
+  - { role: ours, label: "correction $\\Delta Z$" }
+  - { role: muted, label: reference and residual }

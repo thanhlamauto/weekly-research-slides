@@ -1,0 +1,132 @@
+# Mixed-renderer demo deck: Beamer-native slides + native TikZ figures +
+# a Draw.io architecture export + a native results table. One slide_spec, four
+# renderers, one coherent deck.
+deck:
+  title: One method, four renderers
+  subtitle: Diagram backend demo
+  project: Diagram backends
+  stage: method-development
+  week: 1
+  audience: Weekly research group meeting
+  familiarity: medium
+  footer: Diagram backends · synthetic demo
+
+slides:
+  - id: s1
+    archetype: title
+    title: One method, four renderers
+    content:
+      project: Diagram backends
+      headline: Which backend should draw which scientific visual?
+      question: Week 1 · one semantic figure spec, rendered by TikZ, Draw.io and native Beamer layout.
+      byline: Weekly research update · synthetic demo · version 0.1
+    beats: [question]
+    notes: Name the routing question. Do not explain each backend yet; the deck shows them.
+
+  - id: s2
+    archetype: recap
+    title: What stays constant across renderers
+    content:
+      established_title: Established
+      established:
+        - { label: Method model, detail: One semantic model of the method, shared with slides and video. }
+        - { label: Figure spec, detail: Nodes, roles, edges and annotations carry the science, not pixels. }
+        - { label: Routing, detail: The renderer is chosen explicitly or by complexity heuristics. }
+      now_title: This week
+      now: Four renderers coexist in one deck. Conceptual diagrams are native TikZ, the large architecture stays in Draw.io, results stay a native table, and the deck is still one Beamer PDF.
+      prior_week: 'Previous: separate figure pipelines'
+    beats: [established, now]
+    notes: Keep it short. The point is that the science does not move between renderers.
+
+  - id: s3
+    archetype: figure
+    title: Direct reuse vs learned correction
+    content:
+      figure:
+        id: cached_vs_corrected
+        spec: cached_vs_corrected.figure.yaml
+        backend: auto
+        width: 0.97
+      caption: Same inputs, same cache, same output; only the operation between cache and output differs. TikZ keeps both panels in one coordinate system.
+      lead: The difference should be visible in under five seconds.
+    beats: [competitor, ours]
+    notes: Point at the middle operation in both panels. Everything else is deliberately identical.
+
+  - id: s4
+    archetype: figure
+    title: Correction direction vs desired direction
+    content:
+      figure:
+        id: preimage_geometry
+        spec: preimage_geometry.figure.yaml
+        backend: auto
+      caption: The correction is nearly orthogonal to the desired direction; the angle is annotated from the same measurement as the diagnostic slide.
+    beats: [objects, vectors, angle]
+    notes: Reveal objects first, then the desired direction, then the correction. The angle is the observation.
+
+  - id: s5
+    archetype: figure
+    title: 'Method delta: v3 to v4'
+    content:
+      figure:
+        id: v3_v4
+        spec: v3_v4.figure.yaml
+        backend: auto
+        width: 0.97
+      caption: Unchanged components keep their layer across both panels and stay muted; the inserted correction is the only highlighted object.
+    beats: [shared, added]
+    notes: Compare left and right by position, not by reading every label.
+
+  - id: s6
+    archetype: figure
+    title: Large architecture stays editable in Draw.io
+    content:
+      figure:
+        id: lesa_architecture
+        backend: drawio
+        file: ../lesa/figure/lesa_overview.pdf
+        width: 0.92
+      caption: Draw.io remains the backend for large editable architecture figures; Beamer includes the exported PDF directly.
+    beats: [architecture]
+    notes: This figure is intentionally not TikZ; the router would choose Draw.io for it.
+
+  - id: s7
+    archetype: benchmark
+    title: Renderer cost and editability
+    content:
+      metrics:
+        - { key: compile_s, name: Compile (s), unit: lower is better, higher_is_better: false }
+        - { key: native_type, name: Native typography, unit: 1 = native, higher_is_better: true }
+        - { key: editable, name: Editable source, unit: 1 = full, higher_is_better: true }
+      methods:
+        - name: TikZ conceptual
+          role: current
+          values: { compile_s: 1.2, native_type: 1, editable: 0.5 }
+          delta: { compile_s: 'once', native_type: 'yes', editable: 'tex' }
+        - name: Draw.io architecture
+          role: previous
+          values: { compile_s: 0.4, native_type: 0.5, editable: 1 }
+          delta: { compile_s: 'pdf', native_type: 'via pdf', editable: 'gui' }
+        - name: Python plot
+          role: competitor
+          values: { compile_s: 0.3, native_type: 0.5, editable: 0.5 }
+          delta: { compile_s: 'pre', native_type: 'no', editable: 'script' }
+      caption: TikZ costs a compile step and pays back in native typography and direct Beamer integration; Draw.io stays best for large editable figures.
+    beats: [tikz, drawio, python]
+    notes: Honest trade-off, not a benchmark of quality.
+
+  - id: s8
+    archetype: limitations
+    title: Limitations and open questions
+    content:
+      limitations:
+        - TikZ routing is heuristic; the decision is recorded but not yet learned from feedback.
+        - Only conceptual and diagnostic archetypes are implemented in v0.1.
+        - PGFPlots is optional and not used by the default plot pipeline.
+        - Overlays inside a scaled figure are not supported.
+      open_questions:
+        - Should routing learn from critic outcomes across weeks?
+        - Can the same figure spec drive a paper-ready export automatically?
+        - When does a TikZ diagram become too large to stay readable in a slide?
+    beats: [limitations, open-questions]
+    notes: Stop here. Discussion follows.

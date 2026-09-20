@@ -30,6 +30,9 @@ const { diffStates } = require('./model/diff');
 const {
   buildBeamer, compileBeamer, renderPdfPages, makeContactSheet, texDoctor, pdfPageCount, parseLatexLog,
 } = require('./beamer/build');
+const { loadFigureInput, figureEntries } = require('./renderers/figure');
+const { routeFigure, renderFigureTex, exportStandalone, validateFigure, critiqueTikz } = require('./renderers/tikz');
+const { analyzeImages } = require('./critics/imageMetrics');
 
 function parseArgs(argv) {
   const flags = {};
@@ -398,6 +401,154 @@ async function cmdCritique(flags) {
   process.exit(res.hardFailures.length ? 1 : 0);
 }
 
+function printFigureFindings(findings) {
+  findings.forEach((f) => console.log(`[${f.level}] ${f.check}${f.figure ? ` figure=${f.figure}` : ''}${f.slide ? ` slide=${f.slide}` : ''}: ${f.message}${f.action ? ` -> ${f.action}` : ''}`));
+}
+
+function cmdRoute(flags) {
+  const input = requireFlag(flags, 'input');
+  const { spec, kind } = loadFigureInput(input);
+  const decision = routeFigure(spec, { backend: flags.backend || 'auto' });
+  if (flags.output) fs.writeFileSync(flags.output, JSON.stringify(decision, null, 2));
+  if (flags.json) { console.log(JSON.stringify(decision, null, 2)); return; }
+  console.log(`${path.basename(input)} (${kind}) -> ${decision.selected}${decision.explicit ? ' (explicit)' : ''}`);
+  decision.reason.forEach((r) => console.log(`  - ${r}`));
+}
+
+function cmdTikz(flags) {
+  const input = requireFlag(flags, 'input');
+  const { spec, kind } = loadFigureInput(input);
+  if (flags['width-cm']) {
+    spec.figure = spec.figure || {};
+    spec.figure.rendering = { ...(spec.figure.rendering || {}), width_cm: Number(flags['width-cm']) };
+  }
+  const routed = routeFigure(spec, { backend: flags.backend || 'auto' });
+  if (routed.selected !== 'tikz' && !flags.force) {
+    console.log(`router selected '${routed.selected}': ${routed.reason.join('; ')}`);
+    console.log('pass --force to render with TikZ anyway, or --backend tikz to make it explicit');
+    process.exit(1);
+  }
+  const decision = routed.selected === 'tikz' ? routed : routeFigure(spec, { backend: 'tikz' });
+  const rendered = renderFigureTex(spec, { decision });
+  const out = flags.output || `${(spec.figure && spec.figure.id) || 'figure'}.tex`;
+  fs.writeFileSync(out, rendered.tex);
+  const findings = [...validateFigure(spec, rendered.plan), ...critiqueTikz(spec, rendered.plan)];
+  printFigureFindings(findings);
+  console.log(`tikz -> ${out} (${kind}, archetype ${rendered.plan.archetype}, ${rendered.plan.nodes.length} nodes, ${rendered.plan.edges.length} edges)`);
+  if (flags.standalone) {
+    const dir = flags.standalone === true ? path.dirname(path.resolve(out)) : flags.standalone;
+    const st = exportStandalone(spec, dir, { mode: flags.mode || 'presentation' });
+    console.log(st.ok ? `standalone PDF -> ${st.pdf} (mode ${flags.mode || 'presentation'})` : `standalone compile failed: ${st.reason}`);
+    if (!st.ok) process.exit(1);
+  }
+  if (findings.some((f) => f.level === 'error')) process.exit(1);
+}
+
+function cmdTikzQa(flags) {
+  const input = requireFlag(flags, 'input');
+  const outDir = flags['output-dir'] || 'tikz-qa';
+  ensureDir(outDir);
+  const root = path.join(__dirname, '..');
+  const { spec, kind } = loadFigureInput(input);
+  const routed = routeFigure(spec, { backend: flags.backend || 'auto' });
+  const decision = routed.selected === 'tikz' ? routed : routeFigure(spec, { backend: 'tikz' });
+  const rendered = renderFigureTex(spec, { decision });
+  const figureId = (spec.figure && spec.figure.id) || 'figure';
+  fs.writeFileSync(path.join(outDir, `${figureId}.tex`), rendered.tex);
+  let findings = [...validateFigure(spec, rendered.plan), ...critiqueTikz(spec, rendered.plan)];
+  let images = null;
+  let pdf = null;
+  if (flags.render !== false) {
+    const st = exportStandalone(spec, path.join(outDir, 'render'), { mode: flags.mode || 'presentation' });
+    pdf = st.pdf;
+    if (st.ok) {
+      const pages = renderPdfPages(st.pdf, path.join(outDir, 'render'), { dpi: Number(flags.dpi || 150) });
+      if (pages.ok) {
+        const im = analyzeImages(root, path.join(outDir, 'render'));
+        images = im.ok ? im.images : null;
+        if (images) findings = [...findings, ...critiqueTikz(spec, rendered.plan, { images })];
+      }
+    } else {
+      findings.push({ level: 'error', check: 'standalone-compile', message: st.reason || 'standalone compile failed' });
+    }
+  }
+  printFigureFindings(findings);
+  const errors = findings.filter((f) => f.level === 'error');
+  const actions = findings.filter((f) => f.action);
+  fs.writeFileSync(path.join(outDir, 'tikz_qa.json'), JSON.stringify({
+    input, kind, decision,
+    archetype: rendered.plan.archetype,
+    nodes: rendered.plan.nodes.length, edges: rendered.plan.edges.length,
+    width_cm: rendered.plan.width, height_cm: rendered.plan.height,
+    render_pdf: pdf, images: images || [], findings,
+  }, null, 2));
+  fs.writeFileSync(path.join(outDir, 'defect-log.md'), [
+    '# TikZ defect log', '',
+    `input: ${input}`, `archetype: ${rendered.plan.archetype}`,
+    `backend: ${decision.selected} (${decision.reason.join('; ')})`, '',
+    '## Findings', '',
+    ...findings.map((f) => `- [${f.level}] **${f.check}** — ${f.message}${f.action ? ` _(action: ${f.action})_` : ''}`),
+    '', '## Actions requested', '',
+    ...(actions.length ? actions.map((f) => `- \`${f.action}\`: ${f.message}`) : ['- none']),
+    '',
+  ].join('\n'));
+  console.log(`tikz qa -> ${outDir}/tikz_qa.json, defect-log.md (${errors.length} error(s))`);
+  process.exit(errors.length ? 1 : 0);
+}
+
+async function cmdDemoFigures(flags) {
+  const root = path.join(__dirname, '..');
+  const ex = path.join(root, 'examples', 'diagram-backends');
+  const outDir = path.join(ex, 'output');
+  ensureDir(outDir);
+  const slideFile = path.join(ex, 'slide_spec.yaml');
+  const spec = loadData(slideFile);
+  console.log('== mixed-renderer beamer build ==');
+  const pdfOut = path.join(outDir, 'diagram-backends.pdf');
+  const beamer = await buildBeamer(spec, {
+    output: pdfOut,
+    specDir: ex,
+    buildDir: path.join(outDir, 'beamer-build'),
+    handout: true,
+  });
+  printFigureFindings(beamer.findings);
+  const errors = beamer.findings.filter((f) => f.level === 'error');
+  console.log(`Built ${spec.slides.length} slides -> ${pdfOut} (${beamer.presentation.pages || '?'} pages)`);
+  if (beamer.handout && beamer.handout.ok) console.log(`Handout -> ${beamer.handout.pdf} (${beamer.handout.pages || '?'} pages)`);
+  console.log('figures:');
+  (beamer.manifest.figures || []).forEach((f) => console.log(`  - ${f.key}: ${f.backend} (${(f.decision && f.decision.reason || []).join('; ')})`));
+  const pagesDir = path.join(outDir, 'pages');
+  const pages = renderPdfPages(pdfOut, pagesDir, { dpi: 110 });
+  let sheetOk = false;
+  if (pages.ok) {
+    const sheet = makeContactSheet(root, pagesDir, path.join(pagesDir, 'contact-sheet.png'), { cols: 3 });
+    sheetOk = sheet.ok;
+    console.log(`Page renders -> ${pagesDir} (${pages.pages} PNG${sheetOk ? ', contact sheet' : ''})`);
+  } else {
+    console.log(`Page renders unavailable: ${pages.reason}`);
+  }
+  console.log('== standalone figures ==');
+  const figureOutputs = [];
+  for (const fig of figureEntries(spec)) {
+    const resolved = require('./renderers/figure').resolveFigureSpec(fig, ex);
+    if (!resolved) continue;
+    const dir = path.join(outDir, 'figures', fig.key);
+    const st = exportStandalone(resolved.spec, dir, { mode: 'presentation' });
+    figureOutputs.push({ key: fig.key, backend: 'tikz', pdf: st.ok ? st.pdf : null, ok: st.ok });
+    console.log(st.ok ? `  - ${fig.key}: ${st.pdf}` : `  - ${fig.key}: compile failed (${st.reason})`);
+  }
+  fs.writeFileSync(path.join(outDir, 'renderer_report.json'), JSON.stringify({
+    deck: path.basename(slideFile),
+    template: beamer.manifest.template,
+    figures: beamer.manifest.figures,
+    standalone: figureOutputs,
+    pages: beamer.presentation.pages,
+    contact_sheet: sheetOk ? path.join(pagesDir, 'contact-sheet.png') : null,
+    findings: beamer.findings,
+  }, null, 2));
+  if (errors.length) process.exit(1);
+}
+
 async function cmdDemo(flags) {
   const root = path.join(__dirname, '..');
   const ex = path.join(root, 'examples', 'diagnostic-week');
@@ -478,6 +629,10 @@ async function main() {
     case 'diff': cmdDiff(flags); break;
     case 'validate': cmdValidate(flags); break;
     case 'critique': await cmdCritique(flags); break;
+    case 'route': cmdRoute(flags); break;
+    case 'tikz': cmdTikz(flags); break;
+    case 'tikz:qa': cmdTikzQa(flags); break;
+    case 'demo:figures': await cmdDemoFigures(flags); break;
     case 'demo': await cmdDemo(flags); break;
     default:
       console.log('weekly-research-slides CLI');
@@ -494,6 +649,10 @@ async function main() {
       console.log('  scene    --input slide_spec.yaml [--output scene.json|--format svg]');
       console.log('  validate --schema slide_spec --input file.yaml');
       console.log('  critique --input slide_spec.yaml --output revised.yaml --deck out.pdf [--renderer beamer] [--qa-dir qa] [--max-cycles 3] [--no-render]');
+      console.log('  route    --input figure_spec.yaml|figure.ir.json [--backend auto|tikz|drawio|python|manim] [--json]');
+      console.log('  tikz     --input figure_spec.yaml|figure.ir.json [--output figure.tex] [--standalone dir] [--mode paper|presentation] [--width-cm N]');
+      console.log('  tikz:qa  --input figure_spec.yaml|figure.ir.json [--output-dir dir] [--render]');
+      console.log('  demo:figures  build the mixed-renderer deck (Beamer + TikZ + Draw.io) and standalone figures');
       console.log('  (all commands accept --style academic-beamer|academic-metropolis|paper-figure|dark-explainer)');
       console.log('  demo     build + qa the bundled example');
   }

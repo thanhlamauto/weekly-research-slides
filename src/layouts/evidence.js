@@ -341,4 +341,30 @@ function featureSpace(slide) {
   return out;
 }
 
-module.exports = { experiment, benchmark, claim, claimDelta, diagnostic, featureSpace };
+// ---------------------------------------------------------------------------
+// figure — figure-first slide; the native diagram is rendered by the Beamer/
+// TikZ or Draw.io backend, the PPTX backend keeps structure and caption.
+// ---------------------------------------------------------------------------
+function figure(slide) {
+  const c = slide.content || {};
+  const fig = (c.figure && typeof c.figure === 'object') ? c.figure : {};
+  const label = typeof c.figure === 'string' ? c.figure : (fig.id || 'figure');
+  const backend = fig.backend || 'auto';
+  const out = [];
+  out.push(...C.panelBox('figure-frame', M, 1.72, CW, 4.7, c.caption || slide.title));
+  out.push(d.text('figure-label', M + 0.3, 2.55, CW - 0.6, 0.5, `figure '${label}' · backend ${backend}`, {
+    size: FONT.sizes.label, bold: true, color: COLORS.ink, valign: 'middle',
+  }));
+  out.push(d.text('figure-note', M + 0.3, 3.15, CW - 0.6, 0.8,
+    'The native diagram is rendered by the Beamer backend; the PPTX backend keeps the slide structure and caption.', {
+      size: FONT.sizes.small, color: COLORS.muted, valign: 'top',
+    }));
+  if (c.lead) {
+    out.push(d.text('figure-lead', M + 0.3, 4.5, CW - 0.6, 1.6, c.lead, {
+      size: FONT.sizes.body, color: COLORS.inkSoft, valign: 'top', lineSpacing: 20,
+    }));
+  }
+  return out;
+}
+
+module.exports = { experiment, benchmark, claim, claimDelta, diagnostic, featureSpace, figure };

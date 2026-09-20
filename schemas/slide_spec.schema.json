@@ -42,7 +42,7 @@
               "title", "question", "recap", "problem", "method-landscape",
               "competitor-mechanism", "weakness", "motivation", "method-high-level",
               "method-delta", "experiment", "benchmark", "claim", "claim-delta",
-              "diagnostic", "feature-space", "interpretation", "limitations"
+              "diagnostic", "feature-space", "interpretation", "limitations", "figure"
             ]
           },
           "module": {

@@ -472,6 +472,31 @@ function renderLimitations(slide, deck, ctx) {
   return frame({ title: slide.title, body, slide, ctx });
 }
 
+function figureKey(slide) {
+  const fig = slide.content && slide.content.figure;
+  return (fig && typeof fig === 'object' && fig.id) || slide.id;
+}
+
+// Figure-first slide. The artifact was prepared by src/renderers/figure.js:
+// a native TikZ .tex (\wrsDiagram) or a Draw.io/export file (\wrsFigure).
+function renderFigure(slide, deck, ctx) {
+  const c = slide.content || {};
+  const fig = (c.figure && typeof c.figure === 'object') ? c.figure : {};
+  const art = ctx.figures ? ctx.figures[figureKey(slide)] : null;
+  const width = typeof fig.width === 'number' ? `${fig.width}\\linewidth` : null;
+  const parts = [];
+  if (c.lead || c.summary) parts.push(`\\wrsLead{${texEscape(c.lead || c.summary, ctx)}}\\par\\vspace{0.5em}`);
+  if (art && art.backend === 'tikz') {
+    parts.push(width ? `\\wrsDiagram[${width}]{${art.texFile}}` : `\\wrsDiagram{${art.texFile}}`);
+  } else if (art && art.assetFile) {
+    parts.push(width ? `\\wrsFigure[${width}]{${art.assetFile}}` : `\\wrsFigure{${art.assetFile}}`);
+  } else {
+    parts.push(`\\wrsQuiet{${texEscape(c.caption || slide.title, ctx)}}`);
+  }
+  if (c.caption && art) parts.push(`\\vspace{0.3em}\\wrsQuiet{${texEscape(c.caption, ctx)}}`);
+  return frame({ title: slide.title, body: parts.join('\n'), slide, ctx });
+}
+
 function renderGeneric(slide, deck, ctx) {
   const c = slide.content || {};
   const parts = [];
@@ -509,26 +534,12 @@ const RENDERERS = {
   'feature-space': renderFeatureSpace,
   interpretation: renderInterpretation,
   limitations: renderLimitations,
+  figure: renderFigure,
 };
 
 // ---------------------------------------------------------------------------
 // deck assembly
 // ---------------------------------------------------------------------------
-function collectFigures(spec) {
-  const refs = [];
-  const walk = (value) => {
-    if (Array.isArray(value)) { value.forEach(walk); return; }
-    if (!value || typeof value !== 'object') return;
-    Object.entries(value).forEach(([k, v]) => {
-      if (typeof v === 'string' && /^(figure|image|diagram)$/.test(k) && /\.(png|jpg|jpeg|pdf|svg)$/i.test(v)) {
-        refs.push(path.basename(v));
-      } else walk(v);
-    });
-  };
-  walk(spec.slides || []);
-  return [...new Set(refs)];
-}
-
 function wrapper(engine, handout) {
   return [
     `% !TEX program = ${engine}`,
@@ -542,8 +553,8 @@ function wrapper(engine, handout) {
   ].join('\n');
 }
 
-function renderOnce(spec, keepUnicode) {
-  const ctx = { unicode: new Set(), keepUnicode };
+function renderOnce(spec, keepUnicode, figures) {
+  const ctx = { unicode: new Set(), keepUnicode, figures: figures || {} };
   const deck = spec.deck || {};
   const slides = (spec.slides || []).map((s) => {
     const render = RENDERERS[s.archetype] || renderGeneric;
@@ -568,12 +579,12 @@ function renderOnce(spec, keepUnicode) {
 }
 
 function renderBeamer(spec, opts = {}) {
-  const first = renderOnce(spec, true);
+  const first = renderOnce(spec, true, opts.figures);
   let engine = opts.engine || (first.unicode.size ? 'lualatex' : 'pdflatex');
   let result = first;
   const warnings = [];
   if (engine === 'pdflatex' && first.unicode.size) {
-    result = renderOnce(spec, false);
+    result = renderOnce(spec, false, opts.figures);
     warnings.push({
       level: 'warning',
       check: 'beamer-unicode',
@@ -585,7 +596,7 @@ function renderBeamer(spec, opts = {}) {
     'presentation.tex': wrapper(engine, false),
     'handout.tex': wrapper(engine, true),
   };
-  return { engine, warnings, files, figures: collectFigures(spec), template: TEMPLATE };
+  return { engine, warnings, files, figures: opts.figures || {}, template: TEMPLATE };
 }
 
 module.exports = { renderBeamer, texEscape, texMathLabel, TEMPLATE, TEMPLATE_DIR };
