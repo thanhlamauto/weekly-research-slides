@@ -168,7 +168,8 @@ def _is_daily_quota(payload: bytes) -> bool:
     return False
 
 
-def _parse_audio(payload: bytes) -> bytes:    try:
+def _parse_audio(payload: bytes) -> bytes:
+    try:
         data = json.loads(payload.decode("utf-8"))
     except Exception as exc:
         raise GeminiError(f"Gemini TTS returned non-JSON payload ({len(payload)} bytes)") from exc
