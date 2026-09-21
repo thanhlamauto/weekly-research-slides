@@ -15,6 +15,118 @@ across weeks and turns that change into a concise, visually explanatory deck.
 The default output is a **template-driven LaTeX Beamer PDF**; a native,
 editable PowerPoint backend remains available when hand editing matters.
 
+> **Agents: start with [Agents: read this first](#agents-read-this-first).**
+> It is the operational guide for using this repository as a skill.
+
+## Quick start with an AI agent
+
+1. Give your agent this repository (clone it or point the agent at the URL).
+2. Give it your research material: notes, results, last week's deck/state, papers.
+3. Tell it what artifact you want: Beamer slides, a figure, an explainer video, or a combination.
+4. Ask it to use `weekly-research-slides`.
+5. Let it build, render, critique, revise, and return the result.
+
+Minimal copy-paste prompt:
+
+```text
+Read the README and SKILL.md in this repository and use
+weekly-research-slides for this task.
+
+Prepare this week's research update from the material I provide.
+
+Audience:
+my research supervisor and lab members.
+
+Focus on what changed since the previous update.
+Do not repeat background they already know.
+
+Generate the final academic Beamer presentation and run the complete
+content, visual, and deck critique loop before returning it.
+```
+
+A universal bootstrap prompt (works for slides, figures, or video) is in
+[Agents: read this first](#agents-read-this-first). Full task-specific
+prompts are in [Prompt recipes](#prompt-recipes).
+
+## Agents: read this first
+
+This section is written for an AI agent that has been pointed at this
+repository. Follow it literally.
+
+1. **Read [`SKILL.md`](SKILL.md)** and the relevant `references/` documents.
+   `SKILL.md` is the concise entry point; this README explains how to run it.
+2. **Identify the task type:** weekly update, literature survey, competitor
+   explanation, competitor-vs-ours comparison, method explainer video, or a
+   paper figure.
+3. **Inspect the user's material before writing anything.** Read the papers in
+   full (not abstracts), open the notes, results, plots and previous decks.
+   If previous `research_state.yaml` / `weekly_delta.yaml` / decks exist, use
+   them as the baseline.
+4. **Determine the research stage:** `survey`, `hypothesis-formation`,
+   `method-development`, `diagnostic`, `refinement`, `mature-comparison`.
+   The stage selects the story modules (see [Scientific story patterns](#scientific-story-patterns)).
+5. **Build the semantic story first:** `research_state.yaml` → `weekly_delta.yaml`
+   → `storyboard.yaml` → `slide_spec.yaml`. Never write layout code before the
+   semantic model and storyboard exist.
+6. **Select outputs and renderers.** Slides are Beamer by default; diagrams go
+   through the router (TikZ / Draw.io / Python / Manim); video only when motion
+   materially helps (see [Choosing the right output](#choosing-the-right-output)).
+7. **Build** from source: `wrs build`, `wrs tikz`, `wrs video` scripts.
+8. **Critique:** run the content, visual and deck critics; never treat a
+   successful compile as success (see [Quality loop](#quality-loop)).
+9. **Revise the source** (not the artifact) and rebuild. At least one revision
+   cycle is mandatory; keep going until no high-severity issue remains.
+10. **Report artifacts:** source files, final PDF/video, contact sheets, QA
+    reports, and any unresolved limitations or assumptions.
+
+Universal bootstrap prompt:
+
+```text
+Read this repository's README, especially "Agents: read this first", then
+read SKILL.md.
+
+Use the repository as an Agent Skill for the task below.
+Do not merely give me slide text or a storyboard.
+Execute the complete source → build → render → critique → revise workflow.
+
+Task:
+<describe your research task here>
+
+Research material:
+<attach or link files/papers/results>
+
+Audience:
+<supervisor / research group / conference / other>
+
+Prior context:
+<previous deck/state if available>
+
+Desired output:
+<Beamer slides / figure / explainer video / combination>
+```
+
+**Do not invent.** Never fabricate experiment results, baselines, citations,
+method components, previous-week claims, novelty, or paper conclusions. If
+something is unknown, mark it unknown or omit it. Do not fill research gaps
+with plausible-sounding content.
+
+## What to give your agent
+
+You do not need perfectly structured input, and there is no form to fill in.
+Useful material includes:
+
+- research notes and rough thoughts;
+- the previous week's slides, `research_state.yaml` or `weekly_delta.yaml`;
+- paper URLs or PDFs;
+- experiment results, plots and diagnostic outputs;
+- GitHub repositories or code snippets;
+- method sketches, current hypotheses, and known limitations.
+
+More context helps. For mature projects the previous context is especially
+valuable, because the skill is **delta-first**: it wants to know what changed,
+not to rebuild the whole story. If previous slides or state exist, give them to
+the agent.
+
 ## Why this exists
 
 Weekly research presentations are hard for a specific reason: the value is not
@@ -27,7 +139,7 @@ This skill keeps a persistent project state, computes the week's delta, and
 renders an argument through a versioned academic template. The Beamer PDF is the
 deliverable by default; the same source also renders an editable `.pptx`.
 
-## Core idea: research delta
+## Core idea: research delta (delta-first)
 
 ```text
 what the audience already knows
@@ -36,6 +148,29 @@ what the audience already knows
   +  what results moved
   +  what claims strengthened / weakened / refuted / appeared
   =  this week's deck
+```
+
+A weekly research update should generally answer:
+
+- What changed in the method?
+- What changed in the results?
+- What changed in our claims?
+- What new diagnostic evidence appeared?
+- What do we understand differently now?
+- What remains unresolved?
+
+It should **not** automatically replay `problem → related work → motivation →
+method` every week. If the audience already knows that context, compress it.
+
+```text
+Week 2 (early):                 Week 8 (mature, delta-first):
+problem                         this week's question
+→ competitor                    → concise recap
+→ gap                           → method v7 → v8 delta
+→ proposed idea                 → new result
+                                → claim changed
+                                → diagnostic
+                                → limitation
 ```
 
 For a mature project, the deck usually opens with **"What changed this week?"**
@@ -67,6 +202,97 @@ A second, survey-stage example is in
 [`examples/survey-stage/`](examples/survey-stage/) and demonstrates the
 "no invented method, end at the gap" rule.
 
+## How the agent should write research content
+
+Good research slides and videos are **not paper summaries**. These rules apply
+to every output mode.
+
+- **One scientific idea at a time.** Every slide or scene answers one question
+  or communicates one claim.
+- **Explain causally.** Prefer `problem → observation → why existing methods
+  fail → new idea → mechanism` over the paper's section order.
+- **Minimum sufficient explanation.** Explain only what the current argument
+  needs. Do not explain an entire competitor paper when one assumption matters.
+- **Preserve scientific distinctions.** Never collapse measurement,
+  observation, interpretation, claim, and hypothesis.
+- **Evidence controls claim strength.** Never state more than the experiment
+  supports.
+- **Visuals carry mechanism.** If the diagram already explains an operation,
+  do not repeat it in a paragraph.
+- **Slides are not documents.** If something can be said aloud without losing
+  comprehension, move it to speaker notes.
+
+### Before / after
+
+Verbose paper prose:
+
+```text
+Existing feature caching methods leverage the similarity of intermediate
+representations across adjacent diffusion timesteps in order to reduce
+redundant computation.
+```
+
+Better:
+
+```text
+Prior methods reuse nearby features.
+```
+
+If the diagram already shows the reuse:
+
+```text
+Assumption: nearby features stay similar.
+```
+
+Why: the first version repeats the figure, the second states the mechanism,
+the third states the assumption the argument actually attacks.
+
+Generic title:
+
+```text
+Feature Analysis
+```
+
+Better:
+
+```text
+Correction improves output without approaching the future feature
+```
+
+Why: a title should carry the week's argument, so the story reads from the
+titles alone.
+
+Paper prose vs spoken explanation:
+
+```text
+Heterogeneous temporal feature dynamics limit the effectiveness of a
+global predictor.
+```
+
+Better (narration):
+
+```text
+The feature does not evolve the same way throughout diffusion.
+
+So why should one predictor handle every stage?
+```
+
+Why: the first is written to be cited; the second is written to be heard and
+sets up the next visual beat.
+
+### Scientific story patterns
+
+Reusable patterns, not a rigid deck. Omit any module the story does not need.
+
+| Task | Pattern |
+|---|---|
+| Competitor method | problem → key observation → core operation → assumption → relevant weakness |
+| Our method | weakness / motivation → what we change → mechanism → expected behavior → claim |
+| Diagnostic | claim → alternative explanation → test → measurement → observation → updated interpretation |
+| Experiment | question → controlled experiment → result → observation → interpretation |
+| Survey-stage project | problem → method landscape → families of solutions → normalized comparison → unresolved gap |
+| Mature weekly update | this week's question → concise recap → method delta → result delta → claim delta → diagnostics → limitations |
+
 ## Gallery
 
 The demo source is
@@ -79,6 +305,45 @@ built together with a handout PDF and per-page PNG renders by `npm run demo`.
 
 The contact sheet is rendered from the compiled PDF with `pdftoppm`, not from
 the source scene, so it shows the actual deliverable.
+
+## Choosing the right output
+
+### Beamer slides (default)
+
+The default for weekly academic presentations. Use for a research meeting, a
+paper discussion, an experiment update, or a supervisor meeting.
+
+### Static scientific figure
+
+Use when the deliverable is a method architecture, a competitor-vs-ours
+comparison, a method delta, a paper figure, or diagnostic geometry.
+
+### Method explainer video
+
+Use **only when motion materially improves understanding**: temporal feature
+evolution, caching, iterative algorithms, attention/correspondence,
+optimization dynamics, or transformations. Do not generate a video merely
+because the capability exists.
+
+### Transcript / narrated video
+
+Use for a standalone explanation, a shareable demo, or asynchronous review.
+The transcript is authored before animation and is the source of truth.
+
+### Diagram backend routing
+
+| Need | Preferred backend |
+|---|---|
+| Conceptual / math-heavy diagram | TikZ |
+| Feature-space geometry | TikZ |
+| Simple competitor-vs-ours | TikZ |
+| Complex architecture | Draw.io |
+| Reconstruct or style-transfer a reference figure | Draw.io |
+| Quantitative plot | Python / PGFPlots |
+| Animated mechanism | Manim |
+
+Use `rendering.backend: auto` unless there is a reason to override it; the
+router records its decision (see [Scientific diagram backends](#scientific-diagram-backends)).
 
 ## Beamer PDF (default renderer)
 
@@ -170,11 +435,84 @@ Full before/after, findings and reproduction: [`docs/critique-before-after.md`](
 ```bash
 npm run critique:demo
 node src/cli.js critique --input slide_spec.yaml --output revised.yaml \
-  --deck out.pptx --qa-dir qa
+  --renderer beamer --deck out.pdf --qa-dir qa
 ```
 
 Review artifacts: `qa/{content,visual,deck}_review.json`,
 `qa/editorial_metrics.json`, `qa/revision_log.md`.
+
+## Quality loop
+
+Generation is iterative. **Passing compilation is not sufficient.**
+
+```text
+draft
+  ↓
+content critic
+  ↓
+rewrite / delete
+  ↓
+render
+  ↓
+visual critic
+  ↓
+layout / figure repair
+  ↓
+render
+  ↓
+deck critic
+  ↓
+global revision
+  ↓
+final verification
+```
+
+- **Content critic** — is it correct, necessary, concise, and properly supported?
+- **Visual critic** — does the rendered slide communicate clearly?
+- **Deck critic** — does the complete presentation form a coherent research argument?
+
+Every task must run all three critics and revise the source at least once; see
+the implementation details above.
+
+## Definition of a good slide
+
+A good research slide:
+
+- communicates one idea;
+- has one dominant takeaway;
+- uses the title to carry the argument when possible;
+- shows rather than describes;
+- contains the minimum visible text needed;
+- preserves scientific precision;
+- gives important figures enough space;
+- uses speaker notes for spoken explanation;
+- is understandable in context within seconds.
+
+A bad research slide often:
+
+- contains paragraphs;
+- repeats what the figure already shows;
+- explains unrelated background;
+- uses generic titles;
+- contains multiple equal-priority ideas;
+- shrinks figures to fit prose.
+
+## Definition of done for agents
+
+A presentation task is not done until:
+
+- scientific sources have been read;
+- a storyboard exists;
+- the deck builds successfully;
+- all figures resolve;
+- rendered slide images were inspected;
+- the content, visual and deck critics were run;
+- at least one revision cycle occurred;
+- no high-severity unresolved issue remains;
+- final artifacts are reproducible from source.
+
+A video task additionally requires: storyboard; transcript; draft render;
+visual review; pacing/voice review; revision; final render.
 
 ## Method explainer videos
 
@@ -257,8 +595,9 @@ Three modes share one canonical transcript:
 
 - **silent** (default) — no audio; the script sets per-beat dwell and scene
   holds, so pacing follows the words. Best for weekly meetings.
-- **tts** — local synthesis via macOS `say` (free, no account); timings estimated
-  from audio duration.
+- **tts** — Gemini TTS is the preferred backend (voice `Kore`, expressive
+  prosody, audio cached on `model + voice + prompt`); macOS `say` is the local
+  zero-account fallback. Actual audio duration drives scene pacing.
 - **recorded** — force-align a recording to the canonical text with WhisperX
   when installed, else a clearly-labelled estimate. The text is never replaced by
   ASR output.
@@ -271,7 +610,7 @@ deck.
 npm run transcript:build     # narration.md + transcript.json + srt/vtt + word_times
 npm run transcript:qa        # narration, linking, subtitle and pacing checks
 npm run transcript:notes     # transcript -> speaker_notes.yaml
-npm run transcript:tts       # optional local TTS (macOS say)
+npm run transcript:tts       # optional TTS (Gemini preferred, say fallback)
 npm run transcript:align -- --audio narration.wav
 npm run video:narrate        # mux narration onto the rendered scenes
 ```
@@ -421,6 +760,11 @@ the slide source, so one method is never explained three different ways. Figure:
 - **Scientific + geometry + continuity + package QA** and an optional native
   OOXML motion pass.
 - **Inspection and conservative editing** of external PPTX files.
+- **Narrated method videos** — transcript-first pipeline with Gemini TTS
+  (Kore) or the local `say` fallback, semantic chunking, subtitles, speaker
+  notes, and audio-driven scene pacing.
+- **Diagram backend routing** — TikZ, Draw.io, Python/PGFPlots or Manim chosen
+  by a router that records why (`wrs route`).
 - **Source-first** — edit structured source, rebuild; do not patch the artifact.
 
 ## Installation
@@ -443,7 +787,7 @@ cd ~/.agents/skills/weekly-research-slides && npm install
 The skill lives in [`SKILL.md`](SKILL.md); detailed guidance is in
 [`references/`](references/).
 
-## Quick start
+## Quick start (CLI)
 
 ```bash
 npm install
@@ -462,28 +806,168 @@ npm run build -- --input examples/diagnostic-week/slide_spec.yaml --output out.p
 npm run qa   -- --input out.pptx --spec examples/diagnostic-week/slide_spec.yaml
 ```
 
-## Example prompts
+## Prompt recipes
+
+Copy-paste prompts for the most common tasks. Replace the bracketed parts.
+The universal bootstrap prompt is in
+[Agents: read this first](#agents-read-this-first).
+
+### A. Weekly update from notes
 
 ```text
-Use weekly-research-slides to turn these experiment notes into this week's
-editable lab-meeting PowerPoint. Last week's deck is ./week-05.pptx and the
-current results are in ./results/.
+Read this repository's README and SKILL.md and use weekly-research-slides.
+
+Prepare this week's research presentation from the notes and results I provide.
+
+Audience:
+my supervisor and research group.
+
+Use the previous presentation/project state if available.
+
+Focus on:
+- what changed in the method;
+- what changed in the results;
+- what changed in our claims;
+- new diagnostics;
+- current limitations.
+
+Do not repeat familiar background unless necessary.
+
+Generate the academic Beamer deck, render it, run the content/visual/deck
+critique loop, revise the source, and return the final PDF plus relevant
+source artifacts.
 ```
 
-```text
-Use weekly-research-slides in survey mode. Compare these four papers, normalize
-their methods into the same visual language, and end with the unresolved gap.
-```
+### B. Early-stage literature survey
 
 ```text
-Update my previous research deck. Emphasize only what changed in the method,
-benchmark, claims, and diagnostics this week.
+Use weekly-research-slides in survey mode.
+
+Read the papers I provide.
+
+Do not summarize each paper independently. Instead:
+1. identify the common problem;
+2. group methods by core strategy;
+3. normalize them into the same visual language;
+4. explain the important assumption of each family;
+5. identify unresolved weaknesses/gaps.
+
+Generate an academic Beamer presentation.
+
+There is no method of ours yet, so do not invent one.
 ```
 
+### C. Explain one competitor
+
 ```text
-My claim C1 weakened this week. Build a diagnostic slide that separates the
-measurement, the observation, and the interpretation, and links to the claim.
+Use the research method explainer workflow.
+
+Read this paper in full and explain only the parts necessary to understand its
+central mechanism and the weakness relevant to our research.
+
+Structure the explanation as:
+problem → key observation → mechanism → why it works → assumption → limitation
+
+Do not follow paper section order.
+
+Create concise academic slides and a normalized method figure.
 ```
+
+### D. Compare competitor vs our method
+
+```text
+Use weekly-research-slides to compare the competitor method and our current
+method.
+
+Redraw both methods using the same visual grammar and coordinate system.
+
+Emphasize:
+- shared components;
+- the minimal structural difference;
+- the different underlying assumption;
+- how our method addresses the relevant weakness.
+
+Do not paste the original competitor figure beside our diagram.
+```
+
+### E. Update last week's deck
+
+```text
+Update the previous research presentation using weekly-research-slides.
+
+Treat last week's deck/state as known context. Do not recreate the presentation
+from scratch.
+
+Identify:
+- method delta;
+- result delta;
+- claim delta;
+- new diagnostics;
+- resolved or new limitations.
+
+Only reintroduce background when required to understand those changes.
+```
+
+### F. Make a method explainer video
+
+```text
+Use the research-method-video skill.
+
+Read the paper in full.
+
+Target audience:
+an adjacent researcher who understands machine learning but not this specific
+subfield.
+
+First create:
+method model → scientific story → storyboard → spoken narration → scene spec
+
+Then generate the Manim video.
+
+Do not animate screenshots of paper figures. Animate scientific objects and
+preserve object identity.
+
+Use the current narration/TTS backend if configured.
+
+Render a draft, inspect frames and narration, revise at least once, then
+produce final silent and narrated videos.
+```
+
+### G. Draw a paper method figure
+
+```text
+Use the scientific figure workflow.
+
+Create a publication-quality method figure from the method model.
+
+The figure should communicate the mechanism with minimal text.
+
+Use TikZ for conceptual/math-heavy structures or Draw.io when the architecture
+is complex.
+
+Render the output, inspect it, fix overlaps/readability problems, and return
+editable source plus vector export.
+```
+
+### Prompting does not require micro-management
+
+You generally only need to specify: the goal, the audience, the source
+material, what changed or what matters, and the desired artifact. The skill
+decides slide count, layout, diagrams, typography and animation pacing from the
+research story and the QA loops.
+
+Bad prompt: *"Make exactly 12 slides with 3 bullets each."*
+
+Better prompt: *"Prepare a concise update for my supervisor focused on why our
+current claim changed after these diagnostics."*
+
+### When the agent should ask questions
+
+Agents should avoid unnecessary clarification. If sufficient evidence exists,
+make a best-effort presentation. Ask only when missing information would
+materially change scientific meaning, for example an ambiguous experiment
+baseline, an unclear metric, an unknown previous method version, or conflicting
+result files. Do not ask aesthetic questions that the template already decides.
 
 ## Architecture
 
@@ -644,12 +1128,13 @@ weekly-research-slides/
   `annotate` only. No arbitrary PowerPoint editing.
 - **Benchmarks are tables, not charts.** Native charts and equation objects are
   on the roadmap; no figure ingestion yet.
-- **Speaker notes are generated** but narration timing and rehearsal tooling are
-  not part of v0.1.
-- **Video: no narration/TTS, no Morph, no arbitrary Manim→PPTX conversion.** The
-  video is a silent clip; the PowerPoint bridge exports the MP4 plus keyframe
-  stills and a manifest. Animation patterns are authored in Manim per scene, not
-  generated from a general interpreter.
+- **Speaker notes are generated**; rehearsal tooling (teleprompter, practice
+  timing) is not part of v0.1.
+- **Video: narration is supported, but no Morph and no arbitrary Manim→PPTX
+  conversion.** Gemini TTS or local `say` produce the narrated track; the
+  PowerPoint bridge exports the MP4 plus keyframe stills and a manifest.
+  Animation patterns are authored in Manim per scene, not generated from a
+  general interpreter.
 - **Video rendering needs Manim + ffmpeg locally.** Without them the video tests
   and render steps are skipped, and the deck pipeline is unaffected.
 - **Figures: draw.io is canonical; no native `.drawio` rasterizer.** SVG/PDF/PNG
@@ -669,8 +1154,7 @@ weekly-research-slides/
 - Figure/asset ingestion from a local `figures/` directory.
 - Richer external-PPTX editing (shape duplication, style transfer, slide copy).
 - Additional example: `mature-weekly-update`.
-- Video: a general pattern interpreter, optional narration/TTS, and richer
-  PowerPoint keyframe insertion.
+- Video: a general pattern interpreter and richer PowerPoint keyframe insertion.
 - Figures: an optional TikZ backend, `.drawio` → IR round-trip for external
   editing, and richer reconstruction fidelity.
 
