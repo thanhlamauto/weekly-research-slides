@@ -1,6 +1,6 @@
 {
   "errors": 0,
-  "warnings": 2,
+  "warnings": 0,
   "infos": 2,
   "findings": [
     {
@@ -12,16 +12,6 @@
       "level": "info",
       "where": "lc_05_predictors/why",
       "message": "no delivery direction for a key beat; add one for expressiveness"
-    },
-    {
-      "level": "warning",
-      "where": "lc_02_dynamics_mismatch",
-      "message": "narration is 2.7s longer than the animation; re-pace the scene"
-    },
-    {
-      "level": "warning",
-      "where": "lc_06_invertible",
-      "message": "narration is 2.2s longer than the animation; re-pace the scene"
     }
   ]
 }
