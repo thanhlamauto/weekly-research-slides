@@ -1,0 +1,93 @@
+{
+  "generator": "weekly-research-slides 0.8.0",
+  "template": {
+    "name": "academic-beamer",
+    "version": 1
+  },
+  "engine": "lualatex",
+  "deck": {
+    "title": "LearniBridge",
+    "stage": "survey",
+    "week": 1
+  },
+  "slides": 19,
+  "figures": [
+    {
+      "key": "lbq5",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "lbq5",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/qualitative/N5_qualitative.jpg"
+    },
+    {
+      "key": "lbq7",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "lbq7",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/qualitative/N7_qualitative.jpg"
+    },
+    {
+      "key": "lbq10",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "lbq10",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/qualitative/N10_qualitative.jpg"
+    },
+    {
+      "key": "lbq25",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "lbq25",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/qualitative/N25_qualitative.jpg"
+    }
+  ],
+  "generated_at": "2026-09-20T13:43:55.736Z"
+}

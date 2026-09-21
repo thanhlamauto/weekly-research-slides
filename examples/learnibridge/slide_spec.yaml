@@ -1,0 +1,455 @@
+# Renderable source for the LearniBridge paper explainer (Beamer default).
+#
+# Paper: "LearniBridge: Learnable Calibration of Feature Caching for Diffusion
+# Models Acceleration". Xuyue Huang, Zhe Chen, Wang Shen, Xiao-Ping Zhang.
+# arXiv:2606.26778 (25 Jun 2026), ICML 2026. Read from the paper; this deck is an
+# independent explanation, no endorsement by the authors is implied.
+#
+# Every number on the benchmark slides is taken from the paper's tables. Slides
+# separate measurement, observation and interpretation on purpose: the low-rank
+# and prompt-invariance findings are empirical, not universal laws.
+deck:
+  title: LearniBridge
+  subtitle: Learnable calibration of feature caching for diffusion models
+  project: LearniBridge
+  stage: survey
+  week: 1
+  audience: Adjacent-researcher paper reading group
+  familiarity: medium
+  footer: LearniBridge · Huang, Chen, Shen & Zhang · ICML 2026 · independent explainer
+  this_week_question: What correction makes a cached computation behave like the skipped full computation?
+
+slides:
+  - id: lb01
+    archetype: title
+    title: LearniBridge
+    content:
+      project: LearniBridge
+      headline: What correction makes a cached computation behave like the skipped full computation?
+      question: Paper explainer · arXiv:2606.26778 · ICML 2026 · an independent redrawing of the mechanism, not a reproduction of the paper's figures
+      byline: Huang, Chen, Shen & Zhang · ICML 2026
+    beats: [paper, question]
+    notes: >-
+      This is a method explainer, not a leaderboard review. The whole deck answers
+      one question: what does the correction have to look like for cache reuse to
+      survive long skips?
+
+  - id: lb02
+    archetype: problem
+    module: problem
+    title: Feature caching buys speed by skipping blocks
+    content:
+      summary: A Diffusion Transformer evaluates a deep network at every denoising step. Feature caching reuses a representation computed at an earlier step so later steps can skip expensive blocks.
+      why_hard:
+        - The reused feature is stale. It was computed for a different timestep, so it carries the wrong content.
+        - The same approximation is applied at every skipped step, and the error compounds along the trajectory.
+        - The problem grows exactly where the win is. The longer the cache interval, the larger the drift and the larger the speedup.
+      constraints:
+        - The backbone stays as it is. No architectural change and no retraining of the base model.
+        - The calibration budget must be small, a handful of prompts rather than a finetune.
+        - Skipped steps must stay cheap, otherwise the speedup is spent on the fix.
+    beats: [cost, staleness, constraints]
+    notes: >-
+      Establish the trade-off before any architecture. Caching is attractive
+      because it is model-agnostic and needs no training, and that is exactly the
+      property a fix should preserve.
+
+  - id: lb03
+    archetype: competitor-mechanism
+    module: competitor-method
+    title: Existing methods forecast from history
+    content:
+      intuition: Nearby steps produce similar features, so an earlier feature stands in well.
+      mechanism: 'Cache the block output at a reference step, then approximate skipped steps from history: reuse (DeepCache, FORA) or Taylor extrapolation (TaylorSeer).'
+      module_label: cache + forecast
+      failure:
+        - A fixed rule cannot track how the representation changes away from the reference step.
+        - TaylorSeer assumes smooth, high-order differentiable trajectories.
+        - At high acceleration the error accumulates.
+      relation_to_us: Keep the schedule; replace the rule with a learned, structured correction.
+    beats: [intuition, mechanism, failure]
+    notes: >-
+      Keep the baselines compressed to one idea each. The point is not the
+      catalogue but the shared assumption, a fixed rule over historical features.
+
+  - id: lb04
+    archetype: motivation
+    module: motivation
+    title: Change the question, learn the correction
+    content:
+      contrast:
+        old_label: The usual question
+        old: Predict the future feature from historical features with a fixed rule, and hope the prediction is close.
+        new_label: LearniBridge asks
+        new: What correction is required for the cached computation to reproduce the skipped full computation?
+      idea: Model the required change directly and constrain it. The cached input times a low-rank correction approximates the future full-computation output.
+      why_now: If the required correction has exploitable structure, a few calibration prompts are enough and the correction is nearly free at inference.
+    beats: [old, new, idea]
+    notes: >-
+      This is the pivot of the paper. Forecasting works in feature space and
+      guesses forward; LearniBridge asks what change in the computation is needed
+      to land on the true output.
+
+  - id: lb05
+    archetype: feature-space
+    module: method-high-level
+    title: What correction is actually required
+    content:
+      nodes:
+        - { object_id: lb-cached, label: X, kind: feature, cx: 2.7, cy: 4.1, sublabel: cached input, step t }
+        - { object_id: lb-reuse, label: 'F~', kind: feature, cx: 5.4, cy: 2.1, sublabel: output if we just reuse it }
+        - { object_id: lb-target, label: F, kind: feature, cx: 8.4, cy: 3.9, sublabel: true output, step t-k }
+      vectors:
+        - { id: lb-vec-reuse, from: lb-cached, to: lb-reuse, semantic: reference, label: reuse, no correction }
+        - { id: lb-vec-e, from: lb-reuse, to: lb-target, semantic: vector, label: residual E }
+      legend_items:
+        - { label: 'residual E: what the correction must explain', semantic: vector }
+        - { label: 'reuse path, with no correction', semantic: reference }
+      note: >-
+        Over many prompts the paper writes the residuals as a matrix E and the
+        cached inputs as a matrix X, and models E ≈ ΔW · X. The geometry above is
+        in feature space; the correction ΔW itself acts on layer weights.
+    beats: [objects, residual, model]
+    notes: >-
+      Keep the three objects on screen. X is one cached input, F~ is what reuse
+      returns, F is what full computation would have returned. The correction is
+      defined by that gap, and the next slide asks what shape the gap has.
+
+  - id: lb06
+    archetype: diagnostic
+    module: diagnostic
+    title: 'Diagnostic D1: is the required correction low-rank?'
+    citation: Huang et al., ICML 2026, §3.2 and Figure 1
+    content:
+      id: D1
+      question: Does the optimal calibration update have exploitable structure?
+      claim_ids: [C1]
+      measurement: 'Singular values of X (100 prompts) decay rapidly. Fit E ≈ ΔW · X: ΔW = E · pinv(X), rank(ΔW) ≤ rank(X) ≤ r'
+      observation: Spectral energy concentrates in a few principal directions, so the least-squares correction is low rank.
+      interpretation: A low-rank parameterization can represent the required correction; no full-rank update is needed.
+      can_conclude: Under the paper's model E ≈ ΔW · X, the optimal ΔW is low-rank in the authors' setting.
+      cannot_conclude: That diffusion features are low-rank in general, or that the bound holds for every layer and model.
+      alternative_explanation: The decay may partly reflect the chosen layer and prompt pool; this is empirical, not universal.
+    beats: [measurement, observation, interpretation, bounds]
+    notes: >-
+      Walk the bands in order. The measurement is the SVD and the least-squares
+      solution; the observation is the concentration of spectral energy; the
+      interpretation is that low rank is a usable parameterization. The bound
+      rank(ΔW) ≤ rank(X) is a consequence of the paper's model, not a theorem
+      about diffusion models.
+
+  - id: lb07
+    archetype: diagnostic
+    module: diagnostic
+    title: 'Diagnostic D2: is the correction shared across prompts?'
+    citation: Huang et al., ICML 2026, Figure 2
+    content:
+      id: D2
+      question: Does the required correction depend on the prompt?
+      claim_ids: [C1]
+      measurement: 'Fit ΔW on each of 20 disjoint prompt groups; compare principal subspaces pairwise: the angles are small.'
+      observation: Different prompt groups need nearly the same correction subspace.
+      interpretation: The pattern is stable enough that calibration from a few prompts transfers.
+      can_conclude: In the tested setting, subspaces from disjoint prompt groups coincide.
+      cannot_conclude: That every prompt needs the same correction, or that invariance survives a domain shift.
+      alternative_explanation: The groups came from one prompt pool, which may inflate their similarity.
+    beats: [measurement, observation, interpretation, bounds]
+    notes: >-
+      This is the evidence behind the 3-5 prompt calibration budget. Be precise:
+      small principal-subspace angles, not identical corrections, and measured on
+      a shared prompt pool.
+
+  - id: lb08
+    archetype: method-high-level
+    module: method-high-level
+    title: Low rank suggests a LoRA bridge on the final block
+    content:
+      stages:
+        - { label: cached input, role: input, detail: 'the final-block input recorded at the last full step' }
+        - { label: 'final block + ΔW = BA', role: learned, detail: 'LoRA on Q, K, V, O, W1, W2 of block L; the base weights stay frozen' }
+        - { label: calibrated output, role: output, detail: 'approximates the full computation at the skipped step' }
+      note: >-
+        Low rank is not an extra constraint here: LoRA is exactly a low-rank
+        parameterization, ΔW = BA with r far below the layer dimensions. The only
+        trainable parameters are the two small factors A and B.
+    beats: [input, learned, output]
+    notes: >-
+      Make the design follow from the evidence: the analysis says the update is
+      low rank, LoRA is the natural way to parameterize a low-rank update, so the
+      adapter is a consequence rather than a fashion choice.
+
+  - id: lb09
+    archetype: recap
+    module: experiment-setup
+    title: 'Calibration: one full pass, then only the adapters train'
+    content:
+      established_title: 'A. Pre-calibration pass (full computation)'
+      established:
+        - { label: 'Record input.', detail: 'At each full-computation step t, keep the final-block input.' }
+        - { label: 'Record target.', detail: 'At the steps that will be skipped, keep the true final-block output.' }
+      now_title: 'B. LoRA finetune (only the adapters train)'
+      now: The LoRA-augmented final block must turn the cached input into that recorded target, while every base weight stays frozen.
+      prior_week: 'Budget reported in the paper: 3-5 calibration prompts, small rank, no backbone finetuning.'
+    beats: [records, training]
+    notes: >-
+      Be honest about the cost: calibration needs a pre-calibration pass at full
+      computation, so the training data is not free, it is just small. The
+      ablation shows performance saturating beyond about five prompts.
+
+  - id: lb10
+    archetype: method-high-level
+    module: method-high-level
+    title: 'Inference: skip the blocks, run the bridge'
+    content:
+      stages:
+        - { label: full step, role: cache, detail: 'every N steps: run all blocks and cache the final-block input' }
+        - { label: skipped step, role: model, detail: 'blocks g1 to gL-1 are bypassed; no computation is spent there' }
+        - { label: LoRA final block, role: learned, detail: 'only the last block runs, corrected by the low-rank bridge' }
+      note: >-
+        This is the whole acceleration: full computation every N steps, one
+        calibrated block in between. The bridge is not run through every block.
+    beats: [full, skipped, bridge]
+    notes: >-
+      Say the negative explicitly, because it is a common misreading: the adapters
+      live in the final block only, and the earlier blocks do not run at all at
+      skipped steps.
+
+  - id: lb11
+    archetype: benchmark
+    module: benchmark-comparison
+    title: 'Text-to-image: FLUX.1-dev at about 6x'
+    citation: Huang et al., ICML 2026, Table 1
+    content:
+      metrics:
+        - { key: speedup, name: Speed, unit: higher is better }
+        - { key: ir, name: ImageReward, unit: higher is better }
+        - { key: clip, name: CLIP, unit: higher is better }
+        - { key: psnr, name: PSNR, unit: higher is better }
+        - { key: ssim, name: SSIM, unit: higher is better }
+      methods:
+        - name: ToCA (N=12)
+          role: competitor
+          values: { speedup: 5.87, ir: 0.7019, clip: 0.7826, psnr: 26.4802, ssim: 0.5856 }
+        - name: TeaCache (delta=1.4)
+          role: competitor
+          values: { speedup: 5.99, ir: 0.7252, clip: 0.8026, psnr: 26.5802, ssim: 0.6338 }
+        - name: TaylorSeer (N=8, O=2)
+          role: competitor
+          values: { speedup: 6.10, ir: 0.8212, clip: 0.8041, psnr: 26.8228, ssim: 0.6750 }
+        - name: LearniBridge (N=8)
+          role: current
+          role_label: ours
+          values: { speedup: 6.17, ir: 0.8308, clip: 0.8164, psnr: 28.3464, ssim: 0.6870 }
+      caption: 200 DrawBench prompts. At a slightly higher speedup, LearniBridge keeps the best ImageReward, CLIP, PSNR and SSIM of this group. PSNR and SSIM measure fidelity to the unaccelerated output, not perceptual quality on their own.
+    beats: [baselines, ours]
+    notes: >-
+      Read the table as a trade curve, not as a win list: the baselines are
+      allowed different settings. The robust signal is that the ranking holds as
+      the ratio grows, which is what the paper argues.
+
+  - id: lb12
+    archetype: benchmark
+    module: benchmark-comparison
+    title: 'Text-to-video: WAN 2.1-1.3B on VBench'
+    citation: Huang et al., ICML 2026, Table 3
+    content:
+      metrics:
+        - { key: speedup, name: Speed, unit: higher is better }
+        - { key: vbench, name: VBench, unit: higher is better }
+        - { key: psnr, name: PSNR, unit: higher is better }
+        - { key: ssim, name: SSIM, unit: higher is better }
+      methods:
+        - name: EasyCache (delta=0.13)
+          role: competitor
+          values: { speedup: 3.27, vbench: 79.61, psnr: 13.77, ssim: 0.4745 }
+        - name: TaylorSeer (N=4, O=2)
+          role: competitor
+          values: { speedup: 3.46, vbench: 79.17, psnr: 14.84, ssim: 0.4456 }
+        - name: TeaCache (delta=0.3)
+          role: competitor
+          values: { speedup: 3.98, vbench: 79.23, psnr: 12.82, ssim: 0.4691 }
+        - name: LearniBridge (N=5)
+          role: current
+          role_label: ours
+          values: { speedup: 4.10, vbench: 80.51, psnr: 16.32, ssim: 0.6254 }
+        - name: LearniBridge (N=4)
+          role: current
+          role_label: ours
+          values: { speedup: 3.49, vbench: 81.21, psnr: 21.26, ssim: 0.8240 }
+      caption: 946 prompts, five samples each. At 4.10x the bridge keeps VBench 1.28 points above the best baseline at a comparable ratio, and at 3.49x it stays close to the unaccelerated model. HunyuanVideo shows the same pattern up to 5.75x in the paper's Table 2.
+    beats: [baselines, ours]
+    notes: >-
+      Two LearniBridge rows on purpose: one at a higher ratio than every baseline
+      and one at a moderate ratio. Point out that PSNR and SSIM here measure
+      agreement with the unaccelerated video of the same model.
+
+  - id: lb13
+    archetype: benchmark
+    module: results
+    title: 'Our runs: N=5 and N=7 (CLIP, IR, HPSv2.1, PSNR, SSIM, speed)'
+    content:
+      metrics:
+        - { key: clip, name: CLIP, unit: higher is better }
+        - { key: ir, name: IR, unit: higher is better }
+        - { key: hps, name: HPSv2.1, unit: higher is better }
+        - { key: psnr, name: PSNR, unit: higher is better }
+        - { key: ssim, name: SSIM, unit: higher is better }
+        - { key: speedup, name: Speed, unit: higher is better }
+      methods:
+        - name: Original FLUX
+          role: competitor
+          values: { clip: 32.6480, ir: 1.0010, hps: 30.4022, psnr: '∞', ssim: 1.0000, speedup: '1.00x' }
+        - name: Cache thường (N=5)
+          role: competitor
+          values: { clip: 32.6284, ir: 0.9389, hps: 29.4364, psnr: 14.6960, ssim: 0.5475, speedup: '4.63x' }
+        - name: Global-Local (N=5)
+          role: competitor
+          values: { clip: 32.7860, ir: 1.0091, hps: 30.0025, psnr: 15.2076, ssim: 0.5745, speedup: '4.60x' }
+        - name: LearniBridge-100 (N=5)
+          role: current
+          role_label: paper method
+          values: { clip: 32.6587, ir: 0.9754, hps: 29.5289, psnr: 15.0703, ssim: 0.5511, speedup: '4.49x' }
+        - name: Cache thường (N=7)
+          role: competitor
+          values: { clip: 32.2759, ir: 0.8260, hps: 28.2369, psnr: 14.1369, ssim: 0.5246, speedup: '5.66x' }
+        - name: Global-Local (N=7)
+          role: competitor
+          values: { clip: 32.6300, ir: 0.9151, hps: 29.0973, psnr: 14.7256, ssim: 0.5515, speedup: '5.60x' }
+        - name: LearniBridge-100 (N=7)
+          role: current
+          role_label: paper method
+          values: { clip: 32.7565, ir: 0.9222, hps: 28.4371, psnr: 14.4857, ssim: 0.5362, speedup: '5.45x' }
+      caption: 'Fidelity metrics PSNR/SSIM compare against the unaccelerated Original FLUX output, so they fall for every accelerator including the best one; CLIP/IR/HPSv2.1 are the quality signals. LPIPS is omitted here for width (it tracks PSNR/SSIM).'
+    beats: [original, baselines, ours]
+    notes: >-
+      Baseline naming is shown as given in our run logs. Read the rows by N: at
+      the same cache interval, Global-Local is strongest on fidelity while
+      LearniBridge-100 stays closest on CLIP at the longer interval.
+
+  - id: lb14
+    archetype: benchmark
+    module: results
+    title: 'Our runs: N=10 and N=25 (quality collapse at long intervals)'
+    content:
+      metrics:
+        - { key: clip, name: CLIP, unit: higher is better }
+        - { key: ir, name: IR, unit: higher is better }
+        - { key: hps, name: HPSv2.1, unit: higher is better }
+        - { key: psnr, name: PSNR, unit: higher is better }
+        - { key: ssim, name: SSIM, unit: higher is better }
+        - { key: speedup, name: Speed, unit: higher is better }
+      methods:
+        - name: Cache thường (N=10)
+          role: competitor
+          values: { clip: 31.7172, ir: 0.6577, hps: 26.3589, psnr: 13.7678, ssim: 0.4768, speedup: '8.48x' }
+        - name: Global-Local (N=10)
+          role: competitor
+          values: { clip: 31.7687, ir: 0.7560, hps: 27.7644, psnr: 14.4586, ssim: 0.5174, speedup: '8.32x' }
+        - name: LearniBridge-100 (N=10)
+          role: current
+          role_label: paper method
+          values: { clip: 32.1630, ir: 0.7323, hps: 26.6815, psnr: 14.0963, ssim: 0.4694, speedup: '7.96x' }
+        - name: Cache thường (N=25)
+          role: competitor
+          values: { clip: 23.0764, ir: -1.4809, hps: 13.7148, psnr: 13.1228, ssim: 0.4168, speedup: '16.87x' }
+        - name: Global-Local (N=25)
+          role: competitor
+          values: { clip: 22.9852, ir: -1.2793, hps: 15.6773, psnr: 14.2627, ssim: 0.4888, speedup: '16.24x' }
+        - name: LearniBridge-100 (N=25)
+          role: current
+          role_label: paper method
+          values: { clip: 23.0880, ir: -1.5106, hps: 13.7235, psnr: 13.4711, ssim: 0.4503, speedup: '14.77x' }
+      caption: At 25-step intervals every method collapses (IR below zero, HPSv2.1 near half), so the useful regime in these runs is N=5-10; the qualitative folders show where the remaining failures live.
+    beats: [n10, n25]
+    notes: >-
+      Do not read the N=25 rows as a method ranking: all three are far from the
+      original. The qualitative comparison at
+      /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n
+      is the fair way to inspect the failure modes.
+
+  - id: lbq5
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=5: Original / Cache / GL / LearniBridge-100'
+    content:
+      figure:
+        key: lb-qual-n5
+        file: qualitative/N5_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=5), GL, LearniBridge-100.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N5.jpg,
+      re-composed as two side-by-side halves so the rows are readable on a slide.
+      Inspect where plain cache drifts and where LearniBridge-100 recovers content.
+
+  - id: lbq7
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=7: Original / Cache / GL / LearniBridge-100'
+    content:
+      figure:
+        key: lb-qual-n7
+        file: qualitative/N7_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=7), GL, LearniBridge-100.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N7.jpg,
+      re-composed as two side-by-side halves so the rows are readable on a slide.
+      Inspect where plain cache drifts and where LearniBridge-100 recovers content.
+
+  - id: lbq10
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=10: Original / Cache / GL / LearniBridge-100'
+    content:
+      figure:
+        key: lb-qual-n10
+        file: qualitative/N10_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=10), GL, LearniBridge-100.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N10.jpg,
+      re-composed as two side-by-side halves so the rows are readable on a slide.
+      Inspect where plain cache drifts and where LearniBridge-100 recovers content.
+
+  - id: lbq25
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=25: Original / Cache / GL / LearniBridge-100'
+    content:
+      figure:
+        key: lb-qual-n25
+        file: qualitative/N25_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=25), GL, LearniBridge-100.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N25.jpg,
+      re-composed as two side-by-side halves so the rows are readable on a slide.
+      Inspect where plain cache drifts and where LearniBridge-100 recovers content.
+
+  - id: lb15
+    archetype: limitations
+    module: limitation
+    title: Limitations and open questions
+    content:
+      limitations:
+        - Calibration is not free: it needs a pre-calibration pass over full trajectories plus a LoRA finetune, even if only on a few prompts.
+        - Only the final Transformer block is calibrated, so the bridge has to absorb the shift of every bypassed block.
+        - Rank is a design choice. The ablation peaks around r=64 and degrades at larger ranks.
+        - The low-rank and prompt-invariance findings are empirical measurements on the tested models and prompt sets.
+      open_questions:
+        - Does the shared low-rank structure survive other backbones, modalities and layer choices?
+        - Can the pre-calibration pass be replaced by data collected during normal inference?
+        - How does the bridge combine with step distillation, quantization or other caching schedules?
+    beats: [limitations, open-questions]
+    notes: >-
+      End here. No thank-you slide and no leaderboard summary: the mechanism was
+      the point, and the limitations are where the discussion starts.

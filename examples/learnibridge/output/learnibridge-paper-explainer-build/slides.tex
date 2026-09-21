@@ -1,0 +1,298 @@
+\begin{frame}[plain]
+\wrsTitlePage{LearniBridge}{What correction makes a cached computation behave like the skipped full computation?}{Paper explainer \textperiodcentered{} arXiv:2606.26778 \textperiodcentered{} ICML 2026 \textperiodcentered{} an independent redrawing of the mechanism, not a reproduction of the paper's figures}{Huang, Chen, Shen \& Zhang \textperiodcentered{} ICML 2026}
+\note{This is a method explainer, not a leaderboard review. The whole deck answers one question: what does the correction have to look like for cache reuse to survive long skips?}
+\end{frame}
+
+\begin{frame}{Feature caching buys speed by skipping blocks}
+\begin{columns}[T]
+\column{0.56\textwidth}
+\wrsLead{A Diffusion Transformer evaluates a deep network at every denoising step. Feature caching reuses a representation computed at an earlier step so later steps can skip expensive blocks.}\par\vspace{0.6em}
+\wrsSection{Why it is hard}
+\begin{itemize}
+  \item The reused feature is stale. It was computed for a different timestep, so it carries the wrong content.
+  \item The same approximation is applied at every skipped step, and the error compounds along the trajectory.
+  \item The problem grows exactly where the win is. The longer the cache interval, the larger the drift and the larger the speedup.
+\end{itemize}
+\column{0.4\textwidth}
+\wrsSection{Constraints}
+\begin{itemize}
+  \item The backbone stays as it is. No architectural change and no retraining of the base model.
+  \item The calibration budget must be small, a handful of prompts rather than a finetune.
+  \item Skipped steps must stay cheap, otherwise the speedup is spent on the fix.
+\end{itemize}
+\end{columns}
+\note{Establish the trade-off before any architecture. Caching is attractive because it is model-agnostic and needs no training, and that is exactly the property a fix should preserve.}
+\end{frame}
+
+\begin{frame}{Existing methods forecast from history}
+\begin{columns}[T]
+\column{0.31\textwidth}
+\wrsSection{A. Intuition}
+\wrsSmall{Nearby steps produce similar features, so an earlier feature stands in well.}
+\column{0.31\textwidth}
+\wrsSection{B. Mechanism}
+\wrsSmall{Cache the block output at a reference step, then approximate skipped steps from history: reuse (DeepCache, FORA) or Taylor extrapolation (TaylorSeer).}
+\column{0.31\textwidth}
+\wrsSection{C. Where it fails}
+\begin{itemize}
+  \item A fixed rule cannot track how the representation changes away from the reference step.
+  \item TaylorSeer assumes smooth, high-order differentiable trajectories.
+  \item At high acceleration the error accumulates.
+\end{itemize}\vspace{0.3em}
+\begin{wrsband}{interpretation}{Relation to us}Keep the schedule; replace the rule with a learned, structured correction.\end{wrsband}
+\end{columns}
+\note{Keep the baselines compressed to one idea each. The point is not the catalogue but the shared assumption, a fixed rule over historical features.}
+\end{frame}
+
+\begin{frame}{Change the question, learn the correction}
+\begin{columns}[T]
+\column{0.3\textwidth}
+\wrsSection{The usual question}
+\wrsSmall{Predict the future feature from historical features with a fixed rule, and hope the prediction is close.}
+\column{0.3\textwidth}
+\wrsSection{LearniBridge asks}
+\wrsSmall{What correction is required for the cached computation to reproduce the skipped full computation?}
+\column{0.32\textwidth}
+\wrsSection{The idea}
+\wrsBody{Model the required change directly and constrain it. The cached input times a low-rank correction approximates the future full-computation output.}
+\end{columns}
+\vspace{0.6em}\wrsBody{If the required correction has exploitable structure, a few calibration prompts are enough and the correction is nearly free at inference.}
+\note{This is the pivot of the paper. Forecasting works in feature space and guesses forward; LearniBridge asks what change in the computation is needed to land on the true output.}
+\end{frame}
+
+\begin{frame}{What correction is actually required}
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \node[wrsnode] (lb-cached) at (1.38, 2.25) {$X$};
+  \node[wrslabel, below=0.02cm of lb-cached] {cached input};
+  \node[wrsnode] (lb-reuse) at (4.49, 4.75) {$\tilde{F}$};
+  \node[wrslabel, below=0.02cm of lb-reuse] {output if we just reuse it};
+  \node[wrsnode] (lb-target) at (7.93, 2.50) {$F$};
+  \node[wrslabel, below=0.02cm of lb-target] {true output};
+  \draw[wrsreference] (lb-cached) -- node[midway, above, wrslabel] {reuse} (lb-reuse);
+  \draw[wrsvector] (lb-reuse) -- node[midway, above, wrslabel] {residual E} (lb-target);
+\end{tikzpicture}
+\vspace{0.2em}\wrsLegendVector{residual E: what the correction must explain}\hspace{1.6em}\wrsLegendReference{reuse path, with no correction}
+\end{center}
+\begin{center}\wrsQuiet{Over many prompts the paper writes the residuals as a matrix E and the cached inputs as a matrix X, and models E $\approx$ $\Delta$W \textperiodcentered{} X. The geometry above is in feature space; the correction $\Delta$W itself acts on layer weights.}\end{center}
+\note{Keep the three objects on screen. X is one cached input, F\textasciitilde{} is what reuse returns, F is what full computation would have returned. The correction is defined by that gap, and the next slide asks what shape the gap has.}
+\end{frame}
+
+\begin{frame}{Diagnostic D1: is the required correction low-rank?}
+\wrsDiagId{D1}\quad\wrsBody{Does the optimal calibration update have exploitable structure?}\hfill\wrsTests{C1}
+\vspace{0.6em}
+\begin{columns}[T]
+\column{0.56\textwidth}
+\begin{wrsband}{measurement}{Measurement}\wrsMono{Singular values of X (100 prompts) decay rapidly. Fit E $\approx$ $\Delta$W \textperiodcentered{} X: $\Delta$W = E \textperiodcentered{} pinv(X), rank($\Delta$W) $\le$ rank(X) $\le$ r}\end{wrsband}
+\begin{wrsband}{observation}{Observation}Spectral energy concentrates in a few principal directions, so the least-squares correction is low rank.\end{wrsband}
+\begin{wrsband}{interpretation}{Interpretation}A low-rank parameterization can represent the required correction; no full-rank update is needed.\end{wrsband}
+\column{0.4\textwidth}
+\begin{wrsband}{can}{Can conclude}Under the paper's model E $\approx$ $\Delta$W \textperiodcentered{} X, the optimal $\Delta$W is low-rank in the authors' setting.\end{wrsband}
+\begin{wrsband}{cannot}{Cannot conclude}That diffusion features are low-rank in general, or that the bound holds for every layer and model.\end{wrsband}
+\begin{wrsband}{alternative}{Alternative targeted}The decay may partly reflect the chosen layer and prompt pool; this is empirical, not universal.\end{wrsband}
+\end{columns}
+\vfill\wrsCitation{Huang et al., ICML 2026, §3.2 and Figure 1}
+\note{Walk the bands in order. The measurement is the SVD and the least-squares solution; the observation is the concentration of spectral energy; the interpretation is that low rank is a usable parameterization. The bound rank($\Delta$W) $\le$ rank(X) is a consequence of the paper's model, not a theorem about diffusion models.}
+\end{frame}
+
+\begin{frame}{Diagnostic D2: is the correction shared across prompts?}
+\wrsDiagId{D2}\quad\wrsBody{Does the required correction depend on the prompt?}\hfill\wrsTests{C1}
+\vspace{0.6em}
+\begin{columns}[T]
+\column{0.56\textwidth}
+\begin{wrsband}{measurement}{Measurement}\wrsMono{Fit $\Delta$W on each of 20 disjoint prompt groups; compare principal subspaces pairwise: the angles are small.}\end{wrsband}
+\begin{wrsband}{observation}{Observation}Different prompt groups need nearly the same correction subspace.\end{wrsband}
+\begin{wrsband}{interpretation}{Interpretation}The pattern is stable enough that calibration from a few prompts transfers.\end{wrsband}
+\column{0.4\textwidth}
+\begin{wrsband}{can}{Can conclude}In the tested setting, subspaces from disjoint prompt groups coincide.\end{wrsband}
+\begin{wrsband}{cannot}{Cannot conclude}That every prompt needs the same correction, or that invariance survives a domain shift.\end{wrsband}
+\begin{wrsband}{alternative}{Alternative targeted}The groups came from one prompt pool, which may inflate their similarity.\end{wrsband}
+\end{columns}
+\vfill\wrsCitation{Huang et al., ICML 2026, Figure 2}
+\note{This is the evidence behind the 3-5 prompt calibration budget. Be precise: small principal-subspace angles, not identical corrections, and measured on a shared prompt pool.}
+\end{frame}
+
+\begin{frame}{Low rank suggests a LoRA bridge on the final block}
+\begin{center}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tikzpicture}[node distance=2.80cm]
+  \node[wrstoken] (stage-0) {cached input};
+  \node[wrslearned, right=of stage-0] (stage-1) {final block + $\Delta$W = BA};
+  \node[wrslatent, right=of stage-1] (stage-2) {calibrated output};
+  \draw[wrsarrow] (stage-0) -- (stage-1);
+  \draw[wrsarrow] (stage-1) -- (stage-2);
+  \node[wrsdetail, below=0.45cm of stage-0] {the final-block input recorded at the last full step};
+  \node[wrsdetail, below=0.45cm of stage-1] {LoRA on Q, K, V, O, W1, W2 of block L; the base weights stay frozen};
+  \node[wrsdetail, below=0.45cm of stage-2] {approximates the full computation at the skipped step};
+\end{tikzpicture}}
+\end{center}
+\vspace{0.3em}\begin{center}\wrsQuiet{Low rank is not an extra constraint here: LoRA is exactly a low-rank parameterization, $\Delta$W = BA with r far below the layer dimensions. The only trainable parameters are the two small factors A and B.}\end{center}
+\note{Make the design follow from the evidence: the analysis says the update is low rank, LoRA is the natural way to parameterize a low-rank update, so the adapter is a consequence rather than a fashion choice.}
+\end{frame}
+
+\begin{frame}{Calibration: one full pass, then only the adapters train}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{A. Pre-calibration pass (full computation)}
+\begin{itemize}
+  \item \textbf{Record input.} At each full-computation step t, keep the final-block input.
+  \item \textbf{Record target.} At the steps that will be skipped, keep the true final-block output.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{B. LoRA finetune (only the adapters train)}
+\wrsBody{The LoRA-augmented final block must turn the cached input into that recorded target, while every base weight stays frozen.}\par\vspace{0.4em}
+\wrsTiny{Budget reported in the paper: 3-5 calibration prompts, small rank, no backbone finetuning.}
+\end{columns}
+\note{Be honest about the cost: calibration needs a pre-calibration pass at full computation, so the training data is not free, it is just small. The ablation shows performance saturating beyond about five prompts.}
+\end{frame}
+
+\begin{frame}{Inference: skip the blocks, run the bridge}
+\begin{center}
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tikzpicture}[node distance=2.80cm]
+  \node[wrscache] (stage-0) {full step};
+  \node[wrsstage, right=of stage-0] (stage-1) {skipped step};
+  \node[wrslearned, right=of stage-1] (stage-2) {LoRA final block};
+  \draw[wrsarrow] (stage-0) -- (stage-1);
+  \draw[wrsarrow] (stage-1) -- (stage-2);
+  \node[wrsdetail, below=0.45cm of stage-0] {every N steps: run all blocks and cache the final-block input};
+  \node[wrsdetail, below=0.45cm of stage-1] {blocks g1 to gL-1 are bypassed; no computation is spent there};
+  \node[wrsdetail, below=0.45cm of stage-2] {only the last block runs, corrected by the low-rank bridge};
+\end{tikzpicture}}
+\end{center}
+\vspace{0.3em}\begin{center}\wrsQuiet{This is the whole acceleration: full computation every N steps, one calibrated block in between. The bridge is not run through every block.}\end{center}
+\note{Say the negative explicitly, because it is a common misreading: the adapters live in the final block only, and the earlier blocks do not run at all at skipped steps.}
+\end{frame}
+
+\begin{frame}{Text-to-image: FLUX.1-dev at about 6x}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccccc}
+\toprule
+Method & \textbf{Speed} & \textbf{ImageReward} & \textbf{CLIP} & \textbf{PSNR} & \textbf{SSIM} \\
+\midrule
+ToCA (N=12) & 5.87 & 0.70 & 0.78 & 26.48 & 0.59 \\
+TeaCache (delta=1.4) & 5.99 & 0.73 & 0.80 & 26.58 & 0.63 \\
+TaylorSeer (N=8, O=2) & 6.10 & 0.82 & 0.80 & 26.82 & 0.68 \\
+\textbf{\textcolor{wrsBlue}{LearniBridge (N=8)}}\newline{\tiny\color{wrsMuted}(ours)} & \textbf{\textcolor{wrsBlue}{6.17}} & \textbf{\textcolor{wrsBlue}{0.83}} & \textbf{\textcolor{wrsBlue}{0.82}} & \textbf{\textcolor{wrsBlue}{28.35}} & \textbf{\textcolor{wrsBlue}{0.69}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsTiny{higher is better}
+\vspace{0.25em}\wrsQuiet{200 DrawBench prompts. At a slightly higher speedup, LearniBridge keeps the best ImageReward, CLIP, PSNR and SSIM of this group. PSNR and SSIM measure fidelity to the unaccelerated output, not perceptual quality on their own.}
+\vfill\wrsCitation{Huang et al., ICML 2026, Table 1}
+\note{Read the table as a trade curve, not as a win list: the baselines are allowed different settings. The robust signal is that the ranking holds as the ratio grows, which is what the paper argues.}
+\end{frame}
+
+\begin{frame}{Text-to-video: WAN 2.1-1.3B on VBench}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccc}
+\toprule
+Method & \textbf{Speed} & \textbf{VBench} & \textbf{PSNR} & \textbf{SSIM} \\
+\midrule
+EasyCache (delta=0.13) & 3.27 & 79.61 & 13.77 & 0.47 \\
+TaylorSeer (N=4, O=2) & 3.46 & 79.17 & 14.84 & 0.45 \\
+TeaCache (delta=0.3) & 3.98 & 79.23 & 12.82 & 0.47 \\
+\textbf{\textcolor{wrsBlue}{LearniBridge (N=5)}}\newline{\tiny\color{wrsMuted}(ours)} & \textbf{\textcolor{wrsBlue}{4.10}} & \textbf{\textcolor{wrsBlue}{80.51}} & \textbf{\textcolor{wrsBlue}{16.32}} & \textbf{\textcolor{wrsBlue}{0.63}} \\
+\textbf{\textcolor{wrsBlue}{LearniBridge (N=4)}}\newline{\tiny\color{wrsMuted}(ours)} & \textbf{\textcolor{wrsBlue}{3.49}} & \textbf{\textcolor{wrsBlue}{81.21}} & \textbf{\textcolor{wrsBlue}{21.26}} & \textbf{\textcolor{wrsBlue}{0.82}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsTiny{higher is better}
+\vspace{0.25em}\wrsQuiet{946 prompts, five samples each. At 4.10x the bridge keeps VBench 1.28 points above the best baseline at a comparable ratio, and at 3.49x it stays close to the unaccelerated model. HunyuanVideo shows the same pattern up to 5.75x in the paper's Table 2.}
+\vfill\wrsCitation{Huang et al., ICML 2026, Table 3}
+\note{Two LearniBridge rows on purpose: one at a higher ratio than every baseline and one at a moderate ratio. Point out that PSNR and SSIM here measure agreement with the unaccelerated video of the same model.}
+\end{frame}
+
+\begin{frame}{Our runs: N=5 and N=7 (CLIP, IR, HPSv2.1, PSNR, SSIM, speed)}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccccc}
+\toprule
+Method & \textbf{CLIP} & \textbf{IR} & \textbf{HPSv2.1} & \textbf{PSNR} & \textbf{SSIM} & \textbf{Speed} \\
+\midrule
+Original FLUX & 32.65 & 1.00 & 30.40 & $\infty$ & 1 & 1.00x \\
+Cache thường (N=5) & 32.63 & 0.94 & 29.44 & 14.70 & 0.55 & 4.63x \\
+Global-Local (N=5) & 32.79 & 1.01 & 30.00 & 15.21 & 0.57 & 4.60x \\
+\textbf{\textcolor{wrsBlue}{LearniBridge-100 (N=5)}}\newline{\tiny\color{wrsMuted}(paper method)} & \textbf{\textcolor{wrsBlue}{32.66}} & \textbf{\textcolor{wrsBlue}{0.98}} & \textbf{\textcolor{wrsBlue}{29.53}} & \textbf{\textcolor{wrsBlue}{15.07}} & \textbf{\textcolor{wrsBlue}{0.55}} & \textbf{\textcolor{wrsBlue}{4.49x}} \\
+Cache thường (N=7) & 32.28 & 0.83 & 28.24 & 14.14 & 0.52 & 5.66x \\
+Global-Local (N=7) & 32.63 & 0.92 & 29.10 & 14.73 & 0.55 & 5.60x \\
+\textbf{\textcolor{wrsBlue}{LearniBridge-100 (N=7)}}\newline{\tiny\color{wrsMuted}(paper method)} & \textbf{\textcolor{wrsBlue}{32.76}} & \textbf{\textcolor{wrsBlue}{0.92}} & \textbf{\textcolor{wrsBlue}{28.44}} & \textbf{\textcolor{wrsBlue}{14.49}} & \textbf{\textcolor{wrsBlue}{0.54}} & \textbf{\textcolor{wrsBlue}{5.45x}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsTiny{higher is better}
+\vspace{0.25em}\wrsQuiet{Fidelity metrics PSNR/SSIM compare against the unaccelerated Original FLUX output, so they fall for every accelerator including the best one; CLIP/IR/HPSv2.1 are the quality signals. LPIPS is omitted here for width (it tracks PSNR/SSIM).}
+\note{Baseline naming is shown as given in our run logs. Read the rows by N: at the same cache interval, Global-Local is strongest on fidelity while LearniBridge-100 stays closest on CLIP at the longer interval.}
+\end{frame}
+
+\begin{frame}{Our runs: N=10 and N=25 (quality collapse at long intervals)}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lcccccc}
+\toprule
+Method & \textbf{CLIP} & \textbf{IR} & \textbf{HPSv2.1} & \textbf{PSNR} & \textbf{SSIM} & \textbf{Speed} \\
+\midrule
+Cache thường (N=10) & 31.72 & 0.66 & 26.36 & 13.77 & 0.48 & 8.48x \\
+Global-Local (N=10) & 31.77 & 0.76 & 27.76 & 14.46 & 0.52 & 8.32x \\
+\textbf{\textcolor{wrsBlue}{LearniBridge-100 (N=10)}}\newline{\tiny\color{wrsMuted}(paper method)} & \textbf{\textcolor{wrsBlue}{32.16}} & \textbf{\textcolor{wrsBlue}{0.73}} & \textbf{\textcolor{wrsBlue}{26.68}} & \textbf{\textcolor{wrsBlue}{14.10}} & \textbf{\textcolor{wrsBlue}{0.47}} & \textbf{\textcolor{wrsBlue}{7.96x}} \\
+Cache thường (N=25) & 23.08 & -1.48 & 13.71 & 13.12 & 0.42 & 16.87x \\
+Global-Local (N=25) & 22.99 & -1.28 & 15.68 & 14.26 & 0.49 & 16.24x \\
+\textbf{\textcolor{wrsBlue}{LearniBridge-100 (N=25)}}\newline{\tiny\color{wrsMuted}(paper method)} & \textbf{\textcolor{wrsBlue}{23.09}} & \textbf{\textcolor{wrsBlue}{-1.51}} & \textbf{\textcolor{wrsBlue}{13.72}} & \textbf{\textcolor{wrsBlue}{13.47}} & \textbf{\textcolor{wrsBlue}{0.45}} & \textbf{\textcolor{wrsBlue}{14.77x}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsTiny{higher is better}
+\vspace{0.25em}\wrsQuiet{At 25-step intervals every method collapses (IR below zero, HPSv2.1 near half), so the useful regime in these runs is N=5-10; the qualitative folders show where the remaining failures live.}
+\note{Do not read the N=25 rows as a method ranking: all three are far from the original. The qualitative comparison at /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n is the fair way to inspect the failure modes.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=5: Original / Cache / GL / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N5_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=5), GL, LearniBridge-100.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N5.jpg, re-composed as two side-by-side halves so the rows are readable on a slide. Inspect where plain cache drifts and where LearniBridge-100 recovers content.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=7: Original / Cache / GL / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N7_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=7), GL, LearniBridge-100.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N7.jpg, re-composed as two side-by-side halves so the rows are readable on a slide. Inspect where plain cache drifts and where LearniBridge-100 recovers content.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=10: Original / Cache / GL / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N10_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=10), GL, LearniBridge-100.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N10.jpg, re-composed as two side-by-side halves so the rows are readable on a slide. Inspect where plain cache drifts and where LearniBridge-100 recovers content.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=25: Original / Cache / GL / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N25_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Every row is one prompt, columns are Original, Cache (N=25), GL, LearniBridge-100.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N25.jpg, re-composed as two side-by-side halves so the rows are readable on a slide. Inspect where plain cache drifts and where LearniBridge-100 recovers content.}
+\end{frame}
+
+\begin{frame}{Limitations and open questions}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Current limitations}
+\begin{itemize}
+  \item [object Object]
+  \item Only the final Transformer block is calibrated, so the bridge has to absorb the shift of every bypassed block.
+  \item Rank is a design choice. The ablation peaks around r=64 and degrades at larger ranks.
+  \item The low-rank and prompt-invariance findings are empirical measurements on the tested models and prompt sets.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Open questions}
+\begin{itemize}
+  \item Does the shared low-rank structure survive other backbones, modalities and layer choices?
+  \item Can the pre-calibration pass be replaced by data collected during normal inference?
+  \item How does the bridge combine with step distillation, quantization or other caching schedules?
+\end{itemize}
+\end{columns}
+\note{End here. No thank-you slide and no leaderboard summary: the mechanism was the point, and the limitations are where the discussion starts.}
+\end{frame}

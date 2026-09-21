@@ -1,0 +1,130 @@
+% ---------------------------------------------------------------------------
+% academic-beamer - shared palette and TikZ vocabulary
+%
+% Input by theme.tex (slides) and by standalone figure wrappers, so TikZ
+% diagrams inherit exactly the same colors and styles as the Beamer deck.
+% Versioned with templates/academic-beamer/version.json.
+% ---------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  calc,
+  fit,
+  backgrounds,
+  shapes.geometric,
+  decorations.pathreplacing,
+  matrix
+}
+
+% --- palette (matches src/renderer/styles.js) ------------------------------
+\providecolor{wrsInk}{HTML}{1A1A1A}
+\providecolor{wrsInkSoft}{HTML}{3A3A3A}
+\providecolor{wrsMuted}{HTML}{6B6B6B}
+\providecolor{wrsFaint}{HTML}{9B9B9B}
+\providecolor{wrsRule}{HTML}{D9D9D9}
+\providecolor{wrsPanel}{HTML}{F6F6F4}
+\providecolor{wrsPanelLine}{HTML}{E3E3E0}
+\providecolor{wrsBlue}{HTML}{245B78}
+\providecolor{wrsBlueSoft}{HTML}{EAF1F4}
+\providecolor{wrsAmber}{HTML}{A1602A}
+\providecolor{wrsAmberSoft}{HTML}{F6EDE3}
+\providecolor{wrsGreen}{HTML}{2F6B4F}
+\providecolor{wrsGreenSoft}{HTML}{E9F1EC}
+\providecolor{wrsRed}{HTML}{9E3B32}
+\providecolor{wrsRedSoft}{HTML}{F5E9E7}
+\providecolor{wrsPurple}{HTML}{5B4B8A}
+\providecolor{wrsPurpleSoft}{HTML}{EDEAF4}
+\providecolor{wrsSlateSoft}{HTML}{F2F2F0}
+
+% --- semantic figure roles (same names across TikZ / Draw.io / Manim) ------
+\colorlet{methodShared}{wrsMuted}
+\colorlet{methodBaseline}{wrsInkSoft}
+\colorlet{methodCompetitor}{wrsAmber}
+\colorlet{methodOurs}{wrsBlue}
+\colorlet{methodAuxiliary}{wrsGreen}
+\colorlet{methodChanged}{wrsPurple}
+\colorlet{methodAdded}{wrsGreen}
+\colorlet{methodRemoved}{wrsRed}
+\colorlet{methodWarning}{wrsAmber}
+\colorlet{methodMuted}{wrsFaint}
+\colorlet{methodSharedFill}{wrsSlateSoft}
+\colorlet{methodBaselineFill}{wrsPanel}
+\colorlet{methodCompetitorFill}{wrsAmberSoft}
+\colorlet{methodOursFill}{wrsBlueSoft}
+\colorlet{methodAuxiliaryFill}{wrsGreenSoft}
+\colorlet{methodChangedFill}{wrsPurpleSoft}
+\colorlet{methodAddedFill}{wrsGreenSoft}
+\colorlet{methodRemovedFill}{wrsRedSoft}
+\colorlet{methodNeutralFill}{wrsPanel}
+\colorlet{methodWarningFill}{wrsAmberSoft}
+\colorlet{methodMutedFill}{wrsPanel}
+
+% Progressive explanation: in Beamer this is \uncover<n->, outside Beamer it
+% is a plain include, so the same generated figure works in papers.
+\makeatletter
+\@ifundefined{insertframenumber}{%
+  \newcommand{\wrsReveal}[2]{#2}%
+}{%
+  \newcommand{\wrsReveal}[2]{\uncover<#1->{#2}}%
+}
+\makeatother
+
+% --- semantic tikz vocabulary ----------------------------------------------
+% Inline slide diagrams (feature-space, pipelines) and generated scientific
+% figures share these styles. Generated figures use the method* styles.
+\tikzset{
+  % inline slide diagrams
+  wrsnode/.style={circle, draw=wrsBlue, fill=wrsBlueSoft, minimum size=0.95cm,
+    inner sep=1pt, font=\small\bfseries, text=wrsInk},
+  wrstoken/.style={rounded corners=2pt, draw=wrsRule, fill=wrsPanel,
+    minimum height=0.8cm, minimum width=1.7cm, inner sep=3pt, font=\small, text=wrsInk},
+  wrsstage/.style={rounded corners=2pt, draw=wrsBlue, fill=wrsBlueSoft,
+    minimum height=0.8cm, minimum width=1.8cm, inner sep=3pt, font=\small, text=wrsInk},
+  wrslearned/.style={rounded corners=2pt, draw=wrsBlue, fill=white,
+    minimum height=0.8cm, minimum width=1.8cm, inner sep=3pt, font=\small, text=wrsInk},
+  wrscache/.style={rounded corners=2pt, draw=wrsAmber, fill=wrsAmberSoft,
+    minimum height=0.7cm, minimum width=1.6cm, inner sep=3pt, font=\small, text=wrsInk},
+  wrslatent/.style={circle, draw=wrsBlue, fill=wrsBlueSoft, minimum size=0.85cm,
+    inner sep=1pt, font=\small\bfseries, text=wrsInk},
+  wrsoperator/.style={circle, draw=wrsBlue, fill=wrsBlue, minimum size=0.55cm,
+    inner sep=0pt, font=\small\bfseries, text=white},
+  wrsvector/.style={-{Latex[length=1.8mm]}, draw=wrsRed, line width=1.1pt},
+  wrsreference/.style={draw=wrsFaint, line width=0.6pt, dashed},
+  wrsarrow/.style={-{Latex[length=1.8mm]}, draw=wrsMuted, line width=0.7pt},
+  wrslabel/.style={font=\scriptsize, text=wrsInkSoft, fill=white, inner sep=1.5pt},
+  wrsdetail/.style={font=\scriptsize, text=wrsMuted, align=center, text width=2.4cm},
+  % generated scientific figures (method*)
+  methodFeature/.style={circle, draw=methodShared, fill=wrsSlateSoft,
+    minimum size=6.5mm, inner sep=1pt, font=\small\bfseries, text=wrsInk},
+  methodModule/.style={rounded corners=2pt, draw=methodShared, fill=wrsPanel,
+    minimum height=7mm, minimum width=16mm, inner sep=3pt, font=\small,
+    text=wrsInk, align=center, text width=1.7cm},
+  methodLearned/.style={methodModule, draw=methodOurs, fill=wrsBlueSoft},
+  methodFrozen/.style={methodModule, dashed},
+  methodCache/.style={methodModule, double, double distance=1.4pt,
+    draw=methodBaseline},
+  methodOperator/.style={circle, draw=methodAuxiliary, fill=methodAuxiliary,
+    text=white, minimum size=5mm, inner sep=0pt, font=\small\bfseries},
+  methodLoss/.style={ellipse, draw=methodChanged, fill=wrsPurpleSoft,
+    minimum height=6mm, inner sep=2pt, font=\small, text=wrsInk},
+  methodInput/.style={methodModule, fill=wrsSlateSoft},
+  methodOutput/.style={methodModule, fill=wrsGreenSoft},
+  methodNote/.style={font=\scriptsize, text=wrsMuted, align=left,
+    text width=3.2cm},
+  methodStage/.style={draw=methodMuted, fill=wrsPanel, rounded corners=2pt,
+    inner sep=4pt},
+  methodStageLabel/.style={font=\scriptsize\bfseries, text=wrsMuted},
+  methodComputation/.style={-{Latex[length=1.8mm]}, draw=methodBaseline,
+    semithick},
+  methodData/.style={-{Latex[length=1.6mm]}, draw=methodShared, thin},
+  methodReuse/.style={-{Latex[length=1.6mm]}, draw=methodShared, dashed},
+  methodReference/.style={draw=methodMuted, thin, dashed},
+  methodFeedback/.style={-{Latex[length=1.8mm]}, draw=methodChanged,
+    semithick},
+  methodLossEdge/.style={-{Latex[length=1.6mm]}, draw=methodChanged, dashed},
+  methodVector/.style={-{Latex[length=2mm]}, draw=methodOurs, very thick},
+  methodDelta/.style={-{Latex[length=2mm]}, draw=methodChanged, very thick},
+  methodDimension/.style={draw=methodMuted, thin},
+}
