@@ -77,7 +77,23 @@ flat (Gemini Kore is the configured preferred voice; see the voice iteration).
 ## Artifacts
 
 - silent: `renders/final/learnibridge-method-explainer.mp4` (105.3 s)
-- narrated: `renders/final/learnibridge-method-explainer-narrated.mp4` (119.0 s,
-  Samantha via macOS `say`; Gemini quota was exhausted for the day)
+- narrated: `renders/final/learnibridge-method-explainer-narrated.mp4` (180.6 s,
+  Gemini Kore)
 - QA: `qa/qa_report.json`, `qa/voice/report.json`, `qa/keyframes.yaml`,
   `renders/final/narration_mux_report.json`
+
+## Cycle 3 — Gemini Kore voice
+
+The `say` render was replaced with Gemini TTS voice Kore once billing was
+available. The free-tier daily cap had already produced 5 of 7 chunks; the
+finish run reused those from the cache and generated only the missing ones
+(about $0.16 of audio for this video).
+
+- 7 scenes, one semantic chunk each initially; the two longest scenes
+  (29.2 s and 36.8 s) were split with `narration.chunking.per_scene` so no
+  chunk exceeds ~18 s, which removed the chunk-length warnings.
+- Re-rendered with `--timing transcript`: scene durations match the Kore audio,
+  **end-frame padding 0.0 s**, per-scene audio padding ≤ 0.5 s.
+- Voice QA: 0 errors, 0 warnings.
+- Narration was not changed, so only the voice layer moved; the scientific text
+  and subtitles are identical to the silent canonical.

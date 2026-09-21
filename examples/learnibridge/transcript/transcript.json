@@ -16,7 +16,17 @@
     "profile": "research-explainer",
     "chunking": {
       "min_seconds": 20,
-      "max_seconds": 45
+      "max_seconds": 45,
+      "per_scene": {
+        "lb_04_low_rank": {
+          "min_seconds": 8,
+          "max_seconds": 18
+        },
+        "lb_07_training_inference": {
+          "min_seconds": 8,
+          "max_seconds": 18
+        }
+      }
     },
     "pacing": {
       "target_wpm": 140,

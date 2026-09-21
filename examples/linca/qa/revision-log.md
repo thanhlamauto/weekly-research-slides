@@ -60,7 +60,20 @@ flat; Gemini Kore remains the configured preferred voice.
 ## Artifacts
 
 - silent: `renders/final/linca-method-explainer.mp4` (90.2 s)
-- narrated: `renders/final/linca-method-explainer-narrated.mp4` (110.1 s,
-  Samantha via macOS `say`), end-frame padding 5.8 s total
+- narrated: `renders/final/linca-method-explainer-narrated.mp4` (130.9 s,
+  Gemini Kore), end-frame padding 1.8 s total (max 0.9 s per scene)
 - QA: `qa/qa_report.json`, `qa/voice/report.json`, `qa/keyframes.yaml`,
   `renders/final/narration_mux_report.json`
+
+## Cycle 3 — Gemini Kore voice
+
+Replaced the `say` render with Gemini TTS voice Kore, using the cheaper
+2.5 Flash TTS model for this video (about $0.03 of audio). Seven semantic
+chunks, one per scene.
+
+- Re-rendered with `--timing transcript`: scene durations match the audio,
+  end-frame padding 1.8 s total with no scene above 0.9 s.
+- Voice QA: 0 errors, 0 warnings.
+- The two scenes that were re-paced (`lc_02`, `lc_06`) only had their
+  `timing.animation_seconds` adjusted; the narration and subtitles did not
+  change.

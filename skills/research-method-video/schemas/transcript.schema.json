@@ -52,11 +52,22 @@
         },
         "chunking": {
           "type": "object",
-          "description": "Semantic chunk size bounds for TTS requests. Raise the minimum to merge beats into fewer, longer requests (useful for per-day provider quotas).",
+          "description": "Semantic chunk size bounds for TTS requests. Raise the minimum to merge beats into fewer, longer requests (useful for per-day provider quotas). per_scene overrides the bounds for individual scenes that would otherwise become too long.",
           "additionalProperties": false,
           "properties": {
             "min_seconds": { "type": "number", "minimum": 1 },
-            "max_seconds": { "type": "number", "minimum": 2 }
+            "max_seconds": { "type": "number", "minimum": 2 },
+            "per_scene": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "min_seconds": { "type": "number", "minimum": 1 },
+                  "max_seconds": { "type": "number", "minimum": 2 }
+                }
+              }
+            }
           }
         },
         "fallback": {

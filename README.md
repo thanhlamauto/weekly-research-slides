@@ -224,32 +224,24 @@ shared visual grammar.
 | paper | [arXiv:2606.26778](https://arxiv.org/abs/2606.26778) | [arXiv:2608.17973](https://arxiv.org/abs/2608.17973) |
 | one-sentence idea | the required cached-feature correction is low-rank and prompt-invariant, so a tiny LoRA bridge on the final block recovers skipped-timestep representations | one prediction rule cannot fit a feature whose dimensions have different continuity, so LinCa learns an invertible decomposition and predicts each group at a matched order |
 | scenes | 7 | 7 |
-| silent / narrated | 105.3 s / 119.0 s | 90.2 s / 110.1 s |
-| voice in the committed render | macOS `say` (Samantha); Gemini Kore is the configured preferred backend | same |
+| silent / narrated | 105.3 s / 180.6 s | 90.2 s / 130.9 s |
+| voice | Gemini TTS, voice **Kore** (3.1 Flash TTS) | Gemini TTS, voice **Kore** (2.5 Flash TTS, cheaper) |
 | contact sheet | [`examples/learnibridge/qa/contact-sheet.png`](examples/learnibridge/qa/contact-sheet.png) | [`examples/linca/qa/contact-sheet.png`](examples/linca/qa/contact-sheet.png) |
 | revision log | [`examples/learnibridge/qa/revision-log.md`](examples/learnibridge/qa/revision-log.md) | [`examples/linca/qa/revision-log.md`](examples/linca/qa/revision-log.md) |
 
 ```bash
 python skills/research-method-video/scripts/render_scene.py --project examples/learnibridge \
   --quality final --timing transcript --concat examples/learnibridge/renders/final/learnibridge-method-explainer.mp4
-python skills/research-method-video/scripts/tts_narration.py --project examples/learnibridge --backend say --voice Samantha
-python skills/research-method-video/scripts/mux_narration.py --project examples/learnibridge --quality final --backend say
-```
-
-Known limitations: the committed narrated renders use the local `say` fallback
-because the Gemini TTS free quota was exhausted during the run (`--backend
-gemini` is the preferred path). LearniBridge already has 5 of 7 Kore chunks
-cached; when quota is available again, finish it with:
-
-```bash
-python skills/research-method-video/scripts/tts_narration.py --project examples/learnibridge --backend gemini --delay 65
-python skills/research-method-video/scripts/render_scene.py --project examples/learnibridge --quality final --timing transcript
+python skills/research-method-video/scripts/tts_narration.py --project examples/learnibridge --backend gemini
 python skills/research-method-video/scripts/mux_narration.py --project examples/learnibridge --quality final --backend gemini
 ```
 
-LinCa retains 5.8 s of end-frame padding on two scenes, recorded in its revision
-log; both videos were reviewed by frame inspection and self-review against the
-comprehension gates, not by a human panel.
+Cost note: TTS audio is cached on `model + voice + prompt`, so re-rendering the
+animation never re-bills the voice; only narration or delivery changes do. Both
+narrations together cost roughly **$0.20** (Kore, ~5 min of audio at 25 audio
+tokens/s). End-frame padding: LearniBridge 0.0 s; LinCa 1.8 s total with no
+scene above 0.9 s. Both videos were reviewed by frame inspection and self-review
+against the comprehension gates, not by a human panel.
 
 ## Transcript and narration
 

@@ -9,7 +9,7 @@
   },
   "narration": {
     "backend": "gemini",
-    "model": "gemini-3.1-flash-tts-preview",
+    "model": "gemini-2.5-flash-preview-tts",
     "voice": {
       "name": "Kore"
     },
@@ -30,11 +30,11 @@
   "timing": {
     "animation_seconds": {
       "lc_01_one_predictor": 4.77,
-      "lc_02_dynamics_mismatch": 2.0,
+      "lc_02_dynamics_mismatch": 1.0,
       "lc_03_partitioning": 3.07,
       "lc_04_decompose": 5.83,
       "lc_05_predictors": 5.5,
-      "lc_06_invertible": 3.7,
+      "lc_06_invertible": 2.0,
       "lc_07_segments_training": 5.12
     },
     "hooks": {
