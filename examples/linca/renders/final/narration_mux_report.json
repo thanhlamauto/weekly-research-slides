@@ -1,57 +1,57 @@
 {
   "quality": "final",
-  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/transcript/audio",
+  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/transcript/audio/gemini",
   "scenes": [
     {
       "id": "lc_01_one_predictor",
-      "video": 11.967,
-      "audio": 12.004,
-      "end_frame_padding": 0.038,
+      "video": 13.617,
+      "audio": 13.651,
+      "end_frame_padding": 0.034,
       "audio_silence": 0.0
     },
     {
       "id": "lc_02_dynamics_mismatch",
-      "video": 16.117,
-      "audio": 18.81,
-      "end_frame_padding": 2.693,
+      "video": 22.25,
+      "audio": 22.771,
+      "end_frame_padding": 0.521,
       "audio_silence": 0.0
     },
     {
       "id": "lc_03_partitioning",
-      "video": 10.267,
-      "audio": 9.611,
+      "video": 14.633,
+      "audio": 13.971,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.656
+      "audio_silence": 0.662
     },
     {
       "id": "lc_04_decompose",
-      "video": 15.283,
-      "audio": 16.154,
-      "end_frame_padding": 0.87,
+      "video": 16.783,
+      "audio": 17.691,
+      "end_frame_padding": 0.908,
       "audio_silence": 0.0
     },
     {
       "id": "lc_05_predictors",
-      "video": 15.85,
-      "audio": 15.694,
+      "video": 18.85,
+      "audio": 18.691,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.156
+      "audio_silence": 0.159
     },
     {
       "id": "lc_06_invertible",
-      "video": 14.75,
-      "audio": 16.918,
-      "end_frame_padding": 2.168,
+      "video": 20.85,
+      "audio": 21.171,
+      "end_frame_padding": 0.321,
       "audio_silence": 0.0
     },
     {
       "id": "lc_07_segments_training",
-      "video": 20.067,
-      "audio": 19.563,
+      "video": 22.067,
+      "audio": 21.531,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.503
+      "audio_silence": 0.536
     }
   ],
-  "total_end_frame_padding": 5.769,
+  "total_end_frame_padding": 1.784,
   "output": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/linca/renders/final/linca-method-explainer-narrated.mp4"
 }

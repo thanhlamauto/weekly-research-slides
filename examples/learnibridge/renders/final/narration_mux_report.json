@@ -1,55 +1,55 @@
 {
   "quality": "final",
-  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/transcript/audio",
+  "audio_dir": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/learnibridge/transcript/audio/gemini",
   "scenes": [
     {
       "id": "lb_01_why_cache",
-      "video": 13.15,
-      "audio": 12.951,
+      "video": 21.55,
+      "audio": 21.36,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.199
+      "audio_silence": 0.19
     },
     {
       "id": "lb_02_stale_cache",
-      "video": 14.8,
-      "audio": 14.617,
+      "video": 23.6,
+      "audio": 23.44,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.183
+      "audio_silence": 0.16
     },
     {
       "id": "lb_03_change_question",
-      "video": 14.7,
-      "audio": 14.656,
+      "video": 22.45,
+      "audio": 22.4,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.044
+      "audio_silence": 0.05
     },
     {
       "id": "lb_04_low_rank",
-      "video": 19.517,
-      "audio": 19.089,
+      "video": 27.85,
+      "audio": 27.38,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.428
+      "audio_silence": 0.47
     },
     {
       "id": "lb_05_prompt_invariant",
-      "video": 14.883,
-      "audio": 14.375,
-      "end_frame_padding": 0.0,
-      "audio_silence": 0.508
-    },
-    {
-      "id": "lb_06_lora_bridge",
-      "video": 15.917,
-      "audio": 15.434,
+      "video": 21.883,
+      "audio": 21.4,
       "end_frame_padding": 0.0,
       "audio_silence": 0.483
     },
     {
-      "id": "lb_07_training_inference",
-      "video": 26.0,
-      "audio": 25.611,
+      "id": "lb_06_lora_bridge",
+      "video": 23.25,
+      "audio": 22.76,
       "end_frame_padding": 0.0,
-      "audio_silence": 0.389
+      "audio_silence": 0.49
+    },
+    {
+      "id": "lb_07_training_inference",
+      "video": 40.0,
+      "audio": 39.58,
+      "end_frame_padding": 0.0,
+      "audio_silence": 0.42
     }
   ],
   "total_end_frame_padding": 0.0,
