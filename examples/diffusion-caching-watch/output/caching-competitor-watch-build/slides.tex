@@ -1,0 +1,258 @@
+\begin{frame}[plain]
+\wrsTitlePage{Diffusion feature caching}{What do LearniBridge and LinCa change, and where do we stand?}{Week 38 \textperiodcentered{} two new learned competitors (ICML 2026, ECCV 2026) profiled against our schedules, plus our matched runs at N=5-25.}{Weekly competitor watch \textperiodcentered{} three sources \textperiodcentered{} our own runs are labelled separately}
+\note{Frame the meeting: this is a competitor read-out, not a paper explainer. Every claim is tagged as the paper's reported result or as our own run.}
+\end{frame}
+
+\begin{frame}{Where we are, and what changed this week}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Established (unchanged)}
+\begin{itemize}
+  \item \textbf{P1} Block outputs are temporally coherent, so a cached feature is a usable stand-in.
+  \item \textbf{Family A} Fixed reuse (DeepCache, FORA) and calibrated reuse (TeaCache, ToCA).
+  \item \textbf{Family B} History extrapolation with a fixed rule (TaylorSeer) at longer cache intervals.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Where we are now}
+\wrsBody{Two 2026 competitors move the correction itself into learned parameters, and both report quality that fixed rules do not reach at 5-7x. We now have matched runs against one of them.}\par\vspace{0.4em}
+\wrsTiny{Last week: schedule tuning only, no learned competitor in our comparison.}
+\end{columns}
+\note{Twenty seconds. The delta is the arrival of learned competitors and the first matched run, not a change in our own method.}
+\end{frame}
+
+\begin{frame}{Four families, one schedule: where the competitors sit}
+\begin{columns}[T]
+\column{0.22\textwidth}
+\wrsTiny{A}\par\vspace{0.15em}
+{\small\bfseries\color{wrsInk}Fixed reuse}\par\vspace{0.3em}
+\wrsSmall{DeepCache, FORA reuse a cached block output directly; TeaCache and ToCA add calibrated or dynamic caching decisions.}
+\column{0.22\textwidth}
+\wrsTiny{B}\par\vspace{0.15em}
+{\small\bfseries\color{wrsInk}History forecast}\par\vspace{0.3em}
+\wrsSmall{TaylorSeer extrapolates to the next timestep from several cached features with a fixed Taylor-style rule.}
+\column{0.22\textwidth}
+\wrsTiny{C}\par\vspace{0.15em}
+{\small\bfseries\color{wrsInk}Learned correction}\par\vspace{0.3em}
+\wrsSmall{LearniBridge fits a low-rank weight correction on the final block so a cached input reproduces the skipped full computation.}
+\column{0.22\textwidth}
+\wrsTiny{D}\par\vspace{0.15em}
+{\small\bfseries\color{wrsInk}Learned decomposition}\par\vspace{0.3em}
+\wrsSmall{LinCa learns an invertible feature decomposition and matches a different prediction order to each component, per model and timestep segment.}
+\end{columns}
+\vspace{0.4em}
+\begin{wrsband}{gap}{Open gap}Families C and D learn the correction; both still assume the caching schedule is given. That is where our schedule work sits.\end{wrsband}
+\note{Keep the point structural: the field has moved from hand-designed rules to learned corrections. Both new competitors are complementary to a schedule, not replacements for one.}
+\end{frame}
+
+\begin{frame}{Competitor 1: LearniBridge (ICML 2026)}
+\begin{columns}[T]
+\column{0.31\textwidth}
+\wrsSection{A. Intuition}
+\wrsSmall{Ask what correction makes the cached computation reproduce the skipped full computation, instead of forecasting the future feature.}
+\column{0.31\textwidth}
+\wrsSection{B. Mechanism}
+\wrsSmall{Fit a low-rank LoRA update on the linear layers of the final Transformer block; at skipped steps only that block runs. Calibration uses 3-5 prompts.}
+\column{0.31\textwidth}
+\wrsSection{C. Where it fails}
+\begin{itemize}
+  \item Needs a pre-calibration pass with full computation to record targets.
+  \item Only the final block is calibrated, so it absorbs the shift of every bypassed block.
+\end{itemize}\vspace{0.3em}
+\begin{wrsband}{interpretation}{Relation to us}Its adapters presuppose a cache schedule; it changes which block runs, not when skips happen.\end{wrsband}
+\end{columns}
+\vfill\wrsCitation{Huang et al., arXiv:2606.26778, ICML 2026}
+\note{One sentence for the evidence: SVD of the measured input matrix decays fast, and corrections fitted on disjoint prompt groups have small principal angles. Do not restate the derivation; this is a competitor profile.}
+\end{frame}
+
+\begin{frame}{Competitor 2: LinCa (ECCV 2026)}
+\begin{columns}[T]
+\column{0.31\textwidth}
+\wrsSection{A. Intuition}
+\wrsSmall{Inside one feature, dimensions do not share the same temporal behaviour, so one prediction order for the whole feature is a mismatch.}
+\column{0.31\textwidth}
+\wrsSection{B. Mechanism}
+\wrsSmall{A lightweight invertible network splits the feature into components with distinct continuity, applies a matched prediction order to each, and maps them back with the exact inverse (under 0.2\% extra parameters).}
+\column{0.31\textwidth}
+\wrsSection{C. Where it fails}
+\begin{itemize}
+  \item Needs trained decomposition and predictors per model and timestep segment.
+  \item Reported near-lossless 5-7x is on FLUX, Qwen-Image and HunyuanVideo; not reproduced by us.
+\end{itemize}\vspace{0.3em}
+\begin{wrsband}{interpretation}{Relation to us}Our skip pattern still decides how far its prediction must reach.\end{wrsband}
+\end{columns}
+\vfill\wrsCitation{Liu et al., arXiv:2608.17973, ECCV 2026}
+\note{Emphasise the two distinct kinds of specialisation: within a feature (sub-components, different orders) and across the trajectory (per-segment predictors). These are easy to blur.}
+\end{frame}
+
+\begin{frame}{The gap both competitors leave}
+\begin{wrsband}{gap}{Gap}Both competitors learn a better correction, but the caching schedule stays a fixed, hand-set interval; neither reports what happens when the schedule is data-dependent.\end{wrsband}
+\begin{columns}[T]
+\column{0.54\textwidth}
+\wrsSection{Evidence}
+\begin{itemize}
+  \item LearniBridge evaluates a fixed full-compute interval N and calibrates one bridge for it.
+  \item LinCa fixes the decomposition once per model and trains per segment, with the interval set externally.
+  \item In our matched runs, the ranking between methods changes with the interval rather than staying fixed.
+\end{itemize}
+\column{0.4\textwidth}
+\wrsSection{Implication}
+\wrsSmall{A schedule-aware competitor comparison is the right test, and it is the piece we can own.}
+\end{columns}
+\note{This is the pivot from competitor reading to our own work. Keep it hypothesis-shaped; we have not shown that a data-dependent schedule wins.}
+\end{frame}
+
+\begin{frame}{Our approach: retarget the cached state, not the network}
+\begin{columns}[T]
+\column{0.3\textwidth}
+\wrsSection{Forecast (TaylorSeer)}
+\wrsSmall{Z\_s $\rightarrow$ Z\_d: predict the future feature first, then hope the frozen tail accepts it.}
+\column{0.3\textwidth}
+\wrsSection{Learned weights (LearniBridge)}
+\wrsSmall{F\_W $\rightarrow$ F\_W+$\Delta$W: adapt the weights of the final block to the stale input.}
+\column{0.32\textwidth}
+\wrsSection{The idea}
+\wrsBody{Ours keeps F\_W frozen and edits the hidden state instead. Find Z\textasciitilde{}\_s$\rightarrow$d such that the frozen tail, given the true target condition, produces the target output.}
+\end{columns}
+\vspace{0.6em}\wrsBody{The problem is not an incorrect timestep label; it is a stale hidden state. At the skipped step the tail still receives the correct target-step condition, so only the state is wrong.}
+\wrsMath{Z_s \neq Z_d, \qquad F_{\text{tail}}(Z_s, c_d) \neq F_{\text{tail}}(Z_d, c_d)}
+\wrsMath{F_{\text{tail}}^{\text{frozen}}(\tilde Z_{s \to d}, c_d) \approx F_{\text{tail}}^{\text{frozen}}(Z_d, c_d)}
+\note{This is the pivot slide for our own work. Say the mechanism in one line: the tail is already correct, the state it receives is stale, so we repair the state and leave the network alone.}
+\end{frame}
+
+\begin{frame}{The retargeter: three inputs, one small MLP}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Three inputs per token}
+\begin{itemize}
+  \item \textbf{Local.} the cached token state z\_i at step s.
+  \item \textbf{Global.} an image-wide summary c\_s, the mean of the normalized tokens.
+  \item \textbf{Transition.} an embedding e\_t of the step pair (t\_s, t\_d) and the gap $\Delta$.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Fuse, then predict the correction}
+\wrsBody{Normalize the token, fuse the three signals through a SiLU layer, and predict the correction with a two-layer MLP. The retargeted token is the cached token plus that correction.}\par\vspace{0.4em}
+\end{columns}
+\wrsMath{x_i = \mathrm{RMSNorm}(z_i), \qquad c_s = \frac{1}{L} \sum_{i=1}^{L} x_i}
+\wrsMath{e_t = E(t_s, t_d, \Delta), \qquad h_i = \mathrm{SiLU}\!\left(W_z x_i + W_c c_s + e_t\right)}
+\wrsMath{\Delta z_i = W_2 \, \mathrm{SiLU}(W_1 h_i), \qquad \tilde z_{s,i} = z_{s,i} + \Delta z_i}
+\note{One new object per beat: the three inputs, then the fusion, then the correction. The global summary is what makes the correction depend on the whole image rather than on one token.}
+\end{frame}
+
+\begin{frame}{What is frozen, and what the loss actually asks for}
+\begin{wrsband}{gap}{Gap}Only the retargeter is trained. Everything below the edited state stays frozen, and the tail still runs with the true target-step condition.\end{wrsband}
+\begin{columns}[T]
+\column{0.54\textwidth}
+\wrsSection{Evidence}
+\begin{itemize}
+  \item The frozen tail consumes the retargeted state: (H\_d, v\_d) = F\_tail(Z\textasciitilde{}\_s, c\_d).
+  \item The training loss matches the teacher velocity; no term pulls the retargeted state toward Z\_d.
+  \item The edited state only has to be a useful pre-image for the tail, not a copy of the future state.
+\end{itemize}
+\column{0.4\textwidth}
+\wrsSection{Implication}
+\wrsSmall{Metrics that measure distance to Z\_d can punish the method while the tail output improves; judge the retargeter by the tail output, not by state distance.}
+\end{columns}
+\wrsMath{\mathcal{L}_{\text{vel}} = \lVert \hat v_d - v_d^{*} \rVert_2^2, \qquad \text{no } \lVert \tilde Z_{s \to d} - Z_d \rVert^2 \text{ term}}
+\note{This is the design commitment. If someone asks why we do not supervise the state directly, the answer is here: the state is not the deliverable, the frozen tail output is.}
+\end{frame}
+
+\begin{frame}{What our matched runs actually show}
+\begin{columns}[T]
+\column{0.62\textwidth}
+\begin{wrsband}{observation}{Observation}At matched cache intervals, Global-Local leads the fidelity metrics (PSNR, SSIM, HPSv2.1) at N=5, 7 and 10, while LearniBridge-100 leads CLIP at N=7 and N=10; at N=25 all three collapse together.\end{wrsband}
+\begin{wrsband}{interpretation}{Interpretation}The learned bridge competes on semantic alignment rather than pixel fidelity in our setting, and no method survives the 25-step interval. Our retargeter is trained only through the tail output, so its gain shows up on quality metrics rather than on distance-to-original fidelity.\end{wrsband}
+\column{0.34\textwidth}
+\wrsSection{Claim}
+\wrsClaimId{C1}\quad\wrsStatus{weakened}
+\wrsSmall{A learned low-rank calibration dominates our baseline at matched intervals. Our runs do not support this as stated.}
+\end{columns}
+\note{Say it plainly: the competitor's released configuration is competitive, not dominant, in our matched setting. Report the weak metric too; the audience is the group that will decide whether to keep chasing it.}
+\end{frame}
+
+\begin{frame}{Our matched runs: N=5 and N=7}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccccccc}
+\toprule
+Method & \textbf{CLIP $\uparrow$} & \textbf{IR $\uparrow$} & \textbf{HPSv2.1 $\uparrow$} & \textbf{PSNR $\uparrow$} & \textbf{SSIM $\uparrow$} & \textbf{s/ảnh $\downarrow$} & \textbf{Speed $\uparrow$} \\
+\midrule
+\textcolor{wrsMuted}{Original FLUX} & 32.65 & 1.00 & 30.40 & $\infty$ & 1 & 22.88 & 1.00x \\
+Cache thường (N=5) & 32.63 & 0.94 & 29.44 & 14.70 & 0.55 & \textbf{\textcolor{wrsGreen}{4.95}} & 4.63x \\
+Global-Local (N=5)\newline{\tiny\color{wrsMuted}(ours)} & \textbf{\textcolor{wrsGreen}{32.79}} & \textbf{\textcolor{wrsGreen}{1.01}} & \textbf{\textcolor{wrsGreen}{30.00}} & \textbf{\textcolor{wrsGreen}{15.21}} & \textbf{\textcolor{wrsGreen}{0.57}} & 4.98 & 4.60x \\
+LearniBridge-100 (N=5) & 32.66 & 0.98 & 29.53 & 15.07 & 0.55 & 5.09 & 4.49x \\
+Cache thường (N=7) & 32.28 & 0.83 & 28.24 & 14.14 & 0.52 & \textbf{\textcolor{wrsGreen}{4.04}} & 5.66x \\
+Global-Local (N=7)\newline{\tiny\color{wrsMuted}(ours)} & 32.63 & 0.92 & \textbf{\textcolor{wrsGreen}{29.10}} & \textbf{\textcolor{wrsGreen}{14.73}} & \textbf{\textcolor{wrsGreen}{0.55}} & 4.09 & 5.60x \\
+LearniBridge-100 (N=7) & \textbf{\textcolor{wrsGreen}{32.76}} & \textbf{\textcolor{wrsGreen}{0.92}} & 28.44 & 14.49 & 0.54 & 4.20 & 5.45x \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsQuiet{Ours = the retargeter (Global-Local). Green marks the best value in each interval, computed separately for N=5 and N=7; arrows say whether higher or lower is better. PSNR/SSIM are measured against Original FLUX, which is a reference row and is never highlighted.}
+\note{The comparison is matched, so we can read across a row group. Do not polish the deltas; several are inside noise and the group should see that.}
+\end{frame}
+
+\begin{frame}{Our matched runs: N=10 and N=25}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lccccccc}
+\toprule
+Method & \textbf{CLIP $\uparrow$} & \textbf{IR $\uparrow$} & \textbf{HPSv2.1 $\uparrow$} & \textbf{PSNR $\uparrow$} & \textbf{SSIM $\uparrow$} & \textbf{s/ảnh $\downarrow$} & \textbf{Speed $\uparrow$} \\
+\midrule
+Cache thường (N=10) & 31.72 & 0.66 & 26.36 & 13.77 & 0.48 & \textbf{\textcolor{wrsGreen}{2.70}} & 8.48x \\
+Global-Local (N=10)\newline{\tiny\color{wrsMuted}(ours)} & 31.77 & \textbf{\textcolor{wrsGreen}{0.76}} & \textbf{\textcolor{wrsGreen}{27.76}} & \textbf{\textcolor{wrsGreen}{14.46}} & \textbf{\textcolor{wrsGreen}{0.52}} & 2.75 & 8.32x \\
+LearniBridge-100 (N=10) & \textbf{\textcolor{wrsGreen}{32.16}} & 0.73 & 26.68 & 14.10 & 0.47 & 2.88 & 7.96x \\
+Cache thường (N=25) & 23.08 & -1.48 & 13.71 & 13.12 & 0.42 & \textbf{\textcolor{wrsGreen}{1.36}} & 16.87x \\
+Global-Local (N=25)\newline{\tiny\color{wrsMuted}(ours)} & 22.99 & \textbf{\textcolor{wrsGreen}{-1.28}} & \textbf{\textcolor{wrsGreen}{15.68}} & \textbf{\textcolor{wrsGreen}{14.26}} & \textbf{\textcolor{wrsGreen}{0.49}} & 1.41 & 16.24x \\
+LearniBridge-100 (N=25) & \textbf{\textcolor{wrsGreen}{23.09}} & -1.51 & 13.72 & 13.47 & 0.45 & 1.55 & 14.77x \\
+\bottomrule
+\end{tabular}
+\end{center}
+\vspace{0.25em}\wrsQuiet{Green marks the best value within each interval (N=10, then N=25). At N=25 every method is far from Original FLUX (IR below zero, HPSv2.1 near half), so N=25 is a failure regime for all three and should not be ranked.}
+\note{Say explicitly that N=25 is not a ranking, it is a boundary. If anyone quotes a winner there, correct it live.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=5: Original / Cache / ours / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N5_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Columns are Original, Cache (N=5), Global-Local (ours), LearniBridge-100.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N5.jpg, re-composed as two side-by-side halves for slide readability.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=7: Original / Cache / ours / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N7_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Rows 1-4 on the left, rows 5-8 on the right. At N=7 the plain cache starts to drift on structure while both learned methods keep the layout.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N7.jpg. Look for structure drift and colour shifts, not for a winner.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=10: Original / Cache / ours / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N10_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Rows 1-4 on the left, rows 5-8 on the right. Failures are no longer uniform: which method drifts depends on the prompt.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N10.jpg. The prompt dependence is the argument for schedule awareness.}
+\end{frame}
+
+\begin{frame}{Qualitative, N=25: Original / Cache / ours / LearniBridge-100}
+\wrsFigure[0.99\linewidth]{assets/N25_qualitative.jpg}
+\vspace{0.3em}\wrsQuiet{Rows 1-4 on the left, rows 5-8 on the right. At N=25 all four columns are visibly different from Original; this sheet documents the failure regime, not a comparison.}
+\note{Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge\_100\_matched/qualitative\_by\_n/N25.jpg. Use this to set the boundary of the useful interval, then move on.}
+\end{frame}
+
+\begin{frame}{What we still do not know}
+\begin{columns}[T]
+\column{0.5\textwidth}
+\wrsSection{Current limitations}
+\begin{itemize}
+  \item LinCa is profiled from its paper only; we have not reproduced it in our matched setting.
+  \item Our runs cover one model (FLUX) and one prompt set, so cross-model ranking is unmeasured.
+  \item PSNR/SSIM against Original FLUX penalise every accelerator; they are fidelity, not quality.
+  \item N=25 is a failure regime for all three methods, so the interval range where learned corrections pay off is still narrow.
+\end{itemize}
+\column{0.46\textwidth}
+\wrsSection{Open questions}
+\begin{itemize}
+  \item Does LinCa's learned decomposition close the N=10-25 gap that no current method survives?
+  \item Is the CLIP advantage of LearniBridge-100 at N=7/10 reproducible across prompt sets?
+  \item Would a data-dependent schedule change which of these competitors wins?
+\end{itemize}
+\end{columns}
+\note{End here. The next action is a LinCa reproduction in the same matched harness; no thank-you slide.}
+\end{frame}

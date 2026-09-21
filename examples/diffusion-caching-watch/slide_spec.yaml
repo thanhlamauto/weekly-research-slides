@@ -1,0 +1,395 @@
+# Weekly competitor watch: diffusion feature caching.
+#
+# This is a weekly research update whose subject is the competitor landscape
+# (reuse -> forecast -> learned calibration -> learned decomposition), with
+# LearniBridge as ONE competitor among several, plus our own matched runs.
+#
+# Sources read directly:
+#   - LearniBridge, Huang, Chen, Shen, Zhang. arXiv:2606.26778, ICML 2026.
+#   - LinCa, Liu et al. arXiv:2608.17973, ECCV 2026.
+#   - our matched runs (results table and qualitative sheets supplied by the group).
+# Numbers attributed to a paper come from that paper; numbers under "our runs"
+# come from our own matched sweep. Claims are labelled as such, never merged.
+deck:
+  title: Diffusion Feature Caching
+  subtitle: Competitor watch, week 38
+  project: Diffusion feature caching
+  stage: mature-comparison
+  week: 38
+  audience: Weekly research group meeting
+  familiarity: high
+  footer: Competitor watch · diffusion feature caching · week 38
+  this_week_question: What do LearniBridge and LinCa actually change, and where do we stand against them?
+
+slides:
+  - id: cw01
+    archetype: title
+    module: recap
+    title: Diffusion Feature Caching
+    content:
+      project: Diffusion feature caching
+      headline: What do LearniBridge and LinCa change, and where do we stand?
+      question: Week 38 · two new learned competitors (ICML 2026, ECCV 2026) profiled against our schedules, plus our matched runs at N=5-25.
+      byline: Weekly competitor watch · three sources · our own runs are labelled separately
+    beats: [question]
+    notes: >-
+      Frame the meeting: this is a competitor read-out, not a paper explainer.
+      Every claim is tagged as the paper's reported result or as our own run.
+
+  - id: cw02
+    archetype: recap
+    module: recap
+    title: Where we are, and what changed this week
+    content:
+      established_title: Established (unchanged)
+      established:
+        - { label: P1, detail: 'Block outputs are temporally coherent, so a cached feature is a usable stand-in.' }
+        - { label: Family A, detail: 'Fixed reuse (DeepCache, FORA) and calibrated reuse (TeaCache, ToCA).' }
+        - { label: Family B, detail: 'History extrapolation with a fixed rule (TaylorSeer) at longer cache intervals.' }
+      now_title: Where we are now
+      now: Two 2026 competitors move the correction itself into learned parameters, and both report quality that fixed rules do not reach at 5-7x. We now have matched runs against one of them.
+      prior_week: 'Last week: schedule tuning only, no learned competitor in our comparison.'
+    beats: [established, now]
+    notes: >-
+      Twenty seconds. The delta is the arrival of learned competitors and the
+      first matched run, not a change in our own method.
+
+  - id: cw03
+    archetype: method-landscape
+    module: prior-work
+    title: 'Four families, one schedule: where the competitors sit'
+    content:
+      methods:
+        - tag: A
+          name: Fixed reuse
+          role: competitor
+          mechanism: DeepCache, FORA reuse a cached block output directly; TeaCache and ToCA add calibrated or dynamic caching decisions.
+        - tag: B
+          name: History forecast
+          role: competitor
+          mechanism: 'TaylorSeer extrapolates to the next timestep from several cached features with a fixed Taylor-style rule.'
+        - tag: C
+          name: Learned correction
+          role: competitor
+          mechanism: LearniBridge fits a low-rank weight correction on the final block so a cached input reproduces the skipped full computation.
+        - tag: D
+          name: Learned decomposition
+          role: competitor
+          mechanism: LinCa learns an invertible feature decomposition and matches a different prediction order to each component, per model and timestep segment.
+      gap: Families C and D learn the correction; both still assume the caching schedule is given. That is where our schedule work sits.
+    beats: [A, B, C, D, gap]
+    notes: >-
+      Keep the point structural: the field has moved from hand-designed rules to
+      learned corrections. Both new competitors are complementary to a schedule,
+      not replacements for one.
+
+  - id: cw04
+    archetype: competitor-mechanism
+    module: competitor-method
+    title: 'Competitor 1: LearniBridge (ICML 2026)'
+    citation: Huang et al., arXiv:2606.26778, ICML 2026
+    content:
+      intuition: Ask what correction makes the cached computation reproduce the skipped full computation, instead of forecasting the future feature.
+      mechanism: 'Fit a low-rank LoRA update on the linear layers of the final Transformer block; at skipped steps only that block runs. Calibration uses 3-5 prompts.'
+      module_label: learned low-rank correction
+      failure:
+        - Needs a pre-calibration pass with full computation to record targets.
+        - Only the final block is calibrated, so it absorbs the shift of every bypassed block.
+      relation_to_us: Its adapters presuppose a cache schedule; it changes which block runs, not when skips happen.
+    beats: [intuition, mechanism, limits]
+    notes: >-
+      One sentence for the evidence: SVD of the measured input matrix decays
+      fast, and corrections fitted on disjoint prompt groups have small principal
+      angles. Do not restate the derivation; this is a competitor profile.
+
+  - id: cw05
+    archetype: competitor-mechanism
+    module: competitor-method
+    title: 'Competitor 2: LinCa (ECCV 2026)'
+    citation: Liu et al., arXiv:2608.17973, ECCV 2026
+    content:
+      intuition: Inside one feature, dimensions do not share the same temporal behaviour, so one prediction order for the whole feature is a mismatch.
+      mechanism: 'A lightweight invertible network splits the feature into components with distinct continuity, applies a matched prediction order to each, and maps them back with the exact inverse (under 0.2% extra parameters).'
+      module_label: learned invertible decomposition
+      failure:
+        - Needs trained decomposition and predictors per model and timestep segment.
+        - Reported near-lossless 5-7x is on FLUX, Qwen-Image and HunyuanVideo; not reproduced by us.
+      relation_to_us: Our skip pattern still decides how far its prediction must reach.
+    beats: [intuition, mechanism, limits]
+    notes: >-
+      Emphasise the two distinct kinds of specialisation: within a feature
+      (sub-components, different orders) and across the trajectory (per-segment
+      predictors). These are easy to blur.
+
+  - id: cw06
+    archetype: weakness
+    module: weakness-gap
+    title: 'The gap both competitors leave'
+    content:
+      gap: 'Both competitors learn a better correction, but the caching schedule stays a fixed, hand-set interval; neither reports what happens when the schedule is data-dependent.'
+      evidence:
+        - LearniBridge evaluates a fixed full-compute interval N and calibrates one bridge for it.
+        - LinCa fixes the decomposition once per model and trains per segment, with the interval set externally.
+        - In our matched runs, the ranking between methods changes with the interval rather than staying fixed.
+      implication: A schedule-aware competitor comparison is the right test, and it is the piece we can own.
+    beats: [gap, evidence, implication]
+    notes: >-
+      This is the pivot from competitor reading to our own work. Keep it
+      hypothesis-shaped; we have not shown that a data-dependent schedule wins.
+
+  - id: cw-m1
+    archetype: motivation
+    module: method-high-level
+    title: 'Our approach: retarget the cached state, not the network'
+    content:
+      contrast:
+        old_label: 'Forecast (TaylorSeer)'
+        old: 'Z_s → Z_d: predict the future feature first, then hope the frozen tail accepts it.'
+        new_label: 'Learned weights (LearniBridge)'
+        new: 'F_W → F_W+ΔW: adapt the weights of the final block to the stale input.'
+      idea: 'Ours keeps F_W frozen and edits the hidden state instead. Find Z~_s→d such that the frozen tail, given the true target condition, produces the target output.'
+      why_now: 'The problem is not an incorrect timestep label; it is a stale hidden state. At the skipped step the tail still receives the correct target-step condition, so only the state is wrong.'
+      equations:
+        - 'Z_s \neq Z_d, \qquad F_{\text{tail}}(Z_s, c_d) \neq F_{\text{tail}}(Z_d, c_d)'
+        - 'F_{\text{tail}}^{\text{frozen}}(\tilde Z_{s \to d}, c_d) \approx F_{\text{tail}}^{\text{frozen}}(Z_d, c_d)'
+    beats: [contrast, idea, equations]
+    notes: >-
+      This is the pivot slide for our own work. Say the mechanism in one line:
+      the tail is already correct, the state it receives is stale, so we repair
+      the state and leave the network alone.
+
+  - id: cw-m2
+    archetype: recap
+    module: method-high-level
+    title: 'The retargeter: three inputs, one small MLP'
+    content:
+      established_title: 'Three inputs per token'
+      established:
+        - { label: 'Local.', detail: 'the cached token state z_i at step s.' }
+        - { label: 'Global.', detail: 'an image-wide summary c_s, the mean of the normalized tokens.' }
+        - { label: 'Transition.', detail: 'an embedding e_t of the step pair (t_s, t_d) and the gap Δ.' }
+      now_title: 'Fuse, then predict the correction'
+      now: 'Normalize the token, fuse the three signals through a SiLU layer, and predict the correction with a two-layer MLP. The retargeted token is the cached token plus that correction.'
+      equations:
+        - 'x_i = \mathrm{RMSNorm}(z_i), \qquad c_s = \frac{1}{L} \sum_{i=1}^{L} x_i'
+        - 'e_t = E(t_s, t_d, \Delta), \qquad h_i = \mathrm{SiLU}\!\left(W_z x_i + W_c c_s + e_t\right)'
+        - '\Delta z_i = W_2 \, \mathrm{SiLU}(W_1 h_i), \qquad \tilde z_{s,i} = z_{s,i} + \Delta z_i'
+    beats: [inputs, fusion, correction]
+    notes: >-
+      One new object per beat: the three inputs, then the fusion, then the
+      correction. The global summary is what makes the correction depend on the
+      whole image rather than on one token.
+
+  - id: cw-m3
+    archetype: weakness
+    module: method-high-level
+    title: 'What is frozen, and what the loss actually asks for'
+    content:
+      gap: 'Only the retargeter is trained. Everything below the edited state stays frozen, and the tail still runs with the true target-step condition.'
+      evidence:
+        - 'The frozen tail consumes the retargeted state: (H_d, v_d) = F_tail(Z~_s, c_d).'
+        - 'The training loss matches the teacher velocity; no term pulls the retargeted state toward Z_d.'
+        - 'The edited state only has to be a useful pre-image for the tail, not a copy of the future state.'
+      implication: 'Metrics that measure distance to Z_d can punish the method while the tail output improves; judge the retargeter by the tail output, not by state distance.'
+      equations:
+        - '\mathcal{L}_{\text{vel}} = \lVert \hat v_d - v_d^{*} \rVert_2^2, \qquad \text{no } \lVert \tilde Z_{s \to d} - Z_d \rVert^2 \text{ term}'
+    beats: [frozen, loss, implication]
+    notes: >-
+      This is the design commitment. If someone asks why we do not supervise the
+      state directly, the answer is here: the state is not the deliverable, the
+      frozen tail output is.
+
+  - id: cw07
+    archetype: interpretation
+    module: interpretation
+    title: What our matched runs actually show
+    content:
+      observation: At matched cache intervals, Global-Local leads the fidelity metrics (PSNR, SSIM, HPSv2.1) at N=5, 7 and 10, while LearniBridge-100 leads CLIP at N=7 and N=10; at N=25 all three collapse together.
+      interpretation: The learned bridge competes on semantic alignment rather than pixel fidelity in our setting, and no method survives the 25-step interval. Our retargeter is trained only through the tail output, so its gain shows up on quality metrics rather than on distance-to-original fidelity.
+      claim:
+        id: C1
+        status: weakened
+        statement: A learned low-rank calibration dominates our baseline at matched intervals. Our runs do not support this as stated.
+    beats: [observation, interpretation, claim]
+    notes: >-
+      Say it plainly: the competitor's released configuration is competitive,
+      not dominant, in our matched setting. Report the weak metric too; the
+      audience is the group that will decide whether to keep chasing it.
+
+  - id: cw08
+    archetype: benchmark
+    module: results
+    title: 'Our matched runs: N=5 and N=7'
+    content:
+      metrics:
+        - { key: clip, name: 'CLIP ↑', higher_is_better: true }
+        - { key: ir, name: 'IR ↑', higher_is_better: true }
+        - { key: hps, name: 'HPSv2.1 ↑', higher_is_better: true }
+        - { key: psnr, name: 'PSNR ↑', higher_is_better: true }
+        - { key: ssim, name: 'SSIM ↑', higher_is_better: true }
+        - { key: latency, name: 's/ảnh ↓', higher_is_better: false }
+        - { key: speedup, name: 'Speed ↑', higher_is_better: true }
+      methods:
+        - name: Original FLUX
+          role: reference
+          values: { clip: 32.6480, ir: 1.0010, hps: 30.4022, psnr: '∞', ssim: 1.0000, latency: 22.881, speedup: '1.00x' }
+        - name: Cache thường (N=5)
+          role: competitor
+          group: N=5
+          values: { clip: 32.6284, ir: 0.9389, hps: 29.4364, psnr: 14.6960, ssim: 0.5475, latency: 4.945, speedup: '4.63x' }
+        - name: Global-Local (N=5)
+          role: competitor
+          group: N=5
+          role_label: ours
+          values: { clip: 32.7860, ir: 1.0091, hps: 30.0025, psnr: 15.2076, ssim: 0.5745, latency: 4.976, speedup: '4.60x' }
+        - name: LearniBridge-100 (N=5)
+          role: competitor
+          group: N=5
+          values: { clip: 32.6587, ir: 0.9754, hps: 29.5289, psnr: 15.0703, ssim: 0.5511, latency: 5.093, speedup: '4.49x' }
+        - name: Cache thường (N=7)
+          role: competitor
+          group: N=7
+          values: { clip: 32.2759, ir: 0.8260, hps: 28.2369, psnr: 14.1369, ssim: 0.5246, latency: 4.042, speedup: '5.66x' }
+        - name: Global-Local (N=7)
+          role: competitor
+          group: N=7
+          role_label: ours
+          values: { clip: 32.6300, ir: 0.9151, hps: 29.0973, psnr: 14.7256, ssim: 0.5515, latency: 4.086, speedup: '5.60x' }
+        - name: LearniBridge-100 (N=7)
+          role: competitor
+          group: N=7
+          values: { clip: 32.7565, ir: 0.9222, hps: 28.4371, psnr: 14.4857, ssim: 0.5362, latency: 4.201, speedup: '5.45x' }
+      caption: 'Ours = the retargeter (Global-Local). Green marks the best value in each interval, computed separately for N=5 and N=7; arrows say whether higher or lower is better. PSNR/SSIM are measured against Original FLUX, which is a reference row and is never highlighted.'
+    beats: [original, baselines, competitors]
+    notes: >-
+      The comparison is matched, so we can read across a row group. Do not
+      polish the deltas; several are inside noise and the group should see that.
+
+  - id: cw09
+    archetype: benchmark
+    module: results
+    title: 'Our matched runs: N=10 and N=25'
+    content:
+      metrics:
+        - { key: clip, name: 'CLIP ↑', higher_is_better: true }
+        - { key: ir, name: 'IR ↑', higher_is_better: true }
+        - { key: hps, name: 'HPSv2.1 ↑', higher_is_better: true }
+        - { key: psnr, name: 'PSNR ↑', higher_is_better: true }
+        - { key: ssim, name: 'SSIM ↑', higher_is_better: true }
+        - { key: latency, name: 's/ảnh ↓', higher_is_better: false }
+        - { key: speedup, name: 'Speed ↑', higher_is_better: true }
+      methods:
+        - name: Cache thường (N=10)
+          role: competitor
+          group: N=10
+          values: { clip: 31.7172, ir: 0.6577, hps: 26.3589, psnr: 13.7678, ssim: 0.4768, latency: 2.699, speedup: '8.48x' }
+        - name: Global-Local (N=10)
+          role: competitor
+          group: N=10
+          role_label: ours
+          values: { clip: 31.7687, ir: 0.7560, hps: 27.7644, psnr: 14.4586, ssim: 0.5174, latency: 2.751, speedup: '8.32x' }
+        - name: LearniBridge-100 (N=10)
+          role: competitor
+          group: N=10
+          values: { clip: 32.1630, ir: 0.7323, hps: 26.6815, psnr: 14.0963, ssim: 0.4694, latency: 2.875, speedup: '7.96x' }
+        - name: Cache thường (N=25)
+          role: competitor
+          group: N=25
+          values: { clip: 23.0764, ir: -1.4809, hps: 13.7148, psnr: 13.1228, ssim: 0.4168, latency: 1.356, speedup: '16.87x' }
+        - name: Global-Local (N=25)
+          role: competitor
+          group: N=25
+          role_label: ours
+          values: { clip: 22.9852, ir: -1.2793, hps: 15.6773, psnr: 14.2627, ssim: 0.4888, latency: 1.409, speedup: '16.24x' }
+        - name: LearniBridge-100 (N=25)
+          role: competitor
+          group: N=25
+          values: { clip: 23.0880, ir: -1.5106, hps: 13.7235, psnr: 13.4711, ssim: 0.4503, latency: 1.549, speedup: '14.77x' }
+      caption: 'Green marks the best value within each interval (N=10, then N=25). At N=25 every method is far from Original FLUX (IR below zero, HPSv2.1 near half), so N=25 is a failure regime for all three and should not be ranked.'
+    beats: [n10, n25]
+    notes: >-
+      Say explicitly that N=25 is not a ranking, it is a boundary. If anyone
+      quotes a winner there, correct it live.
+
+  - id: cw10
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=5: Original / Cache / ours / LearniBridge-100'
+    content:
+      figure:
+        key: cw-qual-n5
+        file: qualitative/N5_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Sheet split in two blocks: rows 1-4 on the left, rows 5-8 on the right. Columns are Original, Cache (N=5), Global-Local (ours), LearniBridge-100.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N5.jpg,
+      re-composed as two side-by-side halves for slide readability.
+
+  - id: cw11
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=7: Original / Cache / ours / LearniBridge-100'
+    content:
+      figure:
+        key: cw-qual-n7
+        file: qualitative/N7_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Rows 1-4 on the left, rows 5-8 on the right. At N=7 the plain cache starts to drift on structure while both learned methods keep the layout.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N7.jpg.
+      Look for structure drift and colour shifts, not for a winner.
+
+  - id: cw12
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=10: Original / Cache / ours / LearniBridge-100'
+    content:
+      figure:
+        key: cw-qual-n10
+        file: qualitative/N10_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Rows 1-4 on the left, rows 5-8 on the right. Failures are no longer uniform: which method drifts depends on the prompt.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N10.jpg.
+      The prompt dependence is the argument for schedule awareness.
+
+  - id: cw13
+    archetype: figure
+    module: results
+    title: 'Qualitative, N=25: Original / Cache / ours / LearniBridge-100'
+    content:
+      figure:
+        key: cw-qual-n25
+        file: qualitative/N25_qualitative.jpg
+        backend: external
+        width: 0.99
+      caption: 'Rows 1-4 on the left, rows 5-8 on the right. At N=25 all four columns are visibly different from Original; this sheet documents the failure regime, not a comparison.'
+    beats: [sheet]
+    notes: >-
+      Source: /Users/nguyenthanhlam/LESA/artifacts/learnibridge_100_matched/qualitative_by_n/N25.jpg.
+      Use this to set the boundary of the useful interval, then move on.
+
+  - id: cw14
+    archetype: limitations
+    module: limitation
+    title: What we still do not know
+    content:
+      limitations:
+        - LinCa is profiled from its paper only; we have not reproduced it in our matched setting.
+        - Our runs cover one model (FLUX) and one prompt set, so cross-model ranking is unmeasured.
+        - PSNR/SSIM against Original FLUX penalise every accelerator; they are fidelity, not quality.
+        - N=25 is a failure regime for all three methods, so the interval range where learned corrections pay off is still narrow.
+      open_questions:
+        - Does LinCa's learned decomposition close the N=10-25 gap that no current method survives?
+        - Is the CLIP advantage of LearniBridge-100 at N=7/10 reproducible across prompt sets?
+        - Would a data-dependent schedule change which of these competitors wins?
+    beats: [limitations, open-questions]
+    notes: >-
+      End here. The next action is a LinCa reproduction in the same matched
+      harness; no thank-you slide.

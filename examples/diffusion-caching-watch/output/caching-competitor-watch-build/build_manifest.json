@@ -1,0 +1,93 @@
+{
+  "generator": "weekly-research-slides 0.8.0",
+  "template": {
+    "name": "academic-beamer",
+    "version": 2
+  },
+  "engine": "lualatex",
+  "deck": {
+    "title": "Diffusion Feature Caching",
+    "stage": "mature-comparison",
+    "week": 38
+  },
+  "slides": 17,
+  "figures": [
+    {
+      "key": "cw10",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "cw10",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/diffusion-caching-watch/qualitative/N5_qualitative.jpg"
+    },
+    {
+      "key": "cw11",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "cw11",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/diffusion-caching-watch/qualitative/N7_qualitative.jpg"
+    },
+    {
+      "key": "cw12",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "cw12",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/diffusion-caching-watch/qualitative/N10_qualitative.jpg"
+    },
+    {
+      "key": "cw13",
+      "backend": "external",
+      "decision": {
+        "selected": "external",
+        "reason": [
+          "explicit backend: external",
+          "figure export included by path"
+        ],
+        "explicit": true,
+        "stats": null,
+        "figure": {
+          "id": "cw13",
+          "type": null,
+          "mode": null
+        }
+      },
+      "source": "/Users/nguyenthanhlam/Documents/Default Project/weekly-research-slides/examples/diffusion-caching-watch/qualitative/N25_qualitative.jpg"
+    }
+  ],
+  "generated_at": "2026-09-20T13:59:59.069Z"
+}
