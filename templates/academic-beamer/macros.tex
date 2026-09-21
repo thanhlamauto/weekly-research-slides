@@ -66,6 +66,13 @@
   \vspace{0.25em}%
 }
 
+% Raw display math for method slides. The generator passes the argument
+% through verbatim: it is LaTeX math, not escaped text, and it must not contain
+% text-mode markup or a stray closing brace.
+\newcommand{\wrsMath}[1]{%
+  \vspace{0.25em}\begin{center}$\displaystyle #1$\end{center}%
+}
+
 \newcommand{\wrsFigure}[2][\linewidth]{%
   \begin{center}\includegraphics[width=#1,height=0.68\textheight,keepaspectratio]{#2}\end{center}}
 

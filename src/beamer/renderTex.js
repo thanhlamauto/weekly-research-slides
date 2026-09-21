@@ -109,10 +109,22 @@ function noteBlock(slide, ctx) {
   return slide.notes ? `\\note{${texEscape(slide.notes, ctx)}}` : '';
 }
 
+function equationsBlock(slide) {
+  const eqs = (slide.content && slide.content.equations) || [];
+  if (!eqs.length) return '';
+  // Raw LaTeX math: deliberately not escaped. `content.equations` is the one
+  // authored exception to ASCII-only content, so a method slide can show the
+  // actual formula instead of ASCII art. A malformed equation fails the
+  // compile and is reported as a build error.
+  return eqs.map((eq) => `\\wrsMath{${eq}}`).join('\n');
+}
+
 function frame({ title, body, slide, ctx, plain = false }) {
   const parts = [];
   parts.push(plain ? '\\begin{frame}[plain]' : `\\begin{frame}{${texEscape(title, ctx)}}`);
   parts.push(body);
+  const equations = equationsBlock(slide);
+  if (equations) parts.push(equations);
   if (slide.citation) parts.push(`\\vfill\\wrsCitation{${texEscape(slide.citation, ctx)}}`);
   parts.push(noteBlock(slide, ctx));
   parts.push('\\end{frame}');
@@ -238,10 +250,20 @@ const STAGE_STYLES = {
 function renderMethodHighLevel(slide, deck, ctx) {
   const c = slide.content || {};
   const stages = c.stages || [];
-  const parts = ['\\begin{center}', '\\begin{tikzpicture}[node distance=2.8cm]'];
+  // Border-to-border gap between stage nodes, kept wide for short pipelines and
+  // tightened as stages are added so the chain still fits the text width. The
+  // resizebox below is the hard guarantee against an overfull frame.
+  const n = stages.length;
+  const gap = n <= 1 ? 0 : Math.max(0.5, Math.min(2.8, (13.4 - 2.3 * n) / (n - 1)));
+  const parts = [
+    '\\begin{center}',
+    '\\resizebox{\\ifdim\\width>\\linewidth\\linewidth\\else\\width\\fi}{!}{%',
+    `\\begin{tikzpicture}[node distance=${gap.toFixed(2)}cm]`,
+  ];
   stages.forEach((s, i) => {
     const style = STAGE_STYLES[s.role] || 'wrsstage';
-    parts.push(`  \\node[${style}] (stage-${i}) {${texEscape(s.label || '', ctx)}};`);
+    const place = i === 0 ? '' : `, right=of stage-${i - 1}`;
+    parts.push(`  \\node[${style}${place}] (stage-${i}) {${texEscape(s.label || '', ctx)}};`);
   });
   stages.forEach((s, i) => {
     if (i < stages.length - 1) parts.push(`  \\draw[wrsarrow] (stage-${i}) -- (stage-${i + 1});`);
@@ -249,7 +271,7 @@ function renderMethodHighLevel(slide, deck, ctx) {
   stages.forEach((s, i) => {
     if (s.detail) parts.push(`  \\node[wrsdetail, below=0.45cm of stage-${i}] {${texEscape(s.detail, ctx)}};`);
   });
-  parts.push('\\end{tikzpicture}', '\\end{center}');
+  parts.push('\\end{tikzpicture}}', '\\end{center}');
   if (c.note) parts.push(`\\vspace{0.3em}\\begin{center}\\wrsQuiet{${texEscape(c.note, ctx)}}\\end{center}`);
   return frame({ title: slide.title, body: parts.join('\n'), slide, ctx });
 }
@@ -293,21 +315,45 @@ function renderBenchmark(slide, deck, ctx) {
   const methods = c.methods || [];
   const header = ['Method', ...metrics.map((m) => `\\textbf{${texEscape(m.name || m.key, ctx)}}`)];
   const units = [...new Set(metrics.map((m) => m.unit).filter(Boolean))];
+  // Per-metric best within each row group. Rows may declare `group` (for
+  // example a cache interval); without it the whole table is one group. A row
+  // with `role: reference` is a yardstick, never a winner, and is excluded.
+  const groupOf = (m) => (m.group === undefined || m.group === null ? '' : String(m.group));
+  const isHigher = (mt) => mt.higher_is_better !== false;
+  const best = new Map();
+  methods.forEach((mm) => {
+    if (mm.role === 'reference') return;
+    metrics.forEach((mt) => {
+      const v = mm.values ? mm.values[mt.key] : undefined;
+      if (typeof v !== 'number') return;
+      const key = `${groupOf(mm)}\u0000${mt.key}`;
+      const cur = best.get(key);
+      if (cur === undefined || (isHigher(mt) ? v > cur : v < cur)) best.set(key, v);
+    });
+  });
   const rows = methods.map((mm) => {
     const isCurrent = mm.role === 'current';
+    const isReference = mm.role === 'reference';
     const name = isCurrent
       ? `\\textbf{\\textcolor{wrsBlue}{${texEscape(mm.name || '', ctx)}}}`
-      : texEscape(mm.name || '', ctx);
-    const role = mm.role === 'current' ? 'this week' : mm.role === 'previous' ? 'last week' : '';
-    const roleRedundant = role && new RegExp(role.replace(' ', '\\s*'), 'i').test(mm.name || '');
+      : isReference
+        ? `\\textcolor{wrsMuted}{${texEscape(mm.name || '', ctx)}}`
+        : texEscape(mm.name || '', ctx);
+    const role = mm.role_label !== undefined
+      ? mm.role_label
+      : (mm.role === 'current' ? 'this week' : mm.role === 'previous' ? 'last week' : '');
+    const roleRedundant = role && new RegExp(String(role).replace(' ', '\\s*'), 'i').test(mm.name || '');
     const nameCell = role && !roleRedundant
       ? `${name}\\newline{\\tiny\\color{wrsMuted}(${texEscape(role, ctx)})}` : name;
     const cells = metrics.map((mt) => {
-      const val = fmtValue(mm.values ? mm.values[mt.key] : undefined, ctx);
+      const raw = mm.values ? mm.values[mt.key] : undefined;
+      const val = fmtValue(raw, ctx);
       const delta = mm.delta && mm.delta[mt.key]
         ? `\\ {\\tiny\\color{wrsGreen}(${texEscape(mm.delta[mt.key], ctx)})}` : '';
       const cell = `${val}${delta}`;
-      return isCurrent ? `\\textbf{\\textcolor{wrsBlue}{${cell}}}` : cell;
+      const isBest = !isReference && typeof raw === 'number'
+        && best.get(`${groupOf(mm)}\u0000${mt.key}`) === raw;
+      return isBest ? `\\textbf{\\textcolor{wrsGreen}{${cell}}}` : cell;
     });
     return `${nameCell} & ${cells.join(' & ')} \\\\`;
   });

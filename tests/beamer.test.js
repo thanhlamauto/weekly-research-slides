@@ -83,6 +83,94 @@ test('special characters and scientific unicode are escaped', () => {
   assert.equal(texMathLabel('Z~'), '$\\tilde{Z}$');
 });
 
+test('pipeline stages are chained in a row and benchmark roles can be relabelled', () => {
+  const spec = {
+    deck: { title: 'Pipeline and role coverage', stage: 'survey', week: 1 },
+    slides: [
+      {
+        id: 'p1',
+        archetype: 'method-high-level',
+        title: 'Pipeline',
+        content: {
+          stages: [
+            { role: 'input', label: 'a' },
+            { role: 'learned', label: 'b' },
+            { role: 'output', label: 'c' },
+          ],
+        },
+      },
+      {
+        id: 'p2',
+        archetype: 'benchmark',
+        title: 'Benchmark',
+        content: {
+          metrics: [{ key: 'm', name: 'Metric', unit: 'higher is better' }],
+          methods: [
+            { name: 'LearniBridge', role: 'current', role_label: 'ours', values: { m: 1 } },
+            { name: 'TaylorSeer', role: 'competitor', values: { m: 0 } },
+          ],
+        },
+      },
+    ],
+  };
+  const slides = renderBeamer(spec).files['slides.tex'];
+  assert.match(slides, /\\node\[wrstoken\] \(stage-0\)/);
+  assert.match(slides, /\\node\[wrslearned, right=of stage-0\] \(stage-1\)/);
+  assert.match(slides, /\\node\[wrslatent, right=of stage-1\] \(stage-2\)/);
+  assert.match(slides, /LearniBridge.*\(ours\)/);
+  assert.ok(!/this week/.test(slides), 'role_label should replace the weekly default label');
+});
+
+test('content.equations pass through as raw math on method slides', () => {
+  const spec = {
+    deck: { title: 'Math coverage', stage: 'survey', week: 1 },
+    slides: [{
+      id: 'm1',
+      archetype: 'motivation',
+      title: 'Method',
+      content: {
+        idea: 'retarget the cached state',
+        contrast: { old: 'forecast the feature', new: 'edit the hidden state' },
+        equations: ['Z_s \\neq Z_d', '\\Delta z_i = W_2 \\, \\mathrm{SiLU}(W_1 h_i)'],
+      },
+    }],
+  };
+  const slides = renderBeamer(spec).files['slides.tex'];
+  assert.ok(slides.includes('\\wrsMath{Z_s \\neq Z_d}'), 'math must not be escaped');
+  assert.ok(slides.includes('\\wrsMath{\\Delta z_i = W_2 \\, \\mathrm{SiLU}(W_1 h_i)}'));
+  assert.match(slides, /\n\\wrsMath\{.*\}\n\\end\{frame\}/);
+});
+
+test('benchmark highlights the best value per group and never crowns a reference row', () => {
+  const spec = {
+    deck: { title: 'Best per group', stage: 'diagnostic', week: 1 },
+    slides: [{
+      id: 'b1',
+      archetype: 'benchmark',
+      title: 'Groups',
+      content: {
+        metrics: [
+          { key: 'q', name: 'Q', higher_is_better: true },
+          { key: 'e', name: 'E', higher_is_better: false },
+        ],
+        methods: [
+          { name: 'Original', role: 'reference', values: { q: 99, e: 0.01 } },
+          { name: 'A', role: 'competitor', group: 'N=5', values: { q: 10, e: 0.5 } },
+          { name: 'B', role: 'competitor', group: 'N=5', role_label: 'ours', values: { q: 30, e: 0.2 } },
+          { name: 'C', role: 'competitor', group: 'N=7', values: { q: 5, e: 0.1 } },
+          { name: 'D', role: 'competitor', group: 'N=7', values: { q: 9, e: 0.9 } },
+        ],
+      },
+    }],
+  };
+  const slides = renderBeamer(spec).files['slides.tex'];
+  assert.ok(slides.includes('A & 10 & 0.50 \\\\'), 'non-best cells stay plain');
+  assert.ok(slides.includes('B\\newline{\\tiny\\color{wrsMuted}(ours)} & \\textbf{\\textcolor{wrsGreen}{30}} & \\textbf{\\textcolor{wrsGreen}{0.20}} \\\\'));
+  assert.ok(slides.includes('C & 5 & \\textbf{\\textcolor{wrsGreen}{0.10}} \\\\'), 'lower-is-better metric crowns the minimum');
+  assert.ok(slides.includes('D & \\textbf{\\textcolor{wrsGreen}{9}} & 0.90 \\\\'));
+  assert.ok(slides.includes('\\textcolor{wrsMuted}{Original} & 99 & 0.01 \\\\'), 'reference row is muted and never best');
+});
+
 test('compile log QA flags overfull boxes, missing files and undefined refs', () => {
   const log = [
     'Overfull \\hbox (14.2pt too wide) in paragraph at lines 10--11',
@@ -111,6 +199,30 @@ test('doctor reports the beamer toolchain and packages', () => {
 
 const doctor = texDoctor();
 const hasLatex = Boolean(doctor.ok && doctor.tools.pdftoppm);
+
+test('a four-stage pipeline compiles without errors', { skip: !hasLatex ? 'no LaTeX toolchain' : false }, async () => {
+  const spec = {
+    deck: { title: 'Pipeline width', stage: 'survey', week: 1 },
+    slides: [{
+      id: 'p1',
+      archetype: 'method-high-level',
+      title: 'Four stages',
+      content: {
+        stages: [
+          { role: 'cache', label: 'full-compute step', detail: 'every N steps: run all blocks and cache the final-block input' },
+          { role: 'model', label: 'skipped step', detail: 'bypass blocks g1 to gL-1; no block computation here' },
+          { role: 'learned', label: 'LoRA final block', detail: 'only gL runs, with the low-rank correction' },
+          { role: 'output', label: 'output', detail: 'approximation of the skipped full computation' },
+        ],
+      },
+    }],
+  };
+  const dir = tmpdir();
+  const prep = prepareBuildDir(spec, dir, {});
+  const res = compileBeamer(dir, { engine: prep.engine, file: 'presentation.tex' });
+  assert.deepEqual(res.findings.filter((f) => f.level === 'error'), [], JSON.stringify(res.findings, null, 2));
+  assert.equal(res.pages, 1);
+});
 
 test('demo compiles to a clean 10-page presentation and handout', { skip: !hasLatex ? 'no LaTeX toolchain' : false }, async () => {
   const spec = loadData(path.join(EX, 'slide_spec.yaml'));

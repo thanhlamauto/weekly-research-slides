@@ -1,6 +1,6 @@
 {
   "name": "academic-beamer",
-  "version": 1,
+  "version": 2,
   "kind": "latex-beamer",
   "description": "Template-driven LaTeX Beamer deck for weekly research slides. The template owns fonts, margins, footer, blocks and citations; the generator only supplies scientific content.",
   "engine": "pdflatex",

@@ -33,6 +33,9 @@ object. These are the supported archetypes and their content fields.
 `stages: [{label, role, detail}]` where `role` is one of
 `input|model|learned|cache|output|operator`, `note`
 
+Stages are chained left to right and the row auto-scales to the frame width.
+Keep `label` short; put the explanation in `detail`.
+
 ## method-delta
 `from`, `to`, `summary`, `changes: [{change, why}]`, `unchanged: []`
 
@@ -41,8 +44,20 @@ object. These are the supported archetypes and their content fields.
 
 ## benchmark
 `metrics: [{key, name, unit, higher_is_better}]`,
-`methods: [{name, role, values, delta}]` with `role` in
+`methods: [{name, role, role_label, values, delta}]` with `role` in
 `competitor|previous|current`, `caption`
+
+`role` controls emphasis only. `previous`/`current` default to the weekly
+labels "last week"/"this week"; set `role_label` (for example `ours`) when the
+deck is not a weekly delta. `role: reference` marks a yardstick row (for example
+the unaccelerated model): it is muted and can never be crowned best.
+
+By default the renderer bolds and greens the **best value per metric**, honouring
+`higher_is_better` (default `true`). Give methods a `group` (for example an
+interval `N=5`) to compute the best value inside each group, so a table that
+covers several intervals highlights one winner per interval instead of one
+overall winner. Metric names usually carry the direction glyph, for example
+`CLIP ↑` and `s/ảnh ↓`.
 
 ## claim
 `id`, `statement`, `status`, `evidence: []`
@@ -69,5 +84,13 @@ consecutive slides to preserve object permanence.
 
 ## limitations
 `limitations: []`, `open_questions: []`
+
+## Shared fields
+
+Every archetype accepts `content.equations: []`, a list of **raw LaTeX math**
+lines rendered one per line by the template (`\wrsMath`). This is the one
+authored exception to ASCII-only content: write the formula itself, not ASCII
+art. Do not include text-mode markup or a stray closing brace. Equations are
+appended after the archetype body, before the citation.
 
 A module may produce zero, one, or multiple slides.

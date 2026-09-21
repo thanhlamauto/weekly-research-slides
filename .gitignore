@@ -63,6 +63,22 @@ examples/**/output/beamer-build/*.snm
 examples/**/output/beamer-build/*.toc
 examples/**/output/beamer-build/*.vrb
 examples/**/output/beamer-build/*.pdf
+
+# paper-explainer decks: same rule for their <name>-build directories, plus
+# copied figure assets and per-page renders (contact sheets are kept)
+examples/**/output/*-build/*.aux
+examples/**/output/*-build/*.log
+examples/**/output/*-build/*.fls
+examples/**/output/*-build/*.fdb_latexmk
+examples/**/output/*-build/*.out
+examples/**/output/*-build/*.synctex.gz
+examples/**/output/*-build/*.nav
+examples/**/output/*-build/*.snm
+examples/**/output/*-build/*.toc
+examples/**/output/*-build/*.vrb
+examples/**/output/*-build/*.pdf
+examples/**/output/*-build/assets/
+examples/**/output/*-pages/slide-*.png
 # keep the Beamer contact sheet, drop the per-page intermediates (docs/images has the gallery copies)
 examples/**/output/beamer-pages/slide-*.png
 

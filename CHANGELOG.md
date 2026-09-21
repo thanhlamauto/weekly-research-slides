@@ -3,6 +3,37 @@
 All notable changes to this project are documented here. The format is loosely
 based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [Unreleased]
+
+### Fixed
+
+- **`method-high-level` pipelines were drawn on top of each other.** The Beamer
+  renderer emitted every stage node without a position, so all stages piled up
+  at the picture origin. Stages are now chained (`right=of stage-N`) with a gap
+  that tightens as stages are added, and the picture only shrinks when it would
+  exceed the text width. Regression tests cover the positioning and a compiled
+  four-stage pipeline.
+
+### Changed
+
+- **`benchmark` highlights the best value per metric per row group** instead of
+  forcing the `current` row's cells bold. `higher_is_better` (default true) sets
+  the direction, `group` scopes the comparison to a row group such as one cache
+  interval, and `role: reference` marks a yardstick row that is muted and never
+  crowned.
+
+### Added
+
+- **Raw display math on slides** (`content.equations`): a list of LaTeX math
+  lines, rendered by the template macro `\wrsMath` after the archetype body.
+  This is the one authored exception to ASCII-only content, so method slides can
+  show the actual formula instead of ASCII art. Template `academic-beamer`
+  version bumped to 2; a malformed equation fails the compile and is reported as
+  a build error.
+- **`role_label` for `benchmark` rows**: overrides the weekly
+  "last week"/"this week" role label, so paper-explainer and survey decks can
+  mark the explained method (for example `ours`) without weekly framing.
+
 ## [0.8.0] - 2026-09-20
 
 ### Added
